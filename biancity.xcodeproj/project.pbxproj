@@ -87,6 +87,8 @@
 		FECA81141AF760BE00FF57AE /* MyCollectionReusableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = FECA81121AF760BE00FF57AE /* MyCollectionReusableView.xib */; };
 		FECA81171AF76EA400FF57AE /* NearViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FECA81161AF76EA400FF57AE /* NearViewController.m */; };
 		FECA811A1AF77A3900FF57AE /* ModelNearTown.m in Sources */ = {isa = PBXBuildFile; fileRef = FECA81191AF77A3900FF57AE /* ModelNearTown.m */; };
+		FECA811D1AF7AF4500FF57AE /* MyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FECA811C1AF7AF4500FF57AE /* MyViewController.m */; };
+		FECA811F1AF7B43300FF57AE /* bj.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FECA811E1AF7B43300FF57AE /* bj.jpg */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -248,6 +250,9 @@
 		FECA81161AF76EA400FF57AE /* NearViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NearViewController.m; sourceTree = "<group>"; };
 		FECA81181AF77A3900FF57AE /* ModelNearTown.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ModelNearTown.h; sourceTree = "<group>"; };
 		FECA81191AF77A3900FF57AE /* ModelNearTown.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ModelNearTown.m; sourceTree = "<group>"; };
+		FECA811B1AF7AF4500FF57AE /* MyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyViewController.h; sourceTree = "<group>"; };
+		FECA811C1AF7AF4500FF57AE /* MyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyViewController.m; sourceTree = "<group>"; };
+		FECA811E1AF7B43300FF57AE /* bj.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = bj.jpg; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -328,6 +333,8 @@
 				FECA801B1AF71A3000FF57AE /* HotTownViewController.m */,
 				FECA81151AF76EA400FF57AE /* NearViewController.h */,
 				FECA81161AF76EA400FF57AE /* NearViewController.m */,
+				FECA811B1AF7AF4500FF57AE /* MyViewController.h */,
+				FECA811C1AF7AF4500FF57AE /* MyViewController.m */,
 				FECA801D1AF71A3000FF57AE /* Main.storyboard */,
 				FECA80201AF71A3000FF57AE /* Images.xcassets */,
 				FECA80221AF71A3000FF57AE /* LaunchScreen.xib */,
@@ -339,6 +346,7 @@
 		FECA80131AF71A3000FF57AE /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				FECA811E1AF7B43300FF57AE /* bj.jpg */,
 				FECA80141AF71A3000FF57AE /* Info.plist */,
 				FECA80151AF71A3000FF57AE /* main.m */,
 			);
@@ -652,6 +660,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FECA81141AF760BE00FF57AE /* MyCollectionReusableView.xib in Resources */,
+				FECA811F1AF7B43300FF57AE /* bj.jpg in Resources */,
 				FECA801F1AF71A3000FF57AE /* Main.storyboard in Resources */,
 				FECA80241AF71A3000FF57AE /* LaunchScreen.xib in Resources */,
 				FECA80D01AF732BF00FF57AE /* placeholder@2x.png in Resources */,
@@ -715,6 +724,7 @@
 				FECA80EC1AF7340900FF57AE /* basicRequest.m in Sources */,
 				FECA80EF1AF7340900FF57AE /* ResponseHotTown.m in Sources */,
 				FECA80D51AF732BF00FF57AE /* RefreshHeaderView.m in Sources */,
+				FECA811D1AF7AF4500FF57AE /* MyViewController.m in Sources */,
 				FECA80501AF7326B00FF57AE /* AFHTTPSessionManager.m in Sources */,
 				FECA80541AF7326B00FF57AE /* AFURLRequestSerialization.m in Sources */,
 				FECA80721AF7329800FF57AE /* JSONModel.m in Sources */,

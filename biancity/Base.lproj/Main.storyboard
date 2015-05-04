@@ -100,16 +100,63 @@
         <!--我的-->
         <scene sceneID="LGC-gs-SGh">
             <objects>
-                <viewController id="E8t-uw-FbH" sceneMemberID="viewController">
+                <viewController id="E8t-uw-FbH" customClass="MyViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Chv-lh-ocM"/>
                         <viewControllerLayoutGuide type="bottom" id="oGZ-2C-MIP"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="3gS-Fw-RgX">
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="fHu-Sk-cSR">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="PQx-Cc-PnX">
+                                    <size key="itemSize" width="50" height="50"/>
+                                    <size key="headerReferenceSize" width="50" height="50"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells/>
+                                <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="MyCollectionReusableView" id="vOc-Ns-mSl">
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </collectionReusableView>
+                            </collectionView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="fHu-Sk-cSR" secondAttribute="bottom" id="TE8-Op-T8k"/>
+                            <constraint firstItem="fHu-Sk-cSR" firstAttribute="leading" secondItem="3gS-Fw-RgX" secondAttribute="leading" id="VVJ-jw-BWe"/>
+                            <constraint firstAttribute="trailing" secondItem="fHu-Sk-cSR" secondAttribute="trailing" id="Xzk-m8-0Ca"/>
+                            <constraint firstItem="fHu-Sk-cSR" firstAttribute="top" secondItem="3gS-Fw-RgX" secondAttribute="top" id="gWe-Ad-Ixy"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="subviews">
+                                <exclude reference="fHu-Sk-cSR"/>
+                            </mask>
+                            <mask key="constraints">
+                                <exclude reference="TE8-Op-T8k"/>
+                                <exclude reference="VVJ-jw-BWe"/>
+                                <exclude reference="Xzk-m8-0Ca"/>
+                                <exclude reference="gWe-Ad-Ixy"/>
+                            </mask>
+                        </variation>
+                        <variation key="heightClass=regular-widthClass=compact">
+                            <mask key="subviews">
+                                <include reference="fHu-Sk-cSR"/>
+                            </mask>
+                            <mask key="constraints">
+                                <include reference="TE8-Op-T8k"/>
+                                <include reference="VVJ-jw-BWe"/>
+                                <include reference="Xzk-m8-0Ca"/>
+                                <include reference="gWe-Ad-Ixy"/>
+                            </mask>
+                        </variation>
                     </view>
                     <tabBarItem key="tabBarItem" title="我的" id="zaC-Dc-t0E"/>
+                    <connections>
+                        <outlet property="myCollectionView" destination="fHu-Sk-cSR" id="yXR-Jg-hgk"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cty-lN-ifq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
