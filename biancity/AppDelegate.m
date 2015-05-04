@@ -20,10 +20,7 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    basicRequest *basic = [basicRequest sharedBaseic];
-    basic.ptoken=@"N6h5p5GsdTCHTooEXZkV0QfkckfmCBam";
-    basic.ptuserid=@"17";
-    basic.gethoturl =@"http://123.57.132.31:8080/gethot";
+    
     [SDWebImageManager sharedManager].imageDownloader.username = @"httpwatch";
     [SDWebImageManager sharedManager].imageDownloader.password = @"httpwatch01";
     [SDWebImageManager.sharedManager.imageDownloader setValue:@"SDWebImage Demo" forHTTPHeaderField:@"AppName"];

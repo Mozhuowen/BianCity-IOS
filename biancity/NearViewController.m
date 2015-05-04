@@ -1,42 +1,51 @@
 //
-//  ViewController.m
+//  NearViewController.m
 //  biancity
 //
 //  Created by 朱云 on 15/5/4.
 //  Copyright (c) 2015年 Zhuyun. All rights reserved.
 //
 
-#import "HotTownViewController.h"
+#import "NearViewController.h"
 #import "Cells/HotTownCollectionViewCell.h"
 #import "model/ResponseHotTown.h"
 #import "Refresh.h"
 #import "MsgEncrypt.h"
+#import "basicRequest.h"
+#import "ModelNearTown.h"
 #import "AFHTTPRequestOperationManager.h"
-@interface HotTownViewController ()
-@property (weak, nonatomic) IBOutlet UICollectionView *HotTownCollectionView;
+@interface NearViewController ()
+@property (weak, nonatomic) IBOutlet UICollectionView *nearCollectionView;
 @property (nonatomic,strong) ResponseHotTown * hotTown;
+@property (nonatomic,strong) CLLocationManager *locationManager;
+@property (nonatomic,strong) ModelNearTown* nearTown;
 @property (nonatomic,strong)  basicRequest *basic;
 @end
 
-@implementation HotTownViewController
+@implementation NearViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-   _basic= [[basicRequest alloc] init];
-    _basic.ptoken=@"N6h5p5GsdTCHTooEXZkV0QfkckfmCBam";
-    _basic.ptuserid=@"17";
-    _basic.gethoturl =@"http://123.57.132.31:8080/gethot";
-    _basic.rejectid = [[NSMutableArray alloc]init];
-    [self.HotTownCollectionView registerClass:[HotTownCollectionViewCell class] forCellWithReuseIdentifier:@"HotTownCollectionViewCell"];
+    _nearTown = [[ModelNearTown alloc] init];
+    _nearTown.geo = [[GeoInfo alloc] init];
+    [self.nearCollectionView registerClass:[HotTownCollectionViewCell class] forCellWithReuseIdentifier:@"HotTownCollectionViewCell"];
     SDWebImageManager *manager = [SDWebImageManager sharedManager];
     manager.delegate = self;
-    self.HotTownCollectionView.dataSource =self;
-    self.HotTownCollectionView.delegate = self;
+    self.nearCollectionView.dataSource =self;
+    self.nearCollectionView.delegate = self;
+#pragma basic
+    _basic= [[basicRequest alloc] init];
+    _basic.ptoken=@"N6h5p5GsdTCHTooEXZkV0QfkckfmCBam";
+    _basic.ptuserid=@"17";
+  //  _basic.gethoturl =@"http://123.57.132.31:8080/gethot";
+    _basic.rejectid = [[NSMutableArray alloc]init];
+    _basic.gethoturl =@"http://123.57.132.31:8080/getnear";
+#pragma end basic
+    _locationManager=[[CLLocationManager alloc]init];
     [self addHeader];
     [self addFooter];
-
     
-    // Do any additional setup after loading the view, typically from a nib.
+       // Do any additional setup after loading the view.
 }
 
 - (void)didReceiveMemoryWarning {
@@ -90,18 +99,37 @@
 {
     __unsafe_unretained typeof(self) vc = self;
     // 添加下拉刷新头部控件
-    [self.HotTownCollectionView addHeaderWithCallback:^{
+    [self.nearCollectionView addHeaderWithCallback:^{
         // 进入刷新状态就会回调这个Block
-     [vc loadInfo:0];
+        //如果没有授权则请求用户授权
+        if ([CLLocationManager authorizationStatus]==kCLAuthorizationStatusNotDetermined){
+            [_locationManager requestWhenInUseAuthorization];
+        }else if([CLLocationManager authorizationStatus]==kCLAuthorizationStatusAuthorizedWhenInUse){
+            //设置代理
+            _locationManager.delegate=vc;
+            //设置定位精度
+            _locationManager.desiredAccuracy=kCLLocationAccuracyBest;
+            //定位频率,每隔多少米定位一次
+            CLLocationDistance distance=1.0;//十米定位一次
+            _locationManager.distanceFilter=distance;
+            //启动跟踪定位
+            [_locationManager startUpdatingLocation];
+        }
+        if (![CLLocationManager locationServicesEnabled]) {
+            NSLog(@"定位服务当前可能尚未打开，请设置打开！");
+            return;
+        }
+
+        // [vc loadInfo:0];
     }];
-    [self.HotTownCollectionView headerBeginRefreshing];
+    [self.nearCollectionView headerBeginRefreshing];
 }
 
 - (void)addFooter
 {
     __unsafe_unretained typeof(self) vc = self;
     // 添加上拉刷新尾部控件
-    [self.HotTownCollectionView addFooterWithCallback:^{
+    [self.nearCollectionView addFooterWithCallback:^{
         // 进入刷新状态就会回调这个Block
         //[vc addInfo];
         [vc loadInfo:1];
@@ -115,18 +143,19 @@
     if(check==0){
         [_basic.rejectid removeAllObjects];
     }
-    NSDictionary *parameters = [_basic paraters];
-    //NSLog(@"%@",parameters);
+    _nearTown.rejectid =_basic.rejectid  ;
+    NSDictionary *parameters = [_nearTown toDictionary];//[[basicRequest sharedBaseic] paraters];
+  //  NSLog(@"%@",parameters);
     NSString *url =[NSString stringWithString:[_basic gethoturl]];
     NSDate *datenow = [NSDate date];//现在时间,你可以输出来看下是什么格式
     NSString *strtime = [NSString stringWithFormat:@"%ld", (long)[datenow timeIntervalSince1970]];
     MsgEncrypt *encrypt = [[MsgEncrypt alloc] init];
     NSData *msgjson = [NSJSONSerialization dataWithJSONObject:parameters options:NSJSONWritingPrettyPrinted error:nil];
     NSString* info = [[NSString alloc] initWithData:msgjson encoding:NSUTF8StringEncoding];
-    // NSLog(@"Info is %@",info);
+    
     info = [info stringByReplacingOccurrencesOfString:@" " withString:@""];
     info = [info stringByReplacingOccurrencesOfString:@"\n" withString:@""];
-    
+    // NSLog(@"Info is %@",info);
     NSString *signature= [encrypt EncryptMsg:info timeStmap:strtime];
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.requestSerializer=[AFJSONRequestSerializer serializer];
@@ -139,7 +168,7 @@
         NSDictionary * data =[NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
         if(check==0){
             self.hotTown = [[ResponseHotTown alloc] initWithDictionary:data error:nil];
-            [self.HotTownCollectionView headerEndRefreshing];
+            [self.nearCollectionView headerEndRefreshing];
             for(int i=0;i<[self.hotTown.towns count];i++){
                 NSNumber* rjid= [[self.hotTown.towns objectAtIndex:i] townid];
                 [_basic.rejectid  addObject:rjid];
@@ -151,20 +180,57 @@
                 NSNumber* rjid= [[ad.towns objectAtIndex:i] townid];
                 [_basic.rejectid addObject:rjid];
             }
-            [self.HotTownCollectionView footerEndRefreshing];
+            [self.nearCollectionView footerEndRefreshing];
         }
-        [self.HotTownCollectionView reloadData];
+        [self.nearCollectionView reloadData];
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error: %@", error);
         if(check ==0){
-            [self.HotTownCollectionView headerEndRefreshing];
+            [self.nearCollectionView headerEndRefreshing];
         }else {
-            [self.HotTownCollectionView footerEndRefreshing];
+            [self.nearCollectionView footerEndRefreshing];
         }
         
     }];
 }
 
 #pragma end loading Infomation
+
+#pragma Location
+//-(void)mapView:(MAMapView *)mapView didUpdateUserLocation:(MAUserLocation *)userLocation
+//updatingLocation:(BOOL)updatingLocation
+//{
+//    if(updatingLocation)
+//    {
+//        //取出当前位置的坐标
+//        NSLog(@"latitude : %f,longitude: %f",userLocation.coordinate.latitude,userLocation.coordinate.longitude);
+//    }
+//    [self addHeader];
+//    [self addFooter];
+//}
+#pragma mark - CoreLocation 代理
+#pragma mark 跟踪定位代理方法，每次位置发生变化即会执行（只要定位到相应位置）
+//可以通过模拟器设置一个虚拟位置，否则在模拟器中无法调用此方法
+-(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations{
+    CLLocation *location=[locations firstObject];//取出第一个位置
+    CLLocationCoordinate2D coordinate=location.coordinate;//位置坐标
+   // NSLog(@"经度：%f,纬度：%f,海拔：%f,航向：%f,行走速度：%f",coordinate.longitude,coordinate.latitude,location.altitude,location.course,location.speed);
+    //如果不需要实时定位，使用完即使关闭定位服务
+    _nearTown.geo.latitude = [[NSNumber alloc] initWithDouble:coordinate.latitude];
+    _nearTown.geo.longitude = [[NSNumber alloc] initWithDouble:coordinate.longitude];
+    [_locationManager stopUpdatingLocation];
+    [self loadInfo:0];
+}
+#pragma end location
+/*
+#pragma mark - Navigation
+
+// In a storyboard-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
+}
+*/
+
 @end

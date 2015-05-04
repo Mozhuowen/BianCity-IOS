@@ -85,6 +85,8 @@
 		FECA810F1AF759AB00FF57AE /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FECA810E1AF759AB00FF57AE /* UIKit.framework */; };
 		FECA81131AF760BE00FF57AE /* MyCollectionReusableView.m in Sources */ = {isa = PBXBuildFile; fileRef = FECA81111AF760BE00FF57AE /* MyCollectionReusableView.m */; };
 		FECA81141AF760BE00FF57AE /* MyCollectionReusableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = FECA81121AF760BE00FF57AE /* MyCollectionReusableView.xib */; };
+		FECA81171AF76EA400FF57AE /* NearViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FECA81161AF76EA400FF57AE /* NearViewController.m */; };
+		FECA811A1AF77A3900FF57AE /* ModelNearTown.m in Sources */ = {isa = PBXBuildFile; fileRef = FECA81191AF77A3900FF57AE /* ModelNearTown.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -242,6 +244,10 @@
 		FECA81101AF760BE00FF57AE /* MyCollectionReusableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyCollectionReusableView.h; sourceTree = "<group>"; };
 		FECA81111AF760BE00FF57AE /* MyCollectionReusableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyCollectionReusableView.m; sourceTree = "<group>"; };
 		FECA81121AF760BE00FF57AE /* MyCollectionReusableView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MyCollectionReusableView.xib; sourceTree = "<group>"; };
+		FECA81151AF76EA400FF57AE /* NearViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NearViewController.h; sourceTree = "<group>"; };
+		FECA81161AF76EA400FF57AE /* NearViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NearViewController.m; sourceTree = "<group>"; };
+		FECA81181AF77A3900FF57AE /* ModelNearTown.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ModelNearTown.h; sourceTree = "<group>"; };
+		FECA81191AF77A3900FF57AE /* ModelNearTown.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ModelNearTown.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -320,6 +326,8 @@
 				FECA80181AF71A3000FF57AE /* AppDelegate.m */,
 				FECA801A1AF71A3000FF57AE /* HotTownViewController.h */,
 				FECA801B1AF71A3000FF57AE /* HotTownViewController.m */,
+				FECA81151AF76EA400FF57AE /* NearViewController.h */,
+				FECA81161AF76EA400FF57AE /* NearViewController.m */,
 				FECA801D1AF71A3000FF57AE /* Main.storyboard */,
 				FECA80201AF71A3000FF57AE /* Images.xcassets */,
 				FECA80221AF71A3000FF57AE /* LaunchScreen.xib */,
@@ -543,6 +551,8 @@
 				FECA80E61AF7340900FF57AE /* GeoInfo.m */,
 				FECA80E91AF7340900FF57AE /* ResponseHotTown.h */,
 				FECA80EA1AF7340900FF57AE /* ResponseHotTown.m */,
+				FECA81181AF77A3900FF57AE /* ModelNearTown.h */,
+				FECA81191AF77A3900FF57AE /* ModelNearTown.m */,
 			);
 			path = model;
 			sourceTree = "<group>";
@@ -690,6 +700,7 @@
 				FECA80DE1AF733FE00FF57AE /* MsgEncrypt.m in Sources */,
 				FECA80791AF7329800FF57AE /* JSONModel+networking.m in Sources */,
 				FECA80AC1AF732A800FF57AE /* UIImageView+WebCache.m in Sources */,
+				FECA811A1AF77A3900FF57AE /* ModelNearTown.m in Sources */,
 				FECA80D61AF732BF00FF57AE /* UIScrollView+extension.m in Sources */,
 				FECA80D41AF732BF00FF57AE /* RefreshFooterView.m in Sources */,
 				FECA80511AF7326B00FF57AE /* AFNetworkReachabilityManager.m in Sources */,
@@ -723,6 +734,7 @@
 				FECA80AA1AF732A800FF57AE /* UIImage+WebP.m in Sources */,
 				FECA80731AF7329800FF57AE /* JSONModelArray.m in Sources */,
 				FECA80A01AF732A800FF57AE /* SDImageCache.m in Sources */,
+				FECA81171AF76EA400FF57AE /* NearViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

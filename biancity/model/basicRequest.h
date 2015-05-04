@@ -14,5 +14,5 @@
 @property (nonatomic,strong) NSMutableArray*  rejectid;  //已显示的边城号
 @property (nonatomic,strong) NSString *gethoturl;
 -(NSDictionary*)paraters;
-+ (id)sharedBaseic;
+//+ (id)sharedBaseic;
 @end

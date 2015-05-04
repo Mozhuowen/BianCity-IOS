@@ -8,7 +8,7 @@
         <!--附近-->
         <scene sceneID="1FQ-06-ATH">
             <objects>
-                <viewController id="FDP-Iq-Fgv" sceneMemberID="viewController">
+                <viewController id="FDP-Iq-Fgv" customClass="NearViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="NcR-UX-wWd"/>
                         <viewControllerLayoutGuide type="bottom" id="Je0-Bc-hi7"/>
@@ -35,35 +35,63 @@
                                     </mask>
                                 </variation>
                             </label>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="LcV-W8-hXn">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="f5c-B3-DMe">
+                                    <size key="itemSize" width="50" height="50"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells/>
+                            </collectionView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="sKU-JK-jB7" firstAttribute="top" secondItem="lz4-P7-gfj" secondAttribute="top" constant="15" id="6jb-Wu-ugV"/>
                             <constraint firstAttribute="trailing" secondItem="sKU-JK-jB7" secondAttribute="trailing" id="DFt-54-IDq"/>
+                            <constraint firstAttribute="bottom" secondItem="LcV-W8-hXn" secondAttribute="bottom" constant="49" id="ILi-4j-hO4"/>
                             <constraint firstItem="sKU-JK-jB7" firstAttribute="leading" secondItem="lz4-P7-gfj" secondAttribute="leading" id="JJG-jJ-3NW"/>
+                            <constraint firstAttribute="trailing" secondItem="LcV-W8-hXn" secondAttribute="trailing" id="ZvU-qh-fJ3"/>
+                            <constraint firstItem="LcV-W8-hXn" firstAttribute="leading" secondItem="lz4-P7-gfj" secondAttribute="leading" id="mZh-rg-Z0p"/>
+                            <constraint firstItem="LcV-W8-hXn" firstAttribute="top" secondItem="sKU-JK-jB7" secondAttribute="bottom" constant="1" id="zaS-Sr-ueP"/>
                         </constraints>
                         <variation key="default">
                             <mask key="subviews">
                                 <exclude reference="sKU-JK-jB7"/>
+                                <exclude reference="LcV-W8-hXn"/>
                             </mask>
                             <mask key="constraints">
                                 <exclude reference="6jb-Wu-ugV"/>
                                 <exclude reference="DFt-54-IDq"/>
                                 <exclude reference="JJG-jJ-3NW"/>
+                                <exclude reference="ILi-4j-hO4"/>
+                                <exclude reference="ZvU-qh-fJ3"/>
+                                <exclude reference="mZh-rg-Z0p"/>
+                                <exclude reference="zaS-Sr-ueP"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=compact">
                             <mask key="subviews">
                                 <include reference="sKU-JK-jB7"/>
+                                <include reference="LcV-W8-hXn"/>
                             </mask>
                             <mask key="constraints">
                                 <include reference="6jb-Wu-ugV"/>
                                 <include reference="DFt-54-IDq"/>
                                 <include reference="JJG-jJ-3NW"/>
+                                <include reference="ILi-4j-hO4"/>
+                                <include reference="ZvU-qh-fJ3"/>
+                                <include reference="mZh-rg-Z0p"/>
+                                <include reference="zaS-Sr-ueP"/>
                             </mask>
                         </variation>
                     </view>
                     <tabBarItem key="tabBarItem" title="附近" id="q17-4q-lWL"/>
+                    <connections>
+                        <outlet property="nearCollectionView" destination="LcV-W8-hXn" id="FJh-BK-iGX"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="b7j-rb-afo" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -153,8 +181,10 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="D3k-E3-LPu" firstAttribute="top" secondItem="ltR-4U-vnB" secondAttribute="bottom" constant="1" id="3rf-df-WLQ"/>
                             <constraint firstItem="ltR-4U-vnB" firstAttribute="leading" secondItem="Hcd-Nt-I33" secondAttribute="leading" id="Ud3-FQ-ACo"/>
                             <constraint firstAttribute="trailing" secondItem="D3k-E3-LPu" secondAttribute="trailing" id="cnH-w8-kJS"/>
+                            <constraint firstItem="ltR-4U-vnB" firstAttribute="top" secondItem="Hcd-Nt-I33" secondAttribute="top" constant="15" id="dMM-n6-QPQ"/>
                             <constraint firstAttribute="bottom" secondItem="D3k-E3-LPu" secondAttribute="bottom" constant="49" id="dzu-ap-0fw"/>
                             <constraint firstItem="D3k-E3-LPu" firstAttribute="top" secondItem="ltR-4U-vnB" secondAttribute="bottom" constant="-1" id="fWY-vH-8QO"/>
                             <constraint firstItem="ltR-4U-vnB" firstAttribute="top" secondItem="Hcd-Nt-I33" secondAttribute="top" constant="10" id="l9K-bX-yX0"/>
@@ -171,10 +201,12 @@
                             </mask>
                             <mask key="constraints">
                                 <exclude reference="Ud3-FQ-ACo"/>
+                                <exclude reference="dMM-n6-QPQ"/>
                                 <exclude reference="l9K-bX-yX0"/>
                                 <exclude reference="ljo-oL-xk9"/>
                                 <exclude reference="pca-09-0xK"/>
                                 <exclude reference="xho-Ui-KYP"/>
+                                <exclude reference="3rf-df-WLQ"/>
                                 <exclude reference="cnH-w8-kJS"/>
                                 <exclude reference="dzu-ap-0fw"/>
                                 <exclude reference="fWY-vH-8QO"/>
@@ -189,15 +221,17 @@
                             </mask>
                             <mask key="constraints">
                                 <include reference="Ud3-FQ-ACo"/>
+                                <include reference="dMM-n6-QPQ"/>
                                 <exclude reference="l9K-bX-yX0"/>
                                 <include reference="ljo-oL-xk9"/>
-                                <include reference="pca-09-0xK"/>
+                                <exclude reference="pca-09-0xK"/>
                                 <exclude reference="xho-Ui-KYP"/>
+                                <include reference="3rf-df-WLQ"/>
                                 <include reference="cnH-w8-kJS"/>
                                 <include reference="dzu-ap-0fw"/>
                                 <exclude reference="fWY-vH-8QO"/>
                                 <include reference="xen-qB-JAI"/>
-                                <include reference="yuB-uJ-yUL"/>
+                                <exclude reference="yuB-uJ-yUL"/>
                             </mask>
                         </variation>
                     </view>

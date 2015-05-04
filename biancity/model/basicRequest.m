@@ -12,22 +12,22 @@
 -(NSDictionary*)paraters{
     return @{@"ptoken":self.ptoken,@"rejectid":self.rejectid,@"ptuserid":self.ptuserid};
 }
-+ (id)sharedBaseic {
-    static dispatch_once_t once;
-    static id instance;
-    dispatch_once(&once, ^{
-        instance = [self new];
-    });
-    return instance;
-}
-
-- (id)init {
-    if ((self = [super init])) {
-        self.ptoken = [NSString new];
-        self.rejectid = [NSMutableArray new];
-        self.ptuserid = [NSString new];
-        self.gethoturl = [NSString new];
-    }
-    return self;
-}
+//+ (id)sharedBaseic {
+//    static dispatch_once_t once;
+//    static id instance;
+//    dispatch_once(&once, ^{
+//        instance = [self new];
+//    });
+//    return instance;
+//}
+//
+//- (id)init {
+//    if ((self = [super init])) {
+//        self.ptoken = [NSString new];
+//        self.rejectid = [NSMutableArray new];
+//        self.ptuserid = [NSString new];
+//        self.gethoturl = [NSString new];
+//    }
+//    return self;
+//}
 @end
