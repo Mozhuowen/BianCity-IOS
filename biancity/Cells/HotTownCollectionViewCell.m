@@ -19,13 +19,13 @@
         [self setBackgroundColor:[UIColor whiteColor]];
         self.HotTownCoverImage =[[UIImageView alloc] initWithFrame:CGRectMake(4, 4, self.frame.size.width-8, self.frame.size.width-8)];
         [self addSubview:self.HotTownCoverImage];
-        self.hotTownNameLabel =[[UILabel alloc] initWithFrame:CGRectMake(4, (self.HotTownCoverImage.frame.size.height+self.HotTownCoverImage.frame.origin.y+6), 100, 8)];
+        self.hotTownNameLabel =[[UILabel alloc] initWithFrame:CGRectMake(4, (self.HotTownCoverImage.frame.size.height+self.HotTownCoverImage.frame.origin.y+6), 150, 8)];
         [self.hotTownNameLabel setFont:[UIFont fontWithName: @"Helvetica"   size : 12.0]];
         [self addSubview:self.hotTownNameLabel];
         
         self.icon1Image = [[UIImageView alloc] initWithFrame:CGRectMake(4, (self.hotTownNameLabel.frame.size.height+self.hotTownNameLabel.frame.origin.y+10), 12, 12)];
         [self addSubview:self.icon1Image];
-        self.addrLabel =[[UILabel alloc] initWithFrame:CGRectMake(18, (self.hotTownNameLabel.frame.size.height+self.hotTownNameLabel.frame.origin.y+14), 80, 8)];
+        self.addrLabel =[[UILabel alloc] initWithFrame:CGRectMake(18, (self.hotTownNameLabel.frame.size.height+self.hotTownNameLabel.frame.origin.y+14), 105, 8)];
         [self.addrLabel setFont:[UIFont fontWithName: @"Helvetica"   size : 10.0]];
         [self addSubview:self.addrLabel];
         self.goodLabel =[[UILabel alloc] initWithFrame:CGRectMake(self.frame.size.width-30,(self.hotTownNameLabel.frame.size.height+self.hotTownNameLabel.frame.origin.y+11), 15, 15)];

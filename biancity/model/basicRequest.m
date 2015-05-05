@@ -9,9 +9,7 @@
 #import "basicRequest.h"
 
 @implementation basicRequest
--(NSDictionary*)paraters{
-    return @{@"ptoken":self.ptoken,@"rejectid":self.rejectid,@"ptuserid":self.ptuserid};
-}
+
 //+ (id)sharedBaseic {
 //    static dispatch_once_t once;
 //    static id instance;

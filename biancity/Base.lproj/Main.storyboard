@@ -14,6 +14,7 @@
                         <viewControllerLayoutGuide type="bottom" id="Je0-Bc-hi7"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="lz4-P7-gfj">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="附近" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sKU-JK-jB7">
@@ -106,6 +107,7 @@
                         <viewControllerLayoutGuide type="bottom" id="oGZ-2C-MIP"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="3gS-Fw-RgX">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="fHu-Sk-cSR">
@@ -125,7 +127,10 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstAttribute="bottom" secondItem="fHu-Sk-cSR" secondAttribute="bottom" constant="49" id="5PB-zu-IsU"/>
+                            <constraint firstAttribute="bottom" secondItem="fHu-Sk-cSR" secondAttribute="bottom" constant="49" id="Sa2-JG-w8x"/>
                             <constraint firstAttribute="bottom" secondItem="fHu-Sk-cSR" secondAttribute="bottom" id="TE8-Op-T8k"/>
+                            <constraint firstItem="fHu-Sk-cSR" firstAttribute="top" secondItem="3gS-Fw-RgX" secondAttribute="top" id="V4p-hk-mBT"/>
                             <constraint firstItem="fHu-Sk-cSR" firstAttribute="leading" secondItem="3gS-Fw-RgX" secondAttribute="leading" id="VVJ-jw-BWe"/>
                             <constraint firstAttribute="trailing" secondItem="fHu-Sk-cSR" secondAttribute="trailing" id="Xzk-m8-0Ca"/>
                             <constraint firstItem="fHu-Sk-cSR" firstAttribute="top" secondItem="3gS-Fw-RgX" secondAttribute="top" id="gWe-Ad-Ixy"/>
@@ -135,7 +140,10 @@
                                 <exclude reference="fHu-Sk-cSR"/>
                             </mask>
                             <mask key="constraints">
+                                <exclude reference="5PB-zu-IsU"/>
+                                <exclude reference="Sa2-JG-w8x"/>
                                 <exclude reference="TE8-Op-T8k"/>
+                                <exclude reference="V4p-hk-mBT"/>
                                 <exclude reference="VVJ-jw-BWe"/>
                                 <exclude reference="Xzk-m8-0Ca"/>
                                 <exclude reference="gWe-Ad-Ixy"/>
@@ -146,10 +154,13 @@
                                 <include reference="fHu-Sk-cSR"/>
                             </mask>
                             <mask key="constraints">
-                                <include reference="TE8-Op-T8k"/>
+                                <exclude reference="5PB-zu-IsU"/>
+                                <include reference="Sa2-JG-w8x"/>
+                                <exclude reference="TE8-Op-T8k"/>
+                                <include reference="V4p-hk-mBT"/>
                                 <include reference="VVJ-jw-BWe"/>
                                 <include reference="Xzk-m8-0Ca"/>
-                                <include reference="gWe-Ad-Ixy"/>
+                                <exclude reference="gWe-Ad-Ixy"/>
                             </mask>
                         </variation>
                     </view>
@@ -171,6 +182,7 @@
                         <viewControllerLayoutGuide type="bottom" id="ddh-jU-uh0"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="Hcd-Nt-I33">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="主页" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ltR-4U-vnB">
@@ -291,10 +303,10 @@
             </objects>
             <point key="canvasLocation" x="-3603" y="-648"/>
         </scene>
-        <!--Tab Bar Controller-->
+        <!--Home Tab Bar View Controller-->
         <scene sceneID="78j-mb-9Qh">
             <objects>
-                <tabBarController id="HZh-tJ-erl" sceneMemberID="viewController">
+                <tabBarController id="HZh-tJ-erl" customClass="HomeTabBarViewController" sceneMemberID="viewController">
                     <nil key="simulatedBottomBarMetrics"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="CQL-gi-Cod">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>

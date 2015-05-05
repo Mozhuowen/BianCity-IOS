@@ -12,4 +12,6 @@
 @interface ModelNearTown : JSONModel
 @property (nonatomic,strong) NSArray<Optional>* rejectid;
 @property (nonatomic,strong) GeoInfo *geo;
+@property (nonatomic,strong) NSString * ptoken;
+@property (nonatomic,strong) NSString * ptuserid;
 @end

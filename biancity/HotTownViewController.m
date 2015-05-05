@@ -26,12 +26,18 @@
     _basic.ptoken=@"N6h5p5GsdTCHTooEXZkV0QfkckfmCBam";
     _basic.ptuserid=@"17";
     _basic.gethoturl =@"http://123.57.132.31:8080/gethot";
+//    _basic.ptoken=@"nhL0h3zbiB9RmaimDuSfzXKNxmmDbmLs";
+//    _basic.ptuserid=1;
+//    // _basic.gethoturl =@"http://123.57.132.31:8080/getuserinfo";
+//    _basic.gethoturl =@"http://192.168.199.200/gethot";
     _basic.rejectid = [[NSMutableArray alloc]init];
     [self.HotTownCollectionView registerClass:[HotTownCollectionViewCell class] forCellWithReuseIdentifier:@"HotTownCollectionViewCell"];
     SDWebImageManager *manager = [SDWebImageManager sharedManager];
     manager.delegate = self;
     self.HotTownCollectionView.dataSource =self;
     self.HotTownCollectionView.delegate = self;
+   // UITabBarItem *item = [self.tabBarController.tabBar.items objectAtIndex:0];
+ 
     [self addHeader];
     [self addFooter];
 
@@ -115,7 +121,7 @@
     if(check==0){
         [_basic.rejectid removeAllObjects];
     }
-    NSDictionary *parameters = [_basic paraters];
+    NSDictionary *parameters = [_basic toDictionary];
     //NSLog(@"%@",parameters);
     NSString *url =[NSString stringWithString:[_basic gethoturl]];
     NSDate *datenow = [NSDate date];//现在时间,你可以输出来看下是什么格式
@@ -167,4 +173,6 @@
 }
 
 #pragma end loading Infomation
+
+
 @end

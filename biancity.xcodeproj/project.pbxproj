@@ -7,6 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FEC53D671AF8B27800FCF327 /* ModelUser.m in Sources */ = {isa = PBXBuildFile; fileRef = FEC53D661AF8B27800FCF327 /* ModelUser.m */; };
+		FEC53D6A1AF8B29500FCF327 /* ResponseUser.m in Sources */ = {isa = PBXBuildFile; fileRef = FEC53D691AF8B29500FCF327 /* ResponseUser.m */; };
+		FEC53D701AF8BF3600FCF327 /* HomeTabBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FEC53D6F1AF8BF3600FCF327 /* HomeTabBarViewController.m */; };
+		FEC53D7A1AF9237000FCF327 /* locationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FEC53D781AF9237000FCF327 /* locationViewController.m */; };
+		FEC53D7B1AF9237000FCF327 /* locationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FEC53D791AF9237000FCF327 /* locationViewController.xib */; };
+		FEC53D7F1AF923FF00FCF327 /* showNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = FEC53D7D1AF923FF00FCF327 /* showNavigationController.m */; };
+		FEC53D801AF923FF00FCF327 /* showNavigationController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FEC53D7E1AF923FF00FCF327 /* showNavigationController.xib */; };
 		FECA80161AF71A3000FF57AE /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = FECA80151AF71A3000FF57AE /* main.m */; };
 		FECA80191AF71A3000FF57AE /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FECA80181AF71A3000FF57AE /* AppDelegate.m */; };
 		FECA801C1AF71A3000FF57AE /* HotTownViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FECA801B1AF71A3000FF57AE /* HotTownViewController.m */; };
@@ -102,6 +109,18 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		FEC53D651AF8B27800FCF327 /* ModelUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ModelUser.h; sourceTree = "<group>"; };
+		FEC53D661AF8B27800FCF327 /* ModelUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ModelUser.m; sourceTree = "<group>"; };
+		FEC53D681AF8B29500FCF327 /* ResponseUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResponseUser.h; sourceTree = "<group>"; };
+		FEC53D691AF8B29500FCF327 /* ResponseUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResponseUser.m; sourceTree = "<group>"; };
+		FEC53D6E1AF8BF3600FCF327 /* HomeTabBarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeTabBarViewController.h; sourceTree = "<group>"; };
+		FEC53D6F1AF8BF3600FCF327 /* HomeTabBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeTabBarViewController.m; sourceTree = "<group>"; };
+		FEC53D771AF9237000FCF327 /* locationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = locationViewController.h; sourceTree = "<group>"; };
+		FEC53D781AF9237000FCF327 /* locationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = locationViewController.m; sourceTree = "<group>"; };
+		FEC53D791AF9237000FCF327 /* locationViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = locationViewController.xib; sourceTree = "<group>"; };
+		FEC53D7C1AF923FF00FCF327 /* showNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = showNavigationController.h; sourceTree = "<group>"; };
+		FEC53D7D1AF923FF00FCF327 /* showNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = showNavigationController.m; sourceTree = "<group>"; };
+		FEC53D7E1AF923FF00FCF327 /* showNavigationController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = showNavigationController.xib; sourceTree = "<group>"; };
 		FECA80101AF71A3000FF57AE /* biancity.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = biancity.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FECA80141AF71A3000FF57AE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FECA80151AF71A3000FF57AE /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -285,6 +304,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		FEC53D761AF922C700FCF327 /* show */ = {
+			isa = PBXGroup;
+			children = (
+				FEC53D771AF9237000FCF327 /* locationViewController.h */,
+				FEC53D781AF9237000FCF327 /* locationViewController.m */,
+				FEC53D791AF9237000FCF327 /* locationViewController.xib */,
+				FEC53D7C1AF923FF00FCF327 /* showNavigationController.h */,
+				FEC53D7D1AF923FF00FCF327 /* showNavigationController.m */,
+				FEC53D7E1AF923FF00FCF327 /* showNavigationController.xib */,
+			);
+			name = show;
+			sourceTree = "<group>";
+		};
 		FECA80071AF71A3000FF57AE = {
 			isa = PBXGroup;
 			children = (
@@ -319,6 +351,7 @@
 		FECA80121AF71A3000FF57AE /* biancity */ = {
 			isa = PBXGroup;
 			children = (
+				FEC53D761AF922C700FCF327 /* show */,
 				FECA80F01AF74CA100FF57AE /* Cells */,
 				FECA80E01AF7340900FF57AE /* model */,
 				FECA80D91AF733FE00FF57AE /* Security */,
@@ -329,6 +362,8 @@
 				FECA80391AF7326B00FF57AE /* AFNetworking */,
 				FECA80171AF71A3000FF57AE /* AppDelegate.h */,
 				FECA80181AF71A3000FF57AE /* AppDelegate.m */,
+				FEC53D6E1AF8BF3600FCF327 /* HomeTabBarViewController.h */,
+				FEC53D6F1AF8BF3600FCF327 /* HomeTabBarViewController.m */,
 				FECA801A1AF71A3000FF57AE /* HotTownViewController.h */,
 				FECA801B1AF71A3000FF57AE /* HotTownViewController.m */,
 				FECA81151AF76EA400FF57AE /* NearViewController.h */,
@@ -561,6 +596,10 @@
 				FECA80EA1AF7340900FF57AE /* ResponseHotTown.m */,
 				FECA81181AF77A3900FF57AE /* ModelNearTown.h */,
 				FECA81191AF77A3900FF57AE /* ModelNearTown.m */,
+				FEC53D651AF8B27800FCF327 /* ModelUser.h */,
+				FEC53D661AF8B27800FCF327 /* ModelUser.m */,
+				FEC53D681AF8B29500FCF327 /* ResponseUser.h */,
+				FEC53D691AF8B29500FCF327 /* ResponseUser.m */,
 			);
 			path = model;
 			sourceTree = "<group>";
@@ -659,6 +698,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FEC53D801AF923FF00FCF327 /* showNavigationController.xib in Resources */,
 				FECA81141AF760BE00FF57AE /* MyCollectionReusableView.xib in Resources */,
 				FECA811F1AF7B43300FF57AE /* bj.jpg in Resources */,
 				FECA801F1AF71A3000FF57AE /* Main.storyboard in Resources */,
@@ -667,6 +707,7 @@
 				FECA80D11AF732BF00FF57AE /* Refresh.bundle in Resources */,
 				FECA80F51AF74CD300FF57AE /* HotTownCollectionViewCell.xib in Resources */,
 				FECA80211AF71A3000FF57AE /* Images.xcassets in Resources */,
+				FEC53D7B1AF9237000FCF327 /* locationViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -699,12 +740,14 @@
 				FECA80741AF7329800FF57AE /* JSONModelClassProperty.m in Sources */,
 				FECA80BA1AF732B300FF57AE /* NSString+Base64Encode.m in Sources */,
 				FECA80A91AF732A800FF57AE /* UIImage+MultiFormat.m in Sources */,
+				FEC53D7A1AF9237000FCF327 /* locationViewController.m in Sources */,
 				FECA80D71AF732BF00FF57AE /* UIScrollView+Refresh.m in Sources */,
 				FECA804F1AF7326B00FF57AE /* AFHTTPRequestOperationManager.m in Sources */,
 				FECA80BC1AF732B300FF57AE /* UMUUploaderManager.m in Sources */,
 				FECA80A21AF732A800FF57AE /* SDWebImageDecoder.m in Sources */,
 				FECA80BB1AF732B300FF57AE /* NSString+NSHash.m in Sources */,
 				FECA80B91AF732B300FF57AE /* NSData+MD5Digest.m in Sources */,
+				FEC53D6A1AF8B29500FCF327 /* ResponseUser.m in Sources */,
 				FECA80F41AF74CD300FF57AE /* HotTownCollectionViewCell.m in Sources */,
 				FECA80DE1AF733FE00FF57AE /* MsgEncrypt.m in Sources */,
 				FECA80791AF7329800FF57AE /* JSONModel+networking.m in Sources */,
@@ -714,15 +757,18 @@
 				FECA80D41AF732BF00FF57AE /* RefreshFooterView.m in Sources */,
 				FECA80511AF7326B00FF57AE /* AFNetworkReachabilityManager.m in Sources */,
 				FECA80551AF7326B00FF57AE /* AFURLResponseSerialization.m in Sources */,
+				FEC53D7F1AF923FF00FCF327 /* showNavigationController.m in Sources */,
 				FECA809F1AF732A800FF57AE /* NSData+ImageContentType.m in Sources */,
 				FECA80EB1AF7340900FF57AE /* ApplyTown.m in Sources */,
 				FECA80A31AF732A800FF57AE /* SDWebImageDownloader.m in Sources */,
 				FECA80531AF7326B00FF57AE /* AFURLConnectionOperation.m in Sources */,
+				FEC53D671AF8B27800FCF327 /* ModelUser.m in Sources */,
 				FECA80521AF7326B00FF57AE /* AFSecurityPolicy.m in Sources */,
 				FECA80AB1AF732A800FF57AE /* UIImageView+HighlightedWebCache.m in Sources */,
 				FECA80781AF7329800FF57AE /* JSONHTTPClient.m in Sources */,
 				FECA80EC1AF7340900FF57AE /* basicRequest.m in Sources */,
 				FECA80EF1AF7340900FF57AE /* ResponseHotTown.m in Sources */,
+				FEC53D701AF8BF3600FCF327 /* HomeTabBarViewController.m in Sources */,
 				FECA80D51AF732BF00FF57AE /* RefreshHeaderView.m in Sources */,
 				FECA811D1AF7AF4500FF57AE /* MyViewController.m in Sources */,
 				FECA80501AF7326B00FF57AE /* AFHTTPSessionManager.m in Sources */,
@@ -957,6 +1003,7 @@
 				FECA80351AF71A3100FF57AE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		FECA80361AF71A3100FF57AE /* Build configuration list for PBXNativeTarget "biancityTests" */ = {
 			isa = XCConfigurationList;
@@ -965,6 +1012,7 @@
 				FECA80381AF71A3100FF57AE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

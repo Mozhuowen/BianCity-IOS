@@ -26,7 +26,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    _nearTown = [[ModelNearTown alloc] init];
+    
+   // UITabBarItem *item = [self.tabBarController.tabBar.items objectAtIndex:1];
+        _nearTown = [[ModelNearTown alloc] init];
     _nearTown.geo = [[GeoInfo alloc] init];
     [self.nearCollectionView registerClass:[HotTownCollectionViewCell class] forCellWithReuseIdentifier:@"HotTownCollectionViewCell"];
     SDWebImageManager *manager = [SDWebImageManager sharedManager];
@@ -36,12 +38,14 @@
 #pragma basic
     _basic= [[basicRequest alloc] init];
     _basic.ptoken=@"N6h5p5GsdTCHTooEXZkV0QfkckfmCBam";
-    _basic.ptuserid=@"17";
+    _basic.ptuserid=17;
   //  _basic.gethoturl =@"http://123.57.132.31:8080/gethot";
     _basic.rejectid = [[NSMutableArray alloc]init];
     _basic.gethoturl =@"http://123.57.132.31:8080/getnear";
 #pragma end basic
     _locationManager=[[CLLocationManager alloc]init];
+    _nearTown.ptoken= _basic.ptoken;
+    _nearTown.ptuserid = [NSString stringWithFormat:@"%d",_basic.ptuserid];
     [self addHeader];
     [self addFooter];
     
@@ -155,7 +159,7 @@
     
     info = [info stringByReplacingOccurrencesOfString:@" " withString:@""];
     info = [info stringByReplacingOccurrencesOfString:@"\n" withString:@""];
-    // NSLog(@"Info is %@",info);
+     //NSLog(@"Info is %@",info);
     NSString *signature= [encrypt EncryptMsg:info timeStmap:strtime];
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.requestSerializer=[AFJSONRequestSerializer serializer];

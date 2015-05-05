@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "UIImageView+WebCache.h"
-@interface MyViewController : UIViewController<UICollectionViewDataSource,UICollectionViewDelegate,SDWebImageManagerDelegate>
+#import "MyCollectionReusableView.h"
+@interface MyViewController : UIViewController<UICollectionViewDataSource,UICollectionViewDelegate,SDWebImageManagerDelegate,TapImageViewDelegate>
 
 @end

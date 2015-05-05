@@ -7,8 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+@protocol TapImageViewDelegate <NSObject>
 
+- (void) tappedWithObject:(id) sender;
+
+@end
 @interface MyCollectionReusableView : UICollectionReusableView
+@property (weak) id<TapImageViewDelegate> t_delegate;
+@property (nonatomic, strong) id identifier;
 @property (strong, nonatomic)  UIImageView *myCoverImage;
 @property (strong, nonatomic)  UILabel *myNameLabel;
 @property (strong, nonatomic)  UILabel *maleLabel;
