@@ -150,7 +150,8 @@
         header.iconLineImage.backgroundColor = [UIColor whiteColor];
        // NSString * str =nil;
         header.myNameLabel.text = _User.user.name;
-        if(_User.user.sex && [_User.user.sex isEqualToString:@"f"]){
+       // NSLog(@"%@",_User.user.sex);
+        if(_User.user.sex && [_User.user.sex isEqualToString:@"m"]){
             header.maleLabel.text =@"男";
             header.iconMaleImage.image = [UIImage imageNamed:@"ic_sex_boy"];
         }else {
@@ -199,7 +200,7 @@
     if(check==0){
         [_basic.rejectid removeAllObjects];
     }
-    NSDictionary *parameters = @{@"onlystatis":[NSNumber numberWithBool:NO],@"userid":@1,@"ptoken":_basic.ptoken,@"ptuserid":@(_basic.ptuserid)};//[_requestUser toDictionary];//[_basic paraters];
+    NSDictionary *parameters = @{@"onlystatis":[NSNumber numberWithBool:NO],@"userid":@17,@"ptoken":_basic.ptoken,@"ptuserid":@(_basic.ptuserid)};//[_requestUser toDictionary];//[_basic paraters];
    // NSLog(@"%@",parameters);
     NSString *url =[NSString stringWithString:[_basic gethoturl]];
     NSDate *datenow = [NSDate date];//现在时间,你可以输出来看下是什么格式

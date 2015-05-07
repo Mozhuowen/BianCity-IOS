@@ -35,10 +35,10 @@
     _msglabel.lineBreakMode = NSLineBreakByWordWrapping;
     _msglabel.numberOfLines = 0;
     _iconAddrImage.image = [UIImage imageNamed:@"ic_location_large"];
-    NSMutableString *addr = [[NSMutableString alloc] initWithString:@""];
-    [addr appendString:(_geoInfo.province!=nil?_geoInfo.province:@"")];
-    [addr appendString:(_geoInfo.city!=nil?_geoInfo.city:@"")];
-    _addrLabel.text = addr;
+//    NSMutableString *addr = [[NSMutableString alloc] initWithString:@""];
+//    [addr appendString:(_geoInfo.province!=nil?_geoInfo.province:@"")];
+//    [addr appendString:(_geoInfo.city!=nil?_geoInfo.city:@"")];
+//    _addrLabel.text = addr;
     _userAddrTextField.placeholder =@"自定义地址";
    // _userAddrTextField.borderStyle = UITextBorderStyleBezel;
     _userAddrTextField.delegate = self;
@@ -141,9 +141,6 @@
 
 - (void) setGeoInfo:(GeoInfo*) sender{
     _geoInfo = sender;
-    
-    
-
    // NSLog(@"save   ");
 }
 /*

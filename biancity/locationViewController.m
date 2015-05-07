@@ -48,9 +48,10 @@
 }
 -(void)selectRightAction:(id)sender{
     _mapView.showsUserLocation = NO;
+    
     saveAddrViewController *save = [[saveAddrViewController alloc] initWithNibName:@"saveAddrViewController" bundle:nil];
     self.t_delegate = save;
-    [self transfromInfo];
+   [self transfromInfo];
     [self.navigationController pushViewController:save  animated:YES];
 }
 - (void)didReceiveMemoryWarning {
@@ -84,16 +85,16 @@
 {
     if(response.regeocode != nil)
     {
-        _geoinfo.province =[[NSString alloc] initWithString: response.regeocode.addressComponent.province];
-        _geoinfo.city =[[NSString alloc] initWithString: response.regeocode.addressComponent.city];
-        _geoinfo.district = [[NSString alloc] initWithString:response.regeocode.addressComponent.district];
-         _geoinfo.citycode = [[NSString alloc] initWithString:response.regeocode.addressComponent.citycode];
+        _geoinfo.province = response.regeocode.addressComponent.province;
+        _geoinfo.city = response.regeocode.addressComponent.city;
+        _geoinfo.district = response.regeocode.addressComponent.district;
+         _geoinfo.citycode =  response.regeocode.addressComponent.citycode;
          _geoinfo.country = @"中国";
-         _geoinfo.district = [[NSString alloc] initWithString:response.regeocode.addressComponent.district];
-         _geoinfo.street = [[NSString alloc] initWithString:response.regeocode.addressComponent.streetNumber.street];
+         _geoinfo.district = response.regeocode.addressComponent.district;
+         _geoinfo.street = response.regeocode.addressComponent.streetNumber.street;
         NSArray * road = response.regeocode.roads ;
         AMapRoad *roadD = [road objectAtIndex:0];
-         _geoinfo.road = [[NSString alloc] initWithString:roadD.name ];
+         _geoinfo.road = roadD.name ;
         NSMutableString * addr = [[NSMutableString alloc] initWithString:_geoinfo.province];
         [addr appendString:_geoinfo.city];
          [addr appendString:_geoinfo.district];

@@ -24,7 +24,7 @@
     [super viewDidLoad];
    _basic= [[basicRequest alloc] init];
     _basic.ptoken=@"N6h5p5GsdTCHTooEXZkV0QfkckfmCBam";
-    _basic.ptuserid=@"17";
+    _basic.ptuserid=17;
     _basic.gethoturl =@"http://123.57.132.31:8080/gethot";
 //    _basic.ptoken=@"nhL0h3zbiB9RmaimDuSfzXKNxmmDbmLs";
 //    _basic.ptuserid=1;

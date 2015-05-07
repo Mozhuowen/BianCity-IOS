@@ -11,6 +11,7 @@
 #import "UMUUploaderManager.h"
 #import "NSString+NSHash.h"
 #import "NSString+Base64Encode.h"
+#import "townViewController.h"
 @interface upLoadImageViewController ()
 {
     int count;
@@ -142,12 +143,13 @@
 -(void)selectRightAction:(id)sender{
     [_summaryTextView resignFirstResponder];
     [_townNameTextFiled resignFirstResponder];
-    if([self checkInfo])
-      [self uploadFiles];
-    else
-    [self showAlert:@"信息不足，请补充完整"];
-    
-    [self.navigationController pushViewController:nil  animated:NO];
+//    if([self checkInfo])
+//      [self uploadFiles];
+//    else
+//    [self showAlert:@"信息不足，请补充完整"];
+//
+     townViewController *town = [[townViewController alloc] initWithNibName:@"townViewController" bundle:nil];
+    [self.navigationController pushViewController:town  animated:YES];
 }
 -(BOOL)checkInfo{
     if(_geoinfo!=nil&&_GeoImage!=nil&&_townNameTextFiled.text.length!=0&&_summaryTextView.text.length!=0)
