@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
-@interface upLoadImageViewController : UIViewController<UITextFieldDelegate,UITextViewDelegate>
+#import "saveAddrViewController.h"
+@interface upLoadImageViewController : UIViewController<UITextFieldDelegate,UITextViewDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,upLoadGeoInfodegelate>
 
 @end

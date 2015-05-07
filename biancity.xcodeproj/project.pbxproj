@@ -96,6 +96,8 @@
 		FECA811A1AF77A3900FF57AE /* ModelNearTown.m in Sources */ = {isa = PBXBuildFile; fileRef = FECA81191AF77A3900FF57AE /* ModelNearTown.m */; };
 		FECA811D1AF7AF4500FF57AE /* MyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FECA811C1AF7AF4500FF57AE /* MyViewController.m */; };
 		FECA811F1AF7B43300FF57AE /* bj.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FECA811E1AF7B43300FF57AE /* bj.jpg */; };
+		FECA91C81AFB6BD800694847 /* townViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FECA91C61AFB6BD800694847 /* townViewController.m */; };
+		FECA91C91AFB6BD800694847 /* townViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FECA91C71AFB6BD800694847 /* townViewController.xib */; };
 		FED36DBE1AF9C02200251846 /* AMap.bundle in Resources */ = {isa = PBXBuildFile; fileRef = FED36DBD1AF9C02200251846 /* AMap.bundle */; };
 		FED36DC21AF9C37100251846 /* saveAddrViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FED36DC01AF9C37100251846 /* saveAddrViewController.m */; };
 		FED36DC31AF9C37100251846 /* saveAddrViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FED36DC11AF9C37100251846 /* saveAddrViewController.xib */; };
@@ -277,6 +279,9 @@
 		FECA811B1AF7AF4500FF57AE /* MyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyViewController.h; sourceTree = "<group>"; };
 		FECA811C1AF7AF4500FF57AE /* MyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyViewController.m; sourceTree = "<group>"; };
 		FECA811E1AF7B43300FF57AE /* bj.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = bj.jpg; sourceTree = "<group>"; };
+		FECA91C51AFB6BD800694847 /* townViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = townViewController.h; sourceTree = "<group>"; };
+		FECA91C61AFB6BD800694847 /* townViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = townViewController.m; sourceTree = "<group>"; };
+		FECA91C71AFB6BD800694847 /* townViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = townViewController.xib; sourceTree = "<group>"; };
 		FED36DBD1AF9C02200251846 /* AMap.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = AMap.bundle; path = biancity/GaodeGeoInfo/MAMapKit.framework/Versions/2.4.2.19ad4bb/Resources/AMap.bundle; sourceTree = "<group>"; };
 		FED36DBF1AF9C37100251846 /* saveAddrViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = saveAddrViewController.h; sourceTree = "<group>"; };
 		FED36DC01AF9C37100251846 /* saveAddrViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = saveAddrViewController.m; sourceTree = "<group>"; };
@@ -331,6 +336,9 @@
 				FED36DC41AFA49DA00251846 /* upLoadImageViewController.h */,
 				FED36DC51AFA49DA00251846 /* upLoadImageViewController.m */,
 				FED36DC61AFA49DA00251846 /* upLoadImageViewController.xib */,
+				FECA91C51AFB6BD800694847 /* townViewController.h */,
+				FECA91C61AFB6BD800694847 /* townViewController.m */,
+				FECA91C71AFB6BD800694847 /* townViewController.xib */,
 			);
 			name = show;
 			sourceTree = "<group>";
@@ -719,6 +727,7 @@
 			files = (
 				FED36DC31AF9C37100251846 /* saveAddrViewController.xib in Resources */,
 				FED36DBE1AF9C02200251846 /* AMap.bundle in Resources */,
+				FECA91C91AFB6BD800694847 /* townViewController.xib in Resources */,
 				FED36DC81AFA49DA00251846 /* upLoadImageViewController.xib in Resources */,
 				FEC53D801AF923FF00FCF327 /* showNavigationController.xib in Resources */,
 				FECA81141AF760BE00FF57AE /* MyCollectionReusableView.xib in Resources */,
@@ -777,6 +786,7 @@
 				FECA80791AF7329800FF57AE /* JSONModel+networking.m in Sources */,
 				FECA80AC1AF732A800FF57AE /* UIImageView+WebCache.m in Sources */,
 				FECA811A1AF77A3900FF57AE /* ModelNearTown.m in Sources */,
+				FECA91C81AFB6BD800694847 /* townViewController.m in Sources */,
 				FECA80D61AF732BF00FF57AE /* UIScrollView+extension.m in Sources */,
 				FECA80D41AF732BF00FF57AE /* RefreshFooterView.m in Sources */,
 				FECA80511AF7326B00FF57AE /* AFNetworkReachabilityManager.m in Sources */,

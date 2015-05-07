@@ -156,10 +156,6 @@
                     <exclude reference="plN-mt-c6i"/>
                 </mask>
                 <mask key="constraints">
-                    <exclude reference="0YV-Df-uDu"/>
-                    <exclude reference="NTz-NQ-EAg"/>
-                    <exclude reference="Udn-y9-eDp"/>
-                    <exclude reference="Y8Q-Kb-UTf"/>
                     <exclude reference="3GB-Gi-5Sh"/>
                     <exclude reference="4Za-ck-t5x"/>
                     <exclude reference="Cfv-lR-OKZ"/>
@@ -167,12 +163,6 @@
                     <exclude reference="VOP-rw-RGZ"/>
                     <exclude reference="dxt-eE-xfh"/>
                     <exclude reference="nWv-22-6VR"/>
-                    <exclude reference="MeY-27-PC5"/>
-                    <exclude reference="R2J-iN-oWl"/>
-                    <exclude reference="SKX-qq-XU6"/>
-                    <exclude reference="kfF-Mi-h8l"/>
-                    <exclude reference="nJS-tY-hy2"/>
-                    <exclude reference="t7w-hD-bBf"/>
                     <exclude reference="2fy-yL-FzZ"/>
                     <exclude reference="9xZ-jX-8oS"/>
                     <exclude reference="D1d-Si-dZ6"/>
@@ -181,6 +171,16 @@
                     <exclude reference="ig8-vh-rs1"/>
                     <exclude reference="oTI-zE-UhZ"/>
                     <exclude reference="xp5-IE-uzb"/>
+                    <exclude reference="MeY-27-PC5"/>
+                    <exclude reference="R2J-iN-oWl"/>
+                    <exclude reference="SKX-qq-XU6"/>
+                    <exclude reference="kfF-Mi-h8l"/>
+                    <exclude reference="nJS-tY-hy2"/>
+                    <exclude reference="t7w-hD-bBf"/>
+                    <exclude reference="0YV-Df-uDu"/>
+                    <exclude reference="NTz-NQ-EAg"/>
+                    <exclude reference="Udn-y9-eDp"/>
+                    <exclude reference="Y8Q-Kb-UTf"/>
                 </mask>
             </variation>
             <variation key="heightClass=regular-widthClass=compact">
@@ -191,10 +191,6 @@
                     <include reference="plN-mt-c6i"/>
                 </mask>
                 <mask key="constraints">
-                    <include reference="0YV-Df-uDu"/>
-                    <exclude reference="NTz-NQ-EAg"/>
-                    <exclude reference="Udn-y9-eDp"/>
-                    <include reference="Y8Q-Kb-UTf"/>
                     <include reference="3GB-Gi-5Sh"/>
                     <exclude reference="4Za-ck-t5x"/>
                     <exclude reference="Cfv-lR-OKZ"/>
@@ -202,12 +198,6 @@
                     <exclude reference="VOP-rw-RGZ"/>
                     <exclude reference="dxt-eE-xfh"/>
                     <exclude reference="nWv-22-6VR"/>
-                    <include reference="MeY-27-PC5"/>
-                    <include reference="R2J-iN-oWl"/>
-                    <include reference="SKX-qq-XU6"/>
-                    <exclude reference="kfF-Mi-h8l"/>
-                    <include reference="nJS-tY-hy2"/>
-                    <exclude reference="t7w-hD-bBf"/>
                     <exclude reference="2fy-yL-FzZ"/>
                     <exclude reference="9xZ-jX-8oS"/>
                     <exclude reference="D1d-Si-dZ6"/>
@@ -216,6 +206,16 @@
                     <include reference="ig8-vh-rs1"/>
                     <include reference="oTI-zE-UhZ"/>
                     <exclude reference="xp5-IE-uzb"/>
+                    <include reference="MeY-27-PC5"/>
+                    <include reference="R2J-iN-oWl"/>
+                    <include reference="SKX-qq-XU6"/>
+                    <exclude reference="kfF-Mi-h8l"/>
+                    <include reference="nJS-tY-hy2"/>
+                    <exclude reference="t7w-hD-bBf"/>
+                    <include reference="0YV-Df-uDu"/>
+                    <exclude reference="NTz-NQ-EAg"/>
+                    <exclude reference="Udn-y9-eDp"/>
+                    <include reference="Y8Q-Kb-UTf"/>
                 </mask>
             </variation>
             <point key="canvasLocation" x="324" y="330"/>

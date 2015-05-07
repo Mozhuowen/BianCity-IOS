@@ -66,6 +66,11 @@
     
     [_mapView setZoomLevel:16.1 animated:YES];
     [_mapView addAnnotation:pointAnnotation];
+    NSMutableString *addr = [[NSMutableString alloc] initWithString:@""];
+    [addr appendString:(_geoInfo.province!=nil?_geoInfo.province:@"")];
+    [addr appendString:(_geoInfo.city!=nil?_geoInfo.city:@"")];
+    _addrLabel.text = addr;
+
 }
 #pragma mark mapView Delegate 地图 添加标注时 回调
 - (MAAnnotationView *)mapView:(MAMapView *)mapView viewForAnnotation:(id <MAAnnotation>)annotation
@@ -108,14 +113,26 @@
     }
     _geoInfo.freeaddr = _userAddrTextField.text;
     _geoInfo.screenpng = fileName;
-    NSLog(@"fialename is %@",fileName);
+   // NSLog(@"fialename is %@",fileName);
     _screenImage =[_mapView takeSnapshotInRect:inRect];
    // [_buttom addSubview: [[UIImageView alloc]initWithImage:image]];
     
     upLoadImageViewController *upload = [[upLoadImageViewController alloc] initWithNibName:@"upLoadImageViewController" bundle:nil];
-  
+    self.t_delegate=upload;
+    [self transfromInfo];
     [self.navigationController pushViewController:upload  animated:YES];
     
+}
+- (void)transfromInfo{
+    // NSLog(@"tapped");
+    if ([self.t_delegate respondsToSelector:@selector(setUploadGeoInfo:)])
+    {
+        [self.t_delegate setUploadGeoInfo:_geoInfo];
+    }
+    if ([self.t_delegate respondsToSelector:@selector(setUploadImage:)])
+    {
+        [self.t_delegate setUploadImage:_screenImage];
+    }
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -127,7 +144,7 @@
     
     
 
-    NSLog(@"save   ");
+   // NSLog(@"save   ");
 }
 /*
 #pragma mark - Navigation
