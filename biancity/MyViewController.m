@@ -255,7 +255,7 @@
 #pragma end loading Infomation
 #pragma functions
 -(void)addTown{
-    NSLog(@"add");
+   // NSLog(@"add");
     showNavigationController *show= [[showNavigationController alloc] initWithNibName:@"showNavigationController" bundle:nil];
     locationViewController *location =[[locationViewController alloc] initWithNibName:@"locationViewController" bundle:nil];
        [show pushViewController:location animated:YES ];

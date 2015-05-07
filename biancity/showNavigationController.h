@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "GeoInfo.h"
 @interface showNavigationController : UINavigationController
-
+@property (nonatomic,strong) GeoInfo* geoinfo;
 @end

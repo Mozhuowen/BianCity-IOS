@@ -9,7 +9,13 @@
 #import <UIKit/UIKit.h>
 #import "MAMaPKit/MAMapKit.h"
 #import "AMapSearchKit/AMapSearchAPI.h"
+#import "GeoInfo.h"
+@protocol saveGeoInfodegelate <NSObject>
+
+- (void) setGeoInfo:(GeoInfo*) sender;
+
+@end
 @interface locationViewController : UIViewController<MAMapViewDelegate,AMapSearchDelegate>
 @property (weak, nonatomic) IBOutlet UILabel *msgLabel;
-
+@property (weak) id<saveGeoInfodegelate> t_delegate;
 @end
