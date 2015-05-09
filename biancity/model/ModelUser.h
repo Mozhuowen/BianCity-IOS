@@ -9,7 +9,8 @@
 #import <Foundation/Foundation.h>
 #import "JSONModel.h"
 #import "ApplyTown.h"
-@interface ModelUser : JSONModel
+#import "basicRequest.h"
+@interface ModelUser : basicRequest
 @property (nonatomic,strong) NSString<Optional>* name;
 @property (nonatomic,strong)  NSString<Optional>* cover;
 @property (nonatomic,strong)  NSMutableArray<ApplyTown,Optional>* mytowns;

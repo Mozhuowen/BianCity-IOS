@@ -34,7 +34,16 @@
         self.icon2Image = [[UIImageView alloc] initWithFrame:CGRectMake(self.frame.size.width-24, (self.hotTownNameLabel.frame.size.height+self.hotTownNameLabel.frame.origin.y+10), 16, 16)];
         [self addSubview:self.icon2Image];
     }
+    //self.userInteractionEnabled = YES;
     return self;
 }
+//- (void)transfromInfo:(id)applyTown{
+//    
+//    if ([self.applyTown_delegate respondsToSelector:@selector(setApplyTownGeoInfo:)])
+//    {
+//        [self.applyTown_delegate setApplyTownGeoInfo:applyTown];
+//    }
+//    
+//}
 
 @end

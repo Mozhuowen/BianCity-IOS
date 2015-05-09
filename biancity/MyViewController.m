@@ -17,44 +17,53 @@
 #import "AFHTTPRequestOperationManager.h"
 #import "locationViewController.h"
 #import "showNavigationController.h"
+#import "settingTableViewController.h"
+#import "showNavigationController.h"
+#import "townViewController.h"
+#import "responseApplyTown.h"
 @interface MyViewController ()
 @property (weak, nonatomic) IBOutlet UICollectionView *myCollectionView;
 @property (nonatomic,strong) ResponseUser * User;
 @property (strong,nonatomic) NSMutableArray *fakeColors;
-@property (nonatomic,strong)  basicRequest *basic;
 @property (nonatomic,strong) ModelUser *requestUser;
+@property (nonatomic,strong) UIScrollView *bgScrollView;
+@property (nonatomic,strong) responseApplyTown *applyTown;
+@property (nonatomic,strong)  showNavigationController *show;
+@property (nonatomic,strong) townViewController *town;
 @end
 
 @implementation MyViewController
 - (void)viewDidLoad {
     [super viewDidLoad];
-    //UITabBarItem *item = [self.tabBarController.tabBar.items objectAtIndex:2];
+    _applyTown = [[responseApplyTown alloc] init];
+    _show  = [[showNavigationController alloc] initWithNibName:@"showNavigationController" bundle:nil];
+    _town=[[townViewController alloc] initWithNibName:@"townViewController" bundle:nil];
     
-     [self.myCollectionView registerClass:[MyCollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"MyCollectionReusableView"];
+     [_show pushViewController:_town animated:YES ];
+    
+    [self.myCollectionView registerClass:[MyCollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"MyCollectionReusableView"];
        [self.myCollectionView registerClass:[HotTownCollectionViewCell class] forCellWithReuseIdentifier:@"HotTownCollectionViewCell"];
     self.myCollectionView.dataSource =self;
     self.myCollectionView.delegate = self;
-//    self.fakeColors = [[NSMutableArray alloc ] init];
-//    for (int i = 0; i<5; i++) {
-//        [self.fakeColors insertObject:RandomColor atIndex:0];
-//    }
     self.myCollectionView.allowsMultipleSelection = YES;//默认为NO,是否可以多选
     UICollectionViewFlowLayout *collectionViewLayout = (UICollectionViewFlowLayout *)self.myCollectionView.collectionViewLayout;
     collectionViewLayout.headerReferenceSize = CGSizeMake(self.myCollectionView.frame.size.width, 230);
-    _basic= [[basicRequest alloc] init];
-    _basic.ptoken=@"N6h5p5GsdTCHTooEXZkV0QfkckfmCBam";
-   // _basic.ptoken=@"nhL0h3zbiB9RmaimDuSfzXKNxmmDbmLs";
-    _basic.ptuserid=17;
-    _basic.gethoturl =@"http://123.57.132.31:8080/getuserinfo";
-   // _basic.gethoturl =@"http://192.168.199.200/getuserinfo";
-    _basic.rejectid = [[NSMutableArray alloc]init];
     _requestUser = [[ModelUser alloc] init];
-    _requestUser.onlystatis = false;
-    _requestUser.userid = [[NSNumber alloc] initWithInt:17];
+    _requestUser.onlystatis = NO;
+    _requestUser.userid = _requestUser.ptuserid;
     SDWebImageManager *manager = [SDWebImageManager sharedManager];
     manager.delegate = self;
     [self addHeader];
+    self.myCollectionView.scrollEnabled =YES;
+   CGSize origin = self.myCollectionView.contentSize;
+    if(origin.height<800)
+        origin.height =800;
+    self.myCollectionView.contentSize = origin;
+    NSLog(@"width is %f,Height is %f",origin.width,origin.height);
     // Do any additional setup after loading the view.
+}
+-(void)viewWillAppear:(BOOL)animated{
+   // [self.myCollectionView headerBeginRefreshing];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -80,20 +89,16 @@
     return CGSizeMake((collectionView.frame.size.width-16)/2,(collectionView.frame.size.width-16)/2 +50);
 }
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
-   // NSLog(@"count si %lu",(unsigned long)[self.fakeColors count]);
     return [self.User.user.mytowns count];
-    //[self.fakeColors count];//[self.hotTown.towns count];
 }
 
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     HotTownCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"HotTownCollectionViewCell" forIndexPath:indexPath];
     cell.layer.cornerRadius =5;
-    //cell.HotTownCoverImage.backgroundColor = [self.fakeColors objectAtIndex:indexPath.row];
     NSString * imageUrl = [[self.User.user.mytowns objectAtIndex:indexPath.row] cover];
-    NSMutableString *pictureUrl = [[NSMutableString alloc] initWithString:@"http://xiaocheng.b0.upaiyun.com/"];
+    NSMutableString *pictureUrl = [[NSMutableString alloc] initWithString:getPictureUrl];
     [pictureUrl appendString:imageUrl];
     [pictureUrl appendString:@"!small"];
-    // NSLog(@"imageUrl = %@",pictureUrl);
     [cell.HotTownCoverImage sd_setImageWithURL:[NSURL URLWithString:pictureUrl]  placeholderImage:[UIImage imageNamed:@"placeholder"] options:indexPath.row == 0 ? SDWebImageRefreshCached : 0] ;
     
     [cell.hotTownNameLabel setText:[[self.User.user.mytowns objectAtIndex:indexPath.row] townname]];
@@ -105,13 +110,18 @@
     cell.icon2Image.image = [UIImage imageNamed:@"ic_list_thumb_small"];
     return cell;
 }
+-(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
+   
+    _applyTown = [_User.user.mytowns objectAtIndex:indexPath.row];
+    _town.applyTown = _applyTown;
+    [self presentViewController:_show animated:YES completion:^{}];
+    
+}
 -(UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath{
-  
-  //  NSLog(@"header");
     if (kind == UICollectionElementKindSectionHeader){
           MyCollectionReusableView *header;
        header =[collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:@"MyCollectionReusableView" forIndexPath:indexPath];
-        NSMutableString *pictureUrl = [[NSMutableString alloc] initWithString:@"http://xiaocheng.b0.upaiyun.com/"];
+        NSMutableString *pictureUrl = [[NSMutableString alloc] initWithString:getPictureUrl];
         if(!_User.user.wallimage)
         header.myCoverImage.image = [UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"bj" ofType:@"jpg"]];
         else{
@@ -142,6 +152,7 @@
        
         header.iconAddrImage.image = [UIImage imageNamed:@"ic_location_small"] ;
         header.iconSettingImage.image = [UIImage imageNamed:@"ic_account_setting"];
+        header.userInteractionEnabled = YES;
         header.iconMyImage.layer.masksToBounds=YES;
         header.iconMyImage.layer.cornerRadius=25.0;
         header.iconMyImage.layer.borderWidth=2.0;
@@ -197,21 +208,14 @@
 }
 #pragma loading Infomation
 -(void)loadInfo:(int)check{
-    if(check==0){
-        [_basic.rejectid removeAllObjects];
-    }
-    NSDictionary *parameters = @{@"onlystatis":[NSNumber numberWithBool:NO],@"userid":@17,@"ptoken":_basic.ptoken,@"ptuserid":@(_basic.ptuserid)};//[_requestUser toDictionary];//[_basic paraters];
-   // NSLog(@"%@",parameters);
-    NSString *url =[NSString stringWithString:[_basic gethoturl]];
+    NSDictionary *parameters=[_requestUser toDictionary];
+    NSString *url =[NSString stringWithString:getUserInfoUrl];
     NSDate *datenow = [NSDate date];//现在时间,你可以输出来看下是什么格式
     NSString *strtime = [NSString stringWithFormat:@"%ld", (long)[datenow timeIntervalSince1970]];
     MsgEncrypt *encrypt = [[MsgEncrypt alloc] init];
-    NSData *msgjson = [NSJSONSerialization dataWithJSONObject:parameters options:NSJSONWritingPrettyPrinted error:nil];
+    NSData *msgjson = [NSJSONSerialization dataWithJSONObject:parameters options:kNilOptions error:nil];
     NSString* info = [[NSString alloc] initWithData:msgjson encoding:NSUTF8StringEncoding];
-    
-    info = [info stringByReplacingOccurrencesOfString:@" " withString:@""];
-    info = [info stringByReplacingOccurrencesOfString:@"\n" withString:@""];
-    //NSLog(@"Info is %@",info);
+    log(@"User Info is %@",info);
     NSString *signature= [encrypt EncryptMsg:info timeStmap:strtime];
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.requestSerializer=[AFJSONRequestSerializer serializer];
@@ -225,22 +229,16 @@
         if(check==0){
             self.User = [[ResponseUser alloc] initWithDictionary:data error:nil];
             [self.myCollectionView headerEndRefreshing];
-            for(int i=0;i<[self.User.user.mytowns count];i++){
-                NSNumber* rjid= [[self.User.user.mytowns objectAtIndex:i] townid];
-                [_basic.rejectid  addObject:rjid];
-            }
           [self.myCollectionView reloadData];
           // NSLog(@"USer is %@",_User);
         }else {
             ResponseUser *ad=[[ResponseUser alloc] initWithDictionary:data error:nil];
+            _User.stat = ad.stat;
+            _User.errcode = ad.errcode;
             [self.User.user.mytowns addObjectsFromArray:ad.user.mytowns];
-            for(int i=0;i<[ad.user.mytowns count];i++){
-                NSNumber* rjid= [[ad.user.mytowns objectAtIndex:i] townid];
-                [_basic.rejectid addObject:rjid];
-            }
             [self.myCollectionView footerEndRefreshing];
         }
-       
+        log(@"User stat is %d,errcode is %@",_User.stat,_User.errcode);
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error: %@", error);
@@ -264,6 +262,14 @@
 }
 - (void) tappedWithObject:(id)sender{
  [self addTown];
+}
+-(void)setting:(id)sender{
+    NSLog(@"sett");
+    showNavigationController *show= [[showNavigationController alloc] initWithNibName:@"showNavigationController" bundle:nil];
+    settingTableViewController *setting =[[settingTableViewController alloc] initWithNibName:@"settingTableViewController" bundle:nil];
+    [show pushViewController:setting animated:YES ];
+    [self presentViewController:show animated:YES completion:^{}];
+
 }
 #pragma end functions
 /*

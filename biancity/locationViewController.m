@@ -42,17 +42,32 @@
      [self.view addSubview:_mapView];
     // Do any additional setup after loading the view from its nib.
 }
+-(void)showAlert:(NSString *)msg {
+    UIAlertView *alert = [[UIAlertView alloc]
+                          initWithTitle:@"警告"
+                          message:msg
+                          delegate:self
+                          cancelButtonTitle:@"确定"
+                          otherButtonTitles: nil];
+    [alert show];
+}
 -(void)selectLeftAction:(id)sender{
      _mapView.showsUserLocation = NO;
     [self.navigationController dismissViewControllerAnimated:YES completion:^{}];
 }
 -(void)selectRightAction:(id)sender{
-    _mapView.showsUserLocation = NO;
     
-    saveAddrViewController *save = [[saveAddrViewController alloc] initWithNibName:@"saveAddrViewController" bundle:nil];
-    self.t_delegate = save;
-   [self transfromInfo];
+    if(_geoinfo.province==nil)
+    {
+        [self showAlert:@"定位不成功，请等待"];
+        _mapView.showsUserLocation = YES;
+    }else{
+        _mapView.showsUserLocation = NO;
+        saveAddrViewController *save = [[saveAddrViewController alloc] initWithNibName:@"saveAddrViewController" bundle:nil];
+        self.t_delegate = save;
+        [self transfromInfo];
     [self.navigationController pushViewController:save  animated:YES];
+    }
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

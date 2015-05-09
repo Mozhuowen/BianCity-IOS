@@ -9,7 +9,13 @@
 #import "basicRequest.h"
 
 @implementation basicRequest
-
+-(id)init{
+    self=[super init];
+    self.ptoken = @"jjU1uD4ESLf1fNyXqu6EuFTUrAlzArLF";
+    //@"QQ6I6lN8pc4l1NnxkCyFxrkOmzFqbKZO";
+    self.ptuserid = [[NSNumber alloc] initWithInt:15];
+    return self;
+}
 //+ (id)sharedBaseic {
 //    static dispatch_once_t once;
 //    static id instance;

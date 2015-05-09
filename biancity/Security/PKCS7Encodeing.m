@@ -10,7 +10,8 @@
 
 @implementation PKCS7Encodeing
 +(NSData *)encoding:(NSString *)Msg{
-    int countPad = bloc_size - ([Msg length]%bloc_size);
+    NSInteger leng = [Msg dataUsingEncoding:NSUTF8StringEncoding].length;
+    int countPad = bloc_size - (leng%bloc_size);
     if (countPad ==0)
         countPad = bloc_size;
     NSMutableData *result =[[NSMutableData alloc] initWithData:[Msg dataUsingEncoding:NSUTF8StringEncoding]];

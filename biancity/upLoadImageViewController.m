@@ -12,12 +12,17 @@
 #import "NSString+NSHash.h"
 #import "NSString+Base64Encode.h"
 #import "townViewController.h"
+#import "ApplyTown.h"
+#import "responseApplyTown.h"
+#import "MsgEncrypt.h"
 @interface upLoadImageViewController ()
 {
     int count;
     int index;
     float progressCount;
 }
+@property (nonatomic,strong) responseApplyTown *responseApplyTown;
+@property (nonatomic,strong) ApplyTown *requestApplyTown;
 @property(nonatomic,strong)UIProgressView * propressView;
 @property (nonatomic,strong) UIAlertView* progressAlert;
 @property (nonatomic,strong) UIButton * imageButton;
@@ -41,7 +46,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.navigationItem.title = @"创建边城";
+    _requestApplyTown = [[ApplyTown alloc] init];
+        self.navigationItem.title = @"创建边城";
     UIBarButtonItem *leftButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemReply target:self action:@selector(selectLeftAction:)];
     self.navigationItem.leftBarButtonItem = leftButton;
     
@@ -79,6 +85,7 @@
     _townNameTextFiled.returnKeyType =UIReturnKeyDone;
     _townNameTextFiled.borderStyle = UITextBorderStyleRoundedRect;
     _summaryTextView = [[UITextView alloc] initWithFrame:CGRectMake(4, _townNameTextFiled.frame.origin.y+40, self.view.frame.size.width-8, 80)];
+    _summaryTextView.font = [UIFont systemFontOfSize:14];
     _summaryTextView.layer.borderWidth = 1.0;
     _summaryTextView.layer.borderColor =[[UIColor grayColor] CGColor];
     _summaryTextView.returnKeyType =UIReturnKeyDone;
@@ -104,12 +111,13 @@
    [_bgScrollView addSubview:_imageButton];
     [_bgScrollView addSubview:_msgIamgeButtonLabel];
      _propressView = [[UIProgressView alloc]initWithProgressViewStyle:UIProgressViewStyleBar];
-    self.propressView.frame = CGRectMake(5,5, self.view.frame.size.width-50, 5);
+
+    _progressAlert = [[UIAlertView alloc]initWithTitle:@"" message:@"上传图片中，请稍等" delegate:nil cancelButtonTitle:nil otherButtonTitles: nil];
+    self.propressView.frame = CGRectMake(8,5, self.view.frame.size.width*4/5-4, 5);
     self.propressView.backgroundColor= [UIColor grayColor];
     
-    UIView * myview = [[UIView alloc] initWithFrame:CGRectMake(0,0, self.view.frame.size.width-20, 30)];
+    UIView * myview = [[UIView alloc] initWithFrame:CGRectMake(0,0, self.view.frame.size.width, 30)];
     [myview addSubview:self.propressView];
-    _progressAlert = [[UIAlertView alloc]initWithTitle:@"" message:@"上传图片中，请稍等" delegate:nil cancelButtonTitle:nil otherButtonTitles: nil];
     [_progressAlert setValue:myview forKey:@"accessoryView"];
     index = 0;
     progressCount=0.0;
@@ -143,13 +151,17 @@
 -(void)selectRightAction:(id)sender{
     [_summaryTextView resignFirstResponder];
     [_townNameTextFiled resignFirstResponder];
-//    if([self checkInfo])
-//      [self uploadFiles];
-//    else
-//    [self showAlert:@"信息不足，请补充完整"];
-//
-     townViewController *town = [[townViewController alloc] initWithNibName:@"townViewController" bundle:nil];
-    [self.navigationController pushViewController:town  animated:YES];
+    if(_requestApplyTown.geoinfo == nil)
+        _requestApplyTown.geoinfo = _geoinfo;
+    if([self checkInfo]){
+        [self uploadFiles];
+    }else{
+        [self showAlert:@"信息不足，请补充完整"];
+    }
+    //[self loadInfo:0];
+    _requestApplyTown.descri = _summaryTextView.text;
+    _requestApplyTown.townname = _townNameTextFiled.text;
+   
 }
 -(BOOL)checkInfo{
     if(_geoinfo!=nil&&_GeoImage!=nil&&_townNameTextFiled.text.length!=0&&_summaryTextView.text.length!=0)
@@ -180,11 +192,6 @@
     [super viewWillAppear:animated];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
-    NSMutableString *addr = [[NSMutableString alloc] initWithString:@""];
-    [addr appendString:(_geoinfo.province!=nil?_geoinfo.province:@"")];
-    [addr appendString:(_geoinfo.city!=nil?_geoinfo.city:@"")];
-    [addr appendString:_geoinfo.freeaddr!=nil?_geoinfo.freeaddr:@""];
-    _addrLabel.text= addr;
 }
 
 -(void)viewDidDisappear:(BOOL)animated
@@ -249,20 +256,7 @@
     [self presentViewController:imagePickerController animated:YES completion:nil];  //需要以模态的形式展示
     
 }
-//-(void)photoTop:(id)sender{
-//    UIImagePickerControllerSourceType sourceType = UIImagePickerControllerSourceTypeCamera;
-//    //判断是否有摄像头
-//    if(![UIImagePickerController isSourceTypeAvailable:sourceType])
-//    {
-//        sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-//    }
-//    
-//    UIImagePickerController *imagePickerController = [[UIImagePickerController alloc] init];
-//    imagePickerController.delegate = self;   // 设置委托
-//    imagePickerController.sourceType = sourceType;
-//    imagePickerController.allowsEditing = YES;
-//    [self presentViewController:imagePickerController animated:YES completion:nil];  //需要以模态的形式展示
-//}
+
 -(void)showAlert:(NSString *)msg {
     UIAlertView *alert = [[UIAlertView alloc]
                           initWithTitle:@"警告"
@@ -288,7 +282,7 @@
 {
     [picker dismissViewControllerAnimated:YES completion:nil];
 }
-//将照片保存到disk上
+//将照片保存
 -(void)saveImage:(UIImage *)image
 {
     
@@ -302,10 +296,19 @@
     [_imageButton addSubview:bg];
     _imageButton.imageView.image= image;
     _msgIamgeButtonLabel.hidden =YES;
-    //NSLog(@"width is %f,height is %f", image.size.width,image.size.height);
+    NSMutableString *fileName = [[NSMutableString alloc] init];
+    for(int i=0;i<8;i++){
+        [fileName appendFormat:@"%c",(65+arc4random_uniform(26))];
+    }
+    for(int i=0;i<8;i++){
+        [fileName appendFormat:@"%c",(97+arc4random_uniform(26))];
+    }
+    _requestApplyTown.cover = fileName;
+    
 }
 - (void) setUploadGeoInfo:(GeoInfo*) sender{
     _geoinfo = sender;
+    _requestApplyTown.geoinfo = _geoinfo;
 };
 - (void) setUploadImage:(UIImage*) sender{
     _GeoImage = sender;
@@ -323,15 +326,7 @@
      [mutableDic setObject:_geoinfo.screenpng forKey:@"path"];//设置保存路径
     }
     else{
-        NSMutableString *fileName = [[NSMutableString alloc] init];
-        for(int i=0;i<8;i++){
-            [fileName appendFormat:@"%c",(65+arc4random_uniform(26))];
-        }
-        for(int i=0;i<8;i++){
-            [fileName appendFormat:@"%c",(97+arc4random_uniform(26))];
-        }
-
-        [mutableDic setObject:fileName forKey:@"path"];//设置保存路径
+      [mutableDic setObject:_requestApplyTown.cover forKey:@"path"];//设置保存路径
     }
     /**
      *  这个 mutableDic 可以塞入其他可选参数 见：http://docs.upyun.com/api/form_api/#Policy%e5%86%85%e5%ae%b9%e8%af%a6%e8%a7%a3
@@ -354,10 +349,6 @@
 {
     if(index==0)
     [_progressAlert show];
-    
-    // self.propressView.frame = alert1.frame;
-    // [alert1 addSubview:self.propressView];
-    // NSString * url = [[NSBundle mainBundle] pathForResource:@"1" ofType:@"jpeg"];
     int idx = index;
     NSData * fileData;
     if(idx==0)
@@ -391,8 +382,10 @@
                 [_progressAlert dismissWithClickedButtonIndex:0 animated:NO];
                 self.propressView.progress= 0;
                 progressCount=0.0;
-                [alert show];
+               // [alert show];
                 index =0;
+                [self loadInfo:0];
+              
             }else {
                 [weakSelf uploadFiles];
             }
@@ -415,6 +408,67 @@
                                                  encoding:NSUTF8StringEncoding];
     return [jsonString base64encode];
 }
+
+-(void)loadInfo:(int)check{
+    NSDictionary *parameters=[_requestApplyTown toDictionary];
+    NSString *url =[NSString stringWithString:getApplyTownUrl];
+    NSDate *datenow = [NSDate date];//现在时间,你可以输出来看下是什么格式
+    NSString *strtime = [NSString stringWithFormat:@"%ld", (long)[datenow timeIntervalSince1970]];
+    MsgEncrypt *encrypt = [[MsgEncrypt alloc] init];
+    NSData *msgjson = [NSJSONSerialization dataWithJSONObject:parameters options:kNilOptions error:nil];
+    NSString* info = [[NSString alloc] initWithData:msgjson encoding:NSUTF8StringEncoding];
+    //NSLog(@"%lu",(unsigned long)info.length);
+    log(@"ApplyTown Info is %@,length is %lu",info,(unsigned long)info.length);
+    NSString *signature= [encrypt EncryptMsg:info timeStmap:strtime];
+    log(@"%@,time si %@",signature,strtime);
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.requestSerializer=[AFJSONRequestSerializer serializer];
+    [manager.requestSerializer setValue:strtime forHTTPHeaderField:@"timestamp"];
+    [manager.requestSerializer setValue:[signature uppercaseString] forHTTPHeaderField:@"signature"];
+    [manager setSecurityPolicy:[AFSecurityPolicy policyWithPinningMode:AFSSLPinningModeNone] ];
+    manager.responseSerializer =[AFHTTPResponseSerializer serializer];
+    [manager POST:url parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSDictionary * data =[NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
+        if(check==0){
+            _responseApplyTown = [[responseApplyTown alloc] initWithDictionary:data error:nil];
+            //[self.bgScrollView headerEndRefreshing];
+            // NSLog(@"USer is %@",_User);
+            if(_responseApplyTown.stat){
+            townViewController *town = [[townViewController alloc]initWithNibName:@"townViewController" bundle:nil];
+                self.applyTown_delegate = town;
+                [self transfromInfo];
+                [self.navigationController pushViewController:town  animated:YES];
+            }
+        }else {
+//            responseApplyTown *ad=[[responseApplyTown alloc] initWithDictionary:data error:nil];
+//            _responseApplyTown.stat = ad.stat;
+//            _responseApplyTown.errcode = ad.errcode;
+//            [_responseApplyTown.towns addObjectsFromArray:ad.towns];
+           // [self.bgScrollView footerEndRefreshing];
+        }
+        log(@"APPLYTOWN stat is %d,errcode is %d",_responseApplyTown.stat,_responseApplyTown.errcode);
+        log(@"%@",_responseApplyTown);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+//        if(check ==0){
+//            [self.myCollectionView headerEndRefreshing];
+//        }else {
+//            [self.myCollectionView footerEndRefreshing];
+//        }
+        
+    }];
+}
+
+- (void)transfromInfo{
+   
+    if ([self.applyTown_delegate respondsToSelector:@selector(setApplyTownGeoInfo:)])
+    {
+        [self.applyTown_delegate setApplyTownGeoInfo:_responseApplyTown];
+    }
+   
+}
+#pragma end loading Infomation
 
 /*
 #pragma mark - Navigation

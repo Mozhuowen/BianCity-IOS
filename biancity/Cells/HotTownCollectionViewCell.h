@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "responseApplyTown.h"
 @interface HotTownCollectionViewCell : UICollectionViewCell
 @property (strong, nonatomic)  UIImageView *HotTownCoverImage;
 @property (strong, nonatomic)  UILabel *hotTownNameLabel;
@@ -15,5 +15,4 @@
 @property (strong, nonatomic)  UILabel *addrLabel;
 @property (strong, nonatomic)  UILabel *goodLabel;
 @property (strong, nonatomic)  UIImageView *icon2Image;
-
 @end

@@ -10,7 +10,7 @@
 @protocol TapImageViewDelegate <NSObject>
 
 - (void) tappedWithObject:(id) sender;
-
+- (void) setting:(id) sender;
 @end
 @interface MyCollectionReusableView : UICollectionReusableView
 @property (weak) id<TapImageViewDelegate> t_delegate;

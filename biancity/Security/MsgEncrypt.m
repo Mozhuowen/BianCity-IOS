@@ -21,19 +21,19 @@ static const char encodingTable[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopq
 -(NSString*)EncryptMsg:(NSString*)Msg key:(NSString *)key timeStmap:(NSString*)time{
     //AESKey=Base64_Decode(EncodingAESKey + “=”)，EncodingAESKey尾部填充一个字符的“=”, 用Base64_Decode生成32个字节的AESKey；
     NSData *aeskey = [self Base64Decoding:key];
-   // NSLog(@"\nAESKey is %@\n",aeskey);
+    //NSLog(@"\nAESKey is %@\n",aeskey);
     NSMutableString *pckMsg = [[NSMutableString alloc]initWithString:time];
     [pckMsg  appendString:Msg];
     //数据采用PKCS#7填充；PKCS#7：K为秘钥字节数（采用32），buf为待加密的内容，N为其字节数。Buf需要被填充为K的整数倍。在buf的尾部填充(K-N%K)个字节，每个字节的内容是(K- N%K)；
     NSData *PKCS7Msg = [PKCS7Encodeing encoding:pckMsg];
-  //  NSLog(@"\nMsg is %@\n",PKCS7Msg);
+   // NSLog(@"\nMsg is %@\n",PKCS7Msg);
     NSData * aesMsg =[self AESEncryptmsg:PKCS7Msg key:aeskey];
    // NSLog(@"\nAESMsg is %@\n",aesMsg);
     NSMutableData* timeMsg = [[NSMutableData alloc]initWithData:[time dataUsingEncoding:NSUTF8StringEncoding]];
     [timeMsg appendData:aesMsg];
     NSData * newAesMsg = [[NSData alloc] initWithData:timeMsg];
     NSString *result =[self sha1:newAesMsg];
-  // NSLog(@"\nresult is %@\n",result);
+   //NSLog(@"\nresult is %@\n",result);
     return result;
 }
 - (NSString*) sha1:(NSData *)Msg

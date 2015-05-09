@@ -102,6 +102,9 @@
 }
 -(void)selectRightAction:(id)sender{
       [_userAddrTextField resignFirstResponder];
+    if(_userAddrTextField.text.length == 0){
+        [self showAlert:@"请填写自定义地址"];
+    }else {
     //截取地图图片
     CGRect inRect = _mapView.frame;
     NSMutableString *fileName = [[NSMutableString alloc] init];
@@ -113,15 +116,22 @@
     }
     _geoInfo.freeaddr = _userAddrTextField.text;
     _geoInfo.screenpng = fileName;
-   // NSLog(@"fialename is %@",fileName);
     _screenImage =[_mapView takeSnapshotInRect:inRect];
-   // [_buttom addSubview: [[UIImageView alloc]initWithImage:image]];
-    
     upLoadImageViewController *upload = [[upLoadImageViewController alloc] initWithNibName:@"upLoadImageViewController" bundle:nil];
     self.t_delegate=upload;
     [self transfromInfo];
     [self.navigationController pushViewController:upload  animated:YES];
     
+   }
+}
+-(void)showAlert:(NSString *)msg {
+    UIAlertView *alert = [[UIAlertView alloc]
+                          initWithTitle:@"警告"
+                          message:msg
+                          delegate:self
+                          cancelButtonTitle:@"确定"
+                          otherButtonTitles: nil];
+    [alert show];
 }
 - (void)transfromInfo{
     // NSLog(@"tapped");
@@ -141,6 +151,7 @@
 
 - (void) setGeoInfo:(GeoInfo*) sender{
     _geoInfo = sender;
+    [self reloadInputViews];
    // NSLog(@"save   ");
 }
 /*

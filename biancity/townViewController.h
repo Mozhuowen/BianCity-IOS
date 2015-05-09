@@ -7,7 +7,28 @@
 //
 
 #import <UIKit/UIKit.h>
-
-@interface townViewController : UIViewController
-
+#import "UIImageView+WebCache.h"
+#import "upLoadImageViewController.h"
+#import "HotTownCollectionViewCell.h"
+@interface townViewController : UIViewController<ApplyTownGeoInfodegelate,SDWebImageManagerDelegate>
+-(void)setApplyTownGeoInfo:(responseApplyTown *)sender;
+@property (nonatomic,strong) responseApplyTown * applyTown;
+@property (nonatomic,strong) UIScrollView * bgScrollView;
+@property (nonatomic,strong) UIImageView *bgImageView;
+@property (nonatomic,strong) UILabel *townNameLabel;
+@property (nonatomic,strong) UIImageView *iconGoodImageView;
+@property (nonatomic,strong) UILabel *goodslabel;
+@property (nonatomic,strong) UILabel *summaryLabel;
+@property (nonatomic,strong) UIImageView *userImageView;
+@property (nonatomic,strong) UILabel *userNameLabel;
+@property (nonatomic,strong) UILabel *fansLabel;
+@property (nonatomic,strong) UIImageView *iconAddrimage;
+@property (nonatomic,strong) UILabel* addrLabel;
+@property (nonatomic,strong) UIImageView *addrMapImage;
+@property (nonatomic,strong) UILabel *subscri;
+@property (nonatomic,strong) UILabel *leaveMsgLabel;
+@property (nonatomic,strong) UILabel *storyLabel;
+@property (nonatomic,strong) UIImageView *iconAddImage;
+@property (nonatomic,strong) UIBarButtonItem *leftButton;
+@property (nonatomic,strong) UIBarButtonItem *rightButton;
 @end

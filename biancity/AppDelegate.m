@@ -25,8 +25,10 @@
     [SDWebImageManager sharedManager].imageDownloader.password = @"httpwatch01";
     [SDWebImageManager.sharedManager.imageDownloader setValue:@"SDWebImage Demo" forHTTPHeaderField:@"AppName"];
     SDWebImageManager.sharedManager.imageDownloader.executionOrder = SDWebImageDownloaderLIFOExecutionOrder;
-    
-    
+     MsgEncrypt *encrypt = [[MsgEncrypt alloc] init];
+    NSString *Str = @"中国abc" ;
+          NSString *signature= [encrypt EncryptMsg:Str timeStmap:@"123456"];
+    NSLog(@"singature is %@",signature);
     [UIApplication sharedApplication].idleTimerDisabled=TRUE;
     
     localManager = [[CLLocationManager alloc]init];

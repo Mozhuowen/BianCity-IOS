@@ -15,8 +15,14 @@
         [self setBackgroundColor:[UIColor whiteColor]];
         self.myCoverImage = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, 180)];
          [self addSubview:self.myCoverImage];
+        
+        UITapGestureRecognizer *set = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(TappedSetting:)];
         self.iconSettingImage = [[UIImageView alloc] initWithFrame:CGRectMake(self.myCoverImage.frame.size.width-35, 30, 20, 20)];
+        [self.iconSettingImage setUserInteractionEnabled:YES];
+        [self.iconSettingImage addGestureRecognizer:set];
         [self.myCoverImage addSubview:self.iconSettingImage];
+        _myCoverImage.userInteractionEnabled =YES;
+        
         self.myNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.myCoverImage.frame.size.width/2-120, 32, 240, 24)];
         self.myNameLabel.textColor = [UIColor whiteColor];
         self.myNameLabel.textAlignment = NSTextAlignmentCenter;
@@ -133,6 +139,14 @@
     if ([self.t_delegate respondsToSelector:@selector(tappedWithObject:)])
     {
         [self.t_delegate tappedWithObject:self.iconAddImage];
+    }
+}
+-(void)TappedSetting:(UIGestureRecognizer *) gesture{
+    NSLog(@"tappedSetting");
+    if ([self.t_delegate respondsToSelector:@selector(setting:)])
+    {
+        [self.t_delegate setting:_iconSettingImage];
+       
     }
 }
 @end

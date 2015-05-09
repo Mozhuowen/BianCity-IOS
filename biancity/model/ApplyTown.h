@@ -11,7 +11,7 @@
 #import "basicRequest.h"
 @protocol ApplyTown
 @end
-@interface ApplyTown : JSONModel
+@interface ApplyTown : basicRequest
 @property (nonatomic,strong) NSNumber<Optional>* townid;
 @property (nonatomic,strong) NSString<Optional>* townname;
 @property (nonatomic,strong) NSString<Optional>* descri;

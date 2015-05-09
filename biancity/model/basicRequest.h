@@ -7,12 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "modelConsts.h"
 #import "JSONModel.h"
 @interface basicRequest : JSONModel
-@property (nonatomic,strong) NSString* ptoken;	//用户token
-@property (nonatomic) int  ptuserid;	//用户id
-@property (nonatomic,strong) NSMutableArray*  rejectid;  //已显示的边城号
-@property (nonatomic,strong) NSString *gethoturl;
-
+@property (nonatomic,strong) NSString<Optional>* ptoken;	//用户token
+@property (nonatomic,strong) NSNumber<Optional>*  ptuserid;	//用户id
 //+ (id)sharedBaseic;
 @end

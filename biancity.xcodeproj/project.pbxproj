@@ -14,6 +14,11 @@
 		FEC53D7B1AF9237000FCF327 /* locationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FEC53D791AF9237000FCF327 /* locationViewController.xib */; };
 		FEC53D7F1AF923FF00FCF327 /* showNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = FEC53D7D1AF923FF00FCF327 /* showNavigationController.m */; };
 		FEC53D801AF923FF00FCF327 /* showNavigationController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FEC53D7E1AF923FF00FCF327 /* showNavigationController.xib */; };
+		FEC8D04D1AFC53070083FA76 /* ModelHotTown.m in Sources */ = {isa = PBXBuildFile; fileRef = FEC8D04C1AFC53070083FA76 /* ModelHotTown.m */; };
+		FEC8D0501AFC53CF0083FA76 /* modelConsts.m in Sources */ = {isa = PBXBuildFile; fileRef = FEC8D04F1AFC53CF0083FA76 /* modelConsts.m */; };
+		FEC8D0541AFC87290083FA76 /* settingTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FEC8D0521AFC87290083FA76 /* settingTableViewController.m */; };
+		FEC8D0551AFC87290083FA76 /* settingTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FEC8D0531AFC87290083FA76 /* settingTableViewController.xib */; };
+		FEC8D0581AFCAC1C0083FA76 /* responseApplyTown.m in Sources */ = {isa = PBXBuildFile; fileRef = FEC8D0571AFCAC1C0083FA76 /* responseApplyTown.m */; };
 		FECA80161AF71A3000FF57AE /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = FECA80151AF71A3000FF57AE /* main.m */; };
 		FECA80191AF71A3000FF57AE /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FECA80181AF71A3000FF57AE /* AppDelegate.m */; };
 		FECA801C1AF71A3000FF57AE /* HotTownViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FECA801B1AF71A3000FF57AE /* HotTownViewController.m */; };
@@ -128,6 +133,15 @@
 		FEC53D7C1AF923FF00FCF327 /* showNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = showNavigationController.h; sourceTree = "<group>"; };
 		FEC53D7D1AF923FF00FCF327 /* showNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = showNavigationController.m; sourceTree = "<group>"; };
 		FEC53D7E1AF923FF00FCF327 /* showNavigationController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = showNavigationController.xib; sourceTree = "<group>"; };
+		FEC8D04B1AFC53070083FA76 /* ModelHotTown.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ModelHotTown.h; sourceTree = "<group>"; };
+		FEC8D04C1AFC53070083FA76 /* ModelHotTown.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ModelHotTown.m; sourceTree = "<group>"; };
+		FEC8D04E1AFC53CF0083FA76 /* modelConsts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = modelConsts.h; sourceTree = "<group>"; };
+		FEC8D04F1AFC53CF0083FA76 /* modelConsts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = modelConsts.m; sourceTree = "<group>"; };
+		FEC8D0511AFC87290083FA76 /* settingTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = settingTableViewController.h; sourceTree = "<group>"; };
+		FEC8D0521AFC87290083FA76 /* settingTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = settingTableViewController.m; sourceTree = "<group>"; };
+		FEC8D0531AFC87290083FA76 /* settingTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = settingTableViewController.xib; sourceTree = "<group>"; };
+		FEC8D0561AFCAC1C0083FA76 /* responseApplyTown.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = responseApplyTown.h; sourceTree = "<group>"; };
+		FEC8D0571AFCAC1C0083FA76 /* responseApplyTown.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = responseApplyTown.m; sourceTree = "<group>"; };
 		FECA80101AF71A3000FF57AE /* biancity.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = biancity.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FECA80141AF71A3000FF57AE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FECA80151AF71A3000FF57AE /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -339,6 +353,9 @@
 				FECA91C51AFB6BD800694847 /* townViewController.h */,
 				FECA91C61AFB6BD800694847 /* townViewController.m */,
 				FECA91C71AFB6BD800694847 /* townViewController.xib */,
+				FEC8D0511AFC87290083FA76 /* settingTableViewController.h */,
+				FEC8D0521AFC87290083FA76 /* settingTableViewController.m */,
+				FEC8D0531AFC87290083FA76 /* settingTableViewController.xib */,
 			);
 			name = show;
 			sourceTree = "<group>";
@@ -627,6 +644,12 @@
 				FEC53D661AF8B27800FCF327 /* ModelUser.m */,
 				FEC53D681AF8B29500FCF327 /* ResponseUser.h */,
 				FEC53D691AF8B29500FCF327 /* ResponseUser.m */,
+				FEC8D04B1AFC53070083FA76 /* ModelHotTown.h */,
+				FEC8D04C1AFC53070083FA76 /* ModelHotTown.m */,
+				FEC8D04E1AFC53CF0083FA76 /* modelConsts.h */,
+				FEC8D04F1AFC53CF0083FA76 /* modelConsts.m */,
+				FEC8D0561AFCAC1C0083FA76 /* responseApplyTown.h */,
+				FEC8D0571AFCAC1C0083FA76 /* responseApplyTown.m */,
 			);
 			path = model;
 			sourceTree = "<group>";
@@ -729,6 +752,7 @@
 				FED36DBE1AF9C02200251846 /* AMap.bundle in Resources */,
 				FECA91C91AFB6BD800694847 /* townViewController.xib in Resources */,
 				FED36DC81AFA49DA00251846 /* upLoadImageViewController.xib in Resources */,
+				FEC8D0551AFC87290083FA76 /* settingTableViewController.xib in Resources */,
 				FEC53D801AF923FF00FCF327 /* showNavigationController.xib in Resources */,
 				FECA81141AF760BE00FF57AE /* MyCollectionReusableView.xib in Resources */,
 				FECA811F1AF7B43300FF57AE /* bj.jpg in Resources */,
@@ -769,6 +793,7 @@
 				FECA801C1AF71A3000FF57AE /* HotTownViewController.m in Sources */,
 				FECA80A71AF732A800FF57AE /* UIButton+WebCache.m in Sources */,
 				FECA80BD1AF732B300FF57AE /* UMUUploaderOperation.m in Sources */,
+				FEC8D0501AFC53CF0083FA76 /* modelConsts.m in Sources */,
 				FECA80741AF7329800FF57AE /* JSONModelClassProperty.m in Sources */,
 				FECA80BA1AF732B300FF57AE /* NSString+Base64Encode.m in Sources */,
 				FECA80A91AF732A800FF57AE /* UIImage+MultiFormat.m in Sources */,
@@ -785,6 +810,7 @@
 				FECA80DE1AF733FE00FF57AE /* MsgEncrypt.m in Sources */,
 				FECA80791AF7329800FF57AE /* JSONModel+networking.m in Sources */,
 				FECA80AC1AF732A800FF57AE /* UIImageView+WebCache.m in Sources */,
+				FEC8D0581AFCAC1C0083FA76 /* responseApplyTown.m in Sources */,
 				FECA811A1AF77A3900FF57AE /* ModelNearTown.m in Sources */,
 				FECA91C81AFB6BD800694847 /* townViewController.m in Sources */,
 				FECA80D61AF732BF00FF57AE /* UIScrollView+extension.m in Sources */,
@@ -807,6 +833,7 @@
 				FECA811D1AF7AF4500FF57AE /* MyViewController.m in Sources */,
 				FECA80501AF7326B00FF57AE /* AFHTTPSessionManager.m in Sources */,
 				FECA80541AF7326B00FF57AE /* AFURLRequestSerialization.m in Sources */,
+				FEC8D0541AFC87290083FA76 /* settingTableViewController.m in Sources */,
 				FECA80721AF7329800FF57AE /* JSONModel.m in Sources */,
 				FECA80AD1AF732A800FF57AE /* UIView+WebCacheOperation.m in Sources */,
 				FECA80A11AF732A800FF57AE /* SDWebImageCompat.m in Sources */,
@@ -817,6 +844,7 @@
 				FECA80191AF71A3000FF57AE /* AppDelegate.m in Sources */,
 				FECA80A61AF732A800FF57AE /* SDWebImagePrefetcher.m in Sources */,
 				FECA807A1AF7329800FF57AE /* JSONKeyMapper.m in Sources */,
+				FEC8D04D1AFC53070083FA76 /* ModelHotTown.m in Sources */,
 				FECA80D31AF732BF00FF57AE /* RefreshConsts.m in Sources */,
 				FECA80A41AF732A800FF57AE /* SDWebImageDownloaderOperation.m in Sources */,
 				FECA80161AF71A3000FF57AE /* main.m in Sources */,

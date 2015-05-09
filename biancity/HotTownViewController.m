@@ -11,32 +11,38 @@
 #import "model/ResponseHotTown.h"
 #import "Refresh.h"
 #import "MsgEncrypt.h"
+#import "ModelHotTown.h"
+#import "responseApplyTown.h"
 #import "AFHTTPRequestOperationManager.h"
+#import "townViewController.h"
+#import "showNavigationController.h"
 @interface HotTownViewController ()
 @property (weak, nonatomic) IBOutlet UICollectionView *HotTownCollectionView;
 @property (nonatomic,strong) ResponseHotTown * hotTown;
-@property (nonatomic,strong)  basicRequest *basic;
+@property (nonatomic,strong)  ModelHotTown *basic;
+@property (nonatomic,strong) responseApplyTown *applyTown;
+@property (nonatomic,strong)  showNavigationController *show;
+@property (nonatomic,strong) townViewController *town;
 @end
 
 @implementation HotTownViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-   _basic= [[basicRequest alloc] init];
-    _basic.ptoken=@"N6h5p5GsdTCHTooEXZkV0QfkckfmCBam";
-    _basic.ptuserid=17;
-    _basic.gethoturl =@"http://123.57.132.31:8080/gethot";
-//    _basic.ptoken=@"nhL0h3zbiB9RmaimDuSfzXKNxmmDbmLs";
-//    _basic.ptuserid=1;
-//    // _basic.gethoturl =@"http://123.57.132.31:8080/getuserinfo";
-//    _basic.gethoturl =@"http://192.168.199.200/gethot";
+    
+    _applyTown = [[responseApplyTown alloc] init];
+    _show  = [[showNavigationController alloc] initWithNibName:@"showNavigationController" bundle:nil];
+    _town=[[townViewController alloc] initWithNibName:@"townViewController" bundle:nil];
+    
+    [_show pushViewController:_town animated:YES ];
+   _basic= [[ModelHotTown alloc] init];
+
     _basic.rejectid = [[NSMutableArray alloc]init];
     [self.HotTownCollectionView registerClass:[HotTownCollectionViewCell class] forCellWithReuseIdentifier:@"HotTownCollectionViewCell"];
     SDWebImageManager *manager = [SDWebImageManager sharedManager];
     manager.delegate = self;
     self.HotTownCollectionView.dataSource =self;
     self.HotTownCollectionView.delegate = self;
-   // UITabBarItem *item = [self.tabBarController.tabBar.items objectAtIndex:0];
  
     [self addHeader];
     [self addFooter];
@@ -74,10 +80,9 @@
     HotTownCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"HotTownCollectionViewCell" forIndexPath:indexPath];
     cell.layer.cornerRadius =5;
     NSString * imageUrl = [[self.hotTown.towns objectAtIndex:indexPath.row] cover];
-    NSMutableString *pictureUrl = [[NSMutableString alloc] initWithString:@"http://xiaocheng.b0.upaiyun.com/"];
+    NSMutableString *pictureUrl = [[NSMutableString alloc] initWithString:getPictureUrl];
     [pictureUrl appendString:imageUrl];
     [pictureUrl appendString:@"!small"];
-    // NSLog(@"imageUrl = %@",pictureUrl);
     [cell.HotTownCoverImage sd_setImageWithURL:[NSURL URLWithString:pictureUrl]  placeholderImage:[UIImage imageNamed:@"placeholder"] options:indexPath.row == 0 ? SDWebImageRefreshCached : 0] ;
     
     [cell.hotTownNameLabel setText:[[self.hotTown.towns objectAtIndex:indexPath.row] townname]];
@@ -88,6 +93,13 @@
     cell.icon1Image.image = [UIImage imageNamed:@"ic_location_small_light"];
     cell.icon2Image.image = [UIImage imageNamed:@"ic_list_thumb_small"];
     return cell;
+}
+-(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
+    _applyTown = [_hotTown.towns objectAtIndex:indexPath.row];
+    _town.applyTown = _applyTown;
+    //[_show pushViewController:_town animated:YES ];
+    [self presentViewController:_show animated:YES completion:^{}];
+    //self.view.window.rootViewController = _show;
 }
 #pragma Collectionview end
 
@@ -123,16 +135,16 @@
     }
     NSDictionary *parameters = [_basic toDictionary];
     //NSLog(@"%@",parameters);
-    NSString *url =[NSString stringWithString:[_basic gethoturl]];
+    NSString *url =[NSString stringWithString:getHotTownUrl];
     NSDate *datenow = [NSDate date];//现在时间,你可以输出来看下是什么格式
     NSString *strtime = [NSString stringWithFormat:@"%ld", (long)[datenow timeIntervalSince1970]];
     MsgEncrypt *encrypt = [[MsgEncrypt alloc] init];
-    NSData *msgjson = [NSJSONSerialization dataWithJSONObject:parameters options:NSJSONWritingPrettyPrinted error:nil];
+    NSData *msgjson = [NSJSONSerialization dataWithJSONObject:parameters options:kNilOptions error:nil];
     NSString* info = [[NSString alloc] initWithData:msgjson encoding:NSUTF8StringEncoding];
-    // NSLog(@"Info is %@",info);
-    info = [info stringByReplacingOccurrencesOfString:@" " withString:@""];
-    info = [info stringByReplacingOccurrencesOfString:@"\n" withString:@""];
-    
+     log(@"Near Info is %@,%ld",info,info.length);
+//    info = [info stringByReplacingOccurrencesOfString:@" " withString:@""];
+//    info = [info stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+ //   log(@"switch length %ld",info.length);
     NSString *signature= [encrypt EncryptMsg:info timeStmap:strtime];
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.requestSerializer=[AFJSONRequestSerializer serializer];
@@ -153,6 +165,8 @@
         }else {
             ResponseHotTown *ad=[[ResponseHotTown alloc] initWithDictionary:data error:nil];
             [self.hotTown.towns addObjectsFromArray:ad.towns];
+            _hotTown.stat = ad.stat;
+            _hotTown.errcode = ad.errcode;
             for(int i=0;i<[ad.towns count];i++){
                 NSNumber* rjid= [[ad.towns objectAtIndex:i] townid];
                 [_basic.rejectid addObject:rjid];
@@ -160,7 +174,7 @@
             [self.HotTownCollectionView footerEndRefreshing];
         }
         [self.HotTownCollectionView reloadData];
-        
+        log(@"HotTown stat is %d,errcode is %d",_hotTown.stat,_hotTown.errcode);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error: %@", error);
         if(check ==0){

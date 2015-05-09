@@ -14,12 +14,17 @@
 #import "basicRequest.h"
 #import "ModelNearTown.h"
 #import "AFHTTPRequestOperationManager.h"
+#import "showNavigationController.h"
+#import "responseApplyTown.h"
+#import "townViewController.h"
 @interface NearViewController ()
 @property (weak, nonatomic) IBOutlet UICollectionView *nearCollectionView;
 @property (nonatomic,strong) ResponseHotTown * hotTown;
 @property (nonatomic,strong) CLLocationManager *locationManager;
 @property (nonatomic,strong) ModelNearTown* nearTown;
-@property (nonatomic,strong)  basicRequest *basic;
+@property (nonatomic,strong) responseApplyTown *applyTown;
+@property (nonatomic,strong)  showNavigationController *show;
+@property (nonatomic,strong) townViewController *town;
 @end
 
 @implementation NearViewController
@@ -27,25 +32,30 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    _applyTown = [[responseApplyTown alloc] init];
+    _show  = [[showNavigationController alloc] initWithNibName:@"showNavigationController" bundle:nil];
+     _town=[[townViewController alloc] initWithNibName:@"townViewController" bundle:nil];
+  
+    [_show pushViewController:_town animated:YES ];
+
    // UITabBarItem *item = [self.tabBarController.tabBar.items objectAtIndex:1];
-        _nearTown = [[ModelNearTown alloc] init];
+    _nearTown = [[ModelNearTown alloc] init];
     _nearTown.geo = [[GeoInfo alloc] init];
+    _nearTown.rejectid =[[NSMutableArray alloc] init];
     [self.nearCollectionView registerClass:[HotTownCollectionViewCell class] forCellWithReuseIdentifier:@"HotTownCollectionViewCell"];
     SDWebImageManager *manager = [SDWebImageManager sharedManager];
     manager.delegate = self;
     self.nearCollectionView.dataSource =self;
     self.nearCollectionView.delegate = self;
 #pragma basic
-    _basic= [[basicRequest alloc] init];
-    _basic.ptoken=@"N6h5p5GsdTCHTooEXZkV0QfkckfmCBam";
-    _basic.ptuserid=17;
-  //  _basic.gethoturl =@"http://123.57.132.31:8080/gethot";
-    _basic.rejectid = [[NSMutableArray alloc]init];
-    _basic.gethoturl =@"http://123.57.132.31:8080/getnear";
+//    _basic= [[basicRequest alloc] init];
+//    _basic.ptoken=@"N6h5p5GsdTCHTooEXZkV0QfkckfmCBam";
+//    _basic.ptuserid=17;
+//  //  _basic.gethoturl =@"http://123.57.132.31:8080/gethot";
+//    _basic.rejectid = [[NSMutableArray alloc]init];
+//    _basic.gethoturl =@"http://123.57.132.31:8080/getnear";
 #pragma end basic
     _locationManager=[[CLLocationManager alloc]init];
-    _nearTown.ptoken= _basic.ptoken;
-    _nearTown.ptuserid = [NSString stringWithFormat:@"%d",_basic.ptuserid];
     [self addHeader];
     [self addFooter];
     
@@ -81,7 +91,7 @@
     HotTownCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"HotTownCollectionViewCell" forIndexPath:indexPath];
     cell.layer.cornerRadius =5;
     NSString * imageUrl = [[self.hotTown.towns objectAtIndex:indexPath.row] cover];
-    NSMutableString *pictureUrl = [[NSMutableString alloc] initWithString:@"http://xiaocheng.b0.upaiyun.com/"];
+    NSMutableString *pictureUrl = [[NSMutableString alloc] initWithString:getPictureUrl];
     [pictureUrl appendString:imageUrl];
     [pictureUrl appendString:@"!small"];
     // NSLog(@"imageUrl = %@",pictureUrl);
@@ -95,6 +105,13 @@
     cell.icon1Image.image = [UIImage imageNamed:@"ic_location_small_light"];
     cell.icon2Image.image = [UIImage imageNamed:@"ic_list_thumb_small"];
     return cell;
+}
+-(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
+    
+    _applyTown = [_hotTown.towns objectAtIndex:indexPath.row];
+     _town.applyTown = _applyTown;
+    [self presentViewController:_show animated:YES completion:^{}];
+    
 }
 #pragma Collectionview end
 
@@ -145,21 +162,18 @@
 #pragma loading Infomation
 -(void)loadInfo:(int)check{
     if(check==0){
-        [_basic.rejectid removeAllObjects];
+        [_nearTown.rejectid removeAllObjects];
     }
-    _nearTown.rejectid =_basic.rejectid  ;
+    _nearTown.rejectid =_nearTown.rejectid  ;
     NSDictionary *parameters = [_nearTown toDictionary];//[[basicRequest sharedBaseic] paraters];
   //  NSLog(@"%@",parameters);
-    NSString *url =[NSString stringWithString:[_basic gethoturl]];
+    NSString *url =[NSString stringWithString:getNearTownUrl];
     NSDate *datenow = [NSDate date];//现在时间,你可以输出来看下是什么格式
     NSString *strtime = [NSString stringWithFormat:@"%ld", (long)[datenow timeIntervalSince1970]];
     MsgEncrypt *encrypt = [[MsgEncrypt alloc] init];
-    NSData *msgjson = [NSJSONSerialization dataWithJSONObject:parameters options:NSJSONWritingPrettyPrinted error:nil];
+    NSData *msgjson = [NSJSONSerialization dataWithJSONObject:parameters options:kNilOptions error:nil];
     NSString* info = [[NSString alloc] initWithData:msgjson encoding:NSUTF8StringEncoding];
-    
-    info = [info stringByReplacingOccurrencesOfString:@" " withString:@""];
-    info = [info stringByReplacingOccurrencesOfString:@"\n" withString:@""];
-     //NSLog(@"Info is %@",info);
+    log(@"Near Info is %@",info);
     NSString *signature= [encrypt EncryptMsg:info timeStmap:strtime];
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.requestSerializer=[AFJSONRequestSerializer serializer];
@@ -175,19 +189,21 @@
             [self.nearCollectionView headerEndRefreshing];
             for(int i=0;i<[self.hotTown.towns count];i++){
                 NSNumber* rjid= [[self.hotTown.towns objectAtIndex:i] townid];
-                [_basic.rejectid  addObject:rjid];
+                [_nearTown.rejectid  addObject:rjid];
             }
         }else {
             ResponseHotTown *ad=[[ResponseHotTown alloc] initWithDictionary:data error:nil];
             [self.hotTown.towns addObjectsFromArray:ad.towns];
+            _hotTown.stat = ad.stat;
+            _hotTown.errcode = ad.errcode;
             for(int i=0;i<[ad.towns count];i++){
                 NSNumber* rjid= [[ad.towns objectAtIndex:i] townid];
-                [_basic.rejectid addObject:rjid];
+                [_nearTown.rejectid addObject:rjid];
             }
             [self.nearCollectionView footerEndRefreshing];
         }
         [self.nearCollectionView reloadData];
-        
+        log(@"near stat is %d,errcode is %d",self.hotTown.stat,self.hotTown.errcode);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error: %@", error);
         if(check ==0){
@@ -202,17 +218,6 @@
 #pragma end loading Infomation
 
 #pragma Location
-//-(void)mapView:(MAMapView *)mapView didUpdateUserLocation:(MAUserLocation *)userLocation
-//updatingLocation:(BOOL)updatingLocation
-//{
-//    if(updatingLocation)
-//    {
-//        //取出当前位置的坐标
-//        NSLog(@"latitude : %f,longitude: %f",userLocation.coordinate.latitude,userLocation.coordinate.longitude);
-//    }
-//    [self addHeader];
-//    [self addFooter];
-//}
 #pragma mark - CoreLocation 代理
 #pragma mark 跟踪定位代理方法，每次位置发生变化即会执行（只要定位到相应位置）
 //可以通过模拟器设置一个虚拟位置，否则在模拟器中无法调用此方法
