@@ -10,17 +10,21 @@
 
 @implementation MyCollectionReusableView
 -(id)initWithFrame:(CGRect)frame{
+//    CGSize origin = CGSizeMake(frame.size.width, frame.size.width*9/16+frame.size.width/7) ;
+//    frame.size = origin;
     self=[super initWithFrame:frame];
     if(self){
         [self setBackgroundColor:[UIColor whiteColor]];
-        self.myCoverImage = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, 180)];
+        self.myCoverImage = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.width*9/16)];
          [self addSubview:self.myCoverImage];
         
         UITapGestureRecognizer *set = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(TappedSetting:)];
-        self.iconSettingImage = [[UIImageView alloc] initWithFrame:CGRectMake(self.myCoverImage.frame.size.width-35, 30, 20, 20)];
-        [self.iconSettingImage setUserInteractionEnabled:YES];
-        [self.iconSettingImage addGestureRecognizer:set];
-        [self.myCoverImage addSubview:self.iconSettingImage];
+        UIView  *tempView= [[UIView alloc] initWithFrame:CGRectMake(self.myCoverImage.frame.size.width-50, 15, 45, 45)];
+        self.iconSettingImage = [[UIImageView alloc] initWithFrame:CGRectMake(15, 15, 20, 20)];
+        [tempView setUserInteractionEnabled:YES];
+        [tempView addGestureRecognizer:set];
+        [tempView addSubview:self.iconSettingImage];
+        [self.myCoverImage addSubview:tempView];
         _myCoverImage.userInteractionEnabled =YES;
         
         self.myNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.myCoverImage.frame.size.width/2-120, 32, 240, 24)];
@@ -47,7 +51,7 @@
         [self.myCoverImage addSubview:self.addrLabel];
 #pragma end coverImage
         float wt = self.frame.size.width/7;
-        float ht = 30.0;
+        float ht = wt/2;
         int fontSize = 14;
         self.myTownView = [[UIView alloc] initWithFrame:CGRectMake(0, self.myCoverImage.frame.size.height, wt, ht)];
         [self addSubview:self.myTownView];
@@ -89,7 +93,7 @@
         UIView *addImage = [[UIImageView alloc] initWithFrame:CGRectMake(wt*3, self.myCoverImage.frame.size.height, wt, ht)];
         [addImage setUserInteractionEnabled:YES];
         [addImage addGestureRecognizer:add];
-        self.iconAddImage = [[UIImageView alloc] initWithFrame:CGRectMake(5, 8, wt>ht?wt-10:ht-10, wt>ht?wt-10:ht-10)];
+        self.iconAddImage = [[UIImageView alloc] initWithFrame:CGRectMake(5, 5, wt>ht?wt-10:ht-10, wt>ht?wt-10:ht-10)];
         [addImage addSubview:self.iconAddImage];
         [self addSubview:addImage];
         

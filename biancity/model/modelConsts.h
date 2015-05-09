@@ -15,3 +15,4 @@ extern NSString *const getNearTownUrl ;
 extern NSString *const getUserInfoUrl ;
 extern NSString *const getPictureUrl ;
 extern NSString *const getApplyTownUrl ;
+extern NSString *const getStoryUrl;

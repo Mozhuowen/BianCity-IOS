@@ -164,7 +164,7 @@
    
 }
 -(BOOL)checkInfo{
-    if(_geoinfo!=nil&&_GeoImage!=nil&&_townNameTextFiled.text.length!=0&&_summaryTextView.text.length!=0)
+    if(_geoinfo!=nil&&_GeoImage!=nil&&_townNameTextFiled.text.length!=0&&_summaryTextView.text.length!=0&&_imageButton.imageView.image!=nil)
     return YES;
     return NO;
 }

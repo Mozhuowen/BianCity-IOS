@@ -142,9 +142,6 @@
     NSData *msgjson = [NSJSONSerialization dataWithJSONObject:parameters options:kNilOptions error:nil];
     NSString* info = [[NSString alloc] initWithData:msgjson encoding:NSUTF8StringEncoding];
      log(@"Near Info is %@,%ld",info,info.length);
-//    info = [info stringByReplacingOccurrencesOfString:@" " withString:@""];
-//    info = [info stringByReplacingOccurrencesOfString:@"\n" withString:@""];
- //   log(@"switch length %ld",info.length);
     NSString *signature= [encrypt EncryptMsg:info timeStmap:strtime];
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.requestSerializer=[AFJSONRequestSerializer serializer];

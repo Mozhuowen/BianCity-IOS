@@ -7,18 +7,22 @@
 //
 
 #import "settingTableViewController.h"
-
+#import "settingTableViewCell.h"
 @interface settingTableViewController ()
+@property (nonatomic,strong) NSMutableArray *section1;
+@property (nonatomic,strong) NSMutableArray *section2;
 
 @end
 
 @implementation settingTableViewController
-
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.navigationItem.title = @"创建边城";
+    self.navigationItem.title = @"设置";
+    [self.tableView registerClass:[settingTableViewCell class] forCellReuseIdentifier:@"settingTableViewCell"];
     UIBarButtonItem *leftButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemReply target:self action:@selector(selectLeftAction:)];
     self.navigationItem.leftBarButtonItem = leftButton;
+    _section1 = [[NSMutableArray alloc] initWithObjects:@"wo", nil];
+    _section2 = [[NSMutableArray alloc] initWithObjects:@"退出登录",@"草稿箱",@"检查更新",@"关于我们",@"常见意见", nil];
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
@@ -38,24 +42,53 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
 #warning Potentially incomplete method implementation.
     // Return the number of sections.
-    return 0;
+    return 2;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 #warning Incomplete method implementation.
     // Return the number of rows in the section.
-    return 0;
+    switch (section) {
+        
+        case 0:
+        
+        return  [_section1 count];//每个分区通常对应不同的数组，返回其元素个数来确定分区的行数
+        break;
+        case 1:
+        return  [_section2 count];
+        break;
+        default:
+        return 0;
+        break;
+        
+    }
+    
+
 }
 
-/*
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
-    
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"settingTableViewCell" forIndexPath:indexPath];
+    switch (indexPath.section) {
+        
+    case 0://对应各自的分区
+        
+        [[cell textLabel]  setText:[_section1 objectAtIndex:indexPath.row]];//给cell添加数据
+        break;
+        
+    case 1:
+        
+    [[cell textLabel]  setText:[_section2 objectAtIndex:indexPath.row]];
+        
+    break;
+        default:
+        [[cell textLabel]  setText:@"Unknown"];
+        
+    }
     // Configure the cell...
-    
+     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     return cell;
 }
-*/
+
 
 /*
 // Override to support conditional editing of the table view.

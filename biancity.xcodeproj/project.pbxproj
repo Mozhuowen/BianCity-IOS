@@ -14,6 +14,11 @@
 		FEC53D7B1AF9237000FCF327 /* locationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FEC53D791AF9237000FCF327 /* locationViewController.xib */; };
 		FEC53D7F1AF923FF00FCF327 /* showNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = FEC53D7D1AF923FF00FCF327 /* showNavigationController.m */; };
 		FEC53D801AF923FF00FCF327 /* showNavigationController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FEC53D7E1AF923FF00FCF327 /* showNavigationController.xib */; };
+		FEC7CD251AFDE05C007F798B /* ModelStory.m in Sources */ = {isa = PBXBuildFile; fileRef = FEC7CD241AFDE05C007F798B /* ModelStory.m */; };
+		FEC7CD281AFDE204007F798B /* ResponseStory.m in Sources */ = {isa = PBXBuildFile; fileRef = FEC7CD271AFDE204007F798B /* ResponseStory.m */; };
+		FEC7CD2B1AFDE294007F798B /* StoryImage.m in Sources */ = {isa = PBXBuildFile; fileRef = FEC7CD2A1AFDE294007F798B /* StoryImage.m */; };
+		FEC7CD2E1AFDE3CB007F798B /* TownStory.m in Sources */ = {isa = PBXBuildFile; fileRef = FEC7CD2D1AFDE3CB007F798B /* TownStory.m */; };
+		FEC7CD311AFE4142007F798B /* settingTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FEC7CD301AFE4142007F798B /* settingTableViewCell.m */; };
 		FEC8D04D1AFC53070083FA76 /* ModelHotTown.m in Sources */ = {isa = PBXBuildFile; fileRef = FEC8D04C1AFC53070083FA76 /* ModelHotTown.m */; };
 		FEC8D0501AFC53CF0083FA76 /* modelConsts.m in Sources */ = {isa = PBXBuildFile; fileRef = FEC8D04F1AFC53CF0083FA76 /* modelConsts.m */; };
 		FEC8D0541AFC87290083FA76 /* settingTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FEC8D0521AFC87290083FA76 /* settingTableViewController.m */; };
@@ -133,6 +138,16 @@
 		FEC53D7C1AF923FF00FCF327 /* showNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = showNavigationController.h; sourceTree = "<group>"; };
 		FEC53D7D1AF923FF00FCF327 /* showNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = showNavigationController.m; sourceTree = "<group>"; };
 		FEC53D7E1AF923FF00FCF327 /* showNavigationController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = showNavigationController.xib; sourceTree = "<group>"; };
+		FEC7CD231AFDE05C007F798B /* ModelStory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ModelStory.h; sourceTree = "<group>"; };
+		FEC7CD241AFDE05C007F798B /* ModelStory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ModelStory.m; sourceTree = "<group>"; };
+		FEC7CD261AFDE204007F798B /* ResponseStory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResponseStory.h; sourceTree = "<group>"; };
+		FEC7CD271AFDE204007F798B /* ResponseStory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResponseStory.m; sourceTree = "<group>"; };
+		FEC7CD291AFDE294007F798B /* StoryImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StoryImage.h; sourceTree = "<group>"; };
+		FEC7CD2A1AFDE294007F798B /* StoryImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StoryImage.m; sourceTree = "<group>"; };
+		FEC7CD2C1AFDE3CB007F798B /* TownStory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TownStory.h; sourceTree = "<group>"; };
+		FEC7CD2D1AFDE3CB007F798B /* TownStory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TownStory.m; sourceTree = "<group>"; };
+		FEC7CD2F1AFE4142007F798B /* settingTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = settingTableViewCell.h; sourceTree = "<group>"; };
+		FEC7CD301AFE4142007F798B /* settingTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = settingTableViewCell.m; sourceTree = "<group>"; };
 		FEC8D04B1AFC53070083FA76 /* ModelHotTown.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ModelHotTown.h; sourceTree = "<group>"; };
 		FEC8D04C1AFC53070083FA76 /* ModelHotTown.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ModelHotTown.m; sourceTree = "<group>"; };
 		FEC8D04E1AFC53CF0083FA76 /* modelConsts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = modelConsts.h; sourceTree = "<group>"; };
@@ -650,6 +665,14 @@
 				FEC8D04F1AFC53CF0083FA76 /* modelConsts.m */,
 				FEC8D0561AFCAC1C0083FA76 /* responseApplyTown.h */,
 				FEC8D0571AFCAC1C0083FA76 /* responseApplyTown.m */,
+				FEC7CD231AFDE05C007F798B /* ModelStory.h */,
+				FEC7CD241AFDE05C007F798B /* ModelStory.m */,
+				FEC7CD261AFDE204007F798B /* ResponseStory.h */,
+				FEC7CD271AFDE204007F798B /* ResponseStory.m */,
+				FEC7CD291AFDE294007F798B /* StoryImage.h */,
+				FEC7CD2A1AFDE294007F798B /* StoryImage.m */,
+				FEC7CD2C1AFDE3CB007F798B /* TownStory.h */,
+				FEC7CD2D1AFDE3CB007F798B /* TownStory.m */,
 			);
 			path = model;
 			sourceTree = "<group>";
@@ -663,6 +686,8 @@
 				FECA81101AF760BE00FF57AE /* MyCollectionReusableView.h */,
 				FECA81111AF760BE00FF57AE /* MyCollectionReusableView.m */,
 				FECA81121AF760BE00FF57AE /* MyCollectionReusableView.xib */,
+				FEC7CD2F1AFE4142007F798B /* settingTableViewCell.h */,
+				FEC7CD301AFE4142007F798B /* settingTableViewCell.m */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -782,16 +807,20 @@
 			files = (
 				FECA80A81AF732A800FF57AE /* UIImage+GIF.m in Sources */,
 				FECA80ED1AF7340900FF57AE /* GeoInfo.m in Sources */,
+				FEC7CD311AFE4142007F798B /* settingTableViewCell.m in Sources */,
 				FECA80D21AF732BF00FF57AE /* refreshBasicView.m in Sources */,
+				FEC7CD2B1AFDE294007F798B /* StoryImage.m in Sources */,
 				FECA80761AF7329800FF57AE /* NSArray+JSONModel.m in Sources */,
 				FECA80751AF7329800FF57AE /* JSONModelError.m in Sources */,
 				FECA80D81AF732BF00FF57AE /* UIView+extension.m in Sources */,
 				FECA80771AF7329800FF57AE /* JSONAPI.m in Sources */,
 				FECA804E1AF7326B00FF57AE /* AFHTTPRequestOperation.m in Sources */,
 				FECA80DF1AF733FE00FF57AE /* PKCS7Encodeing.m in Sources */,
+				FEC7CD251AFDE05C007F798B /* ModelStory.m in Sources */,
 				FED36DC71AFA49DA00251846 /* upLoadImageViewController.m in Sources */,
 				FECA801C1AF71A3000FF57AE /* HotTownViewController.m in Sources */,
 				FECA80A71AF732A800FF57AE /* UIButton+WebCache.m in Sources */,
+				FEC7CD281AFDE204007F798B /* ResponseStory.m in Sources */,
 				FECA80BD1AF732B300FF57AE /* UMUUploaderOperation.m in Sources */,
 				FEC8D0501AFC53CF0083FA76 /* modelConsts.m in Sources */,
 				FECA80741AF7329800FF57AE /* JSONModelClassProperty.m in Sources */,
@@ -810,6 +839,7 @@
 				FECA80DE1AF733FE00FF57AE /* MsgEncrypt.m in Sources */,
 				FECA80791AF7329800FF57AE /* JSONModel+networking.m in Sources */,
 				FECA80AC1AF732A800FF57AE /* UIImageView+WebCache.m in Sources */,
+				FEC7CD2E1AFDE3CB007F798B /* TownStory.m in Sources */,
 				FEC8D0581AFCAC1C0083FA76 /* responseApplyTown.m in Sources */,
 				FECA811A1AF77A3900FF57AE /* ModelNearTown.m in Sources */,
 				FECA91C81AFB6BD800694847 /* townViewController.m in Sources */,

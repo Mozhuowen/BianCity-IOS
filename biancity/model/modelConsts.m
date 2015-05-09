@@ -20,3 +20,4 @@ NSString *const getNearTownUrl = @"http://192.168.199.200/getnear";
 NSString *const getUserInfoUrl = @"http://192.168.199.200/getuserinfo";
 NSString *const getPictureUrl = @"http://xiaocheng.b0.upaiyun.com/";
 NSString *const getApplyTownUrl = @"http://192.168.199.200/applytown";
+NSString *const getStoryUrl = @"http://192.168.199.200/getputao";

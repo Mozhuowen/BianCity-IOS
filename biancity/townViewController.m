@@ -9,11 +9,16 @@
 #import "townViewController.h"
 #import "Refresh.h"
 #import "responseApplyTown.h"
+#import "ResponseStory.h"
+#import "Modelstory.h"
 @interface townViewController ()
+@property (nonatomic,strong) ResponseStory *responseStroys;
+@property (nonatomic,strong) ModelStory *requestStory;
 @end
 
 @implementation townViewController
 -(void)viewWillAppear:(BOOL)animated{
+    _requestStory.townid = [_applyTown.townid intValue];
     if([_applyTown.ptuserid isEqualToNumber:_applyTown.userid]){
     self.navigationItem.title = @"我的边城";
         self.navigationItem.rightBarButtonItem = _rightButton;
@@ -61,6 +66,7 @@
      _leftButton= [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemReply target:self action:@selector(selectLeftAction:)];
     
      _rightButton= [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemTrash  target:self action:@selector(selectRightAction:)];
+    _requestStory = [[ModelStory alloc] init];
     self.navigationItem.leftBarButtonItem = _leftButton;
     self.navigationItem.rightBarButtonItem = _rightButton;
         self.view.frame = [UIScreen mainScreen].bounds;
@@ -162,13 +168,65 @@
 //        tmp.text = @"add header success!";
 //        //tmp.backgroundColor= [UIColor grayColor];
 //        [vc.bgScrollView addSubview:tmp];
-       [vc.bgScrollView headerEndRefreshing];
+        [vc loadInfo:0];
+       //[vc.bgScrollView headerEndRefreshing];
     }];
     [self.bgScrollView headerBeginRefreshing];
 }
 -(void)setApplyTownGeoInfo:(responseApplyTown *)sender{
     _applyTown = sender;
 };
+
+
+#pragma loading Infomation
+-(void)loadInfo:(int)check{
+    if(check==0){
+        _requestStory.position =0;
+    }
+    NSDictionary *parameters = [_requestStory toDictionary];
+    //NSLog(@"%@",parameters);
+    NSString *url =[NSString stringWithString:getStoryUrl];
+    NSDate *datenow = [NSDate date];//现在时间,你可以输出来看下是什么格式
+    NSString *strtime = [NSString stringWithFormat:@"%ld", (long)[datenow timeIntervalSince1970]];
+    MsgEncrypt *encrypt = [[MsgEncrypt alloc] init];
+    NSData *msgjson = [NSJSONSerialization dataWithJSONObject:parameters options:kNilOptions error:nil];
+    NSString* info = [[NSString alloc] initWithData:msgjson encoding:NSUTF8StringEncoding];
+    log(@"Near Info is %@,%ld",info,info.length);
+    NSString *signature= [encrypt EncryptMsg:info timeStmap:strtime];
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.requestSerializer=[AFJSONRequestSerializer serializer];
+    [manager.requestSerializer setValue:strtime forHTTPHeaderField:@"timestamp"];
+    [manager.requestSerializer setValue:[signature uppercaseString] forHTTPHeaderField:@"signature"];
+    [manager setSecurityPolicy:[AFSecurityPolicy policyWithPinningMode:AFSSLPinningModeNone] ];
+    manager.responseSerializer =[AFHTTPResponseSerializer serializer];
+    [manager POST:url parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        log(@"%@",responseObject);
+        NSDictionary * data =[NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
+        if(check==0){
+            _responseStroys = [[ResponseStory alloc] initWithDictionary:data error:nil];
+            [self.bgScrollView headerEndRefreshing];
+            _requestStory.position =(int) [_responseStroys.putao count];
+        }else {
+            ResponseStory *ad=[[ResponseStory alloc] initWithDictionary:data error:nil];
+            [_responseStroys.putao addObjectsFromArray:ad.putao];
+            _responseStroys.stat = ad.stat;
+            _responseStroys.errcode = ad.errcode;
+        _requestStory.position =(int) [_responseStroys.putao count];
+            [self.bgScrollView footerEndRefreshing];
+        }
+        [self.bgScrollView setNeedsDisplay];
+        log(@"story stat is %d,errcode is %d,Story is %@",_responseStroys.stat,_responseStroys.errcode,_responseStroys);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+        if(check ==0){
+            [self.bgScrollView headerEndRefreshing];
+        }else {
+            [self.bgScrollView footerEndRefreshing];
+        }
+        
+    }];
+}
+
 /*
 #pragma mark - Navigation
 

@@ -40,26 +40,22 @@
     _town=[[townViewController alloc] initWithNibName:@"townViewController" bundle:nil];
     
      [_show pushViewController:_town animated:YES ];
-    
+    self.myCollectionView.frame = self.view.frame;//[UIScreen mainScreen].bounds;
     [self.myCollectionView registerClass:[MyCollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"MyCollectionReusableView"];
        [self.myCollectionView registerClass:[HotTownCollectionViewCell class] forCellWithReuseIdentifier:@"HotTownCollectionViewCell"];
     self.myCollectionView.dataSource =self;
     self.myCollectionView.delegate = self;
     self.myCollectionView.allowsMultipleSelection = YES;//默认为NO,是否可以多选
     UICollectionViewFlowLayout *collectionViewLayout = (UICollectionViewFlowLayout *)self.myCollectionView.collectionViewLayout;
-    collectionViewLayout.headerReferenceSize = CGSizeMake(self.myCollectionView.frame.size.width, 230);
+    collectionViewLayout.headerReferenceSize = CGSizeMake(self.myCollectionView.frame.size.width, self.myCollectionView.frame.size.width*9/16+self.myCollectionView.frame.size.width/7);
+    self.myCollectionView.collectionViewLayout = collectionViewLayout;
     _requestUser = [[ModelUser alloc] init];
     _requestUser.onlystatis = NO;
     _requestUser.userid = _requestUser.ptuserid;
     SDWebImageManager *manager = [SDWebImageManager sharedManager];
     manager.delegate = self;
     [self addHeader];
-    self.myCollectionView.scrollEnabled =YES;
-   CGSize origin = self.myCollectionView.contentSize;
-    if(origin.height<800)
-        origin.height =800;
-    self.myCollectionView.contentSize = origin;
-    NSLog(@"width is %f,Height is %f",origin.width,origin.height);
+   NSLog(@"width is %f,Height is %f",self.myCollectionView.frame.size.width,self.myCollectionView.frame.size.width);
     // Do any additional setup after loading the view.
 }
 -(void)viewWillAppear:(BOOL)animated{
