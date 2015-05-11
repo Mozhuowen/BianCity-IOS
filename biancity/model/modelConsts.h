@@ -16,3 +16,6 @@ extern NSString *const getUserInfoUrl ;
 extern NSString *const getPictureUrl ;
 extern NSString *const getApplyTownUrl ;
 extern NSString *const getStoryUrl;
+extern NSString *const getGoodsUrl;
+extern NSString *const getFansUrl;
+extern NSString *const getSubscriUrl;

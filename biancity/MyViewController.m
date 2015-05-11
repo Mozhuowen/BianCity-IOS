@@ -56,6 +56,7 @@
     manager.delegate = self;
     [self addHeader];
    NSLog(@"width is %f,Height is %f",self.myCollectionView.frame.size.width,self.myCollectionView.frame.size.width);
+    _myCollectionView.userInteractionEnabled = YES;
     // Do any additional setup after loading the view.
 }
 -(void)viewWillAppear:(BOOL)animated{
@@ -104,7 +105,8 @@
     [cell.goodLabel setText:[NSString stringWithFormat:@"%@", [[self.User.user.mytowns objectAtIndex:indexPath.row] good]]];
     cell.icon1Image.image = [UIImage imageNamed:@"ic_location_small_light"];
     cell.icon2Image.image = [UIImage imageNamed:@"ic_list_thumb_small"];
-    return cell;
+    cell.userInteractionEnabled =YES;
+        return cell;
 }
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
    
@@ -148,7 +150,7 @@
        
         header.iconAddrImage.image = [UIImage imageNamed:@"ic_location_small"] ;
         header.iconSettingImage.image = [UIImage imageNamed:@"ic_account_setting"];
-        header.userInteractionEnabled = YES;
+       // header.userInteractionEnabled = YES;
         header.iconMyImage.layer.masksToBounds=YES;
         header.iconMyImage.layer.cornerRadius=25.0;
         header.iconMyImage.layer.borderWidth=2.0;

@@ -11,8 +11,8 @@
 @implementation basicRequest
 -(id)init{
     self=[super init];
-    self.ptoken = @"jjU1uD4ESLf1fNyXqu6EuFTUrAlzArLF";
-    //@"QQ6I6lN8pc4l1NnxkCyFxrkOmzFqbKZO";
+   // self.ptoken = @"jjU1uD4ESLf1fNyXqu6EuFTUrAlzArLF";
+    self.ptoken =@"QQ6I6lN8pc4l1NnxkCyFxrkOmzFqbKZO";
     self.ptuserid = [[NSNumber alloc] initWithInt:15];
     return self;
 }

@@ -24,6 +24,13 @@
 		FEC8D0541AFC87290083FA76 /* settingTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FEC8D0521AFC87290083FA76 /* settingTableViewController.m */; };
 		FEC8D0551AFC87290083FA76 /* settingTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FEC8D0531AFC87290083FA76 /* settingTableViewController.xib */; };
 		FEC8D0581AFCAC1C0083FA76 /* responseApplyTown.m in Sources */ = {isa = PBXBuildFile; fileRef = FEC8D0571AFCAC1C0083FA76 /* responseApplyTown.m */; };
+		FEC8D1E51AFF0077009E3AB0 /* StoryTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FEC8D1E31AFF0077009E3AB0 /* StoryTableViewCell.m */; };
+		FEC8D1EA1AFF5993009E3AB0 /* addStoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FEC8D1E81AFF5993009E3AB0 /* addStoryViewController.m */; };
+		FEC8D1EB1AFF5993009E3AB0 /* addStoryViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FEC8D1E91AFF5993009E3AB0 /* addStoryViewController.xib */; };
+		FEC8D1EE1AFF608E009E3AB0 /* ModelGood.m in Sources */ = {isa = PBXBuildFile; fileRef = FEC8D1ED1AFF608E009E3AB0 /* ModelGood.m */; };
+		FEC8D1F11AFF60B2009E3AB0 /* ResponseGood.m in Sources */ = {isa = PBXBuildFile; fileRef = FEC8D1F01AFF60B2009E3AB0 /* ResponseGood.m */; };
+		FEC8D1F41AFF60F7009E3AB0 /* ModelSubscriTown.m in Sources */ = {isa = PBXBuildFile; fileRef = FEC8D1F31AFF60F7009E3AB0 /* ModelSubscriTown.m */; };
+		FEC8D1F71AFF6121009E3AB0 /* ResponseSubscriTown.m in Sources */ = {isa = PBXBuildFile; fileRef = FEC8D1F61AFF6121009E3AB0 /* ResponseSubscriTown.m */; };
 		FECA80161AF71A3000FF57AE /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = FECA80151AF71A3000FF57AE /* main.m */; };
 		FECA80191AF71A3000FF57AE /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FECA80181AF71A3000FF57AE /* AppDelegate.m */; };
 		FECA801C1AF71A3000FF57AE /* HotTownViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FECA801B1AF71A3000FF57AE /* HotTownViewController.m */; };
@@ -113,6 +120,12 @@
 		FED36DC31AF9C37100251846 /* saveAddrViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FED36DC11AF9C37100251846 /* saveAddrViewController.xib */; };
 		FED36DC71AFA49DA00251846 /* upLoadImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FED36DC51AFA49DA00251846 /* upLoadImageViewController.m */; };
 		FED36DC81AFA49DA00251846 /* upLoadImageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FED36DC61AFA49DA00251846 /* upLoadImageViewController.xib */; };
+		FED86C641B00BC8900B2F96C /* corner.png in Resources */ = {isa = PBXBuildFile; fileRef = FED86C5C1B00BC8900B2F96C /* corner.png */; };
+		FED86C651B00BC8900B2F96C /* NLCropViewLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = FED86C5E1B00BC8900B2F96C /* NLCropViewLayer.m */; };
+		FED86C661B00BC8900B2F96C /* NLImageCropperView.m in Sources */ = {isa = PBXBuildFile; fileRef = FED86C601B00BC8900B2F96C /* NLImageCropperView.m */; };
+		FED86C671B00BC8900B2F96C /* NLViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FED86C621B00BC8900B2F96C /* NLViewController.m */; };
+		FED86C681B00BC8900B2F96C /* sceenshot.png in Resources */ = {isa = PBXBuildFile; fileRef = FED86C631B00BC8900B2F96C /* sceenshot.png */; };
+		FED86C6A1B00BCCC00B2F96C /* NLViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FED86C691B00BCCC00B2F96C /* NLViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -157,6 +170,19 @@
 		FEC8D0531AFC87290083FA76 /* settingTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = settingTableViewController.xib; sourceTree = "<group>"; };
 		FEC8D0561AFCAC1C0083FA76 /* responseApplyTown.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = responseApplyTown.h; sourceTree = "<group>"; };
 		FEC8D0571AFCAC1C0083FA76 /* responseApplyTown.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = responseApplyTown.m; sourceTree = "<group>"; };
+		FEC8D1E21AFF0077009E3AB0 /* StoryTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StoryTableViewCell.h; sourceTree = "<group>"; };
+		FEC8D1E31AFF0077009E3AB0 /* StoryTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StoryTableViewCell.m; sourceTree = "<group>"; };
+		FEC8D1E71AFF5993009E3AB0 /* addStoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = addStoryViewController.h; sourceTree = "<group>"; };
+		FEC8D1E81AFF5993009E3AB0 /* addStoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = addStoryViewController.m; sourceTree = "<group>"; };
+		FEC8D1E91AFF5993009E3AB0 /* addStoryViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = addStoryViewController.xib; sourceTree = "<group>"; };
+		FEC8D1EC1AFF608E009E3AB0 /* ModelGood.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ModelGood.h; sourceTree = "<group>"; };
+		FEC8D1ED1AFF608E009E3AB0 /* ModelGood.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ModelGood.m; sourceTree = "<group>"; };
+		FEC8D1EF1AFF60B2009E3AB0 /* ResponseGood.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResponseGood.h; sourceTree = "<group>"; };
+		FEC8D1F01AFF60B2009E3AB0 /* ResponseGood.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResponseGood.m; sourceTree = "<group>"; };
+		FEC8D1F21AFF60F7009E3AB0 /* ModelSubscriTown.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ModelSubscriTown.h; sourceTree = "<group>"; };
+		FEC8D1F31AFF60F7009E3AB0 /* ModelSubscriTown.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ModelSubscriTown.m; sourceTree = "<group>"; };
+		FEC8D1F51AFF6121009E3AB0 /* ResponseSubscriTown.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResponseSubscriTown.h; sourceTree = "<group>"; };
+		FEC8D1F61AFF6121009E3AB0 /* ResponseSubscriTown.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResponseSubscriTown.m; sourceTree = "<group>"; };
 		FECA80101AF71A3000FF57AE /* biancity.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = biancity.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FECA80141AF71A3000FF57AE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FECA80151AF71A3000FF57AE /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -318,6 +344,15 @@
 		FED36DC41AFA49DA00251846 /* upLoadImageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = upLoadImageViewController.h; sourceTree = "<group>"; };
 		FED36DC51AFA49DA00251846 /* upLoadImageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = upLoadImageViewController.m; sourceTree = "<group>"; };
 		FED36DC61AFA49DA00251846 /* upLoadImageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = upLoadImageViewController.xib; sourceTree = "<group>"; };
+		FED86C5C1B00BC8900B2F96C /* corner.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = corner.png; sourceTree = "<group>"; };
+		FED86C5D1B00BC8900B2F96C /* NLCropViewLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NLCropViewLayer.h; sourceTree = "<group>"; };
+		FED86C5E1B00BC8900B2F96C /* NLCropViewLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NLCropViewLayer.m; sourceTree = "<group>"; };
+		FED86C5F1B00BC8900B2F96C /* NLImageCropperView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NLImageCropperView.h; sourceTree = "<group>"; };
+		FED86C601B00BC8900B2F96C /* NLImageCropperView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NLImageCropperView.m; sourceTree = "<group>"; };
+		FED86C611B00BC8900B2F96C /* NLViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NLViewController.h; sourceTree = "<group>"; };
+		FED86C621B00BC8900B2F96C /* NLViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NLViewController.m; sourceTree = "<group>"; };
+		FED86C631B00BC8900B2F96C /* sceenshot.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sceenshot.png; sourceTree = "<group>"; };
+		FED86C691B00BCCC00B2F96C /* NLViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NLViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -371,6 +406,9 @@
 				FEC8D0511AFC87290083FA76 /* settingTableViewController.h */,
 				FEC8D0521AFC87290083FA76 /* settingTableViewController.m */,
 				FEC8D0531AFC87290083FA76 /* settingTableViewController.xib */,
+				FEC8D1E71AFF5993009E3AB0 /* addStoryViewController.h */,
+				FEC8D1E81AFF5993009E3AB0 /* addStoryViewController.m */,
+				FEC8D1E91AFF5993009E3AB0 /* addStoryViewController.xib */,
 			);
 			name = show;
 			sourceTree = "<group>";
@@ -410,6 +448,7 @@
 		FECA80121AF71A3000FF57AE /* biancity */ = {
 			isa = PBXGroup;
 			children = (
+				FED86C5B1B00BC8900B2F96C /* takePicture */,
 				FEC53D761AF922C700FCF327 /* show */,
 				FECA80F01AF74CA100FF57AE /* Cells */,
 				FECA80E01AF7340900FF57AE /* model */,
@@ -673,6 +712,14 @@
 				FEC7CD2A1AFDE294007F798B /* StoryImage.m */,
 				FEC7CD2C1AFDE3CB007F798B /* TownStory.h */,
 				FEC7CD2D1AFDE3CB007F798B /* TownStory.m */,
+				FEC8D1EC1AFF608E009E3AB0 /* ModelGood.h */,
+				FEC8D1ED1AFF608E009E3AB0 /* ModelGood.m */,
+				FEC8D1EF1AFF60B2009E3AB0 /* ResponseGood.h */,
+				FEC8D1F01AFF60B2009E3AB0 /* ResponseGood.m */,
+				FEC8D1F21AFF60F7009E3AB0 /* ModelSubscriTown.h */,
+				FEC8D1F31AFF60F7009E3AB0 /* ModelSubscriTown.m */,
+				FEC8D1F51AFF6121009E3AB0 /* ResponseSubscriTown.h */,
+				FEC8D1F61AFF6121009E3AB0 /* ResponseSubscriTown.m */,
 			);
 			path = model;
 			sourceTree = "<group>";
@@ -688,8 +735,26 @@
 				FECA81121AF760BE00FF57AE /* MyCollectionReusableView.xib */,
 				FEC7CD2F1AFE4142007F798B /* settingTableViewCell.h */,
 				FEC7CD301AFE4142007F798B /* settingTableViewCell.m */,
+				FEC8D1E21AFF0077009E3AB0 /* StoryTableViewCell.h */,
+				FEC8D1E31AFF0077009E3AB0 /* StoryTableViewCell.m */,
 			);
 			path = Cells;
+			sourceTree = "<group>";
+		};
+		FED86C5B1B00BC8900B2F96C /* takePicture */ = {
+			isa = PBXGroup;
+			children = (
+				FED86C5C1B00BC8900B2F96C /* corner.png */,
+				FED86C5D1B00BC8900B2F96C /* NLCropViewLayer.h */,
+				FED86C5E1B00BC8900B2F96C /* NLCropViewLayer.m */,
+				FED86C5F1B00BC8900B2F96C /* NLImageCropperView.h */,
+				FED86C601B00BC8900B2F96C /* NLImageCropperView.m */,
+				FED86C611B00BC8900B2F96C /* NLViewController.h */,
+				FED86C621B00BC8900B2F96C /* NLViewController.m */,
+				FED86C631B00BC8900B2F96C /* sceenshot.png */,
+				FED86C691B00BCCC00B2F96C /* NLViewController.xib */,
+			);
+			path = takePicture;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -773,17 +838,21 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FED86C6A1B00BCCC00B2F96C /* NLViewController.xib in Resources */,
 				FED36DC31AF9C37100251846 /* saveAddrViewController.xib in Resources */,
 				FED36DBE1AF9C02200251846 /* AMap.bundle in Resources */,
 				FECA91C91AFB6BD800694847 /* townViewController.xib in Resources */,
 				FED36DC81AFA49DA00251846 /* upLoadImageViewController.xib in Resources */,
+				FEC8D1EB1AFF5993009E3AB0 /* addStoryViewController.xib in Resources */,
 				FEC8D0551AFC87290083FA76 /* settingTableViewController.xib in Resources */,
+				FED86C681B00BC8900B2F96C /* sceenshot.png in Resources */,
 				FEC53D801AF923FF00FCF327 /* showNavigationController.xib in Resources */,
 				FECA81141AF760BE00FF57AE /* MyCollectionReusableView.xib in Resources */,
 				FECA811F1AF7B43300FF57AE /* bj.jpg in Resources */,
 				FECA801F1AF71A3000FF57AE /* Main.storyboard in Resources */,
 				FECA80241AF71A3000FF57AE /* LaunchScreen.xib in Resources */,
 				FECA80D01AF732BF00FF57AE /* placeholder@2x.png in Resources */,
+				FED86C641B00BC8900B2F96C /* corner.png in Resources */,
 				FECA80D11AF732BF00FF57AE /* Refresh.bundle in Resources */,
 				FECA80F51AF74CD300FF57AE /* HotTownCollectionViewCell.xib in Resources */,
 				FECA80211AF71A3000FF57AE /* Images.xcassets in Resources */,
@@ -807,6 +876,8 @@
 			files = (
 				FECA80A81AF732A800FF57AE /* UIImage+GIF.m in Sources */,
 				FECA80ED1AF7340900FF57AE /* GeoInfo.m in Sources */,
+				FEC8D1E51AFF0077009E3AB0 /* StoryTableViewCell.m in Sources */,
+				FEC8D1EE1AFF608E009E3AB0 /* ModelGood.m in Sources */,
 				FEC7CD311AFE4142007F798B /* settingTableViewCell.m in Sources */,
 				FECA80D21AF732BF00FF57AE /* refreshBasicView.m in Sources */,
 				FEC7CD2B1AFDE294007F798B /* StoryImage.m in Sources */,
@@ -816,16 +887,19 @@
 				FECA80771AF7329800FF57AE /* JSONAPI.m in Sources */,
 				FECA804E1AF7326B00FF57AE /* AFHTTPRequestOperation.m in Sources */,
 				FECA80DF1AF733FE00FF57AE /* PKCS7Encodeing.m in Sources */,
+				FEC8D1EA1AFF5993009E3AB0 /* addStoryViewController.m in Sources */,
 				FEC7CD251AFDE05C007F798B /* ModelStory.m in Sources */,
 				FED36DC71AFA49DA00251846 /* upLoadImageViewController.m in Sources */,
 				FECA801C1AF71A3000FF57AE /* HotTownViewController.m in Sources */,
 				FECA80A71AF732A800FF57AE /* UIButton+WebCache.m in Sources */,
 				FEC7CD281AFDE204007F798B /* ResponseStory.m in Sources */,
 				FECA80BD1AF732B300FF57AE /* UMUUploaderOperation.m in Sources */,
+				FED86C661B00BC8900B2F96C /* NLImageCropperView.m in Sources */,
 				FEC8D0501AFC53CF0083FA76 /* modelConsts.m in Sources */,
 				FECA80741AF7329800FF57AE /* JSONModelClassProperty.m in Sources */,
 				FECA80BA1AF732B300FF57AE /* NSString+Base64Encode.m in Sources */,
 				FECA80A91AF732A800FF57AE /* UIImage+MultiFormat.m in Sources */,
+				FED86C651B00BC8900B2F96C /* NLCropViewLayer.m in Sources */,
 				FEC53D7A1AF9237000FCF327 /* locationViewController.m in Sources */,
 				FECA80D71AF732BF00FF57AE /* UIScrollView+Refresh.m in Sources */,
 				FECA804F1AF7326B00FF57AE /* AFHTTPRequestOperationManager.m in Sources */,
@@ -845,6 +919,7 @@
 				FECA91C81AFB6BD800694847 /* townViewController.m in Sources */,
 				FECA80D61AF732BF00FF57AE /* UIScrollView+extension.m in Sources */,
 				FECA80D41AF732BF00FF57AE /* RefreshFooterView.m in Sources */,
+				FED86C671B00BC8900B2F96C /* NLViewController.m in Sources */,
 				FECA80511AF7326B00FF57AE /* AFNetworkReachabilityManager.m in Sources */,
 				FECA80551AF7326B00FF57AE /* AFURLResponseSerialization.m in Sources */,
 				FEC53D7F1AF923FF00FCF327 /* showNavigationController.m in Sources */,
@@ -856,6 +931,7 @@
 				FECA80521AF7326B00FF57AE /* AFSecurityPolicy.m in Sources */,
 				FECA80AB1AF732A800FF57AE /* UIImageView+HighlightedWebCache.m in Sources */,
 				FECA80781AF7329800FF57AE /* JSONHTTPClient.m in Sources */,
+				FEC8D1F41AFF60F7009E3AB0 /* ModelSubscriTown.m in Sources */,
 				FECA80EC1AF7340900FF57AE /* basicRequest.m in Sources */,
 				FECA80EF1AF7340900FF57AE /* ResponseHotTown.m in Sources */,
 				FEC53D701AF8BF3600FCF327 /* HomeTabBarViewController.m in Sources */,
@@ -869,11 +945,13 @@
 				FECA80A11AF732A800FF57AE /* SDWebImageCompat.m in Sources */,
 				FECA80561AF7326B00FF57AE /* AFURLSessionManager.m in Sources */,
 				FECA809E1AF732A800FF57AE /* MKAnnotationView+WebCache.m in Sources */,
+				FEC8D1F11AFF60B2009E3AB0 /* ResponseGood.m in Sources */,
 				FECA807B1AF7329800FF57AE /* JSONValueTransformer.m in Sources */,
 				FECA81131AF760BE00FF57AE /* MyCollectionReusableView.m in Sources */,
 				FECA80191AF71A3000FF57AE /* AppDelegate.m in Sources */,
 				FECA80A61AF732A800FF57AE /* SDWebImagePrefetcher.m in Sources */,
 				FECA807A1AF7329800FF57AE /* JSONKeyMapper.m in Sources */,
+				FEC8D1F71AFF6121009E3AB0 /* ResponseSubscriTown.m in Sources */,
 				FEC8D04D1AFC53070083FA76 /* ModelHotTown.m in Sources */,
 				FECA80D31AF732BF00FF57AE /* RefreshConsts.m in Sources */,
 				FECA80A41AF732A800FF57AE /* SDWebImageDownloaderOperation.m in Sources */,
