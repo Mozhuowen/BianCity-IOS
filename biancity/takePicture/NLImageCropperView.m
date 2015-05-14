@@ -33,9 +33,10 @@
 
 - (void)setCropRegionRect:(CGRect)cropRect
 {
+    NSLog(@"x:%f,y:%f,w:%f,h:%f,_scalingFactor is %f",cropRect.origin.x,cropRect.origin.y,cropRect.size.width,cropRect.size.height,_scalingFactor);
     _cropRect = cropRect;
     float scale =[UIScreen mainScreen].bounds.size.width/cropRect.size.width;
-    _translatedCropRect =CGRectMake(cropRect.origin.x/_scalingFactor, cropRect.origin.y/_scalingFactor, cropRect.size.width/_scalingFactor*scale-3, cropRect.size.height/_scalingFactor*scale-2);
+    _translatedCropRect =CGRectMake(cropRect.origin.x/_scalingFactor, cropRect.origin.y/_scalingFactor, cropRect.size.width*scale-22, cropRect.size.height*scale-9);
     [_cropView setCropRegionRect:_translatedCropRect];
 }
 
@@ -90,9 +91,9 @@
 
 - (void) reLayoutView
 {
-     float scale =[UIScreen mainScreen].bounds.size.width/_image.size.width;
-    float imgWidth = _image.size.width*scale;
-    float imgHeight = _image.size.height*scale;
+    // float scale =[UIScreen mainScreen].bounds.size.width/_image.size.width;
+    float imgWidth = _image.size.width;
+    float imgHeight = _image.size.height;
     float viewWidth = self.bounds.size.width - 2*IMAGE_BOUNDRY_SPACE;
     float viewHeight = self.bounds.size.height - 2*IMAGE_BOUNDRY_SPACE;
     
@@ -117,14 +118,14 @@
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
         NSLog(@"Touch Begins");
     [super touchesBegan:touches withEvent:event];
-    //CGPoint locationPoint = [[touches anyObject] locationInView:_imageView];
+//CGPoint locationPoint = [[touches anyObject] locationInView:_imageView];
     _movePoint = MoveCenter;
 //    if(locationPoint.x < 0 || locationPoint.y < 0 || locationPoint.x > _imageView.bounds.size.width || locationPoint.y > _imageView.bounds.size.height)
 //    {
 //        _movePoint = NoPoint;
 //        return;
 //    }
-//    _lastMovePoint = locationPoint;
+ //  _lastMovePoint = locationPoint;
 //    
 //    if(((locationPoint.x - 5) <= _translatedCropRect.origin.x) &&
 //       ((locationPoint.x + 5) >= _translatedCropRect.origin.x))
@@ -150,13 +151,14 @@
 //        else
 //            _movePoint = NoPoint;
 //    }
-//    else if ((locationPoint.x > _translatedCropRect.origin.x) && (locationPoint.x < (_translatedCropRect.origin.x + _translatedCropRect.size.width)) &&
+//else if ((locationPoint.x > _translatedCropRect.origin.x) && (locationPoint.x < (_translatedCropRect.origin.x + _translatedCropRect.size.width)) &&
 //             (locationPoint.y > _translatedCropRect.origin.y) && (locationPoint.y < (_translatedCropRect.origin.y + _translatedCropRect.size.height)))
 //    {
 //        _movePoint = MoveCenter;
 //    }
 //    else
 //        _movePoint = NoPoint;
+//
 }
 
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
@@ -165,7 +167,7 @@
 
     CGPoint locationPoint = [[touches anyObject] locationInView:_imageView];
 
-    NSLog(@"Location Point: (%f,%f)", locationPoint.x, locationPoint.y);
+  //  NSLog(@"Location Point: (%f,%f)", locationPoint.x, locationPoint.y);
     if(locationPoint.x < 0 || locationPoint.y < 0 || locationPoint.x > _imageView.bounds.size.width || locationPoint.y > _imageView.bounds.size.height)
     {
         _movePoint = NoPoint;
@@ -222,7 +224,7 @@
             return;
             break;
     }
-    _translatedCropRect = CGRectMake(_translatedCropRect.origin.x, _translatedCropRect.origin.y, _translatedCropRect.size.width, _translatedCropRect.size.width*9/16);
+    _translatedCropRect = CGRectMake(_translatedCropRect.origin.x, _translatedCropRect.origin.y, _translatedCropRect.size.width, _translatedCropRect.size.width*9/15);
     [_cropView setNeedsDisplay];
     _cropRect = CGRectMake(_translatedCropRect.origin.x*_scalingFactor, _translatedCropRect.origin.y*_scalingFactor, _translatedCropRect.size.width*_scalingFactor, _translatedCropRect.size.height*_scalingFactor);
     [self setCropRegionRect:_cropRect];

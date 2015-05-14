@@ -39,6 +39,7 @@ enum rectPoint { LeftTop = 0, RightTop=1, LeftBottom = 2, RightBottom = 3, MoveC
     CGPoint _lastMovePoint;
     CGFloat _scalingFactor;
 }
+@property (nonatomic)   CGFloat scalingFactor;
 - (void)setCropRegionRect:(CGRect)cropRect;
 - (void) setImage:(UIImage*)image;
 - (void) setFrame:(CGRect)frame;

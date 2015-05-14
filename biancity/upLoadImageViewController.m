@@ -15,6 +15,8 @@
 #import "ApplyTown.h"
 #import "responseApplyTown.h"
 #import "MsgEncrypt.h"
+#import "SDProgressView.h"
+#import "SDDemoItemView.h"
 @interface upLoadImageViewController ()
 {
     int count;
@@ -39,6 +41,8 @@
 @property (nonatomic,strong) UIImage* GeoImage;
 @property (nonatomic,strong) UILabel *msgIamgeButtonLabel;
 @property (nonatomic,strong) UILabel *msgSaveButtonLabel;
+@property (nonatomic,strong) SDDemoItemView *progressDome;
+@property (nonatomic) BOOL uploadFlag;
 @end
 
 @implementation upLoadImageViewController
@@ -146,14 +150,21 @@
 -(void)selectLeftAction:(id)sender{
     [_summaryTextView resignFirstResponder];
     [_townNameTextFiled resignFirstResponder];
-    [self.navigationController dismissViewControllerAnimated:YES completion:^{}];
+    if(!_uploadFlag){
+
+        [self.navigationController dismissViewControllerAnimated:YES completion:^{}];
+    }
 }
 -(void)selectRightAction:(id)sender{
     [_summaryTextView resignFirstResponder];
     [_townNameTextFiled resignFirstResponder];
+    if(_uploadFlag){
+        [self showAlert:@"上传中，请稍等"];
+    }else {
     if(_requestApplyTown.geoinfo == nil)
         _requestApplyTown.geoinfo = _geoinfo;
     if([self checkInfo]){
+        _uploadFlag =YES;
         [self uploadFiles];
     }else{
         [self showAlert:@"信息不足，请补充完整"];
@@ -161,7 +172,7 @@
     //[self loadInfo:0];
     _requestApplyTown.descri = _summaryTextView.text;
     _requestApplyTown.townname = _townNameTextFiled.text;
-   
+    }
 }
 -(BOOL)checkInfo{
     if(_geoinfo!=nil&&_GeoImage!=nil&&_townNameTextFiled.text.length!=0&&_summaryTextView.text.length!=0&&_imageButton.imageView.image!=nil)
@@ -347,8 +358,12 @@
 
 - (void)uploadFiles
 {
-    if(index==0)
-    [_progressAlert show];
+    if(index==0){
+        //[_progressAlert show];
+        _progressDome= [SDDemoItemView demoItemViewWithClass:[SDBallProgressView class]];
+        _progressDome.frame = [UIScreen mainScreen].bounds;
+        [self.view addSubview:_progressDome];
+    }
     int idx = index;
     NSData * fileData;
     if(idx==0)
@@ -371,6 +386,7 @@
     [manager uploadWithFile:fileData policy:policy signature:signature progressBlock:^(CGFloat percent, long long requestDidSendBytes) {
         NSLog(@"%f",percent);
         weakSelf.propressView.progress = percent/2+progressCount;
+        weakSelf.progressDome.progressView.progress =percent/2+progressCount;
     } completeBlock:^(NSError *error, NSDictionary *result, BOOL completed) {
         UIAlertView * alert;
         //self.propressView.alpha = 0;

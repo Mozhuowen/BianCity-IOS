@@ -34,7 +34,7 @@
 
 -(void)viewWillAppear:(BOOL)animated{
     [_imageCropper setImage:_bgImage];
-       [_imageCropper setCropRegionRect:CGRectMake(0, 0, _bgImage.size.width-4, _bgImage.size.width*9/16-3)];
+       [_imageCropper setCropRegionRect:CGRectMake(0, 0, _bgImage.size.width-4, _bgImage.size.width*9/15-3)];
 }
 -(void)selectRightAction:(id)sender{
     NSLog(@"save");
@@ -59,7 +59,7 @@
     _imageCropper = [[NLImageCropperView alloc] initWithFrame:CGRectMake(0, 60, self.view.bounds.size.width, self.view.bounds.size.height)];
     [self.view addSubview:_imageCropper];
 //    [_imageCropper setImage:[UIImage imageNamed:@"sample.jpg"]];
-   [_imageCropper setCropRegionRect:CGRectMake(0, 0, 315, 175)];
+  // [_imageCropper setCropRegionRect:CGRectMake(0, 0, 315, 175)];
 	// Do any additional setup after loading the view, typically from a nib.
 }
 

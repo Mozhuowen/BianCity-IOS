@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "NLViewController.h"
+#import "TownStory.h"
 @interface addStoryViewController : UIViewController<UITextFieldDelegate,UITextViewDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,NLImagepickerDelegate>
-
+@property (nonatomic,strong) TownStory* townstory;
+@property (nonatomic) NSNumber * townid;
 @end

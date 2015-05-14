@@ -19,6 +19,7 @@
 #import "ResponseUser.h"
 #import "addStoryViewController.h"
 #import "ResponseGood.h"
+#import "storyViewController.h"
 @interface townViewController ()
 @property (nonatomic,strong) ResponseStory *responseStroys;
 @property (nonatomic,strong) ModelStory *requestStory;
@@ -42,7 +43,7 @@
     _requestGood.type = 0;
        _requestFans.userid = _applyTown.userid;
       _requestSubscriTown.townid = _applyTown.townid;
-    if([_applyTown.ptuserid isEqualToNumber:_applyTown.userid]){
+    if(_applyTown.userid == nil||[_applyTown.ptuserid isEqualToNumber:_applyTown.userid]){
     self.navigationItem.title = @"我的边城";
         self.navigationItem.rightBarButtonItem = _rightButton;
         _iconAddImage.hidden = NO;
@@ -157,7 +158,8 @@
     _iconAddImage.image = [UIImage imageNamed:@"ic_plus"];
     _iconAddImage.userInteractionEnabled = YES;
     [_iconAddImage addGestureRecognizer:tap];
-    _storyTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, _iconAddImage.frame.origin.y+50, self.view.frame.size.width, 200)];
+    
+    _storyTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, _iconAddImage.frame.origin.y+50, self.view.frame.size.width, 200) style:UITableViewStylePlain];
     _storyTableView.dataSource = self;
     _storyTableView.delegate = self;
     [_storyTableView registerClass:[StoryTableViewCell class] forCellReuseIdentifier:@"StoryTableViewCell"];
@@ -179,15 +181,16 @@
     [_bgScrollView addSubview:_fansLabel];
     [_bgScrollView addSubview:_storyLabel];
     [_bgScrollView addSubview:_iconAddImage];
-    [_bgImageView addSubview:_storyTableView];
+    [_bgScrollView addSubview:_storyTableView];
     [self.view addSubview:_bgScrollView];
-    _bgScrollView.userInteractionEnabled =YES;
     [self addHeader];
     [self addFooter];
     // Do any additional setup after loading the view from its nib.
 }
 -(void)AddStory{
+    
     addStoryViewController * add = [[addStoryViewController alloc] init];
+    add.townid = _applyTown.townid;
     [self.navigationController pushViewController:add  animated:YES];
 
 }
@@ -260,7 +263,6 @@
     [manager setSecurityPolicy:[AFSecurityPolicy policyWithPinningMode:AFSSLPinningModeNone] ];
     manager.responseSerializer =[AFHTTPResponseSerializer serializer];
     [manager POST:url parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        log(@"%@",responseObject);
         NSDictionary * data =[NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
         if(check==0){
             _responseStroys = [[ResponseStory alloc] initWithDictionary:data error:nil];
@@ -277,8 +279,10 @@
         if(_requestStory.position>0){
              self.bgScrollView.contentSize= _origin;
             self.storyTableView.hidden = NO;
+            
         self.storyTableView.frame = CGRectMake(0,self.bgScrollView.contentSize.height-50,self.bgScrollView.frame.size.width, _requestStory.position*90);
             self.bgScrollView.contentSize = CGSizeMake(self.bgScrollView.frame.size.width, self.bgScrollView.contentSize.height+_requestStory.position*90);
+            
                     [self.storyTableView reloadData];
             if(check ==1){
                 _bgScrollView.contentOffset = CGPointMake(0, self.bgScrollView.contentSize.height);
@@ -286,7 +290,7 @@
         }else {
             self.bgScrollView.contentSize= _origin;
             if(check ==0)
-        [self.bgScrollView setNeedsDisplay];
+            [self.bgScrollView setNeedsDisplay];
             self.storyTableView.hidden = YES;
         }
         if(_requestStory.position==0||_requestStory.position%10 != 0){
@@ -294,8 +298,7 @@
             }else{
             _bgScrollView.footerHidden = NO;
         }
-       
-        log(@"story stat is %d,errcode is %d",_responseStroys.stat,_responseStroys.errcode);
+        log(@"story stat is %d,errcode is %d,%@",_responseStroys.stat,_responseStroys.errcode,_responseStroys);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error: %@", error);
         if(check ==0){
@@ -319,7 +322,7 @@
         NSLog(@"count is %lu",(unsigned long)[_responseStroys.putao count]);
         return  [_responseStroys.putao count];//每个分区通常对应不同的数组，返回其元素个数来确定分区的行数
         break;
-                default:
+    default:
         return 0;
         break;
         
@@ -332,6 +335,13 @@
     return 90;
     
 }
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    //[tableView deselectRowAtIndexPath:indexPath animated:YES];//选中后的反显颜色即刻消失
+    NSLog(@"did select");
+    storyViewController *story = [[storyViewController alloc] initWithNibName:@"storyViewController" bundle:nil];
+    story.story = [_responseStroys.putao objectAtIndex:indexPath.row];
+     [self.navigationController pushViewController:story  animated:YES];
+}
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     StoryTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"StoryTableViewCell" forIndexPath:indexPath];
@@ -339,19 +349,20 @@
         
         case 0://对应各自的分区
         
-        [cell.stroyImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@",getPictureUrl,[[_responseStroys.putao objectAtIndex:indexPath.row]  cover],@"!small"]]  placeholderImage:[UIImage imageNamed:@"placeholder"] options:indexPath.row == 0 ? SDWebImageRefreshCached : 0] ;
+        [cell.stroyImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@",getPictureUrl,[[_responseStroys.putao objectAtIndex:indexPath.row]  cover],@"!small"]]  placeholderImage:[UIImage imageNamed:@"placeholder"] options:indexPath.row == 0 ? SDWebImageRefreshCached : 0];
         cell.storyLabel.text = [[_responseStroys.putao objectAtIndex:indexPath.row] title];
         cell.dateLabel.text = [[_responseStroys.putao objectAtIndex:indexPath.row] createtime];
         cell.goodLabel.text =[NSString stringWithFormat:@"%@", [[_responseStroys.putao objectAtIndex:indexPath.row] goods]];
         cell.iconGoodImage.image = [UIImage imageNamed:@"ic_list_thumb"];
+            
         //给cell添加数据
         break;
         default:
         [[cell textLabel]  setText:@"Unknown"];
         
     }
-    // Configure the cell...
-   
+
+    cell.selectionStyle = UITableViewCellSelectionStyleGray;
     return cell;
 }
 

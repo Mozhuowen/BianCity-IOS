@@ -19,3 +19,4 @@ extern NSString *const getStoryUrl;
 extern NSString *const getGoodsUrl;
 extern NSString *const getFansUrl;
 extern NSString *const getSubscriUrl;
+extern NSString *const getCreatePutao;

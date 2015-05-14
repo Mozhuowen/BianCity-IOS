@@ -7,11 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "JSONModel.h"
+#import "basicRequest.h"
 #import "StoryImage.h"
 @protocol TownStory
 @end
-@interface TownStory : JSONModel
+@interface TownStory : basicRequest
 @property (nonatomic,strong) NSNumber<Optional>* userid; 	//故事创建者
 @property (nonatomic,strong) NSNumber<Optional>* townid;		//故事所属的边城id
 @property (nonatomic,strong) NSNumber<Optional>*  putaoid;	//故事id

@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FE4020531B0494CD002125E6 /* ImgScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = FE4020501B0494CD002125E6 /* ImgScrollView.m */; };
+		FE4020541B0494CD002125E6 /* TapImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = FE4020521B0494CD002125E6 /* TapImageView.m */; };
 		FEC53D671AF8B27800FCF327 /* ModelUser.m in Sources */ = {isa = PBXBuildFile; fileRef = FEC53D661AF8B27800FCF327 /* ModelUser.m */; };
 		FEC53D6A1AF8B29500FCF327 /* ResponseUser.m in Sources */ = {isa = PBXBuildFile; fileRef = FEC53D691AF8B29500FCF327 /* ResponseUser.m */; };
 		FEC53D701AF8BF3600FCF327 /* HomeTabBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FEC53D6F1AF8BF3600FCF327 /* HomeTabBarViewController.m */; };
@@ -14,6 +16,17 @@
 		FEC53D7B1AF9237000FCF327 /* locationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FEC53D791AF9237000FCF327 /* locationViewController.xib */; };
 		FEC53D7F1AF923FF00FCF327 /* showNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = FEC53D7D1AF923FF00FCF327 /* showNavigationController.m */; };
 		FEC53D801AF923FF00FCF327 /* showNavigationController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FEC53D7E1AF923FF00FCF327 /* showNavigationController.xib */; };
+		FEC571E71B032A1500D5D8E5 /* SDBallProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = FEC571D61B032A1500D5D8E5 /* SDBallProgressView.m */; };
+		FEC571E81B032A1500D5D8E5 /* SDBaseProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = FEC571D81B032A1500D5D8E5 /* SDBaseProgressView.m */; };
+		FEC571E91B032A1500D5D8E5 /* SDLoopProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = FEC571DA1B032A1500D5D8E5 /* SDLoopProgressView.m */; };
+		FEC571EA1B032A1500D5D8E5 /* SDPieLoopProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = FEC571DC1B032A1500D5D8E5 /* SDPieLoopProgressView.m */; };
+		FEC571EB1B032A1500D5D8E5 /* SDPieProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = FEC571DE1B032A1500D5D8E5 /* SDPieProgressView.m */; };
+		FEC571EC1B032A1500D5D8E5 /* SDRotationLoopProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = FEC571E11B032A1500D5D8E5 /* SDRotationLoopProgressView.m */; };
+		FEC571ED1B032A1500D5D8E5 /* SDTransparentPieProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = FEC571E31B032A1500D5D8E5 /* SDTransparentPieProgressView.m */; };
+		FEC571EE1B032A1500D5D8E5 /* SDDemoItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = FEC571E61B032A1500D5D8E5 /* SDDemoItemView.m */; };
+		FEC571F11B0359B800D5D8E5 /* storyheaderTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FEC571F01B0359B800D5D8E5 /* storyheaderTableViewCell.m */; };
+		FEC571F51B03638900D5D8E5 /* storyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FEC571F31B03638900D5D8E5 /* storyViewController.m */; };
+		FEC571F61B03638900D5D8E5 /* storyViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FEC571F41B03638900D5D8E5 /* storyViewController.xib */; };
 		FEC7CD251AFDE05C007F798B /* ModelStory.m in Sources */ = {isa = PBXBuildFile; fileRef = FEC7CD241AFDE05C007F798B /* ModelStory.m */; };
 		FEC7CD281AFDE204007F798B /* ResponseStory.m in Sources */ = {isa = PBXBuildFile; fileRef = FEC7CD271AFDE204007F798B /* ResponseStory.m */; };
 		FEC7CD2B1AFDE294007F798B /* StoryImage.m in Sources */ = {isa = PBXBuildFile; fileRef = FEC7CD2A1AFDE294007F798B /* StoryImage.m */; };
@@ -139,6 +152,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		FE40204F1B0494CD002125E6 /* ImgScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImgScrollView.h; sourceTree = "<group>"; };
+		FE4020501B0494CD002125E6 /* ImgScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImgScrollView.m; sourceTree = "<group>"; };
+		FE4020511B0494CD002125E6 /* TapImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TapImageView.h; sourceTree = "<group>"; };
+		FE4020521B0494CD002125E6 /* TapImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TapImageView.m; sourceTree = "<group>"; };
 		FEC53D651AF8B27800FCF327 /* ModelUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ModelUser.h; sourceTree = "<group>"; };
 		FEC53D661AF8B27800FCF327 /* ModelUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ModelUser.m; sourceTree = "<group>"; };
 		FEC53D681AF8B29500FCF327 /* ResponseUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResponseUser.h; sourceTree = "<group>"; };
@@ -151,6 +168,28 @@
 		FEC53D7C1AF923FF00FCF327 /* showNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = showNavigationController.h; sourceTree = "<group>"; };
 		FEC53D7D1AF923FF00FCF327 /* showNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = showNavigationController.m; sourceTree = "<group>"; };
 		FEC53D7E1AF923FF00FCF327 /* showNavigationController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = showNavigationController.xib; sourceTree = "<group>"; };
+		FEC571D51B032A1500D5D8E5 /* SDBallProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDBallProgressView.h; sourceTree = "<group>"; };
+		FEC571D61B032A1500D5D8E5 /* SDBallProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDBallProgressView.m; sourceTree = "<group>"; };
+		FEC571D71B032A1500D5D8E5 /* SDBaseProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDBaseProgressView.h; sourceTree = "<group>"; };
+		FEC571D81B032A1500D5D8E5 /* SDBaseProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDBaseProgressView.m; sourceTree = "<group>"; };
+		FEC571D91B032A1500D5D8E5 /* SDLoopProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDLoopProgressView.h; sourceTree = "<group>"; };
+		FEC571DA1B032A1500D5D8E5 /* SDLoopProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDLoopProgressView.m; sourceTree = "<group>"; };
+		FEC571DB1B032A1500D5D8E5 /* SDPieLoopProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDPieLoopProgressView.h; sourceTree = "<group>"; };
+		FEC571DC1B032A1500D5D8E5 /* SDPieLoopProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDPieLoopProgressView.m; sourceTree = "<group>"; };
+		FEC571DD1B032A1500D5D8E5 /* SDPieProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDPieProgressView.h; sourceTree = "<group>"; };
+		FEC571DE1B032A1500D5D8E5 /* SDPieProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDPieProgressView.m; sourceTree = "<group>"; };
+		FEC571DF1B032A1500D5D8E5 /* SDProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDProgressView.h; sourceTree = "<group>"; };
+		FEC571E01B032A1500D5D8E5 /* SDRotationLoopProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDRotationLoopProgressView.h; sourceTree = "<group>"; };
+		FEC571E11B032A1500D5D8E5 /* SDRotationLoopProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDRotationLoopProgressView.m; sourceTree = "<group>"; };
+		FEC571E21B032A1500D5D8E5 /* SDTransparentPieProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDTransparentPieProgressView.h; sourceTree = "<group>"; };
+		FEC571E31B032A1500D5D8E5 /* SDTransparentPieProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDTransparentPieProgressView.m; sourceTree = "<group>"; };
+		FEC571E51B032A1500D5D8E5 /* SDDemoItemView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDDemoItemView.h; sourceTree = "<group>"; };
+		FEC571E61B032A1500D5D8E5 /* SDDemoItemView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDDemoItemView.m; sourceTree = "<group>"; };
+		FEC571EF1B0359B800D5D8E5 /* storyheaderTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = storyheaderTableViewCell.h; sourceTree = "<group>"; };
+		FEC571F01B0359B800D5D8E5 /* storyheaderTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = storyheaderTableViewCell.m; sourceTree = "<group>"; };
+		FEC571F21B03638900D5D8E5 /* storyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = storyViewController.h; sourceTree = "<group>"; };
+		FEC571F31B03638900D5D8E5 /* storyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = storyViewController.m; sourceTree = "<group>"; };
+		FEC571F41B03638900D5D8E5 /* storyViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = storyViewController.xib; sourceTree = "<group>"; };
 		FEC7CD231AFDE05C007F798B /* ModelStory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ModelStory.h; sourceTree = "<group>"; };
 		FEC7CD241AFDE05C007F798B /* ModelStory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ModelStory.m; sourceTree = "<group>"; };
 		FEC7CD261AFDE204007F798B /* ResponseStory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResponseStory.h; sourceTree = "<group>"; };
@@ -385,6 +424,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		FE40204E1B0494CD002125E6 /* scrollImage */ = {
+			isa = PBXGroup;
+			children = (
+				FE40204F1B0494CD002125E6 /* ImgScrollView.h */,
+				FE4020501B0494CD002125E6 /* ImgScrollView.m */,
+				FE4020511B0494CD002125E6 /* TapImageView.h */,
+				FE4020521B0494CD002125E6 /* TapImageView.m */,
+			);
+			path = scrollImage;
+			sourceTree = "<group>";
+		};
 		FEC53D761AF922C700FCF327 /* show */ = {
 			isa = PBXGroup;
 			children = (
@@ -409,8 +459,51 @@
 				FEC8D1E71AFF5993009E3AB0 /* addStoryViewController.h */,
 				FEC8D1E81AFF5993009E3AB0 /* addStoryViewController.m */,
 				FEC8D1E91AFF5993009E3AB0 /* addStoryViewController.xib */,
+				FEC571F21B03638900D5D8E5 /* storyViewController.h */,
+				FEC571F31B03638900D5D8E5 /* storyViewController.m */,
+				FEC571F41B03638900D5D8E5 /* storyViewController.xib */,
 			);
 			name = show;
+			sourceTree = "<group>";
+		};
+		FEC571D31B032A1500D5D8E5 /* progress */ = {
+			isa = PBXGroup;
+			children = (
+				FEC571D41B032A1500D5D8E5 /* Lib */,
+				FEC571E41B032A1500D5D8E5 /* View */,
+			);
+			path = progress;
+			sourceTree = "<group>";
+		};
+		FEC571D41B032A1500D5D8E5 /* Lib */ = {
+			isa = PBXGroup;
+			children = (
+				FEC571D51B032A1500D5D8E5 /* SDBallProgressView.h */,
+				FEC571D61B032A1500D5D8E5 /* SDBallProgressView.m */,
+				FEC571D71B032A1500D5D8E5 /* SDBaseProgressView.h */,
+				FEC571D81B032A1500D5D8E5 /* SDBaseProgressView.m */,
+				FEC571D91B032A1500D5D8E5 /* SDLoopProgressView.h */,
+				FEC571DA1B032A1500D5D8E5 /* SDLoopProgressView.m */,
+				FEC571DB1B032A1500D5D8E5 /* SDPieLoopProgressView.h */,
+				FEC571DC1B032A1500D5D8E5 /* SDPieLoopProgressView.m */,
+				FEC571DD1B032A1500D5D8E5 /* SDPieProgressView.h */,
+				FEC571DE1B032A1500D5D8E5 /* SDPieProgressView.m */,
+				FEC571DF1B032A1500D5D8E5 /* SDProgressView.h */,
+				FEC571E01B032A1500D5D8E5 /* SDRotationLoopProgressView.h */,
+				FEC571E11B032A1500D5D8E5 /* SDRotationLoopProgressView.m */,
+				FEC571E21B032A1500D5D8E5 /* SDTransparentPieProgressView.h */,
+				FEC571E31B032A1500D5D8E5 /* SDTransparentPieProgressView.m */,
+			);
+			path = Lib;
+			sourceTree = "<group>";
+		};
+		FEC571E41B032A1500D5D8E5 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				FEC571E51B032A1500D5D8E5 /* SDDemoItemView.h */,
+				FEC571E61B032A1500D5D8E5 /* SDDemoItemView.m */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		FECA80071AF71A3000FF57AE = {
@@ -448,6 +541,8 @@
 		FECA80121AF71A3000FF57AE /* biancity */ = {
 			isa = PBXGroup;
 			children = (
+				FE40204E1B0494CD002125E6 /* scrollImage */,
+				FEC571D31B032A1500D5D8E5 /* progress */,
 				FED86C5B1B00BC8900B2F96C /* takePicture */,
 				FEC53D761AF922C700FCF327 /* show */,
 				FECA80F01AF74CA100FF57AE /* Cells */,
@@ -737,6 +832,8 @@
 				FEC7CD301AFE4142007F798B /* settingTableViewCell.m */,
 				FEC8D1E21AFF0077009E3AB0 /* StoryTableViewCell.h */,
 				FEC8D1E31AFF0077009E3AB0 /* StoryTableViewCell.m */,
+				FEC571EF1B0359B800D5D8E5 /* storyheaderTableViewCell.h */,
+				FEC571F01B0359B800D5D8E5 /* storyheaderTableViewCell.m */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -842,6 +939,7 @@
 				FED36DC31AF9C37100251846 /* saveAddrViewController.xib in Resources */,
 				FED36DBE1AF9C02200251846 /* AMap.bundle in Resources */,
 				FECA91C91AFB6BD800694847 /* townViewController.xib in Resources */,
+				FEC571F61B03638900D5D8E5 /* storyViewController.xib in Resources */,
 				FED36DC81AFA49DA00251846 /* upLoadImageViewController.xib in Resources */,
 				FEC8D1EB1AFF5993009E3AB0 /* addStoryViewController.xib in Resources */,
 				FEC8D0551AFC87290083FA76 /* settingTableViewController.xib in Resources */,
@@ -876,6 +974,7 @@
 			files = (
 				FECA80A81AF732A800FF57AE /* UIImage+GIF.m in Sources */,
 				FECA80ED1AF7340900FF57AE /* GeoInfo.m in Sources */,
+				FEC571F11B0359B800D5D8E5 /* storyheaderTableViewCell.m in Sources */,
 				FEC8D1E51AFF0077009E3AB0 /* StoryTableViewCell.m in Sources */,
 				FEC8D1EE1AFF608E009E3AB0 /* ModelGood.m in Sources */,
 				FEC7CD311AFE4142007F798B /* settingTableViewCell.m in Sources */,
@@ -883,6 +982,7 @@
 				FEC7CD2B1AFDE294007F798B /* StoryImage.m in Sources */,
 				FECA80761AF7329800FF57AE /* NSArray+JSONModel.m in Sources */,
 				FECA80751AF7329800FF57AE /* JSONModelError.m in Sources */,
+				FEC571E81B032A1500D5D8E5 /* SDBaseProgressView.m in Sources */,
 				FECA80D81AF732BF00FF57AE /* UIView+extension.m in Sources */,
 				FECA80771AF7329800FF57AE /* JSONAPI.m in Sources */,
 				FECA804E1AF7326B00FF57AE /* AFHTTPRequestOperation.m in Sources */,
@@ -891,6 +991,7 @@
 				FEC7CD251AFDE05C007F798B /* ModelStory.m in Sources */,
 				FED36DC71AFA49DA00251846 /* upLoadImageViewController.m in Sources */,
 				FECA801C1AF71A3000FF57AE /* HotTownViewController.m in Sources */,
+				FEC571EE1B032A1500D5D8E5 /* SDDemoItemView.m in Sources */,
 				FECA80A71AF732A800FF57AE /* UIButton+WebCache.m in Sources */,
 				FEC7CD281AFDE204007F798B /* ResponseStory.m in Sources */,
 				FECA80BD1AF732B300FF57AE /* UMUUploaderOperation.m in Sources */,
@@ -899,7 +1000,9 @@
 				FECA80741AF7329800FF57AE /* JSONModelClassProperty.m in Sources */,
 				FECA80BA1AF732B300FF57AE /* NSString+Base64Encode.m in Sources */,
 				FECA80A91AF732A800FF57AE /* UIImage+MultiFormat.m in Sources */,
+				FEC571E71B032A1500D5D8E5 /* SDBallProgressView.m in Sources */,
 				FED86C651B00BC8900B2F96C /* NLCropViewLayer.m in Sources */,
+				FEC571E91B032A1500D5D8E5 /* SDLoopProgressView.m in Sources */,
 				FEC53D7A1AF9237000FCF327 /* locationViewController.m in Sources */,
 				FECA80D71AF732BF00FF57AE /* UIScrollView+Refresh.m in Sources */,
 				FECA804F1AF7326B00FF57AE /* AFHTTPRequestOperationManager.m in Sources */,
@@ -917,7 +1020,9 @@
 				FEC8D0581AFCAC1C0083FA76 /* responseApplyTown.m in Sources */,
 				FECA811A1AF77A3900FF57AE /* ModelNearTown.m in Sources */,
 				FECA91C81AFB6BD800694847 /* townViewController.m in Sources */,
+				FEC571ED1B032A1500D5D8E5 /* SDTransparentPieProgressView.m in Sources */,
 				FECA80D61AF732BF00FF57AE /* UIScrollView+extension.m in Sources */,
+				FEC571EB1B032A1500D5D8E5 /* SDPieProgressView.m in Sources */,
 				FECA80D41AF732BF00FF57AE /* RefreshFooterView.m in Sources */,
 				FED86C671B00BC8900B2F96C /* NLViewController.m in Sources */,
 				FECA80511AF7326B00FF57AE /* AFNetworkReachabilityManager.m in Sources */,
@@ -932,12 +1037,15 @@
 				FECA80AB1AF732A800FF57AE /* UIImageView+HighlightedWebCache.m in Sources */,
 				FECA80781AF7329800FF57AE /* JSONHTTPClient.m in Sources */,
 				FEC8D1F41AFF60F7009E3AB0 /* ModelSubscriTown.m in Sources */,
+				FE4020531B0494CD002125E6 /* ImgScrollView.m in Sources */,
+				FEC571F51B03638900D5D8E5 /* storyViewController.m in Sources */,
 				FECA80EC1AF7340900FF57AE /* basicRequest.m in Sources */,
 				FECA80EF1AF7340900FF57AE /* ResponseHotTown.m in Sources */,
 				FEC53D701AF8BF3600FCF327 /* HomeTabBarViewController.m in Sources */,
 				FECA80D51AF732BF00FF57AE /* RefreshHeaderView.m in Sources */,
 				FECA811D1AF7AF4500FF57AE /* MyViewController.m in Sources */,
 				FECA80501AF7326B00FF57AE /* AFHTTPSessionManager.m in Sources */,
+				FEC571EC1B032A1500D5D8E5 /* SDRotationLoopProgressView.m in Sources */,
 				FECA80541AF7326B00FF57AE /* AFURLRequestSerialization.m in Sources */,
 				FEC8D0541AFC87290083FA76 /* settingTableViewController.m in Sources */,
 				FECA80721AF7329800FF57AE /* JSONModel.m in Sources */,
@@ -948,6 +1056,7 @@
 				FEC8D1F11AFF60B2009E3AB0 /* ResponseGood.m in Sources */,
 				FECA807B1AF7329800FF57AE /* JSONValueTransformer.m in Sources */,
 				FECA81131AF760BE00FF57AE /* MyCollectionReusableView.m in Sources */,
+				FEC571EA1B032A1500D5D8E5 /* SDPieLoopProgressView.m in Sources */,
 				FECA80191AF71A3000FF57AE /* AppDelegate.m in Sources */,
 				FECA80A61AF732A800FF57AE /* SDWebImagePrefetcher.m in Sources */,
 				FECA807A1AF7329800FF57AE /* JSONKeyMapper.m in Sources */,
@@ -960,6 +1069,7 @@
 				FECA80AA1AF732A800FF57AE /* UIImage+WebP.m in Sources */,
 				FECA80731AF7329800FF57AE /* JSONModelArray.m in Sources */,
 				FECA80A01AF732A800FF57AE /* SDImageCache.m in Sources */,
+				FE4020541B0494CD002125E6 /* TapImageView.m in Sources */,
 				FECA81171AF76EA400FF57AE /* NearViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

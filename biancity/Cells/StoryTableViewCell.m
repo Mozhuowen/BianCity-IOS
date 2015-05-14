@@ -13,9 +13,11 @@
 @implementation StoryTableViewCell
 -(instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
-    self.frame = CGRectMake(0, 0, self.frame.size.width, 80);
+    self.frame = CGRectMake(0, 5, self.frame.size.width, 80);
     if(self != nil){
-        _stroyImage = [[UIImageView alloc] initWithFrame:CGRectMake(4, 0, self.frame.size.height, self.frame.size.height)];
+        _stroyImage = [[UIImageView alloc] initWithFrame:CGRectMake(4, 5, self.frame.size.height, self.frame.size.height)];
+        _stroyImage.clipsToBounds  = YES;
+        _stroyImage.contentMode = UIViewContentModeCenter;
         _storyLabel = [[UILabel alloc] initWithFrame:CGRectMake(_stroyImage.frame.origin.x+_stroyImage.frame.size.width+4, 4,_stroyImage.frame.size.width*3, self.frame.size.height/2-4)];
         _dateLabel =[[UILabel alloc] initWithFrame:CGRectMake(_storyLabel.frame.origin.x, _storyLabel.frame.origin.y+_storyLabel.frame.size.height+4, _storyLabel.frame.size.width*3, self.frame.size.height/2-4)];
         _goodLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.frame.size.width-40, 4, 20, self.frame.size.height/2-4)];
@@ -36,7 +38,7 @@
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
-
+    NSLog(@"self select");
     // Configure the view for the selected state
 }
 
