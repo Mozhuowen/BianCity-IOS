@@ -1,3 +1,5 @@
+
+
 //
 //  MyCollectionReusableView.h
 //  biancity
@@ -12,7 +14,7 @@
 - (void) tappedWithObject:(id) sender;
 - (void) setting:(id) sender;
 @end
-@interface MyCollectionReusableView : UICollectionReusableView
+@interface UserCollectionReusableView : UICollectionReusableView
 @property (weak) id<TapImageViewDelegate> t_delegate;
 @property (nonatomic, strong) id identifier;
 @property (strong, nonatomic)  UIImageView *myCoverImage;
@@ -25,7 +27,7 @@
 @property (strong, nonatomic)  UIImageView *iconMaleImage;
 @property (strong, nonatomic)  UIImageView *iconAddrImage;
 @property (strong, nonatomic)  UIImageView *iconLineImage;
- 
+
 @property (strong, nonatomic)  UILabel *myTownsLabel;
 @property (strong, nonatomic)  UILabel *myTownLabel;
 @property (strong, nonatomic)  UIView *myTownView;
@@ -50,3 +52,4 @@
 @property (strong, nonatomic)  UILabel *goodLabel;
 @property (strong, nonatomic)  UIView *goodView;
 @end
+

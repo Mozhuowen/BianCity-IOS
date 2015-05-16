@@ -18,6 +18,9 @@ NSString *const getGoodsUrl = @"http://123.57.132.31:8080/getgoods";
 NSString *const getFansUrl = @"http://123.57.132.31:8080/getfans";
 NSString *const getSubscriUrl = @"http://123.57.132.31:8080/getsubscri";
 NSString *const getCreatePutao = @"http://123.57.132.31:8080/createputao";
+NSString *const getCommentUrl = @"http://123.57.132.31:8080/getcomment";
+NSString *const submitCommentUrl = @"http://123.57.132.31:8080/submitcomment";
+
 
 
 //NSString *const getHotTownUrl = @"http://192.168.199.200/gethot";
@@ -30,3 +33,6 @@ NSString *const getCreatePutao = @"http://123.57.132.31:8080/createputao";
 //NSString *const getFansUrl = @"http://192.168.199.200/getfans";
 //NSString *const getSubscriUrl = @"http://192.168.199.200/getsubscri";
 //NSString *const getCreatePutao = @"http://192.168.199.200/createputao";
+//NSString *const getCommentUrl = @"http://192.168.199.200/getcomment";
+//NSString *const submitCommentUrl = @"http://192.168.199.200/submitcomment";
+

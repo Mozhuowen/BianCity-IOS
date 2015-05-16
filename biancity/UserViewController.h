@@ -1,8 +1,8 @@
 //
-//  MyViewController.h
+//  UserViewController.h
 //  biancity
 //
-//  Created by 朱云 on 15/5/4.
+//  Created by 朱云 on 15/5/16.
 //  Copyright (c) 2015年 Zhuyun. All rights reserved.
 //
 
@@ -22,7 +22,7 @@
 #import "showNavigationController.h"
 #import "townViewController.h"
 #import "responseApplyTown.h"
-@interface MyViewController : UIViewController<UICollectionViewDataSource,UICollectionViewDelegate,SDWebImageManagerDelegate,TapImageViewDelegate>
+@interface UserViewController : UIViewController<UICollectionViewDataSource,UICollectionViewDelegate,SDWebImageManagerDelegate,TapImageViewDelegate>
 @property (nonatomic,strong) ResponseUser * User;
 @property (strong,nonatomic) NSMutableArray *fakeColors;
 @property (nonatomic,strong) ModelUser *requestUser;
@@ -30,5 +30,8 @@
 @property (nonatomic,strong) responseApplyTown *applyTown;
 @property (nonatomic,strong)  showNavigationController *show;
 @property (nonatomic,strong) townViewController *town;
-
+@property (nonatomic,strong) NSString* UserName;
+@property (nonatomic,strong) NSString* UserCover;
+@property (nonatomic) BOOL  via;
+@property (nonatomic,strong) NSNumber* userid;
 @end

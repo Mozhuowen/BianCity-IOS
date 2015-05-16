@@ -20,3 +20,5 @@ extern NSString *const getGoodsUrl;
 extern NSString *const getFansUrl;
 extern NSString *const getSubscriUrl;
 extern NSString *const getCreatePutao;
+extern NSString *const getCommentUrl ;
+extern NSString *const submitCommentUrl ;

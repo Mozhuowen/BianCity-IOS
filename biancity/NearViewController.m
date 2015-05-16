@@ -107,7 +107,7 @@
     return cell;
 }
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
-    
+  
     _applyTown = [_hotTown.towns objectAtIndex:indexPath.row];
      _town.applyTown = _applyTown;
     [self presentViewController:_show animated:YES completion:^{}];

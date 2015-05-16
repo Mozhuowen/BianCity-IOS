@@ -51,7 +51,6 @@
         [self addSubview:imgView];
 
     }
-    [self setImage:[UIImage imageNamed:@"placeholder"]];
     return self;
 }
 
@@ -63,8 +62,6 @@
 
 - (void) setAnimationRect
 {
-    if(imgView.image.size.width !=scaleOriginRect.size.width||imgView.image.size.height!=scaleOriginRect.size.height)
-        [self setImage:imgView.image];
     
     imgView.frame = scaleOriginRect;
 }
@@ -77,13 +74,10 @@
 - (void)loadImage:(NSString *)imageUrl{
    
     NSURL *url = [NSURL URLWithString:imageUrl];
- 
-    
-    
     if (url) {
         __weak id weakSelf = self;
         [imgView sd_setImageWithURL:url
-                          placeholderImage:[UIImage imageNamed:@"placeholder"]
+                          placeholderImage:imgView.image
                                    options:SDWebImageProgressiveDownload
                                   progress:^(NSInteger receivedSize, NSInteger expectedSize) {
                                       //add some ting

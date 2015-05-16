@@ -20,6 +20,7 @@
 #import "addStoryViewController.h"
 #import "ResponseGood.h"
 #import "storyViewController.h"
+#import "UserViewController.h"
 @interface townViewController ()
 @property (nonatomic,strong) ResponseStory *responseStroys;
 @property (nonatomic,strong) ModelStory *requestStory;
@@ -35,6 +36,7 @@
 @end
 
 @implementation townViewController
+
 -(void)viewWillAppear:(BOOL)animated{
     if(_oldTownid != [_applyTown.townid integerValue])
     [self.bgScrollView headerBeginRefreshing];
@@ -43,6 +45,7 @@
     _requestGood.type = 0;
        _requestFans.userid = _applyTown.userid;
       _requestSubscriTown.townid = _applyTown.townid;
+    _addrMapImage.image = [UIImage imageNamed:@"placeholder"];
     if(_applyTown.userid == nil||[_applyTown.ptuserid isEqualToNumber:_applyTown.userid]){
     self.navigationItem.title = @"我的边城";
         self.navigationItem.rightBarButtonItem = _rightButton;
@@ -54,7 +57,21 @@
         _iconAddImage.hidden = YES;
     }
     
-    [_bgImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@",getPictureUrl,_applyTown.cover,@"!large"]]  placeholderImage:[UIImage imageNamed:@"placeholder"] options:0] ;
+    
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@",getPictureUrl,_applyTown.cover,@"!small"]];
+ 
+      // __weak id weakSelf = self;
+    [_placeholderImage sd_setImageWithURL:url
+                   placeholderImage:[UIImage imageNamed:@"placeholder"]
+                            options:SDWebImageProgressiveDownload
+                           progress:^(NSInteger receivedSize, NSInteger expectedSize) {
+                               //add some ting
+                           }
+                          completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+                            NSLog(@"loadbgImage complete");
+                              [self loadBgimage:image];
+                          }];
+
    
     NSString *myImgUrl = _applyTown.usercover;
     NSString *jap = @"http://";
@@ -75,19 +92,82 @@
     _leaveMsgLabel.text = @"留言";
      _storyLabel.text =[NSString stringWithFormat:@"故事(%@)",_applyTown.storycount];
     _townNameLabel.text = _applyTown.townname;
+   
+    UILabel *la = [[UILabel alloc] initWithFrame:CGRectMake(4, _townNameLabel.frame.origin.y+_townNameLabel.frame.size.height+5,[UIScreen mainScreen].bounds.size.width-10, 5)];
+    la.text = [NSString stringWithFormat:@"简介: %@",_applyTown.descri];//@"描述";
+    la.lineBreakMode = NSLineBreakByWordWrapping;
+    la.numberOfLines = 0;
+    [la sizeToFit];
+    CGRect rect = la.frame;
+    rect.size.width =  rect.size.width > 300? rect.size.width:300;
+    _summaryLabel.frame = rect;
     _summaryLabel.text = [NSString stringWithFormat:@"简介: %@",_applyTown.descri];//@"描述";
+    [self changeFrame];
         _userNameLabel.text = _applyTown.username;
-    [_addrMapImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@",getPictureUrl,_applyTown.geoinfo.screenpng,@"!large"]]  placeholderImage:[UIImage imageNamed:@"placeholder"] options:0] ;
+    
+    url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@",getPictureUrl,_applyTown.geoinfo.screenpng,@"!small"]];
+    [_placeholderImage sd_setImageWithURL:url
+                         placeholderImage:[UIImage imageNamed:@"placeholder"]
+                                  options:SDWebImageProgressiveDownload
+                                 progress:^(NSInteger receivedSize, NSInteger expectedSize) {
+                                     //add some ting
+                                 }
+                                completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+                                    NSLog(@"loadMapImage complete");
+                                    [self loadMapImage:image];
+                                }];
     
     _addrLabel.text = [NSString stringWithFormat:@"%@%@%@",_applyTown.geoinfo.province,_applyTown.geoinfo.city,_applyTown.geoinfo.freeaddr];
     _oldTownid = [_applyTown.townid integerValue];
+    _storyTableView.scrollEnabled = NO;
+}
+-(void)loadMapImage:(UIImage*)image{
+    [_addrMapImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@",getPictureUrl,_applyTown.geoinfo.screenpng,@"!large"]]  placeholderImage:image options:0] ;
+    
+}
+-(void)loadBgimage:(UIImage*)image{
+     [_bgImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@",getPictureUrl,_applyTown.cover,@"!large"]]  placeholderImage:image options:0] ;
+}
+-(void)changeFrame{
+    
+    _userImageView.frame=CGRectMake(5, _summaryLabel.frame.origin.y+_summaryLabel.frame.size.height+25, 50, 50);
+    
+    _userNameLabel.frame=CGRectMake(_userImageView.frame.origin.x+_userImageView.frame.size.height+4, _userImageView.frame.origin.y+5, 100, 20);
+    
+    _fansLabel.frame=CGRectMake(_userNameLabel.frame.origin.x, _userNameLabel.frame.size.height+_userNameLabel.frame.origin.y+5, 80, 12);
+    
+    _iconAddrimage.frame=CGRectMake(_userImageView.frame.origin.x, _userImageView.frame.origin.y+_userImageView.frame.size.height+15, 20, 20);
+    
+    _addrLabel.frame=CGRectMake( _iconAddrimage.frame.origin.x+_iconAddrimage.frame.size.width+2, _iconAddrimage.frame.origin.y+3, 150, 12);
+    //[_addrLabel sizeToFit];
+    _subscri.frame=CGRectMake(5, _iconAddrimage.frame.origin.y+50, 80, 40);
+    _leaveMsgLabel.frame= CGRectMake(_subscri.frame.origin.x+90, _subscri.frame.origin.y, 80, 40);
+    
+    _addrMapImage.frame=
+    CGRectMake(self.view.frame.size.width*3/5-10,_summaryLabel.frame.origin.y+_summaryLabel.frame.size.height, self.view.frame.size.width*2/5, _leaveMsgLabel.frame.origin.y+_leaveMsgLabel.frame.size.height-(_summaryLabel.frame.origin.y+_summaryLabel.frame.size.height));
+    
+    _storyLabel.frame=CGRectMake(4,_leaveMsgLabel.frame.origin.y+60, 80, 35);
+    
+    _iconAddImage.frame=CGRectMake(self.view.frame.size.width -50, _storyLabel.frame.origin.y-5, 45, 45);
+    CGRect re = _storyTableView.frame;
+    re.origin.y = _iconAddImage.frame.origin.y+50;
+    _storyTableView.frame=re;
+}
+-(void)tapUser{
+    
+    UserViewController * user = [[UserViewController alloc] initWithNibName:@"UserViewController" bundle:nil];
+    user.userid = _applyTown.userid;
+    user.UserCover = _applyTown.usercover;
+    user.UserName = _applyTown.username;
+    user.via = YES;
+    [self.navigationController pushViewController:user animated:YES];
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     SDWebImageManager *manager = [SDWebImageManager sharedManager];
     manager.delegate = self;
-
+    _placeholderImage = [[UIImageView alloc] init];
      _leftButton= [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemReply target:self action:@selector(selectLeftAction:)];
     
      _rightButton= [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemTrash  target:self action:@selector(selectRightAction:)];
@@ -116,16 +196,20 @@
     
     _iconGoodImageView =[[UIImageView alloc] initWithFrame:CGRectMake(_bgImageView.frame.size.width-25, _townNameLabel.frame.origin.y, 24, 24)];
     _iconGoodImageView.image =[UIImage imageNamed:@"ic_list_thumb"];
-    _summaryLabel =[[UILabel alloc] initWithFrame:CGRectMake(4, _townNameLabel.frame.origin.y+_townNameLabel.frame.size.height+5, _bgImageView.frame.size.width-10, 15)];
-    _summaryLabel.font = [UIFont systemFontOfSize:10];
-    
-    _userImageView = [[UIImageView alloc] initWithFrame:CGRectMake(5, _summaryLabel.frame.origin.y+30, 50, 50)];
+    _summaryLabel =[[UILabel alloc] initWithFrame:CGRectMake(4, _townNameLabel.frame.origin.y+_townNameLabel.frame.size.height+15, [UIScreen mainScreen].bounds.size.width-10, 5)];
+    _summaryLabel.font = [UIFont systemFontOfSize:12];
+    _summaryLabel.lineBreakMode = NSLineBreakByWordWrapping;
+    _summaryLabel.numberOfLines = 0;
+    _userImageView = [[UIImageView alloc] initWithFrame:CGRectMake(5, _summaryLabel.frame.origin.y+_summaryLabel.frame.size.height+15, 50, 50)];
     _userImageView.layer.masksToBounds = YES;
     _userImageView.layer.cornerRadius = 25;
+    _userImageView.userInteractionEnabled = YES;
+    UITapGestureRecognizer *tapUser=[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapUser)];
+    [_userImageView addGestureRecognizer:tapUser];
 //    _userImageView.image = [UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"bj" ofType:@"jpg"]];
     
     
-    _userNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(_userImageView.frame.origin.x+_userImageView.frame.size.height+4, _userImageView.frame.origin.y, 100, 20)];
+    _userNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(_userImageView.frame.origin.x+_userImageView.frame.size.height, _userImageView.frame.origin.y+4, 100, 20)];
     _userNameLabel.font = [UIFont systemFontOfSize:14];
 
     _fansLabel = [[UILabel alloc] initWithFrame:CGRectMake(_userNameLabel.frame.origin.x, _userNameLabel.frame.size.height+_userNameLabel.frame.origin.y+5, 80, 12)];
@@ -134,8 +218,11 @@
     _iconAddrimage = [[UIImageView alloc] initWithFrame:CGRectMake(_userImageView.frame.origin.x, _userImageView.frame.origin.y+_userImageView.frame.size.height+15, 20, 20)];
     
     _iconAddrimage.image = [UIImage imageNamed:@"ic_location_small"];
-    _addrLabel = [[UILabel alloc] initWithFrame:CGRectMake( _iconAddrimage.frame.origin.x+_iconAddrimage.frame.size.width+2, _iconAddrimage.frame.origin.y+3, 200, 12)];
+    _addrLabel = [[UILabel alloc] initWithFrame:CGRectMake( _iconAddrimage.frame.origin.x+_iconAddrimage.frame.size.width+2,  _iconAddrimage.frame.origin.y, 150, 12)];
+    [_addrLabel sizeToFit];
     _addrLabel.font = [UIFont systemFontOfSize:14];
+   _addrLabel.lineBreakMode = NSLineBreakByWordWrapping;
+    _addrLabel.numberOfLines = 0;
     _subscri = [[UILabel alloc ] initWithFrame:CGRectMake(5, _iconAddrimage.frame.origin.y+50, 80, 40)];
     _subscri.layer.borderWidth = 1.0;
     _subscri.layer.cornerRadius = 3.0;
@@ -146,7 +233,7 @@
     _leaveMsgLabel.layer.cornerRadius = 3.0;
     _leaveMsgLabel.layer.borderColor =[[UIColor grayColor] CGColor];
     _leaveMsgLabel.textAlignment =NSTextAlignmentCenter;
-    _addrMapImage = [[UIImageView alloc ]initWithFrame:CGRectMake(self.view.frame.size.width*3/5-10,_summaryLabel.frame.origin.y+18, self.view.frame.size.width*2/5, _leaveMsgLabel.frame.origin.y+40-(_summaryLabel.frame.origin.y+20))];
+    _addrMapImage = [[UIImageView alloc ]initWithFrame:CGRectMake(self.view.frame.size.width*3/5-10,_summaryLabel.frame.origin.y+_summaryLabel.frame.size.height, self.view.frame.size.width*2/5, _leaveMsgLabel.frame.origin.y+_leaveMsgLabel.frame.size.height-(_summaryLabel.frame.origin.y+_summaryLabel.frame.size.height))];
 //    _addrMapImage.image = [UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"bj" ofType:@"jpg"]];
 
     _storyLabel = [[UILabel alloc] initWithFrame:CGRectMake(4,_leaveMsgLabel.frame.origin.y+80, 80, 35)];
@@ -298,7 +385,7 @@
             }else{
             _bgScrollView.footerHidden = NO;
         }
-        log(@"story stat is %d,errcode is %d,%@",_responseStroys.stat,_responseStroys.errcode,_responseStroys);
+        log(@"story stat is %d,errcode is %d",_responseStroys.stat,_responseStroys.errcode);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error: %@", error);
         if(check ==0){
@@ -362,7 +449,7 @@
         
     }
 
-    cell.selectionStyle = UITableViewCellSelectionStyleGray;
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
 }
 

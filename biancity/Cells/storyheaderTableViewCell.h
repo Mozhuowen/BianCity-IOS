@@ -10,6 +10,7 @@
 
 @interface storyheaderTableViewCell : UITableViewCell
 @property (nonatomic,strong) UIImageView * bgImageView;
+@property (nonatomic,strong) UILabel *titleLabel;
 @property (nonatomic,strong) UIImageView *iconUserImage;
 @property (nonatomic,strong) UILabel * userNameLabel;
 @property (nonatomic,strong) UILabel * dateLabel;
@@ -18,4 +19,5 @@
 @property (nonatomic,strong) UIImageView * iconGoodImage;
 @property (nonatomic,strong) UILabel *descrilabel;
 @property (nonatomic,strong) UIView * imagesView;
+@property (nonatomic,strong) UILabel *comment;
 @end

@@ -31,4 +31,6 @@
 @property (nonatomic,strong) UIImageView *iconAddImage;
 @property (nonatomic,strong) UIBarButtonItem *leftButton;
 @property (nonatomic,strong) UIBarButtonItem *rightButton;
+@property (nonatomic,strong) UIImageView *placeholderImage;
+
 @end

@@ -101,7 +101,7 @@
         <!--我的-->
         <scene sceneID="LGC-gs-SGh">
             <objects>
-                <viewController id="E8t-uw-FbH" customClass="MyViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="MyViewController" id="E8t-uw-FbH" customClass="MyViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Chv-lh-ocM"/>
                         <viewControllerLayoutGuide type="bottom" id="oGZ-2C-MIP"/>

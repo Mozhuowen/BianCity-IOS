@@ -8,31 +8,14 @@
 #define RandomColor [UIColor colorWithRed:arc4random_uniform(255)/255.0 green:arc4random_uniform(255)/255.0 blue:arc4random_uniform(255)/255.0 alpha:1]
 
 #import "MyViewController.h"
-#import "MyCollectionReusableView.h"
-#import "HotTownCollectionViewCell.h"
-#import "ResponseHotTown.h"
-#import "ResponseUser.h"
-#import "Refresh.h"
-#import "MsgEncrypt.h"
-#import "AFHTTPRequestOperationManager.h"
-#import "locationViewController.h"
-#import "showNavigationController.h"
-#import "settingTableViewController.h"
-#import "showNavigationController.h"
-#import "townViewController.h"
-#import "responseApplyTown.h"
+
 @interface MyViewController ()
 @property (weak, nonatomic) IBOutlet UICollectionView *myCollectionView;
-@property (nonatomic,strong) ResponseUser * User;
-@property (strong,nonatomic) NSMutableArray *fakeColors;
-@property (nonatomic,strong) ModelUser *requestUser;
-@property (nonatomic,strong) UIScrollView *bgScrollView;
-@property (nonatomic,strong) responseApplyTown *applyTown;
-@property (nonatomic,strong)  showNavigationController *show;
-@property (nonatomic,strong) townViewController *town;
+
 @end
 
 @implementation MyViewController
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     _applyTown = [[responseApplyTown alloc] init];
@@ -58,9 +41,6 @@
    NSLog(@"width is %f,Height is %f",self.myCollectionView.frame.size.width,self.myCollectionView.frame.size.width);
     _myCollectionView.userInteractionEnabled = YES;
     // Do any additional setup after loading the view.
-}
--(void)viewWillAppear:(BOOL)animated{
-   // [self.myCollectionView headerBeginRefreshing];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -109,7 +89,7 @@
         return cell;
 }
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
-   
+ 
     _applyTown = [_User.user.mytowns objectAtIndex:indexPath.row];
     _town.applyTown = _applyTown;
     [self presentViewController:_show animated:YES completion:^{}];
