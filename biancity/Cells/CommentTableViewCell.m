@@ -22,15 +22,19 @@
         _goodLabel = [[UILabel alloc] initWithFrame:CGRectMake([UIScreen mainScreen].bounds.size.width-70, _userNameLabel.frame.origin.y, 30, 30)];
         _goodLabel.textAlignment = NSTextAlignmentRight;
         _iconGoodImage = [[UIImageView alloc] initWithFrame:CGRectMake(_goodLabel.frame.origin.x+_goodLabel.frame.size.width, _goodLabel.frame.origin.y, 30, 30)];
-        _commentlabel = [[UIWebView alloc] initWithFrame:CGRectMake(_iconUserImage.frame.origin.x+40, _iconUserImage.frame.origin.y+_iconUserImage.frame.size.height, [UIScreen mainScreen].bounds.size.width-45, 10)];
-        _commentlabel.scrollView.scrollEnabled = NO;
-        _commentlabel.backgroundColor = [UIColor clearColor];
+          _commentRTlabel = [[RTLabel alloc] initWithFrame:CGRectMake(_iconUserImage.frame.origin.x+40, _iconUserImage.frame.origin.y+_iconUserImage.frame.size.height, [UIScreen mainScreen].bounds.size.width-45, 10)];
+        	[_commentRTlabel setBackgroundColor:[UIColor clearColor]];
+         [_commentRTlabel setParagraphReplacement:@""];
+        _commentlabel = [[UILabel alloc] initWithFrame:_commentRTlabel.frame];       _commentlabel.numberOfLines = 0;
+        _commentlabel.lineBreakMode = NSLineBreakByWordWrapping;
         [self.contentView addSubview:_iconUserImage];
         [self.contentView addSubview:_userNameLabel];
         [self.contentView addSubview:_dateLabel];
         [self.contentView addSubview:_goodLabel];
         [self.contentView addSubview:_iconGoodImage];
         [self.contentView addSubview:_commentlabel];
+         [self.contentView addSubview:_commentRTlabel];
+        // [self.contentView addSubview:_commentWebView];
     }
     return  self;
 }

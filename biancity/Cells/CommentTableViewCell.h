@@ -7,12 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "RTLabel.h"
 @interface CommentTableViewCell : UITableViewCell
 @property (nonatomic,strong) UIImageView *iconUserImage;
 @property (nonatomic,strong) UILabel * userNameLabel;
 @property (nonatomic,strong) UILabel * dateLabel;
 @property (nonatomic,strong) UILabel * goodLabel;
 @property (nonatomic,strong) UIImageView * iconGoodImage;
-@property (nonatomic,strong) UIWebView *commentlabel;
+//@property (nonatomic,strong) UIWebView *commentWebView;
+@property (nonatomic,strong) UILabel *commentlabel;
+@property (nonatomic,strong) RTLabel *commentRTlabel;
 @end

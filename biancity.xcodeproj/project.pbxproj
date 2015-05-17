@@ -135,6 +135,11 @@
 		FECAE90E1B07763E00FE6FA7 /* UserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FECAE90C1B07763E00FE6FA7 /* UserViewController.m */; };
 		FECAE90F1B07763E00FE6FA7 /* UserViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FECAE90D1B07763E00FE6FA7 /* UserViewController.xib */; };
 		FECAE9121B07865100FE6FA7 /* UserCollectionReusableView.m in Sources */ = {isa = PBXBuildFile; fileRef = FECAE9111B07865100FE6FA7 /* UserCollectionReusableView.m */; };
+		FED0A5D41B08993800B452DB /* RTLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = FED0A5D31B08993800B452DB /* RTLabel.m */; };
+		FED0A5D81B08A0F700B452DB /* messageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FED0A5D61B08A0F700B452DB /* messageViewController.m */; };
+		FED0A5D91B08A0F700B452DB /* messageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FED0A5D71B08A0F700B452DB /* messageViewController.xib */; };
+		FED0A5DC1B08C24B00B452DB /* ModelMessBoard.m in Sources */ = {isa = PBXBuildFile; fileRef = FED0A5DB1B08C24B00B452DB /* ModelMessBoard.m */; };
+		FED0A5DF1B08C39F00B452DB /* ResponseMess.m in Sources */ = {isa = PBXBuildFile; fileRef = FED0A5DE1B08C39F00B452DB /* ResponseMess.m */; };
 		FED36DBE1AF9C02200251846 /* AMap.bundle in Resources */ = {isa = PBXBuildFile; fileRef = FED36DBD1AF9C02200251846 /* AMap.bundle */; };
 		FED36DC21AF9C37100251846 /* saveAddrViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FED36DC01AF9C37100251846 /* saveAddrViewController.m */; };
 		FED36DC31AF9C37100251846 /* saveAddrViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FED36DC11AF9C37100251846 /* saveAddrViewController.xib */; };
@@ -396,6 +401,15 @@
 		FECAE90D1B07763E00FE6FA7 /* UserViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UserViewController.xib; sourceTree = "<group>"; };
 		FECAE9101B07865100FE6FA7 /* UserCollectionReusableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserCollectionReusableView.h; sourceTree = "<group>"; };
 		FECAE9111B07865100FE6FA7 /* UserCollectionReusableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserCollectionReusableView.m; sourceTree = "<group>"; };
+		FED0A5D21B08993800B452DB /* RTLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RTLabel.h; sourceTree = "<group>"; };
+		FED0A5D31B08993800B452DB /* RTLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RTLabel.m; sourceTree = "<group>"; };
+		FED0A5D51B08A0F700B452DB /* messageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = messageViewController.h; sourceTree = "<group>"; };
+		FED0A5D61B08A0F700B452DB /* messageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = messageViewController.m; sourceTree = "<group>"; };
+		FED0A5D71B08A0F700B452DB /* messageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = messageViewController.xib; sourceTree = "<group>"; };
+		FED0A5DA1B08C24B00B452DB /* ModelMessBoard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ModelMessBoard.h; sourceTree = "<group>"; };
+		FED0A5DB1B08C24B00B452DB /* ModelMessBoard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ModelMessBoard.m; sourceTree = "<group>"; };
+		FED0A5DD1B08C39F00B452DB /* ResponseMess.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResponseMess.h; sourceTree = "<group>"; };
+		FED0A5DE1B08C39F00B452DB /* ResponseMess.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResponseMess.m; sourceTree = "<group>"; };
 		FED36DBD1AF9C02200251846 /* AMap.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = AMap.bundle; path = biancity/GaodeGeoInfo/MAMapKit.framework/Versions/2.4.2.19ad4bb/Resources/AMap.bundle; sourceTree = "<group>"; };
 		FED36DBF1AF9C37100251846 /* saveAddrViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = saveAddrViewController.h; sourceTree = "<group>"; };
 		FED36DC01AF9C37100251846 /* saveAddrViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = saveAddrViewController.m; sourceTree = "<group>"; };
@@ -485,6 +499,9 @@
 				FECAE90B1B07763E00FE6FA7 /* UserViewController.h */,
 				FECAE90C1B07763E00FE6FA7 /* UserViewController.m */,
 				FECAE90D1B07763E00FE6FA7 /* UserViewController.xib */,
+				FED0A5D51B08A0F700B452DB /* messageViewController.h */,
+				FED0A5D61B08A0F700B452DB /* messageViewController.m */,
+				FED0A5D71B08A0F700B452DB /* messageViewController.xib */,
 			);
 			name = show;
 			sourceTree = "<group>";
@@ -573,6 +590,7 @@
 		FECA80121AF71A3000FF57AE /* biancity */ = {
 			isa = PBXGroup;
 			children = (
+				FED0A5D11B08993800B452DB /* webLabel */,
 				FEC62DEA1B06225A004510DC /* KeyboardObserver */,
 				FE40204E1B0494CD002125E6 /* scrollImage */,
 				FEC571D31B032A1500D5D8E5 /* progress */,
@@ -852,6 +870,10 @@
 				FE4020561B04FCE1002125E6 /* ModelComment.m */,
 				FE4020581B04FE34002125E6 /* ResponseComment.h */,
 				FE4020591B04FE34002125E6 /* ResponseComment.m */,
+				FED0A5DA1B08C24B00B452DB /* ModelMessBoard.h */,
+				FED0A5DB1B08C24B00B452DB /* ModelMessBoard.m */,
+				FED0A5DD1B08C39F00B452DB /* ResponseMess.h */,
+				FED0A5DE1B08C39F00B452DB /* ResponseMess.m */,
 			);
 			path = model;
 			sourceTree = "<group>";
@@ -877,6 +899,15 @@
 				FECAE9111B07865100FE6FA7 /* UserCollectionReusableView.m */,
 			);
 			path = Cells;
+			sourceTree = "<group>";
+		};
+		FED0A5D11B08993800B452DB /* webLabel */ = {
+			isa = PBXGroup;
+			children = (
+				FED0A5D21B08993800B452DB /* RTLabel.h */,
+				FED0A5D31B08993800B452DB /* RTLabel.m */,
+			);
+			path = webLabel;
 			sourceTree = "<group>";
 		};
 		FED86C5B1B00BC8900B2F96C /* takePicture */ = {
@@ -986,6 +1017,7 @@
 				FECAE90F1B07763E00FE6FA7 /* UserViewController.xib in Resources */,
 				FEC8D0551AFC87290083FA76 /* settingTableViewController.xib in Resources */,
 				FED86C681B00BC8900B2F96C /* sceenshot.png in Resources */,
+				FED0A5D91B08A0F700B452DB /* messageViewController.xib in Resources */,
 				FEC53D801AF923FF00FCF327 /* showNavigationController.xib in Resources */,
 				FECA81141AF760BE00FF57AE /* MyCollectionReusableView.xib in Resources */,
 				FECA811F1AF7B43300FF57AE /* bj.jpg in Resources */,
@@ -1054,6 +1086,7 @@
 				FECAE90E1B07763E00FE6FA7 /* UserViewController.m in Sources */,
 				FECA80A21AF732A800FF57AE /* SDWebImageDecoder.m in Sources */,
 				FECA80BB1AF732B300FF57AE /* NSString+NSHash.m in Sources */,
+				FED0A5D81B08A0F700B452DB /* messageViewController.m in Sources */,
 				FECA80B91AF732B300FF57AE /* NSData+MD5Digest.m in Sources */,
 				FEC53D6A1AF8B29500FCF327 /* ResponseUser.m in Sources */,
 				FECA80F41AF74CD300FF57AE /* HotTownCollectionViewCell.m in Sources */,
@@ -1063,6 +1096,7 @@
 				FEC7CD2E1AFDE3CB007F798B /* TownStory.m in Sources */,
 				FEC8D0581AFCAC1C0083FA76 /* responseApplyTown.m in Sources */,
 				FECA811A1AF77A3900FF57AE /* ModelNearTown.m in Sources */,
+				FED0A5DF1B08C39F00B452DB /* ResponseMess.m in Sources */,
 				FECA91C81AFB6BD800694847 /* townViewController.m in Sources */,
 				FEC571ED1B032A1500D5D8E5 /* SDTransparentPieProgressView.m in Sources */,
 				FECA80D61AF732BF00FF57AE /* UIScrollView+extension.m in Sources */,
@@ -1105,6 +1139,7 @@
 				FECA807B1AF7329800FF57AE /* JSONValueTransformer.m in Sources */,
 				FECA81131AF760BE00FF57AE /* MyCollectionReusableView.m in Sources */,
 				FEC571EA1B032A1500D5D8E5 /* SDPieLoopProgressView.m in Sources */,
+				FED0A5DC1B08C24B00B452DB /* ModelMessBoard.m in Sources */,
 				FECA80191AF71A3000FF57AE /* AppDelegate.m in Sources */,
 				FECA80A61AF732A800FF57AE /* SDWebImagePrefetcher.m in Sources */,
 				FECA807A1AF7329800FF57AE /* JSONKeyMapper.m in Sources */,
@@ -1112,6 +1147,7 @@
 				FEC8D04D1AFC53070083FA76 /* ModelHotTown.m in Sources */,
 				FECA80D31AF732BF00FF57AE /* RefreshConsts.m in Sources */,
 				FECA80A41AF732A800FF57AE /* SDWebImageDownloaderOperation.m in Sources */,
+				FED0A5D41B08993800B452DB /* RTLabel.m in Sources */,
 				FECA80161AF71A3000FF57AE /* main.m in Sources */,
 				FECA80A51AF732A800FF57AE /* SDWebImageManager.m in Sources */,
 				FECA80AA1AF732A800FF57AE /* UIImage+WebP.m in Sources */,

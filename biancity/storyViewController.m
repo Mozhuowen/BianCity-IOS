@@ -13,6 +13,7 @@
 #import "Refresh.h"
 #import "CommentTableViewCell.h"
 #import "UIView+KeyboardObserver.h"
+#import "UserViewController.h"
 @interface storyViewController ()
 {
     //  UITableView *myTable;
@@ -35,7 +36,6 @@
 @property (nonatomic,strong) UITextField * responseText;
 @property (nonatomic,strong) UILabel * retrunLabel;
 @property (nonatomic,strong) UIView *bgTextView;
-
 @end
 
 @implementation storyViewController
@@ -78,6 +78,10 @@
     [self loadCommentInfo:2];
 }
 -(void)viewWillAppear:(BOOL)animated{
+    if([_story.userid isEqualToNumber:_story.ptuserid]){
+        UIBarButtonItem *rightButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemTrash  target:self action:@selector(selectRightAction:)];
+        self.navigationItem.rightBarButtonItem = rightButton;
+    }
      [_bgTextView addKeyboardObserver];
     
 }
@@ -97,8 +101,6 @@
     UIBarButtonItem *leftButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemReply target:self action:@selector(selectLeftAction:)];
     self.navigationItem.leftBarButtonItem = leftButton;
     
-    UIBarButtonItem *rightButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemTrash  target:self action:@selector(selectRightAction:)];
-    self.navigationItem.rightBarButtonItem = rightButton;
     self.view.frame = [UIScreen mainScreen].bounds;
     _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height)];
     _bgTextView = [[UIView alloc] initWithFrame:CGRectMake(0, _tableView.frame.size.height-40, _tableView.frame.size.width, 40)];
@@ -193,7 +195,9 @@
  
 }
 -(CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+
 {
+    NSString*str;
     UILabel *label;
     switch (indexPath.section) {
             
@@ -216,9 +220,12 @@
                label = [[UILabel alloc] initWithFrame:CGRectMake(40, 0, [UIScreen mainScreen].bounds.size.width-45, 10)];
             label.lineBreakMode = NSLineBreakByWordWrapping;
             label.numberOfLines = 0;
-            label.text =[[_responseComment.comments objectAtIndex:indexPath.row] content];
+            str= [[[_responseComment.comments objectAtIndex:indexPath.row] content] stringByReplacingOccurrencesOfString:@"<font color='#1E90FF'>" withString:@""];
+            str = [str stringByReplacingOccurrencesOfString:@"</font>" withString:@""];
+
+            label.text =str;
             [label sizeToFit];
-            return 40 + (label.frame.size.height>45?label.frame.size.height:45);
+            return 40 + ((label.frame.size.height+20)>45?(label.frame.size.height+20):45);
             break;
         default:
          return 0;
@@ -229,7 +236,7 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     switch (indexPath.section) {
         case 0:
-        
+        [_responseText resignFirstResponder];
         break;
         case 1:
         _responseText.placeholder = [NSString stringWithFormat:@"回复: %@",[[_responseComment.comments objectAtIndex:indexPath.row] username]];
@@ -248,12 +255,14 @@
         rect.size.height = rect.size.height -40;
         _tableView.frame = rect;
         _bgTextView.alpha = 1;
+         [_responseText becomeFirstResponder];
     }else {
         rect.size.height = rect.size.height +40;
         _tableView.frame = rect;
         _bgTextView.alpha = 0;
     }
     [_bgTextView setNeedsDisplay];
+   
     NSLog(@"textTap");
 }
 -(void)textAppear:(NSInteger)index{
@@ -265,9 +274,13 @@
         _tableView.frame = rect;
         _bgTextView.alpha = 1;
     }
+     [_responseText becomeFirstResponder];
     [_bgTextView setNeedsDisplay];
     NSLog(@"textTap");
 }
+
+
+
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     UITableViewCell *cell;
     storyheaderTableViewCell * headerCell;
@@ -295,8 +308,15 @@
         
             headerCell.iconGoodImage.image = [UIImage imageNamed:@"ic_list_thumb"];
             [self setUserImage:_story.usercover imageView:headerCell.iconUserImage row:indexPath.row];
+            headerCell.iconUserImage.tag =-1;
+            
+            label.frame =headerCell.descrilabel.frame ;
+            label.lineBreakMode = NSLineBreakByWordWrapping;
+            label.numberOfLines = 0;
+            label.text = _story.content;
+            [label sizeToFit];
+            headerCell.descrilabel.frame = label.frame;
             headerCell.descrilabel.text = _story.content;
-            [headerCell.descrilabel sizeToFit];
              rect = headerCell.imagesView.frame;
             rect.origin.y = headerCell.descrilabel.frame.origin.y+headerCell.descrilabel.frame.size.height+10;
             headerCell.imagesView.frame =rect;
@@ -324,29 +344,42 @@
         NSLog(@"index.row is %ld",(long)indexPath.row);
             tmp =[_responseComment.comments objectAtIndex:indexPath.row];
              [self setUserImage:tmp.cover imageView:commentCell.iconUserImage row:indexPath.row];
+           NSString*str= [tmp.content stringByReplacingOccurrencesOfString:@"<font color='#1E90FF'>" withString:@""];
+            str = [str stringByReplacingOccurrencesOfString:@"</font>" withString:@""];
             label.lineBreakMode = NSLineBreakByWordWrapping;
             label.numberOfLines = 0;
-            label.text =tmp.content;
+            label.text =str;
             [label sizeToFit];
             rect = commentCell.commentlabel.frame;
             rect.size.height = label.frame.size.height>35?label.frame.size.height:35;
             rect.size.width = label.frame.size.width >=275?label.frame.size.width:275;
-            commentCell.commentlabel.frame = rect;
-            [commentCell.commentlabel loadHTMLString:tmp.content baseURL:nil] ;
-//            [commentCell.commentlabel sizeToFit];
-//             [commentCell.commentlabel loadHTMLString:tmp.content baseURL:nil] ;
-             NSLog(@"commentCell width %f,commentCell height %f",commentCell.commentlabel.frame.size.width,commentCell.commentlabel.frame.size.height);
+            rect.size.height +=10;
+           
+            NSString *myImgUrl = tmp.content;
+            NSString *jap = @"</font>";
+            NSRange foundObj=[myImgUrl rangeOfString:jap options:NSCaseInsensitiveSearch];
+            if(foundObj.length>0){
+            commentCell.commentRTlabel.hidden =NO;
+            commentCell.commentRTlabel.frame =rect;
+            commentCell.commentRTlabel.text =tmp.content;
+                commentCell.commentlabel.hidden = YES;
+            }else{
+                commentCell.commentlabel.hidden = NO;
+                commentCell.commentlabel.frame = rect;
+                commentCell.commentlabel.text = tmp.content;
+                commentCell.commentRTlabel.hidden =YES;
+            }
+             log(@"commentCell width %f,commentCell height %f",commentCell.commentlabel.frame.size.width,commentCell.commentlabel.frame.size.height);
            // [commentCell.commentlabel setNeedsDisplay];
             commentCell.userNameLabel.text = tmp.username;
             commentCell.dateLabel.text =tmp.time;
             commentCell.goodLabel.text = [NSString stringWithFormat:@"%@",tmp.goods];
             cell = commentCell;
             break;
-        default:
-            break;
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    [cell sizeToFit];
+   // [cell sizeToFit];
+    
     return cell;
 }
 -(void)loadBgimage:(UIImageView*)imgView image:(UIImage*)image{
@@ -401,7 +434,27 @@
     }else {
         imView.image =[UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"bj" ofType:@"jpg"]];
     }
-
+    imView.tag = index_row;
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapUser:)];
+    [imView addGestureRecognizer:tap];
+    imView.userInteractionEnabled =YES;
+}
+-(void)tapUser:(UITapGestureRecognizer*)sender{
+    UIImageView *vi =( UIImageView *) [sender view];
+    NSInteger idx_user = vi.tag;
+    NSLog(@"tag %ld",(long)idx_user);
+    UserViewController * user = [[UserViewController alloc] initWithNibName:@"UserViewController" bundle:nil];
+    if(idx_user<0){
+        user.userid = _story.userid;
+        user.UserCover = _story.usercover;
+        user.UserName = _story.username;
+    }else{
+    user.userid = [[_responseComment.comments objectAtIndex:idx_user] userid];
+    user.UserCover = [[_responseComment.comments objectAtIndex:idx_user] cover];
+        user.UserName = [[_responseComment.comments objectAtIndex:idx_user] username];
+    }
+    user.via = YES;
+    [self.navigationController pushViewController:user animated:YES];
 }
 
 #pragma scrollImage
@@ -521,6 +574,8 @@
             [_tableView headerEndRefreshing];
             if([_responseComment.comments count]<10){
                 _tableView.footerHidden =YES;
+            }else{
+                _tableView.footerHidden =NO;
             }
         }else if(check ==1){
             ResponseComment *ad = [[ResponseComment alloc] initWithDictionary:data error:nil];
@@ -532,6 +587,8 @@
                 _responseComment.errcode = ad.errcode;
                 if([ad.comments count]<10){
                     _tableView.footerHidden = YES;
+                }else{
+                _tableView.footerHidden =NO;
                 }
             }else{
                 _tableView.footerHidden = YES;

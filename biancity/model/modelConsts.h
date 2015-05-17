@@ -22,3 +22,6 @@ extern NSString *const getSubscriUrl;
 extern NSString *const getCreatePutao;
 extern NSString *const getCommentUrl ;
 extern NSString *const submitCommentUrl ;
+extern NSString *const getMessUrl;
+extern NSString *const submitMesstUrl;
+

@@ -21,6 +21,7 @@
 #import "ResponseGood.h"
 #import "storyViewController.h"
 #import "UserViewController.h"
+#import "messageViewController.h"
 @interface townViewController ()
 @property (nonatomic,strong) ResponseStory *responseStroys;
 @property (nonatomic,strong) ModelStory *requestStory;
@@ -229,6 +230,9 @@
     _subscri.textAlignment =NSTextAlignmentCenter;
     _subscri.layer.borderColor =[[UIColor grayColor] CGColor];
     _leaveMsgLabel = [[UILabel alloc] initWithFrame:CGRectMake(_subscri.frame.origin.x+90, _subscri.frame.origin.y, 80, 40)];
+    UITapGestureRecognizer * tapLeave =[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapLeave)];
+    [_leaveMsgLabel addGestureRecognizer:tapLeave];
+    _leaveMsgLabel.userInteractionEnabled =YES;
     _leaveMsgLabel.layer.borderWidth = 1.0;
     _leaveMsgLabel.layer.cornerRadius = 3.0;
     _leaveMsgLabel.layer.borderColor =[[UIColor grayColor] CGColor];
@@ -273,6 +277,13 @@
     [self addHeader];
     [self addFooter];
     // Do any additional setup after loading the view from its nib.
+}
+-(void)tapLeave{
+    messageViewController *mess = [[messageViewController alloc] initWithNibName:@"messageViewController" bundle:nil];
+    mess.townid = _applyTown.townid;
+    CLLocation *local = [[CLLocation alloc] initWithLatitude:[_applyTown.geoinfo.latitude doubleValue] longitude:[_applyTown.geoinfo.longitude doubleValue]];
+    mess.townLocal = local;
+    [self.navigationController pushViewController:mess animated:YES];
 }
 -(void)AddStory{
     
@@ -427,6 +438,7 @@
     NSLog(@"did select");
     storyViewController *story = [[storyViewController alloc] initWithNibName:@"storyViewController" bundle:nil];
     story.story = [_responseStroys.putao objectAtIndex:indexPath.row];
+ 
      [self.navigationController pushViewController:story  animated:YES];
 }
 
