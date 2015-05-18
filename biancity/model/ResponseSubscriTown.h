@@ -12,6 +12,6 @@
 @interface ResponseSubscriTown : basicRequest
 @property (nonatomic) BOOL  stat;
 @property (nonatomic) int  errcode;
-@property (nonatomic,strong) ModelSubscriTown* subscri;
+@property (nonatomic,strong) ModelSubscriTown<Optional>* subscri;
 @property (nonatomic,strong) NSMutableArray<ApplyTown,Optional>* towns;
 @end

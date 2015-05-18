@@ -32,5 +32,5 @@
 @property (nonatomic,strong) UIBarButtonItem *leftButton;
 @property (nonatomic,strong) UIBarButtonItem *rightButton;
 @property (nonatomic,strong) UIImageView *placeholderImage;
-
+@property (nonatomic) BOOL isComeFromSubscri;
 @end

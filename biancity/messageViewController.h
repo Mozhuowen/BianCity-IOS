@@ -10,8 +10,9 @@
 #import "UIImageView+WebCache.h"
 #import "MAMaPKit/MAMapKit.h"
 #import "AMapSearchKit/AMapSearchAPI.h"
-@interface messageViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,SDWebImageManagerDelegate,MAMapViewDelegate,AMapSearchDelegate,CLLocationManagerDelegate>
+@interface messageViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,SDWebImageManagerDelegate,MAMapViewDelegate,AMapSearchDelegate,CLLocationManagerDelegate,UITextFieldDelegate>
 @property (nonatomic,strong) UITableView *messageTableView;
 @property (nonatomic,strong) NSNumber *townid;
 @property (nonatomic,strong) CLLocation *townLocal;
+@property (nonatomic,strong) NSString* townname;
 @end

@@ -24,4 +24,11 @@ extern NSString *const getCommentUrl ;
 extern NSString *const submitCommentUrl ;
 extern NSString *const getMessUrl;
 extern NSString *const submitMesstUrl;
+extern NSString *const doSubscriUrl ;
+extern NSString *const getsubslistUrl;
+extern NSString *const getfavoriteUrl ;
+extern NSString *const dofavoriteUrl ;
+extern NSString *const getfavolistUrl ;
+
+
 

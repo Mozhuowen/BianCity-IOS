@@ -12,6 +12,16 @@
 		FE4020571B04FCE1002125E6 /* ModelComment.m in Sources */ = {isa = PBXBuildFile; fileRef = FE4020561B04FCE1002125E6 /* ModelComment.m */; };
 		FE40205A1B04FE34002125E6 /* ResponseComment.m in Sources */ = {isa = PBXBuildFile; fileRef = FE4020591B04FE34002125E6 /* ResponseComment.m */; };
 		FE40205D1B050477002125E6 /* CommentTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FE40205C1B050477002125E6 /* CommentTableViewCell.m */; };
+		FE4CC1041B09AC9700B2615F /* WGS84TOGCJ02.m in Sources */ = {isa = PBXBuildFile; fileRef = FE4CC1031B09AC9700B2615F /* WGS84TOGCJ02.m */; };
+		FE4CC1081B09CA9E00B2615F /* mapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE4CC1061B09CA9E00B2615F /* mapViewController.m */; };
+		FE4CC1091B09CA9E00B2615F /* mapViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FE4CC1071B09CA9E00B2615F /* mapViewController.xib */; };
+		FE4CC10D1B0A0DC000B2615F /* subscriViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE4CC10B1B0A0DC000B2615F /* subscriViewController.m */; };
+		FE4CC10E1B0A0DC000B2615F /* subscriViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FE4CC10C1B0A0DC000B2615F /* subscriViewController.xib */; };
+		FE4CC1111B0A100600B2615F /* subscriTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FE4CC1101B0A100600B2615F /* subscriTableViewCell.m */; };
+		FE4CC1141B0A2CD500B2615F /* ModelFavorite.m in Sources */ = {isa = PBXBuildFile; fileRef = FE4CC1131B0A2CD500B2615F /* ModelFavorite.m */; };
+		FE4CC1171B0A2D5700B2615F /* ResponseFavorite.m in Sources */ = {isa = PBXBuildFile; fileRef = FE4CC1161B0A2D5700B2615F /* ResponseFavorite.m */; };
+		FE4CC11B1B0A2E3D00B2615F /* favoriteListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE4CC1191B0A2E3D00B2615F /* favoriteListViewController.m */; };
+		FE4CC11C1B0A2E3D00B2615F /* favoriteListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FE4CC11A1B0A2E3D00B2615F /* favoriteListViewController.xib */; };
 		FEC53D671AF8B27800FCF327 /* ModelUser.m in Sources */ = {isa = PBXBuildFile; fileRef = FEC53D661AF8B27800FCF327 /* ModelUser.m */; };
 		FEC53D6A1AF8B29500FCF327 /* ResponseUser.m in Sources */ = {isa = PBXBuildFile; fileRef = FEC53D691AF8B29500FCF327 /* ResponseUser.m */; };
 		FEC53D701AF8BF3600FCF327 /* HomeTabBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FEC53D6F1AF8BF3600FCF327 /* HomeTabBarViewController.m */; };
@@ -174,6 +184,23 @@
 		FE4020591B04FE34002125E6 /* ResponseComment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResponseComment.m; sourceTree = "<group>"; };
 		FE40205B1B050477002125E6 /* CommentTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommentTableViewCell.h; sourceTree = "<group>"; };
 		FE40205C1B050477002125E6 /* CommentTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentTableViewCell.m; sourceTree = "<group>"; };
+		FE4CC1021B09AC9700B2615F /* WGS84TOGCJ02.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WGS84TOGCJ02.h; sourceTree = "<group>"; };
+		FE4CC1031B09AC9700B2615F /* WGS84TOGCJ02.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WGS84TOGCJ02.m; sourceTree = "<group>"; };
+		FE4CC1051B09CA9E00B2615F /* mapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mapViewController.h; sourceTree = "<group>"; };
+		FE4CC1061B09CA9E00B2615F /* mapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = mapViewController.m; sourceTree = "<group>"; };
+		FE4CC1071B09CA9E00B2615F /* mapViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = mapViewController.xib; sourceTree = "<group>"; };
+		FE4CC10A1B0A0DC000B2615F /* subscriViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = subscriViewController.h; sourceTree = "<group>"; };
+		FE4CC10B1B0A0DC000B2615F /* subscriViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = subscriViewController.m; sourceTree = "<group>"; };
+		FE4CC10C1B0A0DC000B2615F /* subscriViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = subscriViewController.xib; sourceTree = "<group>"; };
+		FE4CC10F1B0A100600B2615F /* subscriTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = subscriTableViewCell.h; sourceTree = "<group>"; };
+		FE4CC1101B0A100600B2615F /* subscriTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = subscriTableViewCell.m; sourceTree = "<group>"; };
+		FE4CC1121B0A2CD500B2615F /* ModelFavorite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ModelFavorite.h; sourceTree = "<group>"; };
+		FE4CC1131B0A2CD500B2615F /* ModelFavorite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ModelFavorite.m; sourceTree = "<group>"; };
+		FE4CC1151B0A2D5700B2615F /* ResponseFavorite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResponseFavorite.h; sourceTree = "<group>"; };
+		FE4CC1161B0A2D5700B2615F /* ResponseFavorite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResponseFavorite.m; sourceTree = "<group>"; };
+		FE4CC1181B0A2E3D00B2615F /* favoriteListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = favoriteListViewController.h; sourceTree = "<group>"; };
+		FE4CC1191B0A2E3D00B2615F /* favoriteListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = favoriteListViewController.m; sourceTree = "<group>"; };
+		FE4CC11A1B0A2E3D00B2615F /* favoriteListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = favoriteListViewController.xib; sourceTree = "<group>"; };
 		FEC53D651AF8B27800FCF327 /* ModelUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ModelUser.h; sourceTree = "<group>"; };
 		FEC53D661AF8B27800FCF327 /* ModelUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ModelUser.m; sourceTree = "<group>"; };
 		FEC53D681AF8B29500FCF327 /* ResponseUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResponseUser.h; sourceTree = "<group>"; };
@@ -502,6 +529,15 @@
 				FED0A5D51B08A0F700B452DB /* messageViewController.h */,
 				FED0A5D61B08A0F700B452DB /* messageViewController.m */,
 				FED0A5D71B08A0F700B452DB /* messageViewController.xib */,
+				FE4CC1051B09CA9E00B2615F /* mapViewController.h */,
+				FE4CC1061B09CA9E00B2615F /* mapViewController.m */,
+				FE4CC1071B09CA9E00B2615F /* mapViewController.xib */,
+				FE4CC10A1B0A0DC000B2615F /* subscriViewController.h */,
+				FE4CC10B1B0A0DC000B2615F /* subscriViewController.m */,
+				FE4CC10C1B0A0DC000B2615F /* subscriViewController.xib */,
+				FE4CC1181B0A2E3D00B2615F /* favoriteListViewController.h */,
+				FE4CC1191B0A2E3D00B2615F /* favoriteListViewController.m */,
+				FE4CC11A1B0A2E3D00B2615F /* favoriteListViewController.xib */,
 			);
 			name = show;
 			sourceTree = "<group>";
@@ -874,6 +910,12 @@
 				FED0A5DB1B08C24B00B452DB /* ModelMessBoard.m */,
 				FED0A5DD1B08C39F00B452DB /* ResponseMess.h */,
 				FED0A5DE1B08C39F00B452DB /* ResponseMess.m */,
+				FE4CC1021B09AC9700B2615F /* WGS84TOGCJ02.h */,
+				FE4CC1031B09AC9700B2615F /* WGS84TOGCJ02.m */,
+				FE4CC1121B0A2CD500B2615F /* ModelFavorite.h */,
+				FE4CC1131B0A2CD500B2615F /* ModelFavorite.m */,
+				FE4CC1151B0A2D5700B2615F /* ResponseFavorite.h */,
+				FE4CC1161B0A2D5700B2615F /* ResponseFavorite.m */,
 			);
 			path = model;
 			sourceTree = "<group>";
@@ -897,6 +939,8 @@
 				FE40205C1B050477002125E6 /* CommentTableViewCell.m */,
 				FECAE9101B07865100FE6FA7 /* UserCollectionReusableView.h */,
 				FECAE9111B07865100FE6FA7 /* UserCollectionReusableView.m */,
+				FE4CC10F1B0A100600B2615F /* subscriTableViewCell.h */,
+				FE4CC1101B0A100600B2615F /* subscriTableViewCell.m */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -1019,7 +1063,10 @@
 				FED86C681B00BC8900B2F96C /* sceenshot.png in Resources */,
 				FED0A5D91B08A0F700B452DB /* messageViewController.xib in Resources */,
 				FEC53D801AF923FF00FCF327 /* showNavigationController.xib in Resources */,
+				FE4CC10E1B0A0DC000B2615F /* subscriViewController.xib in Resources */,
+				FE4CC1091B09CA9E00B2615F /* mapViewController.xib in Resources */,
 				FECA81141AF760BE00FF57AE /* MyCollectionReusableView.xib in Resources */,
+				FE4CC11C1B0A2E3D00B2615F /* favoriteListViewController.xib in Resources */,
 				FECA811F1AF7B43300FF57AE /* bj.jpg in Resources */,
 				FECA801F1AF71A3000FF57AE /* Main.storyboard in Resources */,
 				FECA80241AF71A3000FF57AE /* LaunchScreen.xib in Resources */,
@@ -1053,10 +1100,13 @@
 				FEC8D1E51AFF0077009E3AB0 /* StoryTableViewCell.m in Sources */,
 				FEC8D1EE1AFF608E009E3AB0 /* ModelGood.m in Sources */,
 				FEC7CD311AFE4142007F798B /* settingTableViewCell.m in Sources */,
+				FE4CC1141B0A2CD500B2615F /* ModelFavorite.m in Sources */,
+				FE4CC1081B09CA9E00B2615F /* mapViewController.m in Sources */,
 				FECA80D21AF732BF00FF57AE /* refreshBasicView.m in Sources */,
 				FEC7CD2B1AFDE294007F798B /* StoryImage.m in Sources */,
 				FECA80761AF7329800FF57AE /* NSArray+JSONModel.m in Sources */,
 				FECA80751AF7329800FF57AE /* JSONModelError.m in Sources */,
+				FE4CC10D1B0A0DC000B2615F /* subscriViewController.m in Sources */,
 				FEC571E81B032A1500D5D8E5 /* SDBaseProgressView.m in Sources */,
 				FECA80D81AF732BF00FF57AE /* UIView+extension.m in Sources */,
 				FECA80771AF7329800FF57AE /* JSONAPI.m in Sources */,
@@ -1086,16 +1136,19 @@
 				FECAE90E1B07763E00FE6FA7 /* UserViewController.m in Sources */,
 				FECA80A21AF732A800FF57AE /* SDWebImageDecoder.m in Sources */,
 				FECA80BB1AF732B300FF57AE /* NSString+NSHash.m in Sources */,
+				FE4CC1111B0A100600B2615F /* subscriTableViewCell.m in Sources */,
 				FED0A5D81B08A0F700B452DB /* messageViewController.m in Sources */,
 				FECA80B91AF732B300FF57AE /* NSData+MD5Digest.m in Sources */,
 				FEC53D6A1AF8B29500FCF327 /* ResponseUser.m in Sources */,
 				FECA80F41AF74CD300FF57AE /* HotTownCollectionViewCell.m in Sources */,
 				FECA80DE1AF733FE00FF57AE /* MsgEncrypt.m in Sources */,
 				FECA80791AF7329800FF57AE /* JSONModel+networking.m in Sources */,
+				FE4CC11B1B0A2E3D00B2615F /* favoriteListViewController.m in Sources */,
 				FECA80AC1AF732A800FF57AE /* UIImageView+WebCache.m in Sources */,
 				FEC7CD2E1AFDE3CB007F798B /* TownStory.m in Sources */,
 				FEC8D0581AFCAC1C0083FA76 /* responseApplyTown.m in Sources */,
 				FECA811A1AF77A3900FF57AE /* ModelNearTown.m in Sources */,
+				FE4CC1171B0A2D5700B2615F /* ResponseFavorite.m in Sources */,
 				FED0A5DF1B08C39F00B452DB /* ResponseMess.m in Sources */,
 				FECA91C81AFB6BD800694847 /* townViewController.m in Sources */,
 				FEC571ED1B032A1500D5D8E5 /* SDTransparentPieProgressView.m in Sources */,
@@ -1107,6 +1160,7 @@
 				FECA80551AF7326B00FF57AE /* AFURLResponseSerialization.m in Sources */,
 				FEC53D7F1AF923FF00FCF327 /* showNavigationController.m in Sources */,
 				FECA809F1AF732A800FF57AE /* NSData+ImageContentType.m in Sources */,
+				FE4CC1041B09AC9700B2615F /* WGS84TOGCJ02.m in Sources */,
 				FECA80EB1AF7340900FF57AE /* ApplyTown.m in Sources */,
 				FECA80A31AF732A800FF57AE /* SDWebImageDownloader.m in Sources */,
 				FECA80531AF7326B00FF57AE /* AFURLConnectionOperation.m in Sources */,
@@ -1284,7 +1338,7 @@
 					"$(PROJECT_DIR)/biancity/GaodeGeoInfo",
 				);
 				INFOPLIST_FILE = biancity/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1304,7 +1358,7 @@
 					"$(PROJECT_DIR)/biancity/GaodeGeoInfo",
 				);
 				INFOPLIST_FILE = biancity/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",

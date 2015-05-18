@@ -8,7 +8,8 @@
 #define RandomColor [UIColor colorWithRed:arc4random_uniform(255)/255.0 green:arc4random_uniform(255)/255.0 blue:arc4random_uniform(255)/255.0 alpha:1]
 
 #import "MyViewController.h"
-
+#import "subscriViewController.h"
+#import "favoriteListViewController.h"
 @interface MyViewController ()
 @property (weak, nonatomic) IBOutlet UICollectionView *myCollectionView;
 
@@ -160,10 +161,14 @@
         
         header.checksLabel.text = [NSString stringWithFormat:@"%@",_User.user.subscricount];
         header.checkLabel.text = @"订阅";
-        
+        UITapGestureRecognizer *subi = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(subList)];
+        [header.checkView addGestureRecognizer:subi];
+        header.checkView.userInteractionEnabled = YES;
         header.storesLabel.text = [NSString stringWithFormat:@"%@",_User.user.favoritecount];
         header.storeLabel.text = @"收藏";
-        
+        UITapGestureRecognizer *tapfav = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(storyList)];
+        header.storeView.userInteractionEnabled =YES;
+        [header.storeView addGestureRecognizer:tapfav];
         header.goodsLabel.text =[NSString stringWithFormat:@"%@",_User.user.begoodcount];
         header.goodLabel.text = @"被赞";
         header.t_delegate = self;
@@ -171,7 +176,21 @@
     }
     return nil;
 }
+-(void)storyList{
+    
+    showNavigationController *showSubscri =[[showNavigationController alloc] initWithNibName:@"showNavigationController" bundle:nil];
+    favoriteListViewController *favlist = [[favoriteListViewController alloc] initWithNibName:@"favoriteListViewController" bundle:nil];
+    
+      [showSubscri pushViewController:favlist animated:YES];
+    [self presentViewController:showSubscri animated:YES completion:^{}];
+}
+-(void)subList{
+    showNavigationController *showSubscri =[[showNavigationController alloc] initWithNibName:@"showNavigationController" bundle:nil];
+    subscriViewController *subscri = [[subscriViewController alloc] initWithNibName:@"subscriViewController" bundle:nil];
+    [showSubscri pushViewController:subscri animated:YES];
+   [self presentViewController:showSubscri animated:YES completion:^{}];
 
+}
 #pragma CollectionView End
 
 - (void)addHeader
@@ -245,6 +264,7 @@
     NSLog(@"sett");
     showNavigationController *show= [[showNavigationController alloc] initWithNibName:@"showNavigationController" bundle:nil];
     settingTableViewController *setting =[[settingTableViewController alloc] initWithNibName:@"settingTableViewController" bundle:nil];
+    setting.user = _User.user;
     [show pushViewController:setting animated:YES ];
     [self presentViewController:show animated:YES completion:^{}];
 

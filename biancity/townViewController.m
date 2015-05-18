@@ -22,6 +22,7 @@
 #import "storyViewController.h"
 #import "UserViewController.h"
 #import "messageViewController.h"
+#import "mapViewController.h"
 @interface townViewController ()
 @property (nonatomic,strong) ResponseStory *responseStroys;
 @property (nonatomic,strong) ModelStory *requestStory;
@@ -48,21 +49,19 @@
       _requestSubscriTown.townid = _applyTown.townid;
     _addrMapImage.image = [UIImage imageNamed:@"placeholder"];
     if(_applyTown.userid == nil||[_applyTown.ptuserid isEqualToNumber:_applyTown.userid]){
-    self.navigationItem.title = @"我的边城";
         self.navigationItem.rightBarButtonItem = _rightButton;
         _iconAddImage.hidden = NO;
         
     }else {
-        self.navigationItem.title = @"边城";
+       
         self.navigationItem.rightBarButtonItem= nil;
         _iconAddImage.hidden = YES;
     }
+     self.navigationItem.title = [NSString stringWithFormat:@"%@•边城",_applyTown.townname];
     
-    
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@",getPictureUrl,_applyTown.cover,@"!small"]];
- 
       // __weak id weakSelf = self;
-    [_placeholderImage sd_setImageWithURL:url
+    [_placeholderImage sd_setImageWithURL:
+     [NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@",getPictureUrl,_applyTown.cover,@"!small"]]
                    placeholderImage:[UIImage imageNamed:@"placeholder"]
                             options:SDWebImageProgressiveDownload
                            progress:^(NSInteger receivedSize, NSInteger expectedSize) {
@@ -105,9 +104,7 @@
     _summaryLabel.text = [NSString stringWithFormat:@"简介: %@",_applyTown.descri];//@"描述";
     [self changeFrame];
         _userNameLabel.text = _applyTown.username;
-    
-    url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@",getPictureUrl,_applyTown.geoinfo.screenpng,@"!small"]];
-    [_placeholderImage sd_setImageWithURL:url
+    [_placeholderImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@",getPictureUrl,_applyTown.geoinfo.screenpng,@"!small"]]
                          placeholderImage:[UIImage imageNamed:@"placeholder"]
                                   options:SDWebImageProgressiveDownload
                                  progress:^(NSInteger receivedSize, NSInteger expectedSize) {
@@ -117,7 +114,12 @@
                                     NSLog(@"loadMapImage complete");
                                     [self loadMapImage:image];
                                 }];
-    
+    la.frame = _addrLabel.frame;
+    la.text =  [NSString stringWithFormat:@"%@%@%@",_applyTown.geoinfo.province,_applyTown.geoinfo.city,_applyTown.geoinfo.freeaddr];
+    [la sizeToFit];
+    rect = la.frame;
+   rect.size.height += 5;
+    _addrLabel.frame =rect;
     _addrLabel.text = [NSString stringWithFormat:@"%@%@%@",_applyTown.geoinfo.province,_applyTown.geoinfo.city,_applyTown.geoinfo.freeaddr];
     _oldTownid = [_applyTown.townid integerValue];
     _storyTableView.scrollEnabled = NO;
@@ -139,8 +141,10 @@
     
     _iconAddrimage.frame=CGRectMake(_userImageView.frame.origin.x, _userImageView.frame.origin.y+_userImageView.frame.size.height+15, 20, 20);
     
-    _addrLabel.frame=CGRectMake( _iconAddrimage.frame.origin.x+_iconAddrimage.frame.size.width+2, _iconAddrimage.frame.origin.y+3, 150, 12);
+    _addrLabel.frame=CGRectMake( _iconAddrimage.frame.origin.x+_iconAddrimage.frame.size.width+2, _iconAddrimage.frame.origin.y-6, 165, 12);
     //[_addrLabel sizeToFit];
+    _addrLabel.lineBreakMode =NSLineBreakByWordWrapping;
+    _addrLabel.numberOfLines =0;
     _subscri.frame=CGRectMake(5, _iconAddrimage.frame.origin.y+50, 80, 40);
     _leaveMsgLabel.frame= CGRectMake(_subscri.frame.origin.x+90, _subscri.frame.origin.y, 80, 40);
     
@@ -220,7 +224,6 @@
     
     _iconAddrimage.image = [UIImage imageNamed:@"ic_location_small"];
     _addrLabel = [[UILabel alloc] initWithFrame:CGRectMake( _iconAddrimage.frame.origin.x+_iconAddrimage.frame.size.width+2,  _iconAddrimage.frame.origin.y, 150, 12)];
-    [_addrLabel sizeToFit];
     _addrLabel.font = [UIFont systemFontOfSize:14];
    _addrLabel.lineBreakMode = NSLineBreakByWordWrapping;
     _addrLabel.numberOfLines = 0;
@@ -229,6 +232,9 @@
     _subscri.layer.cornerRadius = 3.0;
     _subscri.textAlignment =NSTextAlignmentCenter;
     _subscri.layer.borderColor =[[UIColor grayColor] CGColor];
+    UITapGestureRecognizer *tapSubscri = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(commitSubscri)];
+    [_subscri addGestureRecognizer:tapSubscri];
+    _subscri.userInteractionEnabled =YES;
     _leaveMsgLabel = [[UILabel alloc] initWithFrame:CGRectMake(_subscri.frame.origin.x+90, _subscri.frame.origin.y, 80, 40)];
     UITapGestureRecognizer * tapLeave =[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapLeave)];
     [_leaveMsgLabel addGestureRecognizer:tapLeave];
@@ -238,7 +244,10 @@
     _leaveMsgLabel.layer.borderColor =[[UIColor grayColor] CGColor];
     _leaveMsgLabel.textAlignment =NSTextAlignmentCenter;
     _addrMapImage = [[UIImageView alloc ]initWithFrame:CGRectMake(self.view.frame.size.width*3/5-10,_summaryLabel.frame.origin.y+_summaryLabel.frame.size.height, self.view.frame.size.width*2/5, _leaveMsgLabel.frame.origin.y+_leaveMsgLabel.frame.size.height-(_summaryLabel.frame.origin.y+_summaryLabel.frame.size.height))];
-//    _addrMapImage.image = [UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"bj" ofType:@"jpg"]];
+    UITapGestureRecognizer* tapShowMap=[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showMap)];
+    _addrMapImage.userInteractionEnabled =YES;
+    [_addrMapImage addGestureRecognizer:tapShowMap];
+    //    _addrMapImage.image = [UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"bj" ofType:@"jpg"]];
 
     _storyLabel = [[UILabel alloc] initWithFrame:CGRectMake(4,_leaveMsgLabel.frame.origin.y+80, 80, 35)];
     _storyLabel.textAlignment =NSTextAlignmentCenter;
@@ -278,11 +287,28 @@
     [self addFooter];
     // Do any additional setup after loading the view from its nib.
 }
+-(void)commitSubscri{
+    _requestSubscriTown.townid = _applyTown.townid;
+    if(_responseSubscriTown.subscri.dosubscri){
+        _requestSubscriTown.action = [NSNumber numberWithInt:1];
+    }else{
+        _requestSubscriTown.action = [NSNumber numberWithInt:0];
+    }
+    [self loadSubscriInfo:1];
+    _subscri.userInteractionEnabled =NO;
+}
+-(void)showMap{
+    mapViewController *map = [[mapViewController alloc] initWithNibName:@"mapViewController" bundle:nil];
+    map.townLocal = [[CLLocation alloc] initWithLatitude:[_applyTown.geoinfo.latitude doubleValue] longitude:[_applyTown.geoinfo.longitude doubleValue]];
+    map.townname = _applyTown.townname;
+    [self.navigationController pushViewController:map animated:YES];
+}
 -(void)tapLeave{
     messageViewController *mess = [[messageViewController alloc] initWithNibName:@"messageViewController" bundle:nil];
     mess.townid = _applyTown.townid;
     CLLocation *local = [[CLLocation alloc] initWithLatitude:[_applyTown.geoinfo.latitude doubleValue] longitude:[_applyTown.geoinfo.longitude doubleValue]];
     mess.townLocal = local;
+    mess.townname = _applyTown.townname;
     [self.navigationController pushViewController:mess animated:YES];
 }
 -(void)AddStory{
@@ -298,8 +324,11 @@
 }
 
 -(void)selectLeftAction:(id)sender{
-
-    [self.navigationController dismissViewControllerAnimated:YES completion:^{}];
+    if(_isComeFromSubscri){
+        [self.navigationController popViewControllerAnimated:YES];
+    }else{
+        [self.navigationController dismissViewControllerAnimated:YES completion:^{}];
+    }
 }
 -(void)selectRightAction:(id)sender{
     
@@ -319,7 +348,7 @@
         [vc loadInfo:0];
         [vc loadGoodInfo];
         [vc loadFansInfo];
-        [vc loadSubscriInfo];
+        [vc loadSubscriInfo:0];
        //[vc.bgScrollView headerEndRefreshing];
     }];
     [self.bgScrollView headerBeginRefreshing];
@@ -529,11 +558,17 @@
     }];
 }
 
--(void)loadSubscriInfo{
+-(void)loadSubscriInfo:(NSInteger)check{
     
     NSDictionary *parameters = [_requestSubscriTown toDictionary];
     //NSLog(@"%@",parameters);
-    NSString *url =[NSString stringWithString:getSubscriUrl];
+    NSString *url;
+    if(check ==0){
+        url=[NSString stringWithString:getSubscriUrl];
+    }else {
+        url=[NSString stringWithString:doSubscriUrl];
+
+    }
     NSDate *datenow = [NSDate date];//现在时间,你可以输出来看下是什么格式
     NSString *strtime = [NSString stringWithFormat:@"%ld", (long)[datenow timeIntervalSince1970]];
     MsgEncrypt *encrypt = [[MsgEncrypt alloc] init];
@@ -558,7 +593,7 @@
         }else {
             _subscri.text =@"订阅";
         }
-
+_subscri.userInteractionEnabled =YES;
         log(@"loadSubscriInfo stat is %d,errcode is %d",_responseSubscriTown.stat,_responseSubscriTown.errcode);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error: %@", error);

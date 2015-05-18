@@ -14,6 +14,8 @@
 #import "CommentTableViewCell.h"
 #import "UIView+KeyboardObserver.h"
 #import "UserViewController.h"
+#import "ModelFavorite.h"
+#import "ResponseFavorite.h"
 @interface storyViewController ()
 {
     //  UITableView *myTable;
@@ -36,6 +38,8 @@
 @property (nonatomic,strong) UITextField * responseText;
 @property (nonatomic,strong) UILabel * retrunLabel;
 @property (nonatomic,strong) UIView *bgTextView;
+@property (nonatomic,strong) ModelFavorite *requestFavorite;
+@property (nonatomic,strong) ResponseFavorite* responseFavorite;
 @end
 
 @implementation storyViewController
@@ -47,6 +51,7 @@
     [self.tableView addHeaderWithCallback:^{
         // 进入刷新状态就会回调这个Block
         [vc loadCommentInfo:0];
+        [vc loadfavoriteInfo:0 view:nil];
     }];
     [self.tableView headerBeginRefreshing];
 }
@@ -81,7 +86,10 @@
     if([_story.userid isEqualToNumber:_story.ptuserid]){
         UIBarButtonItem *rightButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemTrash  target:self action:@selector(selectRightAction:)];
         self.navigationItem.rightBarButtonItem = rightButton;
+    }else{
+        
     }
+    self.navigationItem.title = [NSString stringWithFormat:@"%@•故事",_story.title];
      [_bgTextView addKeyboardObserver];
     
 }
@@ -91,13 +99,15 @@
 #pragma header and footer end
 - (void)viewDidLoad {
     [super viewDidLoad];
+    _requestFavorite = [[ModelFavorite alloc] init];
+    _requestFavorite.putaoid = _story.putaoid;
     _requestComment = [[ModelComment alloc] init];
     _requestComment.commentposition = 0;
     _requestComment .putaoid = _story.putaoid;
     SDWebImageManager *manager = [SDWebImageManager sharedManager];
     manager.delegate = self;
     _placeholderImage = [[UIImageView alloc] init];
-    self.navigationItem.title = @"故事";
+   
     UIBarButtonItem *leftButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemReply target:self action:@selector(selectLeftAction:)];
     self.navigationItem.leftBarButtonItem = leftButton;
     
@@ -279,7 +289,10 @@
     NSLog(@"textTap");
 }
 
-
+-(void)tapfavorite:(UITapGestureRecognizer*)sender{
+    ((UILabel *)[sender view]).userInteractionEnabled = NO;
+    [self loadfavoriteInfo:1 view:(UILabel *)[sender view]];
+}
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     UITableViewCell *cell;
@@ -289,6 +302,7 @@
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(40, 0, [UIScreen mainScreen].bounds.size.width-45, 10)];
      NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@",getPictureUrl,_story.cover,@"!small"]];
     UITapGestureRecognizer *tapComment = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(textAppear)];
+    UITapGestureRecognizer * tapfav =[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapfavorite:)];
     CGRect rect;
     switch (indexPath.section) {
         case 0://对应各自的分区
@@ -328,7 +342,24 @@
             headerCell.dateLabel.text = _story.createtime;
             headerCell.goodLabel.text = [NSString stringWithFormat:@"%@",_story.goods];
         headerCell.titleLabel.text = _story.title;
-            headerCell.subscrilabel.text = @"收藏";
+            if(_responseFavorite.favori.dofavori){
+                CGRect re=headerCell.subscrilabel.frame;
+                re.origin.x = [UIScreen mainScreen].bounds.size.width-160;
+                re.size.width = 90;
+                headerCell.subscrilabel.frame = re;
+                headerCell.subscrilabel.text = @"取消收藏";
+                _requestFavorite.action = [NSNumber numberWithInt:1];
+            }else{
+                CGRect re=headerCell.subscrilabel.frame;
+                re.origin.x = [UIScreen mainScreen].bounds.size.width-130;
+                re.size.width = 60;
+                headerCell.subscrilabel.frame = re;
+                headerCell.subscrilabel.text = @"收藏";
+                _requestFavorite.action = [NSNumber numberWithInt:0];
+            }
+           
+            headerCell.subscrilabel.userInteractionEnabled =YES;
+            [headerCell.subscrilabel addGestureRecognizer:tapfav];
         headerCell.comment.text = @"评论";
         [headerCell.comment addGestureRecognizer:tapComment];
             if([_story.imagenames count]>0)
@@ -612,6 +643,57 @@
     }];
 }
 
+-(void)loadfavoriteInfo:(NSInteger)check view:(UILabel*)label{
+    
+    NSDictionary *parameters = [_requestFavorite toDictionary];
+    //NSLog(@"%@",parameters);
+    NSString *url;
+    if(check == 0){
+        url=[NSString stringWithString:getfavoriteUrl];
+    }else{
+         url=[NSString stringWithString:dofavoriteUrl];
+    }
+    NSDate *datenow = [NSDate date];//现在时间,你可以输出来看下是什么格式
+    NSString *strtime = [NSString stringWithFormat:@"%ld", (long)[datenow timeIntervalSince1970]];
+    MsgEncrypt *encrypt = [[MsgEncrypt alloc] init];
+    NSData *msgjson = [NSJSONSerialization dataWithJSONObject:parameters options:kNilOptions error:nil];
+    NSString* info = [[NSString alloc] initWithData:msgjson encoding:NSUTF8StringEncoding];
+    log(@"loadfavoriteInfo Info is %@,%ld",info,info.length);
+    NSString *signature= [encrypt EncryptMsg:info timeStmap:strtime];
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.requestSerializer=[AFJSONRequestSerializer serializer];
+    [manager.requestSerializer setValue:strtime forHTTPHeaderField:@"timestamp"];
+    [manager.requestSerializer setValue:[signature uppercaseString] forHTTPHeaderField:@"signature"];
+    [manager setSecurityPolicy:[AFSecurityPolicy policyWithPinningMode:AFSSLPinningModeNone] ];
+    manager.responseSerializer =[AFHTTPResponseSerializer serializer];
+    [manager POST:url parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSDictionary * data =[NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
+        _responseFavorite = [[ResponseFavorite alloc] initWithDictionary:data error:nil];
+        // [self.bgScrollView headerEndRefreshing];
+        log(@"loadfavoriteInfo stat is %d,errcode is %d",_responseFavorite.stat,_responseFavorite.errcode);
+        if(check==1){
+            if(_responseFavorite.favori.dofavori){
+                CGRect re=label.frame;
+                re.origin.x = [UIScreen mainScreen].bounds.size.width-160;
+                re.size.width = 90;
+                label.frame = re;
+                label.text = @"取消收藏";
+            }else{
+                CGRect re=label.frame;
+                re.origin.x = [UIScreen mainScreen].bounds.size.width-130;
+                re.size.width = 60;
+                label.frame = re;
+                label.text = @"收藏";
+            }
+        }
+        [_tableView reloadData];
+        label.userInteractionEnabled = YES;
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+        // [self.bgScrollView headerEndRefreshing];
+    }];
+}
 #pragma endload
 /*
 #pragma mark - Navigation

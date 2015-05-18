@@ -20,7 +20,7 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 -(void)viewWillAppear:(BOOL)animated{
-    if(_requestUser.ptuserid == _userid){
+    if([_requestUser.ptuserid isEqualToNumber:_userid]){
         self.navigationItem.title = @"我的";
     }else{
         self.navigationItem.title =[NSString stringWithFormat:@"%@",_UserName];

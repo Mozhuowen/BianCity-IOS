@@ -8,6 +8,7 @@
 
 #import "settingTableViewController.h"
 #import "settingTableViewCell.h"
+
 @interface settingTableViewController ()
 @property (nonatomic,strong) NSMutableArray *section1;
 @property (nonatomic,strong) NSMutableArray *section2;
@@ -17,6 +18,8 @@
 @implementation settingTableViewController
 - (void)viewDidLoad {
     [super viewDidLoad];
+    SDWebImageManager *manager = [SDWebImageManager sharedManager];
+    manager.delegate = self;
     self.navigationItem.title = @"设置";
     [self.tableView registerClass:[settingTableViewCell class] forCellReuseIdentifier:@"settingTableViewCell"];
     UIBarButtonItem *leftButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemReply target:self action:@selector(selectLeftAction:)];
@@ -65,14 +68,48 @@
     
 
 }
-
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    switch (indexPath.section) {
+        case 0:
+            return 60;
+            break;
+        case 1:
+            return 50;
+            break;
+        default:
+            break;
+    }
+    return 50;
+}
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"settingTableViewCell" forIndexPath:indexPath];
     switch (indexPath.section) {
         
     case 0://对应各自的分区
         
-        [[cell textLabel]  setText:[_section1 objectAtIndex:indexPath.row]];//给cell添加数据
+        [[cell textLabel]  setText:_user.name];//给cell添加数据
+            cell.imageView.frame = CGRectMake(0, 0, 40, 40);
+            cell.imageView.layer.masksToBounds = YES;
+            [cell imageView].layer.cornerRadius = 20;
+            NSLog(@"w %f,h %f",cell.imageView.frame.size.width,cell.imageView.frame.size.height);
+            if(_user){
+            NSString *myImgUrl = _user.cover;
+            NSString *jap = @"http://";
+            NSRange foundObj=[myImgUrl rangeOfString:jap options:NSCaseInsensitiveSearch];
+            if(_user.cover){
+                if(foundObj.length>0) {
+                    [cell.imageView sd_setImageWithURL:[NSURL URLWithString:myImgUrl]  placeholderImage:[UIImage imageNamed:@"placeholder"] options:indexPath.row == 0 ? SDWebImageRefreshCached : 0] ;
+                }else {
+                    NSMutableString * temp = [[NSMutableString alloc] initWithString:getPictureUrl];
+                    [temp appendString:_user.cover];
+                    [temp appendString:@"!small"];
+                    [cell.imageView sd_setImageWithURL:[NSURL URLWithString:temp]  placeholderImage:[UIImage imageNamed:@"placeholder"] options:indexPath.row == 0 ? SDWebImageRefreshCached : 0] ;
+                }
+            }else {
+                cell.imageView.image =[UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"bj" ofType:@"jpg"]];
+            }
+            }
+    
         break;
         
     case 1:
@@ -82,13 +119,94 @@
     break;
         default:
         [[cell textLabel]  setText:@"Unknown"];
+            break;
         
     }
     // Configure the cell...
      cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     return cell;
 }
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    switch (indexPath.section) {
+        case 0:
+            return;
+            break;
+        case 1:
+            switch (indexPath.row) {
+                case 0:
+                    [self showExit];
+                    return;
+                    break;
+                case 1:
+                    return;
+                    break;
+                case 2:
+                    return;
+                    break;
+                case 3:
+                    return;
+                    break;
+                default:
+                    break;
+            }
+            return;
+            break;
+        default:
+            break;
+    }
+}
+- (void)showExit {
+   
+    UIActionSheet *actionSheet = [[UIActionSheet alloc]
+                                  initWithTitle:@"确认退出"
+                                  delegate:self
+                                  cancelButtonTitle:@"取消"
+                                  destructiveButtonTitle:nil
+                                  otherButtonTitles:@"退出",nil];
+    actionSheet.actionSheetStyle = UIActionSheetStyleBlackOpaque;
+    [actionSheet showInView:self.view];
+}
+-(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 0) {
+        [self exitApplication];
+    }else if (buttonIndex == 1) {
+        return;
+    }
+}
+- (void)exitApplication {
+    
+    [UIView beginAnimations:@"exitApplication" context:nil];
+    
+    [UIView setAnimationDuration:0.5];
+    
+    [UIView setAnimationDelegate:self];
+    
+    // [UIView setAnimationTransition:UIViewAnimationCurveEaseOut forView:self.view.window cache:NO];
+    
+    [UIView setAnimationTransition:UIViewAnimationCurveEaseOut forView:self.view.window cache:NO];
+    
+    [UIView setAnimationDidStopSelector:@selector(animationFinished:finished:context:)];
+    
+    //self.view.window.bounds = CGRectMake(0, 0, 0, 0);
+    
+    self.view.window.bounds = CGRectMake(0, 0, 0, 0);
+    
+    [UIView commitAnimations];
+    
+}
 
+
+
+- (void)animationFinished:(NSString *)animationID finished:(NSNumber *)finished context:(void *)context {
+    
+    if ([animationID compare:@"exitApplication"] == 0) {
+        
+        exit(0);
+        
+    }
+    
+}
 
 /*
 // Override to support conditional editing of the table view.

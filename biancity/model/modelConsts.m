@@ -22,9 +22,15 @@ NSString *const getCommentUrl = @"http://123.57.132.31:8080/getcomment";
 NSString *const submitCommentUrl = @"http://123.57.132.31:8080/submitcomment";
 NSString *const getMessUrl = @"http://123.57.132.31:8080/getmess";
 NSString *const submitMesstUrl = @"http://123.57.132.31:8080/submitmess";
+NSString *const doSubscriUrl = @"http://123.57.132.31:8080/dosubscri";
+NSString *const getsubslistUrl = @"http://123.57.132.31:8080/getsubslist";
+NSString *const getfavoriteUrl = @"http://123.57.132.31:8080/getfavorite";
+NSString *const dofavoriteUrl = @"http://123.57.132.31:8080/dofavorite";
+NSString *const getfavolistUrl = @"http://123.57.132.31:8080/getfavolist";
 
-
-
+//NSString *const getfavoriteUrl = @"http://192.168.199.200/getfavorite";
+//NSString *const dofavoriteUrl = @"http://192.168.199.200/dofavorite";
+//NSString *const getfavolistUrl = @"http://192.168.199.200/getfavolist";
 //NSString *const getHotTownUrl = @"http://192.168.199.200/gethot";
 //NSString *const getNearTownUrl = @"http://192.168.199.200/getnear";
 //NSString *const getUserInfoUrl = @"http://192.168.199.200/getuserinfo";
@@ -39,5 +45,6 @@ NSString *const submitMesstUrl = @"http://123.57.132.31:8080/submitmess";
 //NSString *const submitCommentUrl = @"http://192.168.199.200/submitcomment";
 //NSString *const getMessUrl = @"http://192.168.199.200/getmess";
 //NSString *const submitMesstUrl = @"http://192.168.199.200/submitmess";
-
+//NSString *const doSubscriUrl = @"http://192.168.199.200/dosubscri";
+//NSString *const getsubslistUrl = @"http://192.168.199.200/getsubslist";
 
