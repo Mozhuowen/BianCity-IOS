@@ -14,8 +14,11 @@
 #import "UIView+KeyboardObserver.h"
 #import "UserViewController.h"
 #import "WGS84TOGCJ02.h"
+#import "ModelGood.h"
+#import "ResponseGood.h"
 @interface messageViewController ()
 {
+    BOOL isloading;
     NSInteger index_comment;
 }
 @property (nonatomic,strong) ModelMessBoard* requestMess;
@@ -30,10 +33,15 @@
 @property (nonatomic,strong) UIView *bgTextView;
 @property (nonatomic,strong) MAMapView *mapView;
 @property (nonatomic,strong) UILabel *bgPlaceHolderLabel;
+@property (nonatomic,strong) ModelGood *requestGood;
 @end
 
 @implementation messageViewController
 -(void)viewWillAppear:(BOOL)animated{
+    if ([CLLocationManager authorizationStatus]==kCLAuthorizationStatusDenied||[CLLocationManager authorizationStatus]==kCLAuthorizationStatusRestricted){
+        [self showAlert:@"请设置app可访问位置信息"];
+        
+    }
 
     self.navigationItem.title =[NSString stringWithFormat:@"%@•留言",_townname];
     [_bgTextView addKeyboardObserver];
@@ -48,7 +56,9 @@
     manager.delegate = self;
     [MAMapServices sharedServices].apiKey =@"3b9e1284b49e66b32342d17309eb45eb";
       _locationManager=[[CLLocationManager alloc]init];
-    
+    _requestGood = [[ModelGood alloc] init];
+    _requestGood.type = [NSNumber numberWithInt:3];
+    _requestGood.targetid = 0;
     UIBarButtonItem *leftButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemReply target:self action:@selector(selectLeftAction:)];
     self.navigationItem.leftBarButtonItem = leftButton;
    
@@ -99,7 +109,7 @@
     [self addFooter];
     [self localInfo];
     index_comment =-1;
- 
+    isloading =NO;
 
 }
 -(void)commitComment{
@@ -120,7 +130,12 @@
     [textField resignFirstResponder];    //主要是[receiver resignFirstResponder]在哪调用就能把receiver对应的键盘往下收
     return YES;
 }
-
+-(void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status{
+    if(status==kCLAuthorizationStatusAuthorizedWhenInUse){
+       [self localInfo];
+    }
+    NSLog(@"didChangeAuthorizationStatus");
+}
 -(void)localInfo{
     if ([CLLocationManager authorizationStatus]==kCLAuthorizationStatusNotDetermined){
         [_locationManager requestWhenInUseAuthorization];
@@ -143,6 +158,15 @@
         return;
     }
 
+}
+-(void)showAlert:(NSString *)msg {
+    UIAlertView *alert = [[UIAlertView alloc]
+                          initWithTitle:@"提示"
+                          message:msg
+                          delegate:self
+                          cancelButtonTitle:@"确定"
+                          otherButtonTitles: nil];
+    [alert show];
 }
 #pragma Location
 #pragma mark - CoreLocation 代理
@@ -284,7 +308,17 @@
     CGRect rect;
     ModelMessBoard *tmp;
     commentCell = [tableView dequeueReusableCellWithIdentifier:@"CommentTableViewCell" forIndexPath:indexPath];
-    commentCell.iconGoodImage.image = [UIImage imageNamed:@"ic_list_thumb"];
+    
+    UITapGestureRecognizer* tapGood = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(doGoodCommit:)];
+    if([((ModelMessBoard*)[_responseMess.mess objectAtIndex:indexPath.row]).dogood boolValue]){
+        commentCell.iconGoodImage.image =[UIImage imageNamed:@"ic_list_thumbup"];
+    }else{
+        commentCell.iconGoodImage.image =[UIImage imageNamed:@"ic_list_thumb"];
+    }
+    commentCell.iconGoodImage.tag = indexPath.row;
+    commentCell.iconGoodImage.userInteractionEnabled =YES;
+    [commentCell.iconGoodImage addGestureRecognizer:tapGood];
+    //commentCell.iconGoodImage.image = [UIImage imageNamed:@"ic_list_thumb"];
     NSLog(@"index.row is %ld",(long)indexPath.row);
     tmp =[_responseMess.mess objectAtIndex:indexPath.row];
     [self setUserImage:tmp.cover imageView:commentCell.iconUserImage row:indexPath.row];
@@ -321,6 +355,23 @@
     
     commentCell.selectionStyle = UITableViewCellSelectionStyleNone;
     return commentCell;
+}
+-(void)doGoodCommit:(UITapGestureRecognizer*)sender{
+    if(!isloading){
+        NSInteger tag = ((UIImageView*)[sender view]).tag;
+        
+        if([((ModelMessBoard*)[_responseMess.mess objectAtIndex:tag]).dogood boolValue]){
+            _requestGood.action = [NSNumber numberWithInt:1];
+        }else{
+            _requestGood.action = [NSNumber numberWithInt:0];
+        }
+        _requestGood.type = [NSNumber numberWithInt:3];
+        _requestGood.targetid =((ModelMessBoard*)[_responseMess.mess objectAtIndex:tag]).messid;
+        [self loadGoodInfo:1 tag:tag];
+        isloading =YES;
+    }
+    
+    
 }
 
 -(void)setUserImage:(NSString *)imageName imageView:(UIImageView*)imView row:(NSInteger)index_row{
@@ -436,7 +487,14 @@
             _bgPlaceHolderLabel.hidden = YES;
             _messageTableView.hidden =NO;
              [_messageTableView reloadData];
-        }
+            if(check ==2){
+                
+                NSIndexPath *scrollIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+                [_messageTableView scrollToRowAtIndexPath:scrollIndexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
+            }
+            }
+        
+
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error: %@", error);
         if(check==0){
@@ -446,6 +504,50 @@
         }
     }];
 }
+
+
+-(void)loadGoodInfo:(NSInteger)check tag:(NSInteger)tag{
+    
+    NSDictionary *parameters = [_requestGood toDictionary];
+    //NSLog(@"%@",parameters);
+    NSString *url;
+    if(check ==0){
+        url=[NSString stringWithString:getGoodsUrl];
+    }else {
+        url=[NSString stringWithString:doGoodUrl];
+        
+    }
+    NSDate *datenow = [NSDate date];//现在时间,你可以输出来看下是什么格式
+    NSString *strtime = [NSString stringWithFormat:@"%ld", (long)[datenow timeIntervalSince1970]];
+    MsgEncrypt *encrypt = [[MsgEncrypt alloc] init];
+    NSData *msgjson = [NSJSONSerialization dataWithJSONObject:parameters options:kNilOptions error:nil];
+    NSString* info = [[NSString alloc] initWithData:msgjson encoding:NSUTF8StringEncoding];
+    log(@"loadGoodInfo Info is %@,%ld",info,info.length);
+    NSString *signature= [encrypt EncryptMsg:info timeStmap:strtime];
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.requestSerializer=[AFJSONRequestSerializer serializer];
+    [manager.requestSerializer setValue:strtime forHTTPHeaderField:@"timestamp"];
+    [manager.requestSerializer setValue:[signature uppercaseString] forHTTPHeaderField:@"signature"];
+    [manager setSecurityPolicy:[AFSecurityPolicy policyWithPinningMode:AFSSLPinningModeNone] ];
+    manager.responseSerializer =[AFHTTPResponseSerializer serializer];
+    [manager POST:url parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSDictionary * data =[NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
+        // [self.bgScrollView headerEndRefreshing];
+     
+            ResponseGood * ad;
+            ad = [[ResponseGood alloc] initWithDictionary:data error:nil];
+            ((ModelMessBoard*) [_responseMess.mess objectAtIndex:tag]).dogood=[NSNumber numberWithBool: ad.good.dogood];
+            ((ModelMessBoard*) [_responseMess.mess objectAtIndex:tag]).goods = ad.good.goods;
+                [_messageTableView reloadData];
+        isloading =NO;
+        log(@"loadGoodInfo stat is %d,errcode is %d",ad.stat,ad.errcode);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+        //[self.bgScrollView headerEndRefreshing];
+    }];
+}
+
 /*
 #pragma mark - Navigation
 

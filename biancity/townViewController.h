@@ -10,7 +10,7 @@
 #import "UIImageView+WebCache.h"
 #import "upLoadImageViewController.h"
 #import "HotTownCollectionViewCell.h"
-@interface townViewController : UIViewController<ApplyTownGeoInfodegelate,SDWebImageManagerDelegate,UITableViewDataSource,UITableViewDelegate>
+@interface townViewController : UIViewController<ApplyTownGeoInfodegelate,SDWebImageManagerDelegate,UITableViewDataSource,UITableViewDelegate,UIActionSheetDelegate>
 -(void)setApplyTownGeoInfo:(responseApplyTown *)sender;
 @property (nonatomic,strong) responseApplyTown * applyTown;
 @property (nonatomic,strong) UIScrollView * bgScrollView;

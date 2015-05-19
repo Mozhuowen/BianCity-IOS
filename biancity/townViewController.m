@@ -23,6 +23,8 @@
 #import "UserViewController.h"
 #import "messageViewController.h"
 #import "mapViewController.h"
+#import "ModelDelete.h"
+#import "ResponseSimple.h"
 @interface townViewController ()
 @property (nonatomic,strong) ResponseStory *responseStroys;
 @property (nonatomic,strong) ModelStory *requestStory;
@@ -35,6 +37,8 @@
 @property (nonatomic,strong) ResponseUser *responseFans;
 @property (nonatomic)  CGSize origin;
 @property (nonatomic) NSInteger oldTownid;
+@property (nonatomic,strong) ModelDelete *requestDelete;
+@property (nonatomic,strong) ResponseSimple *responseDelete;
 @end
 
 @implementation townViewController
@@ -174,7 +178,9 @@
     manager.delegate = self;
     _placeholderImage = [[UIImageView alloc] init];
      _leftButton= [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemReply target:self action:@selector(selectLeftAction:)];
-    
+    _requestDelete =[[ModelDelete alloc] init];
+    _requestDelete.type = 0;
+    _requestDelete.id = _applyTown.townid;
      _rightButton= [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemTrash  target:self action:@selector(selectRightAction:)];
     _requestGood =[[ModelGood alloc] init];
     _requestGood.targetid = _applyTown.townid;
@@ -196,11 +202,13 @@
     _townNameLabel =[[UILabel alloc ] initWithFrame:CGRectMake(4, _bgImageView.frame.origin.y+_bgImageView.frame.size.height+5, 150, 20)];
     _townNameLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:16];
     
-    _goodslabel = [[UILabel alloc] initWithFrame:CGRectMake(_bgImageView.frame.size.width-70, _townNameLabel.frame.origin.y, 40, 20)];
+    _goodslabel = [[UILabel alloc] initWithFrame:CGRectMake(_bgImageView.frame.size.width-80, _townNameLabel.frame.origin.y+6, 40, 20)];
     _goodslabel.textAlignment = NSTextAlignmentRight;
     
-    _iconGoodImageView =[[UIImageView alloc] initWithFrame:CGRectMake(_bgImageView.frame.size.width-25, _townNameLabel.frame.origin.y, 24, 24)];
-    _iconGoodImageView.image =[UIImage imageNamed:@"ic_list_thumb"];
+    _iconGoodImageView =[[UIImageView alloc] initWithFrame:CGRectMake(_bgImageView.frame.size.width-45, _townNameLabel.frame.origin.y, 30, 30)];
+    UITapGestureRecognizer* tapGood = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(doGoodCommit)];
+    _iconGoodImageView.userInteractionEnabled = YES;
+    [_iconGoodImageView addGestureRecognizer:tapGood];
     _summaryLabel =[[UILabel alloc] initWithFrame:CGRectMake(4, _townNameLabel.frame.origin.y+_townNameLabel.frame.size.height+15, [UIScreen mainScreen].bounds.size.width-10, 5)];
     _summaryLabel.font = [UIFont systemFontOfSize:12];
     _summaryLabel.lineBreakMode = NSLineBreakByWordWrapping;
@@ -287,6 +295,21 @@
     [self addFooter];
     // Do any additional setup after loading the view from its nib.
 }
+-(void)doGoodCommit{
+    _iconGoodImageView.userInteractionEnabled =NO;
+    if(_responseGood.good.dogood){
+        _requestGood.action = [NSNumber numberWithInt:1];
+        _requestGood.type = [NSNumber numberWithInt:0];
+        _requestGood.targetid = _applyTown.townid;
+    }else{
+        _requestGood.action = [NSNumber numberWithInt:0];
+        _requestGood.type = [NSNumber numberWithInt:0];
+        _requestGood.targetid = _applyTown.townid;
+
+    }
+    [self loadGoodInfo:1];
+}
+
 -(void)commitSubscri{
     _requestSubscriTown.townid = _applyTown.townid;
     if(_responseSubscriTown.subscri.dosubscri){
@@ -332,7 +355,29 @@
 }
 -(void)selectRightAction:(id)sender{
     
-    [self.navigationController pushViewController:nil  animated:NO];
+    //[self.navigationController pushViewController:nil  animated:NO];
+    [self showSheetSource:sender];
+}
+- (void)showSheetSource:(id)sender {
+    // NSLog(@"showSheet");
+    UIActionSheet *actionSheet = [[UIActionSheet alloc]
+                                  initWithTitle:@"确认删除"
+                                  delegate:self
+                                  cancelButtonTitle:@"取消"
+                                  destructiveButtonTitle:nil
+                                  otherButtonTitles:@"确定",nil];
+    actionSheet.actionSheetStyle = UIActionSheetStyleBlackOpaque;
+    [actionSheet showInView:self.view];
+}
+-(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+   
+    if (buttonIndex == 0) {
+       [self deleteInfo];
+    }else if (buttonIndex == 1) {
+        //   [self showAlert:@"第一项"];
+         return;
+    }
 }
 - (void)addHeader
 {
@@ -346,7 +391,7 @@
 //        //tmp.backgroundColor= [UIColor grayColor];
 //        [vc.bgScrollView addSubview:tmp];
         [vc loadInfo:0];
-        [vc loadGoodInfo];
+        [vc loadGoodInfo:0];
         [vc loadFansInfo];
         [vc loadSubscriInfo:0];
        //[vc.bgScrollView headerEndRefreshing];
@@ -490,15 +535,21 @@
         
     }
 
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+  //  cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
 }
 
--(void)loadGoodInfo{
+-(void)loadGoodInfo:(NSInteger)check{
    
     NSDictionary *parameters = [_requestGood toDictionary];
     //NSLog(@"%@",parameters);
-    NSString *url =[NSString stringWithString:getGoodsUrl];
+    NSString *url;
+    if(check ==0){
+        url=[NSString stringWithString:getGoodsUrl];
+    }else {
+        url=[NSString stringWithString:doGoodUrl];
+
+    }
     NSDate *datenow = [NSDate date];//现在时间,你可以输出来看下是什么格式
     NSString *strtime = [NSString stringWithFormat:@"%ld", (long)[datenow timeIntervalSince1970]];
     MsgEncrypt *encrypt = [[MsgEncrypt alloc] init];
@@ -519,6 +570,12 @@
        // [self.bgScrollView headerEndRefreshing];
         [self.bgScrollView setNeedsDisplay];
          _goodslabel.text = [NSString stringWithFormat:@"%@",_responseGood.good.goods];
+        if(_responseGood.good.dogood){
+            _iconGoodImageView.image =[UIImage imageNamed:@"ic_list_thumbup"];
+        }else{
+            _iconGoodImageView.image =[UIImage imageNamed:@"ic_list_thumb"];
+        }
+        _iconGoodImageView.userInteractionEnabled = YES;
         log(@"loadGoodInfo stat is %d,errcode is %d",_responseGood.stat,_responseGood.errcode);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error: %@", error);
@@ -602,7 +659,38 @@ _subscri.userInteractionEnabled =YES;
 }
 
 
-
+-(void)deleteInfo{
+    
+    NSDictionary *parameters = [_requestDelete toDictionary];
+    //NSLog(@"%@",parameters);
+    NSString *url =[NSString stringWithString:deleteUrl];
+    NSDate *datenow = [NSDate date];//现在时间,你可以输出来看下是什么格式
+    NSString *strtime = [NSString stringWithFormat:@"%ld", (long)[datenow timeIntervalSince1970]];
+    MsgEncrypt *encrypt = [[MsgEncrypt alloc] init];
+    NSData *msgjson = [NSJSONSerialization dataWithJSONObject:parameters options:kNilOptions error:nil];
+    NSString* info = [[NSString alloc] initWithData:msgjson encoding:NSUTF8StringEncoding];
+    log(@"Delete Info is %@,%ld",info,info.length);
+    NSString *signature= [encrypt EncryptMsg:info timeStmap:strtime];
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.requestSerializer=[AFJSONRequestSerializer serializer];
+    [manager.requestSerializer setValue:strtime forHTTPHeaderField:@"timestamp"];
+    [manager.requestSerializer setValue:[signature uppercaseString] forHTTPHeaderField:@"signature"];
+    [manager setSecurityPolicy:[AFSecurityPolicy policyWithPinningMode:AFSSLPinningModeNone] ];
+    manager.responseSerializer =[AFHTTPResponseSerializer serializer];
+    [manager POST:url parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSDictionary * data =[NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
+        _responseDelete = [[ResponseSimple alloc] initWithDictionary:data error:nil];
+        
+        log(@"responseDelete stat is %d,errcode is %d",_responseDelete.stat,_responseDelete.errcode);
+        if(_responseDelete.stat){
+            [self.navigationController dismissViewControllerAnimated:YES completion:^{}];
+        }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+        // [self.bgScrollView headerEndRefreshing];
+    }];
+}
 /*
 #pragma mark - Navigation
 

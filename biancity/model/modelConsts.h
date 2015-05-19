@@ -29,6 +29,7 @@ extern NSString *const getsubslistUrl;
 extern NSString *const getfavoriteUrl ;
 extern NSString *const dofavoriteUrl ;
 extern NSString *const getfavolistUrl ;
-
-
+extern NSString *const getCwallUrl;
+extern NSString *const doGoodUrl;
+extern NSString *const deleteUrl;
 

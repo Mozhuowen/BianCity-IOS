@@ -29,6 +29,19 @@
 
 @implementation NearViewController
 
+-(void)viewWillAppear:(BOOL)animated{
+    
+    if (![CLLocationManager locationServicesEnabled]) {
+        [self showAlert:@"定位服务当前可能尚未打开，请设置打开！"];
+        return;
+    }
+    if ([CLLocationManager authorizationStatus]==kCLAuthorizationStatusDenied||[CLLocationManager authorizationStatus]==kCLAuthorizationStatusRestricted){
+        [self showAlert:@"请到后台设置APP可访问地理信息"];
+        //[vc.nearCollectionView headerBeginRefreshing];
+    }
+        NSLog(@"appear");
+
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -56,6 +69,7 @@
 //    _basic.gethoturl =@"http://123.57.132.31:8080/getnear";
 #pragma end basic
     _locationManager=[[CLLocationManager alloc]init];
+    _locationManager.delegate =self;
     [self addHeader];
     [self addFooter];
     
@@ -114,7 +128,12 @@
     
 }
 #pragma Collectionview end
-
+-(void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status{
+    if(status==kCLAuthorizationStatusAuthorizedWhenInUse){
+        [self.nearCollectionView headerBeginRefreshing];
+    }
+    NSLog(@"didChangeAuthorizationStatus");
+}
 #pragma header and footer
 - (void)addHeader
 {
@@ -124,7 +143,9 @@
         // 进入刷新状态就会回调这个Block
         //如果没有授权则请求用户授权
         if ([CLLocationManager authorizationStatus]==kCLAuthorizationStatusNotDetermined){
-            [_locationManager requestWhenInUseAuthorization];
+           [_locationManager requestWhenInUseAuthorization];
+            [vc.nearCollectionView headerEndRefreshing];
+             //[vc.nearCollectionView headerBeginRefreshing];
         }else if([CLLocationManager authorizationStatus]==kCLAuthorizationStatusAuthorizedWhenInUse){
             //设置代理
             _locationManager.delegate=vc;
@@ -135,9 +156,12 @@
             _locationManager.distanceFilter=distance;
             //启动跟踪定位
             [_locationManager startUpdatingLocation];
+        }else if ([CLLocationManager authorizationStatus]==kCLAuthorizationStatusDenied||[CLLocationManager authorizationStatus]==kCLAuthorizationStatusRestricted){
+            [vc.nearCollectionView headerEndRefreshing];
+
         }
         if (![CLLocationManager locationServicesEnabled]) {
-            NSLog(@"定位服务当前可能尚未打开，请设置打开！");
+            [self showAlert:@"定位服务当前可能尚未打开，请设置打开！"];
             return;
         }
 
@@ -145,7 +169,15 @@
     }];
     [self.nearCollectionView headerBeginRefreshing];
 }
-
+-(void)showAlert:(NSString *)msg {
+    UIAlertView *alert = [[UIAlertView alloc]
+                          initWithTitle:@"提示"
+                          message:msg
+                          delegate:self
+                          cancelButtonTitle:@"确定"
+                          otherButtonTitles: nil];
+    [alert show];
+}
 - (void)addFooter
 {
     __unsafe_unretained typeof(self) vc = self;
@@ -228,8 +260,12 @@
     //如果不需要实时定位，使用完即使关闭定位服务
     _nearTown.geo.latitude = [[NSNumber alloc] initWithDouble:coordinate.latitude];
     _nearTown.geo.longitude = [[NSNumber alloc] initWithDouble:coordinate.longitude];
-    [_locationManager stopUpdatingLocation];
-    [self loadInfo:0];
+        if(_nearTown.geo.latitude!=nil){
+        [_locationManager stopUpdatingLocation];
+        [self loadInfo:0];
+        }else{
+         [_locationManager startUpdatingLocation];
+        }
 }
 #pragma end location
 /*

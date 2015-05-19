@@ -44,7 +44,7 @@
 }
 -(void)showAlert:(NSString *)msg {
     UIAlertView *alert = [[UIAlertView alloc]
-                          initWithTitle:@"警告"
+                          initWithTitle:@"提示"
                           message:msg
                           delegate:self
                           cancelButtonTitle:@"确定"
@@ -59,7 +59,7 @@
     
     if(_geoinfo.province==nil)
     {
-        [self showAlert:@"定位不成功，请等待"];
+        [self showAlert:@"定位不成功(请检查是否允许调用定位服务)，请重试"];
         _mapView.showsUserLocation = YES;
     }else{
         _mapView.showsUserLocation = NO;

@@ -161,6 +161,11 @@
 		FED86C671B00BC8900B2F96C /* NLViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FED86C621B00BC8900B2F96C /* NLViewController.m */; };
 		FED86C681B00BC8900B2F96C /* sceenshot.png in Resources */ = {isa = PBXBuildFile; fileRef = FED86C631B00BC8900B2F96C /* sceenshot.png */; };
 		FED86C6A1B00BCCC00B2F96C /* NLViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FED86C691B00BCCC00B2F96C /* NLViewController.xib */; };
+		FEE5C8731B0AE8BF00772651 /* configureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FEE5C8711B0AE8BF00772651 /* configureViewController.m */; };
+		FEE5C8741B0AE8BF00772651 /* configureViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FEE5C8721B0AE8BF00772651 /* configureViewController.xib */; };
+		FEE5C8771B0AFE4200772651 /* ModelCWall.m in Sources */ = {isa = PBXBuildFile; fileRef = FEE5C8761B0AFE4200772651 /* ModelCWall.m */; };
+		FEE5C87A1B0AFE7400772651 /* ResponseSimple.m in Sources */ = {isa = PBXBuildFile; fileRef = FEE5C8791B0AFE7400772651 /* ResponseSimple.m */; };
+		FEE5C87D1B0B845B00772651 /* ModelDelete.m in Sources */ = {isa = PBXBuildFile; fileRef = FEE5C87C1B0B845B00772651 /* ModelDelete.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -453,6 +458,15 @@
 		FED86C621B00BC8900B2F96C /* NLViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NLViewController.m; sourceTree = "<group>"; };
 		FED86C631B00BC8900B2F96C /* sceenshot.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sceenshot.png; sourceTree = "<group>"; };
 		FED86C691B00BCCC00B2F96C /* NLViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NLViewController.xib; sourceTree = "<group>"; };
+		FEE5C8701B0AE8BF00772651 /* configureViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = configureViewController.h; sourceTree = "<group>"; };
+		FEE5C8711B0AE8BF00772651 /* configureViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = configureViewController.m; sourceTree = "<group>"; };
+		FEE5C8721B0AE8BF00772651 /* configureViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = configureViewController.xib; sourceTree = "<group>"; };
+		FEE5C8751B0AFE4200772651 /* ModelCWall.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ModelCWall.h; sourceTree = "<group>"; };
+		FEE5C8761B0AFE4200772651 /* ModelCWall.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ModelCWall.m; sourceTree = "<group>"; };
+		FEE5C8781B0AFE7400772651 /* ResponseSimple.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResponseSimple.h; sourceTree = "<group>"; };
+		FEE5C8791B0AFE7400772651 /* ResponseSimple.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResponseSimple.m; sourceTree = "<group>"; };
+		FEE5C87B1B0B845B00772651 /* ModelDelete.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ModelDelete.h; sourceTree = "<group>"; };
+		FEE5C87C1B0B845B00772651 /* ModelDelete.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ModelDelete.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -538,6 +552,9 @@
 				FE4CC1181B0A2E3D00B2615F /* favoriteListViewController.h */,
 				FE4CC1191B0A2E3D00B2615F /* favoriteListViewController.m */,
 				FE4CC11A1B0A2E3D00B2615F /* favoriteListViewController.xib */,
+				FEE5C8701B0AE8BF00772651 /* configureViewController.h */,
+				FEE5C8711B0AE8BF00772651 /* configureViewController.m */,
+				FEE5C8721B0AE8BF00772651 /* configureViewController.xib */,
 			);
 			name = show;
 			sourceTree = "<group>";
@@ -916,6 +933,12 @@
 				FE4CC1131B0A2CD500B2615F /* ModelFavorite.m */,
 				FE4CC1151B0A2D5700B2615F /* ResponseFavorite.h */,
 				FE4CC1161B0A2D5700B2615F /* ResponseFavorite.m */,
+				FEE5C8751B0AFE4200772651 /* ModelCWall.h */,
+				FEE5C8761B0AFE4200772651 /* ModelCWall.m */,
+				FEE5C8781B0AFE7400772651 /* ResponseSimple.h */,
+				FEE5C8791B0AFE7400772651 /* ResponseSimple.m */,
+				FEE5C87B1B0B845B00772651 /* ModelDelete.h */,
+				FEE5C87C1B0B845B00772651 /* ModelDelete.m */,
 			);
 			path = model;
 			sourceTree = "<group>";
@@ -1064,6 +1087,7 @@
 				FED0A5D91B08A0F700B452DB /* messageViewController.xib in Resources */,
 				FEC53D801AF923FF00FCF327 /* showNavigationController.xib in Resources */,
 				FE4CC10E1B0A0DC000B2615F /* subscriViewController.xib in Resources */,
+				FEE5C8741B0AE8BF00772651 /* configureViewController.xib in Resources */,
 				FE4CC1091B09CA9E00B2615F /* mapViewController.xib in Resources */,
 				FECA81141AF760BE00FF57AE /* MyCollectionReusableView.xib in Resources */,
 				FE4CC11C1B0A2E3D00B2615F /* favoriteListViewController.xib in Resources */,
@@ -1108,10 +1132,12 @@
 				FECA80751AF7329800FF57AE /* JSONModelError.m in Sources */,
 				FE4CC10D1B0A0DC000B2615F /* subscriViewController.m in Sources */,
 				FEC571E81B032A1500D5D8E5 /* SDBaseProgressView.m in Sources */,
+				FEE5C8771B0AFE4200772651 /* ModelCWall.m in Sources */,
 				FECA80D81AF732BF00FF57AE /* UIView+extension.m in Sources */,
 				FECA80771AF7329800FF57AE /* JSONAPI.m in Sources */,
 				FECA804E1AF7326B00FF57AE /* AFHTTPRequestOperation.m in Sources */,
 				FECA80DF1AF733FE00FF57AE /* PKCS7Encodeing.m in Sources */,
+				FEE5C87D1B0B845B00772651 /* ModelDelete.m in Sources */,
 				FEC8D1EA1AFF5993009E3AB0 /* addStoryViewController.m in Sources */,
 				FEC7CD251AFDE05C007F798B /* ModelStory.m in Sources */,
 				FED36DC71AFA49DA00251846 /* upLoadImageViewController.m in Sources */,
@@ -1199,6 +1225,8 @@
 				FECA807A1AF7329800FF57AE /* JSONKeyMapper.m in Sources */,
 				FEC8D1F71AFF6121009E3AB0 /* ResponseSubscriTown.m in Sources */,
 				FEC8D04D1AFC53070083FA76 /* ModelHotTown.m in Sources */,
+				FEE5C87A1B0AFE7400772651 /* ResponseSimple.m in Sources */,
+				FEE5C8731B0AE8BF00772651 /* configureViewController.m in Sources */,
 				FECA80D31AF732BF00FF57AE /* RefreshConsts.m in Sources */,
 				FECA80A41AF732A800FF57AE /* SDWebImageDownloaderOperation.m in Sources */,
 				FED0A5D41B08993800B452DB /* RTLabel.m in Sources */,

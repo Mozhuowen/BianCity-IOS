@@ -24,7 +24,9 @@
 
 }
 -(void)viewWillAppear:(BOOL)animated{
+    
   [self loadSubscriInfo];
+    
 }
 - (void)viewDidLoad {
     [super viewDidLoad];

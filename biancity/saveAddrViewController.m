@@ -126,7 +126,7 @@
 }
 -(void)showAlert:(NSString *)msg {
     UIAlertView *alert = [[UIAlertView alloc]
-                          initWithTitle:@"警告"
+                          initWithTitle:@"提示"
                           message:msg
                           delegate:self
                           cancelButtonTitle:@"确定"

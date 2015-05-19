@@ -11,6 +11,6 @@
 #import "UIImageView+WebCache.h"
 #import "ImgScrollView.h"
 #import "TapImageView.h"
-@interface storyViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,SDWebImageManagerDelegate,TapImageViewDelegate,ImgScrollViewDelegate,UITextFieldDelegate,UIWebViewDelegate>
+@interface storyViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,SDWebImageManagerDelegate,TapImageViewDelegate,ImgScrollViewDelegate,UITextFieldDelegate,UIWebViewDelegate,UIActionSheetDelegate>
 @property (nonatomic,strong) TownStory * story;
 @end

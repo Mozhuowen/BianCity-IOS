@@ -10,9 +10,17 @@
 #import "MyViewController.h"
 #import "subscriViewController.h"
 #import "favoriteListViewController.h"
+#import "UMUUploaderManager.h"
+#import "NLViewController.h"
+#import "ModelCWall.h"
+#import "ResponseSimple.h"
 @interface MyViewController ()
 @property (weak, nonatomic) IBOutlet UICollectionView *myCollectionView;
-
+@property (nonatomic,strong) UIImage* wallImage;
+@property (nonatomic,strong) NSString *wallImageName;
+@property (nonatomic,strong) SDDemoItemView *progress;
+@property (nonatomic,strong) ModelCWall *requestCWall;
+@property (nonatomic,strong) ResponseSimple *responseWall;
 @end
 
 @implementation MyViewController
@@ -22,7 +30,7 @@
     _applyTown = [[responseApplyTown alloc] init];
     _show  = [[showNavigationController alloc] initWithNibName:@"showNavigationController" bundle:nil];
     _town=[[townViewController alloc] initWithNibName:@"townViewController" bundle:nil];
-    
+    _requestCWall =[[ModelCWall alloc] init];
      [_show pushViewController:_town animated:YES ];
     self.myCollectionView.frame = self.view.frame;//[UIScreen mainScreen].bounds;
     [self.myCollectionView registerClass:[MyCollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"MyCollectionReusableView"];
@@ -31,7 +39,7 @@
     self.myCollectionView.delegate = self;
     self.myCollectionView.allowsMultipleSelection = YES;//默认为NO,是否可以多选
     UICollectionViewFlowLayout *collectionViewLayout = (UICollectionViewFlowLayout *)self.myCollectionView.collectionViewLayout;
-    collectionViewLayout.headerReferenceSize = CGSizeMake(self.myCollectionView.frame.size.width, self.myCollectionView.frame.size.width*9/16+self.myCollectionView.frame.size.width/7);
+    collectionViewLayout.headerReferenceSize = CGSizeMake(self.myCollectionView.frame.size.width, self.myCollectionView.frame.size.width*3/5+self.myCollectionView.frame.size.width/7);
     self.myCollectionView.collectionViewLayout = collectionViewLayout;
     _requestUser = [[ModelUser alloc] init];
     _requestUser.onlystatis = NO;
@@ -109,6 +117,9 @@
             [bgImgUrl appendString:@"!large"];
             [header.myCoverImage sd_setImageWithURL:[NSURL URLWithString:bgImgUrl]  placeholderImage:[UIImage imageNamed:@"placeholder"] options:indexPath.row == 0 ? SDWebImageRefreshCached : 0] ;
         }
+        UITapGestureRecognizer *tapwall = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showSheetSource:)];
+        header.myCoverImage.userInteractionEnabled = YES;
+        [header.myCoverImage addGestureRecognizer:tapwall];
          NSString *myImgUrl = _User.user.cover;
         NSString *jap = @"http://";
         NSRange foundObj=[myImgUrl rangeOfString:jap options:NSCaseInsensitiveSearch];
@@ -176,6 +187,7 @@
     }
     return nil;
 }
+
 -(void)storyList{
     
     showNavigationController *showSubscri =[[showNavigationController alloc] initWithNibName:@"showNavigationController" bundle:nil];
@@ -269,7 +281,210 @@
     [self presentViewController:show animated:YES completion:^{}];
 
 }
+
+- (void)showSheetSource:(UITapGestureRecognizer* )sender {
+    // NSLog(@"showSheet");
+    UIActionSheet *actionSheet = [[UIActionSheet alloc]
+                                  initWithTitle:@"请选择照片来源"
+                                  delegate:self
+                                  cancelButtonTitle:@"取消"
+                                  destructiveButtonTitle:nil
+                                  otherButtonTitles:@"从相册中选择", @"拍照",nil];
+    actionSheet.actionSheetStyle = UIActionSheetStyleBlackOpaque;
+    [actionSheet showInView:self.view];
+}
+-(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    UIImagePickerControllerSourceType sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+    if (buttonIndex == 0) {
+        sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+    }else if (buttonIndex == 1) {
+        //   [self showAlert:@"第一项"];
+        sourceType = UIImagePickerControllerSourceTypeCamera;
+        //判断是否有摄像头
+        if(![UIImagePickerController isSourceTypeAvailable:sourceType])
+        {
+            [self showAlert:@"相机不可用，使用相册"];
+            return;
+            // sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+        }
+        
+    }else if(buttonIndex == 2) {
+        
+        //  [self showAlert:@"第二项"];
+        return;
+    }
+    UIImagePickerController *imagePickerController = [[UIImagePickerController alloc] init];
+    imagePickerController.delegate = self;   // 设置委托
+    imagePickerController.sourceType = sourceType;
+    // imagePickerController.allowsEditing = YES;
+    [self presentViewController:imagePickerController animated:YES completion:nil];  //需要以模态的形式展示
+    
+}
+
+-(void)showAlert:(NSString *)msg {
+    UIAlertView *alert = [[UIAlertView alloc]
+                          initWithTitle:@"警告"
+                          message:msg
+                          delegate:self
+                          cancelButtonTitle:@"确定"
+                          otherButtonTitles: nil];
+    [alert show];
+}
+-(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+{
+    
+    [picker dismissViewControllerAnimated:YES completion:^{}];
+    UIImage *image = [info objectForKey:UIImagePickerControllerEditedImage];
+    if (image == nil){
+        image = [info objectForKey:UIImagePickerControllerOriginalImage];
+    }
+        NLViewController *pic = [[NLViewController alloc] initWithNibName:@"NLViewController" bundle:nil];
+        pic.bgImage = image;
+        pic.Nl_delegate =self;
+    pic.isComeFormMy =YES;
+    showNavigationController *show =[[showNavigationController alloc] initWithNibName:@"showNavigationController" bundle:nil];
+    [show pushViewController:pic  animated:NO];
+    [self presentViewController:show animated:NO completion:^{}];
+
+
+}
+-(void)changeiamge:(UIImage*)image{
+    _wallImage = image;
+    _wallImageName = [self createFileName];
+    _requestCWall.wallimage = _wallImageName;
+    [self uploadFiles];
+};
+//用户取消拍照
+-(void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
+{
+    [picker dismissViewControllerAnimated:YES completion:nil];
+}
+-(NSString*)createFileName{
+    NSMutableString *fileName = [[NSMutableString alloc] init];
+    for(int i=0;i<8;i++){
+        [fileName appendFormat:@"%c",(65+arc4random_uniform(26))];
+    }
+    for(int i=0;i<8;i++){
+        [fileName appendFormat:@"%c",(97+arc4random_uniform(26))];
+    }
+    return fileName;
+}
 #pragma end functions
+
+
+- (NSDictionary *)constructingSignatureAndPolicyWithFileInfo:(NSDictionary *)fileInfo
+{
+#pragma warning 您需要加上自己的bucket和secret
+    NSString * bucket = @"xiaocheng";
+    NSString * secret = @"8giBNZVp2lo8f9c7gf6Q8Wk8BQw=";
+    
+    NSMutableDictionary * mutableDic = [[NSMutableDictionary alloc]initWithDictionary:fileInfo];
+    [mutableDic setObject:@(ceil([[NSDate date] timeIntervalSince1970])+60) forKey:@"expiration"];//设置授权过期时间
+        [mutableDic setObject:[NSString stringWithString:_wallImageName] forKey:@"path"];//设置保存路径
+    /**
+     *  这个 mutableDic 可以塞入其他可选参数 见：http://docs.upyun.com/api/form_api/#Policy%e5%86%85%e5%ae%b9%e8%af%a6%e8%a7%a3
+     */
+    NSString * signature = @"";
+    NSArray * keys = [mutableDic allKeys];
+    keys= [keys sortedArrayUsingSelector:@selector(compare:)];
+    for (NSString * key in keys) {
+        NSString * value = mutableDic[key];
+        signature = [NSString stringWithFormat:@"%@%@%@",signature,key,value];
+    }
+    signature = [signature stringByAppendingString:secret];
+    
+    return @{@"signature":[signature MD5],
+             @"policy":[self dictionaryToJSONStringBase64Encoding:mutableDic],
+             @"bucket":bucket};
+}
+
+- (void)uploadFiles
+{
+    
+        _progress= [SDDemoItemView demoItemViewWithClass:[SDBallProgressView class]];
+        _progress.frame = [UIScreen mainScreen].bounds;//CGRectMake(self.view.frame.size.width/2-100, self.view.frame.size.height/2-100, 200, 200);
+        [self.view addSubview:_progress];
+    NSData * fileData;
+        fileData=UIImagePNGRepresentation(_wallImage);
+  
+    NSDictionary * fileInfo = [UMUUploaderManager fetchFileInfoDictionaryWith:fileData];//获取文件信息
+    
+    NSDictionary * signaturePolicyDic =[self constructingSignatureAndPolicyWithFileInfo:fileInfo];
+    
+    NSString * signature = signaturePolicyDic[@"signature"];
+    NSString * policy = signaturePolicyDic[@"policy"];
+    NSString * bucket = signaturePolicyDic[@"bucket"];
+    
+    __weak typeof(self)weakSelf = self;
+    UMUUploaderManager * manager = [UMUUploaderManager managerWithBucket:bucket];
+    [manager uploadWithFile:fileData policy:policy signature:signature progressBlock:^(CGFloat percent, long long requestDidSendBytes) {
+        NSLog(@"%f",percent);
+        
+        weakSelf.progress.progressView.progress =percent;        NSLog(@"progress is %f", weakSelf.progress.progressView.progress);
+    } completeBlock:^(NSError *error, NSDictionary *result, BOOL completed) {
+        UIAlertView * alert;
+        //self.propressView.alpha = 0;
+        if (completed) {
+           
+//        alert = [[UIAlertView alloc]initWithTitle:@"" message:@"上传成功" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+//                NSLog(@"%@",result);
+        [self loadWallInfo];
+            [_progress removeFromSuperview];
+        }else {
+            alert = [[UIAlertView alloc]initWithTitle:@"" message:@"上传背景失败" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+            NSLog(@"%@",error);
+            [alert show];
+        }
+        
+        
+    }];
+}
+
+- (NSString *)dictionaryToJSONStringBase64Encoding:(NSDictionary *)dic
+{
+    id paramesData = [NSJSONSerialization dataWithJSONObject:dic options:0 error:nil];
+    NSString *jsonString = [[NSString alloc] initWithData:paramesData
+                                                 encoding:NSUTF8StringEncoding];
+    return [jsonString base64encode];
+}
+
+
+#pragma loading Infomation
+-(void)loadWallInfo{
+    NSDictionary *parameters = [_requestCWall toDictionary];
+    //NSLog(@"%@",parameters);
+    NSString *url =[NSString stringWithString:getCwallUrl];
+    NSDate *datenow = [NSDate date];//现在时间,你可以输出来看下是什么格式
+    NSString *strtime = [NSString stringWithFormat:@"%ld", (long)[datenow timeIntervalSince1970]];
+    MsgEncrypt *encrypt = [[MsgEncrypt alloc] init];
+    NSData *msgjson = [NSJSONSerialization dataWithJSONObject:parameters options:kNilOptions error:nil];
+    NSString* info = [[NSString alloc] initWithData:msgjson encoding:NSUTF8StringEncoding];
+    log(@"create story Info is %@,%ld",info,info.length);
+    NSString *signature= [encrypt EncryptMsg:info timeStmap:strtime];
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.requestSerializer=[AFJSONRequestSerializer serializer];
+    [manager.requestSerializer setValue:strtime forHTTPHeaderField:@"timestamp"];
+    [manager.requestSerializer setValue:[signature uppercaseString] forHTTPHeaderField:@"signature"];
+    [manager setSecurityPolicy:[AFSecurityPolicy policyWithPinningMode:AFSSLPinningModeNone] ];
+    manager.responseSerializer =[AFHTTPResponseSerializer serializer];
+    [manager POST:url parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSDictionary * data =[NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
+        
+        self.responseWall = [[ResponseSimple alloc] initWithDictionary:data error:nil];
+        
+        log(@"creatStroy stat is %d,errcode is %d",_responseWall.stat,_responseWall.errcode);
+        if(_responseWall.stat ==1){
+            [self loadInfo:0];
+        }
+        [self.navigationController popViewControllerAnimated:YES];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+        [self showAlert:@"更换背景失败"];
+    }];
+}
+
 /*
 #pragma mark - Navigation
 

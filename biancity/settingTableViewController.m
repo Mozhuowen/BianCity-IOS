@@ -8,7 +8,7 @@
 
 #import "settingTableViewController.h"
 #import "settingTableViewCell.h"
-
+#import "configureViewController.h"
 @interface settingTableViewController ()
 @property (nonatomic,strong) NSMutableArray *section1;
 @property (nonatomic,strong) NSMutableArray *section2;
@@ -129,6 +129,7 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     switch (indexPath.section) {
         case 0:
+            [self configure];
             return;
             break;
         case 1:
@@ -154,6 +155,12 @@
         default:
             break;
     }
+}
+-(void)configure{
+    configureViewController *conf = [[configureViewController alloc] initWithNibName:@"configureViewController" bundle:nil];
+    conf.user = _user;
+    [self.navigationController pushViewController:conf animated:YES];
+
 }
 - (void)showExit {
    

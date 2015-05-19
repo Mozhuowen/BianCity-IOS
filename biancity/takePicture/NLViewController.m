@@ -41,11 +41,18 @@
     if([self.Nl_delegate respondsToSelector:@selector(changeiamge:)]){
         [self.Nl_delegate changeiamge:[_imageCropper getCroppedImage]];
     }
-    [self.navigationController popViewControllerAnimated:YES];
+    if(_isComeFormMy){
+        [self dismissViewControllerAnimated:NO completion:^{}];
+    }else{
+        [self.navigationController popViewControllerAnimated:YES];
+    }
 }
 -(void)selectLeftAction:(id)sender{
-    [self.navigationController popViewControllerAnimated:YES];
-
+    if(_isComeFormMy){
+        [self dismissViewControllerAnimated:NO completion:^{}];
+    }else{
+        [self.navigationController popViewControllerAnimated:YES];
+    }
 }
 - (void)viewDidLoad
 {

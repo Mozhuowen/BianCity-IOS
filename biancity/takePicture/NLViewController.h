@@ -37,4 +37,5 @@
 @property (nonatomic,strong) UIImage * bgImage;
 @property (nonatomic,strong) NLImageCropperView* imageCropper;
 @property (weak) id<NLImagepickerDelegate> Nl_delegate;
+@property (nonatomic) BOOL isComeFormMy;
 @end

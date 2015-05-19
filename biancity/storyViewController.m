@@ -16,6 +16,10 @@
 #import "UserViewController.h"
 #import "ModelFavorite.h"
 #import "ResponseFavorite.h"
+#import "ModelGood.h"
+#import "ResponseGood.h"
+#import "ModelDelete.h"
+#import "ResponseSimple.h"
 @interface storyViewController ()
 {
     //  UITableView *myTable;
@@ -29,6 +33,7 @@
     UIAlertView * progressAlert;
     ImgScrollView *lastImgScrollView;
     NSInteger index_comment;
+    BOOL isloading;
 }
 @property (nonatomic,strong) UITableView *tableView;
 @property (nonatomic,strong) NSMutableArray* tapImages;
@@ -40,6 +45,11 @@
 @property (nonatomic,strong) UIView *bgTextView;
 @property (nonatomic,strong) ModelFavorite *requestFavorite;
 @property (nonatomic,strong) ResponseFavorite* responseFavorite;
+@property (nonatomic,strong) ModelGood *requestGood;
+@property (nonatomic,strong) ResponseGood *responseGood;
+@property (nonatomic,strong) ModelDelete *requestDelete;
+@property (nonatomic,strong) ResponseSimple *responseDelete;
+
 @end
 
 @implementation storyViewController
@@ -52,6 +62,7 @@
         // 进入刷新状态就会回调这个Block
         [vc loadCommentInfo:0];
         [vc loadfavoriteInfo:0 view:nil];
+        [vc loadGoodInfo:0 tag:-1];
     }];
     [self.tableView headerBeginRefreshing];
 }
@@ -104,6 +115,12 @@
     _requestComment = [[ModelComment alloc] init];
     _requestComment.commentposition = 0;
     _requestComment .putaoid = _story.putaoid;
+    _requestGood = [[ModelGood alloc] init];
+    _requestGood.type = [NSNumber numberWithInt:1];
+    _requestGood.targetid =  _story.putaoid;
+    _requestDelete = [[ModelDelete alloc] init];
+    _requestDelete.type =[NSNumber numberWithInt:1];
+    _requestDelete.id = _story.putaoid;
     SDWebImageManager *manager = [SDWebImageManager sharedManager];
     manager.delegate = self;
     _placeholderImage = [[UIImageView alloc] init];
@@ -165,7 +182,7 @@
     [self addHeader];
     [self addFooter];
   
-   
+    isloading =NO;
     [self.view addSubview:_bgTextView];
     _bgTextView.alpha = 0;
     // Do any additional setup after loading the view from its nib.
@@ -184,7 +201,7 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 -(void)selectRightAction:(id)sender{
-    
+    [self showSheetSource:sender];
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     // Return the number of sections.
@@ -304,6 +321,8 @@
     UITapGestureRecognizer *tapComment = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(textAppear)];
     UITapGestureRecognizer * tapfav =[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapfavorite:)];
     CGRect rect;
+    UITapGestureRecognizer* tapGood = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(doGoodCommit:)];
+    
     switch (indexPath.section) {
         case 0://对应各自的分区
             headerCell = [tableView dequeueReusableCellWithIdentifier:@"storyheaderTableViewCell" forIndexPath:indexPath];
@@ -319,8 +338,15 @@
                                         [self loadBgimage:headerCell.bgImageView image:image];
                                     }];
              }
-        
-            headerCell.iconGoodImage.image = [UIImage imageNamed:@"ic_list_thumb"];
+            if(_responseGood.good.dogood){
+                headerCell.iconGoodImage.image =[UIImage imageNamed:@"ic_list_thumbup"];
+            }else{
+                headerCell.iconGoodImage.image =[UIImage imageNamed:@"ic_list_thumb"];
+            }
+            headerCell.iconGoodImage.tag = -1;
+             headerCell.iconGoodImage.userInteractionEnabled = YES;
+            [ headerCell.iconGoodImage addGestureRecognizer:tapGood];
+            
             [self setUserImage:_story.usercover imageView:headerCell.iconUserImage row:indexPath.row];
             headerCell.iconUserImage.tag =-1;
             
@@ -340,7 +366,7 @@
             NSLog(@"headerCell.descrilabel width %f,headerCell.descrilabel height %f",headerCell.descrilabel.frame.size.width,headerCell.descrilabel.frame.size.height);
             headerCell.userNameLabel.text = _story.username;
             headerCell.dateLabel.text = _story.createtime;
-            headerCell.goodLabel.text = [NSString stringWithFormat:@"%@",_story.goods];
+            headerCell.goodLabel.text = [NSString stringWithFormat:@"%@",_responseGood.good.goods];
         headerCell.titleLabel.text = _story.title;
             if(_responseFavorite.favori.dofavori){
                 CGRect re=headerCell.subscrilabel.frame;
@@ -371,7 +397,15 @@
             break;
         case 1:
             commentCell = [tableView dequeueReusableCellWithIdentifier:@"CommentTableViewCell" forIndexPath:indexPath];
-              commentCell.iconGoodImage.image = [UIImage imageNamed:@"ic_list_thumb"];
+            if([((ModelComment*)[_responseComment.comments objectAtIndex:indexPath.row]).dogood boolValue]){
+                commentCell.iconGoodImage.image =[UIImage imageNamed:@"ic_list_thumbup"];
+            }else{
+                commentCell.iconGoodImage.image =[UIImage imageNamed:@"ic_list_thumb"];
+            }
+            commentCell.iconGoodImage.tag = indexPath.row;
+            commentCell.iconGoodImage.userInteractionEnabled = YES;
+            [ commentCell.iconGoodImage addGestureRecognizer:tapGood];
+
         NSLog(@"index.row is %ld",(long)indexPath.row);
             tmp =[_responseComment.comments objectAtIndex:indexPath.row];
              [self setUserImage:tmp.cover imageView:commentCell.iconUserImage row:indexPath.row];
@@ -412,6 +446,32 @@
    // [cell sizeToFit];
     
     return cell;
+}
+-(void)doGoodCommit:(UITapGestureRecognizer*)sender{
+    if(!isloading){
+    NSInteger tag = ((UIImageView*)[sender view]).tag;
+      if(tag<0){
+        if(_responseGood.good.dogood){
+            _requestGood.action = [NSNumber numberWithInt:1];
+        }else{
+            _requestGood.action = [NSNumber numberWithInt:0];
+
+        }
+              _requestGood.type = [NSNumber numberWithInt:1];
+        _requestGood.targetid = _story.putaoid;
+    }else{
+        if([((ModelComment*)[_responseComment.comments objectAtIndex:tag]).dogood boolValue]){
+            _requestGood.action = [NSNumber numberWithInt:1];
+        }else{
+            _requestGood.action = [NSNumber numberWithInt:0];
+        }
+        _requestGood.type = [NSNumber numberWithInt:2];
+        _requestGood.targetid =((ModelComment*)[_responseComment.comments objectAtIndex:tag]).commentid;
+        
+    }
+        [self loadGoodInfo:1 tag:tag];
+        isloading = YES;
+  }
 }
 -(void)loadBgimage:(UIImageView*)imgView image:(UIImage*)image{
    [imgView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@",getPictureUrl,_story.cover,@"!large"]]  placeholderImage:image options:0] ;
@@ -634,6 +694,10 @@
         _requestComment.commentposition = [NSNumber numberWithInteger:[_responseComment.comments count]];
      log(@"loadSubscriInfo stat is %d,errcode is %d,%@",_responseComment.stat,_responseComment.errcode,_responseComment);
         [_tableView reloadData];
+        if(check ==2){
+        NSIndexPath *scrollIndexPath = [NSIndexPath indexPathForRow:0 inSection:1];
+            [_tableView scrollToRowAtIndexPath:scrollIndexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
+        }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error: %@", error);
         if(check==0)
@@ -689,6 +753,105 @@
         }
         [_tableView reloadData];
         label.userInteractionEnabled = YES;
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+        // [self.bgScrollView headerEndRefreshing];
+    }];
+}
+
+-(void)loadGoodInfo:(NSInteger)check tag:(NSInteger)tag{
+    
+    NSDictionary *parameters = [_requestGood toDictionary];
+    //NSLog(@"%@",parameters);
+    NSString *url;
+    if(check ==0){
+        url=[NSString stringWithString:getGoodsUrl];
+    }else {
+        url=[NSString stringWithString:doGoodUrl];
+        
+    }
+    NSDate *datenow = [NSDate date];//现在时间,你可以输出来看下是什么格式
+    NSString *strtime = [NSString stringWithFormat:@"%ld", (long)[datenow timeIntervalSince1970]];
+    MsgEncrypt *encrypt = [[MsgEncrypt alloc] init];
+    NSData *msgjson = [NSJSONSerialization dataWithJSONObject:parameters options:kNilOptions error:nil];
+    NSString* info = [[NSString alloc] initWithData:msgjson encoding:NSUTF8StringEncoding];
+    log(@"loadGoodInfo Info is %@,%ld",info,info.length);
+    NSString *signature= [encrypt EncryptMsg:info timeStmap:strtime];
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.requestSerializer=[AFJSONRequestSerializer serializer];
+    [manager.requestSerializer setValue:strtime forHTTPHeaderField:@"timestamp"];
+    [manager.requestSerializer setValue:[signature uppercaseString] forHTTPHeaderField:@"signature"];
+    [manager setSecurityPolicy:[AFSecurityPolicy policyWithPinningMode:AFSSLPinningModeNone] ];
+    manager.responseSerializer =[AFHTTPResponseSerializer serializer];
+    [manager POST:url parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSDictionary * data =[NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
+             // [self.bgScrollView headerEndRefreshing];
+        if(tag>=0){
+            ResponseGood * ad;
+            ad = [[ResponseGood alloc] initWithDictionary:data error:nil];
+            ((ModelComment*) [_responseComment.comments objectAtIndex:tag]).dogood=[NSNumber numberWithBool: ad.good.dogood];
+            ((ModelComment*) [_responseComment.comments objectAtIndex:tag]).goods = ad.good.goods;
+        }else {
+         _responseGood = [[ResponseGood alloc] initWithDictionary:data error:nil];
+        }
+        [_tableView reloadData];
+        isloading =NO;
+        log(@"loadGoodInfo stat is %d,errcode is %d",_responseGood.stat,_responseGood.errcode);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+        //[self.bgScrollView headerEndRefreshing];
+    }];
+}
+- (void)showSheetSource:(id)sender {
+    // NSLog(@"showSheet");
+    UIActionSheet *actionSheet = [[UIActionSheet alloc]
+                                  initWithTitle:@"确认删除"
+                                  delegate:self
+                                  cancelButtonTitle:@"取消"
+                                  destructiveButtonTitle:nil
+                                  otherButtonTitles:@"确定",nil];
+    actionSheet.actionSheetStyle = UIActionSheetStyleBlackOpaque;
+    [actionSheet showInView:self.view];
+}
+-(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    
+    if (buttonIndex == 0) {
+        [self deleteInfo];
+    }else if (buttonIndex == 1) {
+        //   [self showAlert:@"第一项"];
+        return;
+    }
+}
+
+-(void)deleteInfo{
+    
+    NSDictionary *parameters = [_requestDelete toDictionary];
+    //NSLog(@"%@",parameters);
+    NSString *url =[NSString stringWithString:deleteUrl];
+    NSDate *datenow = [NSDate date];//现在时间,你可以输出来看下是什么格式
+    NSString *strtime = [NSString stringWithFormat:@"%ld", (long)[datenow timeIntervalSince1970]];
+    MsgEncrypt *encrypt = [[MsgEncrypt alloc] init];
+    NSData *msgjson = [NSJSONSerialization dataWithJSONObject:parameters options:kNilOptions error:nil];
+    NSString* info = [[NSString alloc] initWithData:msgjson encoding:NSUTF8StringEncoding];
+    log(@"Delete Info is %@,%ld",info,info.length);
+    NSString *signature= [encrypt EncryptMsg:info timeStmap:strtime];
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.requestSerializer=[AFJSONRequestSerializer serializer];
+    [manager.requestSerializer setValue:strtime forHTTPHeaderField:@"timestamp"];
+    [manager.requestSerializer setValue:[signature uppercaseString] forHTTPHeaderField:@"signature"];
+    [manager setSecurityPolicy:[AFSecurityPolicy policyWithPinningMode:AFSSLPinningModeNone] ];
+    manager.responseSerializer =[AFHTTPResponseSerializer serializer];
+    [manager POST:url parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSDictionary * data =[NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
+        _responseDelete = [[ResponseSimple alloc] initWithDictionary:data error:nil];
+        
+        log(@"responseDelete stat is %d,errcode is %d",_responseDelete.stat,_responseDelete.errcode);
+        if(_responseDelete.stat){
+            [self.navigationController popViewControllerAnimated:YES];
+             }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error: %@", error);
         // [self.bgScrollView headerEndRefreshing];

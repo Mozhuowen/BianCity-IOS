@@ -22,7 +22,13 @@
 #import "showNavigationController.h"
 #import "townViewController.h"
 #import "responseApplyTown.h"
-@interface MyViewController : UIViewController<UICollectionViewDataSource,UICollectionViewDelegate,SDWebImageManagerDelegate,TapImageViewDelegate>
+#import "SDProgressView.h"
+#import "SDDemoItemView.h"
+#import "NLViewController.h"
+#import "NSString+NSHash.h"
+#import "NSString+Base64Encode.h"
+#import <CommonCrypto/CommonDigest.h>
+@interface MyViewController : UIViewController<UICollectionViewDataSource,UICollectionViewDelegate,SDWebImageManagerDelegate,TapImageViewDelegate,NLImagepickerDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UIActionSheetDelegate>
 @property (nonatomic,strong) ResponseUser * User;
 @property (strong,nonatomic) NSMutableArray *fakeColors;
 @property (nonatomic,strong) ModelUser *requestUser;

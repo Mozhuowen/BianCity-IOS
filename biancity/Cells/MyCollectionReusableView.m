@@ -15,7 +15,7 @@
     self=[super initWithFrame:frame];
     if(self){
         [self setBackgroundColor:[UIColor whiteColor]];
-        self.myCoverImage = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.width*9/16)];
+        self.myCoverImage = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.width*3/5)];
          [self addSubview:self.myCoverImage];
         
         UITapGestureRecognizer *set = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(TappedSetting:)];
