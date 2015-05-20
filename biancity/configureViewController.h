@@ -9,6 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "ModelUser.h"
 #import "UIImageView+WebCache.h"
-@interface configureViewController : UIViewController<UITableViewDelegate,UITableViewDataSource,SDWebImageManagerDelegate>
+@interface configureViewController : UIViewController<UITableViewDelegate,UITableViewDataSource,SDWebImageManagerDelegate,UINavigationControllerDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UITextFieldDelegate>
 @property (nonatomic,strong) ModelUser* user;
 @end

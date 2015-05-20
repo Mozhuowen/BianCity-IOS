@@ -9,6 +9,7 @@
 #import "settingTableViewController.h"
 #import "settingTableViewCell.h"
 #import "configureViewController.h"
+#import "ResponseUser.h"
 @interface settingTableViewController ()
 @property (nonatomic,strong) NSMutableArray *section1;
 @property (nonatomic,strong) NSMutableArray *section2;
@@ -16,6 +17,9 @@
 @end
 
 @implementation settingTableViewController
+-(void)viewWillAppear:(BOOL)animated{
+    [self loadUserInfo];
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     SDWebImageManager *manager = [SDWebImageManager sharedManager];
@@ -214,6 +218,38 @@
     }
     
 }
+
+-(void)loadUserInfo{
+    NSDictionary *parameters=[_user toDictionary];
+    NSString *url =[NSString stringWithString:getUserInfoUrl];
+    NSDate *datenow = [NSDate date];//现在时间,你可以输出来看下是什么格式
+    NSString *strtime = [NSString stringWithFormat:@"%ld", (long)[datenow timeIntervalSince1970]];
+    MsgEncrypt *encrypt = [[MsgEncrypt alloc] init];
+    NSData *msgjson = [NSJSONSerialization dataWithJSONObject:parameters options:kNilOptions error:nil];
+    NSString* info = [[NSString alloc] initWithData:msgjson encoding:NSUTF8StringEncoding];
+    log(@"User Info is %@",info);
+    NSString *signature= [encrypt EncryptMsg:info timeStmap:strtime];
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.requestSerializer=[AFJSONRequestSerializer serializer];
+    [manager.requestSerializer setValue:strtime forHTTPHeaderField:@"timestamp"];
+    [manager.requestSerializer setValue:[signature uppercaseString] forHTTPHeaderField:@"signature"];
+    [manager setSecurityPolicy:[AFSecurityPolicy policyWithPinningMode:AFSSLPinningModeNone] ];
+    manager.responseSerializer =[AFHTTPResponseSerializer serializer];
+    [manager POST:url parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSDictionary * data =[NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
+        ResponseUser *response;
+            response = [[ResponseUser alloc] initWithDictionary:data error:nil];
+        _user = response.user;
+        [self.tableView reloadData];
+            // NSLog(@"USer is %@",_User);
+    log(@"User stat is %d,errcode is %@",response.stat,response.errcode);
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+ }];
+}
+
 
 /*
 // Override to support conditional editing of the table view.

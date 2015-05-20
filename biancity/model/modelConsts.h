@@ -32,4 +32,5 @@ extern NSString *const getfavolistUrl ;
 extern NSString *const getCwallUrl;
 extern NSString *const doGoodUrl;
 extern NSString *const deleteUrl;
+extern NSString *const cuserinfoUrl ;
 

@@ -30,8 +30,10 @@ NSString *const getfavolistUrl = @"http://123.57.132.31:8080/getfavolist";
 NSString *const getCwallUrl = @"http://123.57.132.31:8080/cwall";
 NSString *const doGoodUrl = @"http://123.57.132.31:8080/dogood";
 NSString *const deleteUrl = @"http://123.57.132.31:8080/invisible";
+NSString *const cuserinfoUrl = @"http://123.57.132.31:8080/cuserinfo";
 
 
+//NSString *const cuserinfoUrl = @"http://192.168.199.200/cuserinfo";
 //NSString *const deleteUrl = @"http://192.168.199.200/invisible";
 //NSString *const getCwallUrl = @"http://192.168.199.200/cwall";
 //NSString *const getfavoriteUrl = @"http://192.168.199.200/getfavorite";
