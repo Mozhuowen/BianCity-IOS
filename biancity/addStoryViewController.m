@@ -47,6 +47,11 @@
 
 @implementation addStoryViewController
 
+
+
+
+
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     _townstory = [[TownStory alloc] init];
@@ -108,7 +113,9 @@
     pSave.textAlignment = NSTextAlignmentCenter;
     pSave.textColor = [UIColor whiteColor];
     pSave.text = @"保存到草稿箱";
-
+    UITapGestureRecognizer *tapCache = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(saveUserDefaultsOwn)];
+    _save.userInteractionEnabled = YES;
+    [_save addGestureRecognizer:tapCache];
     _placeholder.enabled = NO;
     
     _progressAlert = [[UIAlertView alloc]initWithTitle:@"" message:@"上传图片中，请稍等" delegate:nil cancelButtonTitle:nil otherButtonTitles: nil];
@@ -120,7 +127,9 @@
     [_progressAlert setValue:myview forKey:@"accessoryView"];
     index_images = 0;
     progressCount=0.0;
-    
+    if(_cacheid == nil){
+        _cacheid = [self createFileName];
+    }
      //_bgScrollView.backgroundColor =[UIColor grayColor];
     [_bgScrollView addSubview:_wallImage];
     [_bgScrollView addSubview:_bgsesciLabel];
@@ -134,7 +143,9 @@
     
     [self.view addSubview:_bgScrollView];
     
- 
+    if(_isComeFormCache){
+        [self readUserDeafultsOwn];
+    }
 
     // Do any additional setup after loading the view from its nib.
 }
@@ -377,8 +388,10 @@
 
 - (void)uploadFiles
 {
-    
+    _progress.hidden = NO;
     if(index_images==0){
+        
+        [self.navigationController setNavigationBarHidden:YES animated:NO];
         //[_progressAlert show];
         _progress= [SDDemoItemView demoItemViewWithClass:[SDBallProgressView class]];
         _progress.frame = [UIScreen mainScreen].bounds;//CGRectMake(self.view.frame.size.width/2-100, self.view.frame.size.height/2-100, 200, 200);
@@ -412,8 +425,9 @@
         UIAlertView * alert;
         //self.propressView.alpha = 0;
         if (completed) {
+        index_images ++;
             progressCount += self.progress.progressView.progress;
-            if(idx ==[_images count]){
+          if(idx ==[_images count]){
                 alert = [[UIAlertView alloc]initWithTitle:@"" message:@"上传成功" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
                 NSLog(@"%@",result);
                 [_progressAlert dismissWithClickedButtonIndex:0 animated:NO];
@@ -421,8 +435,10 @@
                 progressCount=0.0;
                 // [alert show];
                 index_images =0;
-                [self loadInfo:0];
                 
+                [self.navigationController setNavigationBarHidden:NO animated:NO];
+                [self loadInfo:0];
+                _progress.hidden = YES;
             }else {
                 [weakSelf uploadFiles];
             }
@@ -431,11 +447,12 @@
             alert = [[UIAlertView alloc]initWithTitle:@"" message:@"上传失败" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
             NSLog(@"%@",error);
             [alert show];
+            _progress.hidden = YES;
         }
-        
+      
         
     }];
-    index_images ++;
+    
 }
 
 - (NSString *)dictionaryToJSONStringBase64Encoding:(NSDictionary *)dic
@@ -473,10 +490,180 @@
         
         log(@"creatStroy stat is %d,errcode is %d",_responseStory.stat,_responseStory.errcode);
         [self.navigationController popViewControllerAnimated:YES];
+        [self deletecache];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error: %@", error);
         [self showAlert:@"创建故事失败"];
     }];
+}
+#pragma   草稿箱
+-(UIImage*)readeIamge:(NSString*)imageName{
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
+    
+    UIImage * result;
+    NSString *uniquePath=[[paths objectAtIndex:0] stringByAppendingPathComponent:imageName];
+    BOOL blHave=[[NSFileManager defaultManager] fileExistsAtPath:uniquePath];
+    if(blHave){
+        result = [UIImage imageWithData:[NSData dataWithContentsOfFile:uniquePath]];
+    }
+    return  result;
+}
+-(void)saveImage:(NSString*)imagename image:(UIImage*)image{
+    
+    //此处首先指定了图片存取路径（默认写到应用程序沙盒 中）
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
+    
+    //并给文件起个文件名
+    NSString *uniquePath=[[paths objectAtIndex:0] stringByAppendingPathComponent:imagename];
+    BOOL blHave=[[NSFileManager defaultManager] fileExistsAtPath:uniquePath];
+    if (blHave) {
+        NSLog(@"already have");
+        return ;
+    }
+    NSData * imagedata = UIImagePNGRepresentation(image);
+    BOOL result = [imagedata writeToFile:uniquePath atomically:YES];
+    if (result) {
+        NSLog(@"save %@ image success",imagename);
+    }else {
+        NSLog(@"no success");
+    }
+}
+-(void)removeImageFile:(NSString*)imageName{
+    NSFileManager* fileManager=[NSFileManager defaultManager];
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
+    
+    //文件名
+    NSString *uniquePath=[[paths objectAtIndex:0] stringByAppendingPathComponent:imageName];
+    BOOL blHave=[[NSFileManager defaultManager] fileExistsAtPath:uniquePath];
+    if (!blHave) {
+        NSLog(@"no  have");
+        return ;
+    }else {
+        NSLog(@" have");
+        BOOL blDele= [fileManager removeItemAtPath:uniquePath error:nil];
+        if (blDele) {
+            NSLog(@"dele success");
+        }else {
+            NSLog(@"dele fail");
+        }
+        
+    }
+}
+- (void)saveUserDefaultsOwn{
+    
+    townCache *item1 = [[townCache alloc] init];
+    item1.title = _titleTextField.text;
+    item1.descri = _descriTextView.text;
+    item1.coverName = _townstory.cover;
+    item1.type = 1;
+    item1.townid =_townid;
+    item1.imagesName= _imageNames;
+    NSDictionary *cache;
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    cache = [userDefaults objectForKey:@"cache"];
+       NSLog(@"save button,cache %@",cache);
+    NSDictionary * para = [item1 toDictionary];
+    NSMutableDictionary *ad;
+    if(cache !=nil){
+        ad= [[NSMutableDictionary alloc] initWithDictionary:cache];
+        
+    }else{
+        ad= [[NSMutableDictionary alloc] init];
+    }
+    [ad setObject:para forKey:_cacheid];
+    NSLog(@"item1 %@",ad);
+    [userDefaults setObject:ad forKey:@"cache"];
+    [userDefaults synchronize];
+    
+    [self saveImage: item1.coverName image:_wallImage.image];
+    for(int i=0;i<[_images count];i++){
+        [self saveImage:[item1.imagesName objectAtIndex:i] image:[_images objectAtIndex:i]];
+    }
+
+}
+-(void)setCacheBegin:(townCache*)cache key:(NSString*)keyid{
+    _wallimagelabel = cache.coverName;
+    _bgsesciLabel.hidden= YES;
+    _townstory.cover = _wallimagelabel;
+    _cacheid = keyid;
+    _townid = cache.townid;
+    _descriTextView.text = cache.descri;
+    _titleTextField.text = cache.title;
+    _titleTextField.placeholder =@"";
+    _placeholder.text = @"";
+    _wallImage.image = [self readeIamge:cache.coverName];
+    for(int i=0;i<[cache.imagesName count];i++){
+        [self saveImage:[self readeIamge:[cache.imagesName objectAtIndex:i]] imageName:[cache.imagesName objectAtIndex:i]];
+    }
+    
+    [self.view setNeedsDisplay];
+    NSLog(@"staory cache %@",cache);
+}
+- (void) readUserDeafultsOwn
+{
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    NSDictionary *cache = [[NSDictionary alloc] init];
+    cache = [userDefaults objectForKey:@"cache"];
+    townCache *item1  = [[townCache alloc] initWithDictionary:[cache objectForKey:_cacheid] error:nil];;
+    [self setCacheBegin:item1 key:_cacheid];
+}
+
+//将照片保存
+-(void)saveImage:(UIImage *)image imageName:(NSString*)imageName
+{
+    
+    //    NSData *imageData = UIImagePNGRepresentation(image);
+    //    if(imageData == nil)
+    //    {
+    //        imageData = UIImageJPEGRepresentation(image, 1.0);
+    //    }
+    
+    NSString *fileName =imageName;
+    [_images addObject:image];
+    [_imageNames addObject:fileName];
+    UIImageView *temp=[[UIImageView alloc] initWithFrame:_imagesLabel.frame];
+    temp.image = image;
+    temp.contentMode = UIViewContentModeScaleAspectFit;
+    [_bgImages addSubview:temp];
+    if([_images count]==4){
+        CGRect rect = _bgImages.frame;
+        rect.size.height += _imagesLabel.frame.size.width;
+        _bgImages.frame =rect;
+        rect = _save.frame;
+        rect.origin.y +=_imagesLabel.frame.size.width;
+        _save.frame = rect;
+        rect = _imagesLabel.frame;
+        rect.origin.x = 0;
+        rect.origin.y +=_imagesLabel.frame.size.width;
+        _imagesLabel.frame = rect;
+        CGPoint point= _bgScrollView.contentOffset;
+        point.y += _imagesLabel.frame.size.width;
+        _bgScrollView.contentOffset = point;
+    }else if([_images count]==8){
+        _imagesLabel.hidden = YES;
+    }else{
+        _imagesLabel.frame =  CGRectMake(_imagesLabel.frame.origin.x+_imagesLabel.frame.size.width, _imagesLabel.frame.origin.y, _imagesLabel.frame.size.width, _imagesLabel.frame.size.height);
+    }
+    StoryImage *img = [[StoryImage alloc] init];
+    img.imagename = fileName;
+    NSData *tp =UIImageJPEGRepresentation(image, 1.0);
+    img.md5 =[self image_md5:[[NSString alloc] initWithData:tp encoding:NSUTF8StringEncoding]];
+    img.list_index =[[NSNumber alloc] initWithLongLong:([_images count]-1)];
+    img.size = [[NSNumber alloc] initWithDouble:image.size.width*image.size.height];
+    [_townstory.images addObject:img];
+    [_bgImages setNeedsDisplay];
+}
+-(void)deletecache{
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    NSMutableDictionary *cache = [[NSMutableDictionary alloc] initWithDictionary:[userDefaults objectForKey:@"cache"]];
+    [cache removeObjectForKey:_cacheid];
+    [self removeImageFile:_townstory.cover];
+    for(int i =0;i<[_images count];i++){
+    [self removeImageFile:[_imageNames objectAtIndex:i]];
+    }
+    [userDefaults setObject:cache forKey:@"cache"];
+    [userDefaults synchronize];
+    
 }
 
 /*

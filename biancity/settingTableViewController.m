@@ -10,6 +10,7 @@
 #import "settingTableViewCell.h"
 #import "configureViewController.h"
 #import "ResponseUser.h"
+#import "cacheViewController.h"
 @interface settingTableViewController ()
 @property (nonatomic,strong) NSMutableArray *section1;
 @property (nonatomic,strong) NSMutableArray *section2;
@@ -143,6 +144,7 @@
                     return;
                     break;
                 case 1:
+                    [self showCache];
                     return;
                     break;
                 case 2:
@@ -159,6 +161,11 @@
         default:
             break;
     }
+}
+-(void)showCache{
+    cacheViewController* cache =[[cacheViewController alloc] initWithNibName:@"cacheViewController" bundle:nil];
+    
+    [self.navigationController pushViewController:cache animated:YES];
 }
 -(void)configure{
     configureViewController *conf = [[configureViewController alloc] initWithNibName:@"configureViewController" bundle:nil];

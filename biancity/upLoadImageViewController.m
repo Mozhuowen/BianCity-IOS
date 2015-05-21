@@ -17,6 +17,7 @@
 #import "MsgEncrypt.h"
 #import "SDProgressView.h"
 #import "SDDemoItemView.h"
+#import "townCache.h"
 @interface upLoadImageViewController ()
 {
     int count;
@@ -27,13 +28,12 @@
 @property (nonatomic,strong) ApplyTown *requestApplyTown;
 @property(nonatomic,strong)UIProgressView * propressView;
 @property (nonatomic,strong) UIAlertView* progressAlert;
-@property (nonatomic,strong) UIButton * imageButton;
+@property (nonatomic,strong) UIImage * coverimage;
 @property (nonatomic,strong) UILabel *msgLabel;
 @property (nonatomic,strong) UIImageView *iconAddrImage;
 @property (nonatomic,strong) UILabel *addrLabel;
 @property (nonatomic,strong) UITextField *townNameTextFiled;
 @property (nonatomic,strong) UITextView *summaryTextView;
-@property (nonatomic,strong) UIButton* saveButton;
 @property (nonatomic,strong) UIScrollView *bgScrollView;
 @property (nonatomic,strong) UILabel *placeholder;
 @property (nonatomic) CGPoint originPoint;
@@ -43,47 +43,195 @@
 @property (nonatomic,strong) UILabel *msgSaveButtonLabel;
 @property (nonatomic,strong) SDDemoItemView *progressDome;
 @property (nonatomic) BOOL uploadFlag;
+
 @end
 
 @implementation upLoadImageViewController
+-(void)deletecache{
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    NSMutableDictionary *cache = [[NSMutableDictionary alloc] initWithDictionary:[userDefaults objectForKey:@"cache"]];
+    [cache removeObjectForKey:_cacheid];
+    [self removeImageFile:_requestApplyTown.cover];
+    [self removeImageFile:_requestApplyTown.geoinfo.screenpng];
+    
+    [userDefaults setObject:cache forKey:@"cache"];
+    [userDefaults synchronize];
 
+}
+-(void)setCacheBegin:(townCache*)cache key:(NSString*)keyid{
+    _msgIamgeButtonLabel.text =@"";
+    CGRect rect = _msgIamgeButtonLabel.frame;
+    rect.origin.x =0;
+    rect.origin.y = 0;
+    _requestApplyTown.geoinfo = cache.geoinfo;
+    UIImageView *bg = [[UIImageView alloc] initWithFrame:rect];
+    bg.image =[self readeIamge:cache.coverName];
+    _coverimage = bg.image;
+    _requestApplyTown.cover = cache.coverName;
+    [_msgIamgeButtonLabel addSubview:bg];
+    _GeoImage = [self readeIamge:cache.mapIamgeName];
+    _geoinfo =cache.geoinfo;
+    _cacheid = keyid;
+    _summaryTextView.text = cache.descri;
+    _townNameTextFiled.text = cache.title;
+    _townNameTextFiled.placeholder =@"";
+    _placeholder.text = @"";
+    NSMutableString *addr = [[NSMutableString alloc] initWithString:@""];
+    [addr appendString:(_geoinfo.province!=nil?_geoinfo.province:@"")];
+    [addr appendString:(_geoinfo.city!=nil?_geoinfo.city:@"")];
+    [addr appendString:_geoinfo.freeaddr!=nil?_geoinfo.freeaddr:@""];
+    _addrLabel.text= addr;
 
+    [self.view setNeedsDisplay];
+    NSLog(@"cache %@",cache);
+}
+
+-(UIImage*)readeIamge:(NSString*)imageName{
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
+    
+    UIImage * result;
+    NSString *uniquePath=[[paths objectAtIndex:0] stringByAppendingPathComponent:imageName];
+    BOOL blHave=[[NSFileManager defaultManager] fileExistsAtPath:uniquePath];
+    if(blHave){
+        result = [UIImage imageWithData:[NSData dataWithContentsOfFile:uniquePath]];
+    }
+    return  result;
+}
+-(void)saveImage:(NSString*)imagename image:(UIImage*)image{
+ 
+    //此处首先指定了图片存取路径（默认写到应用程序沙盒 中）
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
+    
+    //并给文件起个文件名
+    NSString *uniquePath=[[paths objectAtIndex:0] stringByAppendingPathComponent:imagename];
+    BOOL blHave=[[NSFileManager defaultManager] fileExistsAtPath:uniquePath];
+    if (blHave) {
+        NSLog(@"already have");
+        return ;
+    }
+    NSData * imagedata = UIImagePNGRepresentation(image);
+    BOOL result = [imagedata writeToFile:uniquePath atomically:YES];
+    if (result) {
+        NSLog(@"success");
+    }else {
+        NSLog(@"no success");
+    }
+}
+-(void)removeImageFile:(NSString*)imageName{
+    NSFileManager* fileManager=[NSFileManager defaultManager];
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
+    
+    //文件名
+    NSString *uniquePath=[[paths objectAtIndex:0] stringByAppendingPathComponent:imageName];
+    BOOL blHave=[[NSFileManager defaultManager] fileExistsAtPath:uniquePath];
+    if (!blHave) {
+        NSLog(@"no  have");
+        return ;
+    }else {
+        NSLog(@" have");
+        BOOL blDele= [fileManager removeItemAtPath:uniquePath error:nil];
+        if (blDele) {
+            NSLog(@"dele success");
+        }else {
+            NSLog(@"dele fail");
+        }
+        
+    }
+}
+-(NSString*)createName{
+    NSMutableString *fileName = [[NSMutableString alloc] init];
+    for(int i=0;i<8;i++){
+        [fileName appendFormat:@"%c",(65+arc4random_uniform(26))];
+    }
+    for(int i=0;i<8;i++){
+        [fileName appendFormat:@"%c",(97+arc4random_uniform(26))];
+    }
+    return fileName;
+}
+- (void)saveUserDefaultsOwn{
+  
+    townCache *item1 = [[townCache alloc] init];
+    item1.coverName = _requestApplyTown.cover;
+    item1.title = _townNameTextFiled.text;
+    item1.descri = _summaryTextView.text;
+    item1.type = 0;
+    item1.geoinfo = _geoinfo;
+    item1.mapIamgeName = _geoinfo.screenpng;
+    NSDictionary *cache;
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    cache = [userDefaults objectForKey:@"cache"];
+    [self saveImage: item1.coverName image:_coverimage];
+    [self saveImage:item1.mapIamgeName image:_GeoImage];
+    NSLog(@"save button,cache %@",cache);
+    NSDictionary * para = [item1 toDictionary];
+    NSMutableDictionary *ad;
+    if(cache !=nil){
+       ad= [[NSMutableDictionary alloc] initWithDictionary:cache];
+        
+    }else{
+        ad= [[NSMutableDictionary alloc] init];
+    }
+    [ad setObject:para forKey:_cacheid];
+    NSLog(@"item1 %@",ad);
+    [userDefaults setObject:ad forKey:@"cache"];
+
+    
+    [userDefaults synchronize];
+}
+- (void) readUserDeafultsOwn
+{
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+   NSDictionary *cache = [[NSDictionary alloc] init];
+    cache = [userDefaults objectForKey:@"cache"];
+    townCache *item1  = [[townCache alloc] initWithDictionary:[cache objectForKey:_cacheid] error:nil];;
+    [self setCacheBegin:item1 key:_cacheid];
+//   townCache *item1 = [[townCache alloc] init];
+//    for(id key in cache){
+//        item1 = [[townCache alloc]initWithDictionary:[cache objectForKey:key] error:nil];
+//        UIImageView * bg = [[UIImageView alloc] initWithFrame:_msgIamgeButtonLabel.frame];
+//        bg.image = [self readeIamge:item1.coverName];
+//        [_msgIamgeButtonLabel addSubview:bg];
+//        _summaryTextView.text = item1.descri;
+//        _townNameTextFiled.text = item1.title;
+//        NSLog(@"cache is %@",item1);
+//
+//    }
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     _requestApplyTown = [[ApplyTown alloc] init];
         self.navigationItem.title = @"创建边城";
     UIBarButtonItem *leftButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemReply target:self action:@selector(selectLeftAction:)];
     self.navigationItem.leftBarButtonItem = leftButton;
-    
+    if(_cacheid==nil){
+        _cacheid = [self createName];
+    }
     UIBarButtonItem *rightButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave  target:self action:@selector(selectRightAction:)];
     self.navigationItem.rightBarButtonItem = rightButton;
     self.view.frame =[UIScreen mainScreen].bounds;
     _bgScrollView = [[UIScrollView alloc] initWithFrame:[UIScreen mainScreen].bounds];
     _bgScrollView.contentSize = CGSizeMake([UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height+200);
-   // NSLog(@"%f,%f",self.view.frame.size.width,self.view.frame.size.height);
-    _imageButton = [[UIButton alloc] initWithFrame:CGRectMake(40,10,self.view.frame.size.width-80,self.view.frame.size.width-80)];
-    [_imageButton addTarget:self action:@selector(showSheetSource:) forControlEvents:UIControlEventTouchUpInside];
-    // _imageButton.titleLabel.textColor = [UIColor grayColor];
-    [_imageButton.layer setBorderWidth:1.0];
-    [_imageButton.layer setBorderColor:[[UIColor grayColor] CGColor]];
-     //[_imageButton setTitle:@"点击选择封面照片" forState:UIControlStateNormal];
-    _msgIamgeButtonLabel = [[UILabel alloc] initWithFrame:_imageButton.frame];
+    _msgIamgeButtonLabel = [[UILabel alloc] initWithFrame:CGRectMake(40,10,self.view.frame.size.width-80,self.view.frame.size.width-80)];
     _msgIamgeButtonLabel.textAlignment = NSTextAlignmentCenter;
     _msgIamgeButtonLabel.text =@"点击选择封面照片";
     _msgIamgeButtonLabel.tag = 111;
-    
-    _msgLabel = [[UILabel alloc] initWithFrame:CGRectMake(4, _imageButton.frame.origin.y+_imageButton.frame.size.height+15, 70, 12)];
+    [_msgIamgeButtonLabel.layer setBorderWidth:1.0];
+    [_msgIamgeButtonLabel.layer setBorderColor:[[UIColor grayColor] CGColor]];
+    UITapGestureRecognizer * tapIamge = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showSheetSource:)];
+    _msgIamgeButtonLabel.userInteractionEnabled = YES;
+    [_msgIamgeButtonLabel addGestureRecognizer:tapIamge];
+    _msgLabel = [[UILabel alloc] initWithFrame:CGRectMake(4, _msgIamgeButtonLabel.frame.origin.y+_msgIamgeButtonLabel.frame.size.height+15, 70, 12)];
     _msgLabel.text =@"地址信息";
     _msgLabel.textColor =[UIColor grayColor];
-    _iconAddrImage = [[UIImageView alloc] initWithFrame:CGRectMake(_msgLabel.frame.origin.x+_msgLabel.frame.size.width+2,  _imageButton.frame.origin.y+_imageButton.frame.size.height+10, 20, 20)];
+    _iconAddrImage = [[UIImageView alloc] initWithFrame:CGRectMake(_msgLabel.frame.origin.x+_msgLabel.frame.size.width+2,  _msgIamgeButtonLabel.frame.origin.y+_msgIamgeButtonLabel.frame.size.height+10, 20, 20)];
     _iconAddrImage.image = [UIImage imageNamed:@"ic_location_large"];
-    _addrLabel = [[UILabel alloc] initWithFrame:CGRectMake(_iconAddrImage.frame.origin.x+22,  _imageButton.frame.origin.y+_imageButton.frame.size.height+15, self.view.frame.size.width-(_iconAddrImage.frame.origin.x+22), 12)];
+    _addrLabel = [[UILabel alloc] initWithFrame:CGRectMake(_iconAddrImage.frame.origin.x+22,  _msgIamgeButtonLabel.frame.origin.y+_msgIamgeButtonLabel.frame.size.height+15, self.view.frame.size.width-(_iconAddrImage.frame.origin.x+22), 12)];
     NSMutableString *addr = [[NSMutableString alloc] initWithString:@""];
     [addr appendString:(_geoinfo.province!=nil?_geoinfo.province:@"")];
     [addr appendString:(_geoinfo.city!=nil?_geoinfo.city:@"")];
     [addr appendString:_geoinfo.freeaddr!=nil?_geoinfo.freeaddr:@""];
     _addrLabel.text= addr;
-    _townNameTextFiled = [[UITextField alloc] initWithFrame:CGRectMake(4,  _imageButton.frame.origin.y+_imageButton.frame.size.height+42, self.view.frame.size.width-8, 30)];
+    _townNameTextFiled = [[UITextField alloc] initWithFrame:CGRectMake(4,  _msgIamgeButtonLabel.frame.origin.y+_msgIamgeButtonLabel.frame.size.height+42, self.view.frame.size.width-8, 30)];
     _townNameTextFiled.placeholder = @"边城名字";
     _townNameTextFiled.delegate =self;
     _townNameTextFiled.returnKeyType =UIReturnKeyDone;
@@ -100,19 +248,18 @@
     _placeholder.text =@"可以输入最多150字的描述";
     _placeholder.backgroundColor = [UIColor clearColor];
     _placeholder.enabled = NO;
-    _saveButton = [[UIButton alloc] initWithFrame:CGRectMake(self.view.frame.size.width/2-100, _summaryTextView.frame.origin.y+100, 200, 40)];
-    _saveButton.titleLabel.textAlignment = NSTextAlignmentCenter;
-    _saveButton.layer.borderColor =[[UIColor blueColor] CGColor];
-    _saveButton.layer.borderWidth = 1.0;
-    _saveButton.layer.cornerRadius = 4.0;
-    _saveButton.backgroundColor = [UIColor blueColor];
-//    _saveButton.tintColor = [UIColor whiteColor];
-//    _saveButton.titleLabel.text = @"保存到草稿箱";
-    _msgSaveButtonLabel =[[UILabel alloc] initWithFrame:_saveButton.frame];
+
+    _msgSaveButtonLabel =[[UILabel alloc] initWithFrame:CGRectMake(self.view.frame.size.width/2-100, _summaryTextView.frame.origin.y+100, 200, 40)];
     _msgSaveButtonLabel.textAlignment =NSTextAlignmentCenter;
     _msgSaveButtonLabel.textColor = [UIColor whiteColor];
     _msgSaveButtonLabel.text = @"保存到草稿箱";
-   [_bgScrollView addSubview:_imageButton];
+    _msgSaveButtonLabel.layer.borderColor =[[UIColor blueColor] CGColor];
+    _msgSaveButtonLabel.layer.borderWidth = 1.0;
+    _msgSaveButtonLabel.layer.cornerRadius = 4.0;
+    UITapGestureRecognizer *tapSave = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(saveUserDefaultsOwn)];
+    _msgSaveButtonLabel.userInteractionEnabled =YES;
+    [_msgSaveButtonLabel addGestureRecognizer:tapSave];
+    _msgSaveButtonLabel.backgroundColor = [UIColor blueColor];
     [_bgScrollView addSubview:_msgIamgeButtonLabel];
      _propressView = [[UIProgressView alloc]initWithProgressViewStyle:UIProgressViewStyleBar];
 
@@ -131,11 +278,13 @@
     [_bgScrollView addSubview:_townNameTextFiled];
     [_bgScrollView addSubview:_summaryTextView];
      [_bgScrollView addSubview:_placeholder];
-    [_bgScrollView addSubview:_saveButton];
     [_bgScrollView addSubview:_msgSaveButtonLabel];
     [_bgScrollView setScrollEnabled:YES];
     [_bgScrollView setShowsVerticalScrollIndicator:YES];
     [self.view addSubview:_bgScrollView];
+    if(_isComeFromCache){
+        [self readUserDeafultsOwn];
+    }
     // Do any additional setup after loading the view from its nib.
 }
 -(void)textViewDidChange:(UITextView *)textView
@@ -151,8 +300,13 @@
     [_summaryTextView resignFirstResponder];
     [_townNameTextFiled resignFirstResponder];
     if(!_uploadFlag){
+        if(_isComeFromCache){
+            [self.navigationController popViewControllerAnimated:YES];
 
-        [self.navigationController dismissViewControllerAnimated:YES completion:^{}];
+            }else{
+         [self.navigationController dismissViewControllerAnimated:YES completion:^{}];
+
+        }
     }
 }
 -(void)selectRightAction:(id)sender{
@@ -175,7 +329,7 @@
     }
 }
 -(BOOL)checkInfo{
-    if(_geoinfo!=nil&&_GeoImage!=nil&&_townNameTextFiled.text.length!=0&&_summaryTextView.text.length!=0&&_imageButton.imageView.image!=nil)
+    if(_geoinfo!=nil&&_GeoImage!=nil&&_townNameTextFiled.text.length!=0&&_summaryTextView.text.length!=0&&_coverimage!=nil)
     return YES;
     return NO;
 }
@@ -304,9 +458,8 @@
 //    }
     UIImageView *bg = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width-80, self.view.frame.size.width-80)];
    bg.image= image;
-    [_imageButton addSubview:bg];
-    _imageButton.imageView.image= image;
-    _msgIamgeButtonLabel.hidden =YES;
+    [_msgIamgeButtonLabel addSubview:bg];
+    _coverimage= image;
     NSMutableString *fileName = [[NSMutableString alloc] init];
     for(int i=0;i<8;i++){
         [fileName appendFormat:@"%c",(65+arc4random_uniform(26))];
@@ -359,6 +512,8 @@
 - (void)uploadFiles
 {
     if(index==0){
+        _progressDome.hidden = NO;
+        [self.navigationController setNavigationBarHidden:YES animated:NO];
         //[_progressAlert show];
         _progressDome= [SDDemoItemView demoItemViewWithClass:[SDBallProgressView class]];
         _progressDome.frame = [UIScreen mainScreen].bounds;
@@ -371,7 +526,7 @@
         fileData=UIImagePNGRepresentation(_GeoImage);
     }//[NSData
     else{
-        fileData=UIImagePNGRepresentation(_imageButton.imageView.image);
+        fileData=UIImagePNGRepresentation(_coverimage);
     }
     NSDictionary * fileInfo = [UMUUploaderManager fetchFileInfoDictionaryWith:fileData];//获取文件信息
     
@@ -391,6 +546,7 @@
         UIAlertView * alert;
         //self.propressView.alpha = 0;
         if (completed) {
+             index ++;
             progressCount +=self.propressView.progress;
             if(idx ==1){
                 alert = [[UIAlertView alloc]initWithTitle:@"" message:@"上传成功" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
@@ -400,8 +556,10 @@
                 progressCount=0.0;
                // [alert show];
                 index =0;
+                
+                [self.navigationController setNavigationBarHidden:NO animated:NO];
                 [self loadInfo:0];
-              
+                   _progressDome.hidden = YES;
             }else {
                 [weakSelf uploadFiles];
             }
@@ -414,7 +572,7 @@
         
         
     }];
-    index ++;
+   
 }
 
 - (NSString *)dictionaryToJSONStringBase64Encoding:(NSDictionary *)dic
@@ -446,7 +604,7 @@
     [manager POST:url parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         
         NSDictionary * data =[NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
-        if(check==0){
+       
             _responseApplyTown = [[responseApplyTown alloc] initWithDictionary:data error:nil];
             //[self.bgScrollView headerEndRefreshing];
             // NSLog(@"USer is %@",_User);
@@ -454,24 +612,17 @@
             townViewController *town = [[townViewController alloc]initWithNibName:@"townViewController" bundle:nil];
                 self.applyTown_delegate = town;
                 [self transfromInfo];
+                town.applyTown = _responseApplyTown;
                 [self.navigationController pushViewController:town  animated:YES];
+                [self deletecache];
             }
-        }else {
-//            responseApplyTown *ad=[[responseApplyTown alloc] initWithDictionary:data error:nil];
-//            _responseApplyTown.stat = ad.stat;
-//            _responseApplyTown.errcode = ad.errcode;
-//            [_responseApplyTown.towns addObjectsFromArray:ad.towns];
-           // [self.bgScrollView footerEndRefreshing];
-        }
+            else{
+                [self showAlert:@"上传不成功"];
+            }
         log(@"APPLYTOWN stat is %d,errcode is %d",_responseApplyTown.stat,_responseApplyTown.errcode);
         log(@"%@",_responseApplyTown);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error: %@", error);
-//        if(check ==0){
-//            [self.myCollectionView headerEndRefreshing];
-//        }else {
-//            [self.myCollectionView footerEndRefreshing];
-//        }
         
     }];
 }

@@ -146,7 +146,7 @@
            [_locationManager requestWhenInUseAuthorization];
             [vc.nearCollectionView headerEndRefreshing];
              //[vc.nearCollectionView headerBeginRefreshing];
-        }else if([CLLocationManager authorizationStatus]==kCLAuthorizationStatusAuthorizedWhenInUse){
+        }else if([CLLocationManager authorizationStatus]==kCLAuthorizationStatusAuthorizedWhenInUse||[CLLocationManager authorizationStatus]==kCLAuthorizationStatusAuthorizedAlways){
             //设置代理
             _locationManager.delegate=vc;
             //设置定位精度

@@ -46,6 +46,9 @@
 		FEC7CD2B1AFDE294007F798B /* StoryImage.m in Sources */ = {isa = PBXBuildFile; fileRef = FEC7CD2A1AFDE294007F798B /* StoryImage.m */; };
 		FEC7CD2E1AFDE3CB007F798B /* TownStory.m in Sources */ = {isa = PBXBuildFile; fileRef = FEC7CD2D1AFDE3CB007F798B /* TownStory.m */; };
 		FEC7CD311AFE4142007F798B /* settingTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FEC7CD301AFE4142007F798B /* settingTableViewCell.m */; };
+		FEC880AB1B0DD15900C6F231 /* cacheViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FEC880A91B0DD15900C6F231 /* cacheViewController.m */; };
+		FEC880AC1B0DD15900C6F231 /* cacheViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FEC880AA1B0DD15900C6F231 /* cacheViewController.xib */; };
+		FEC880AF1B0DD38800C6F231 /* CacheTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FEC880AE1B0DD38800C6F231 /* CacheTableViewCell.m */; };
 		FEC8D04D1AFC53070083FA76 /* ModelHotTown.m in Sources */ = {isa = PBXBuildFile; fileRef = FEC8D04C1AFC53070083FA76 /* ModelHotTown.m */; };
 		FEC8D0501AFC53CF0083FA76 /* modelConsts.m in Sources */ = {isa = PBXBuildFile; fileRef = FEC8D04F1AFC53CF0083FA76 /* modelConsts.m */; };
 		FEC8D0541AFC87290083FA76 /* settingTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FEC8D0521AFC87290083FA76 /* settingTableViewController.m */; };
@@ -145,6 +148,7 @@
 		FECAE90E1B07763E00FE6FA7 /* UserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FECAE90C1B07763E00FE6FA7 /* UserViewController.m */; };
 		FECAE90F1B07763E00FE6FA7 /* UserViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FECAE90D1B07763E00FE6FA7 /* UserViewController.xib */; };
 		FECAE9121B07865100FE6FA7 /* UserCollectionReusableView.m in Sources */ = {isa = PBXBuildFile; fileRef = FECAE9111B07865100FE6FA7 /* UserCollectionReusableView.m */; };
+		FECE80561B0CDFD600116714 /* townCache.m in Sources */ = {isa = PBXBuildFile; fileRef = FECE80551B0CDFD600116714 /* townCache.m */; };
 		FED0A5D41B08993800B452DB /* RTLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = FED0A5D31B08993800B452DB /* RTLabel.m */; };
 		FED0A5D81B08A0F700B452DB /* messageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FED0A5D61B08A0F700B452DB /* messageViewController.m */; };
 		FED0A5D91B08A0F700B452DB /* messageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FED0A5D71B08A0F700B452DB /* messageViewController.xib */; };
@@ -252,6 +256,11 @@
 		FEC7CD2D1AFDE3CB007F798B /* TownStory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TownStory.m; sourceTree = "<group>"; };
 		FEC7CD2F1AFE4142007F798B /* settingTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = settingTableViewCell.h; sourceTree = "<group>"; };
 		FEC7CD301AFE4142007F798B /* settingTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = settingTableViewCell.m; sourceTree = "<group>"; };
+		FEC880A81B0DD15900C6F231 /* cacheViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cacheViewController.h; sourceTree = "<group>"; };
+		FEC880A91B0DD15900C6F231 /* cacheViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = cacheViewController.m; sourceTree = "<group>"; };
+		FEC880AA1B0DD15900C6F231 /* cacheViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = cacheViewController.xib; sourceTree = "<group>"; };
+		FEC880AD1B0DD38800C6F231 /* CacheTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CacheTableViewCell.h; sourceTree = "<group>"; };
+		FEC880AE1B0DD38800C6F231 /* CacheTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CacheTableViewCell.m; sourceTree = "<group>"; };
 		FEC8D04B1AFC53070083FA76 /* ModelHotTown.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ModelHotTown.h; sourceTree = "<group>"; };
 		FEC8D04C1AFC53070083FA76 /* ModelHotTown.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ModelHotTown.m; sourceTree = "<group>"; };
 		FEC8D04E1AFC53CF0083FA76 /* modelConsts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = modelConsts.h; sourceTree = "<group>"; };
@@ -433,6 +442,8 @@
 		FECAE90D1B07763E00FE6FA7 /* UserViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UserViewController.xib; sourceTree = "<group>"; };
 		FECAE9101B07865100FE6FA7 /* UserCollectionReusableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserCollectionReusableView.h; sourceTree = "<group>"; };
 		FECAE9111B07865100FE6FA7 /* UserCollectionReusableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserCollectionReusableView.m; sourceTree = "<group>"; };
+		FECE80541B0CDFD600116714 /* townCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = townCache.h; sourceTree = "<group>"; };
+		FECE80551B0CDFD600116714 /* townCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = townCache.m; sourceTree = "<group>"; };
 		FED0A5D21B08993800B452DB /* RTLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RTLabel.h; sourceTree = "<group>"; };
 		FED0A5D31B08993800B452DB /* RTLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RTLabel.m; sourceTree = "<group>"; };
 		FED0A5D51B08A0F700B452DB /* messageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = messageViewController.h; sourceTree = "<group>"; };
@@ -555,6 +566,9 @@
 				FEE5C8701B0AE8BF00772651 /* configureViewController.h */,
 				FEE5C8711B0AE8BF00772651 /* configureViewController.m */,
 				FEE5C8721B0AE8BF00772651 /* configureViewController.xib */,
+				FEC880A81B0DD15900C6F231 /* cacheViewController.h */,
+				FEC880A91B0DD15900C6F231 /* cacheViewController.m */,
+				FEC880AA1B0DD15900C6F231 /* cacheViewController.xib */,
 			);
 			name = show;
 			sourceTree = "<group>";
@@ -939,6 +953,8 @@
 				FEE5C8791B0AFE7400772651 /* ResponseSimple.m */,
 				FEE5C87B1B0B845B00772651 /* ModelDelete.h */,
 				FEE5C87C1B0B845B00772651 /* ModelDelete.m */,
+				FECE80541B0CDFD600116714 /* townCache.h */,
+				FECE80551B0CDFD600116714 /* townCache.m */,
 			);
 			path = model;
 			sourceTree = "<group>";
@@ -964,6 +980,8 @@
 				FECAE9111B07865100FE6FA7 /* UserCollectionReusableView.m */,
 				FE4CC10F1B0A100600B2615F /* subscriTableViewCell.h */,
 				FE4CC1101B0A100600B2615F /* subscriTableViewCell.m */,
+				FEC880AD1B0DD38800C6F231 /* CacheTableViewCell.h */,
+				FEC880AE1B0DD38800C6F231 /* CacheTableViewCell.m */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -1082,6 +1100,7 @@
 				FED36DC81AFA49DA00251846 /* upLoadImageViewController.xib in Resources */,
 				FEC8D1EB1AFF5993009E3AB0 /* addStoryViewController.xib in Resources */,
 				FECAE90F1B07763E00FE6FA7 /* UserViewController.xib in Resources */,
+				FEC880AC1B0DD15900C6F231 /* cacheViewController.xib in Resources */,
 				FEC8D0551AFC87290083FA76 /* settingTableViewController.xib in Resources */,
 				FED86C681B00BC8900B2F96C /* sceenshot.png in Resources */,
 				FED0A5D91B08A0F700B452DB /* messageViewController.xib in Resources */,
@@ -1141,6 +1160,7 @@
 				FEC8D1EA1AFF5993009E3AB0 /* addStoryViewController.m in Sources */,
 				FEC7CD251AFDE05C007F798B /* ModelStory.m in Sources */,
 				FED36DC71AFA49DA00251846 /* upLoadImageViewController.m in Sources */,
+				FECE80561B0CDFD600116714 /* townCache.m in Sources */,
 				FECA801C1AF71A3000FF57AE /* HotTownViewController.m in Sources */,
 				FEC571EE1B032A1500D5D8E5 /* SDDemoItemView.m in Sources */,
 				FECA80A71AF732A800FF57AE /* UIButton+WebCache.m in Sources */,
@@ -1178,6 +1198,7 @@
 				FED0A5DF1B08C39F00B452DB /* ResponseMess.m in Sources */,
 				FECA91C81AFB6BD800694847 /* townViewController.m in Sources */,
 				FEC571ED1B032A1500D5D8E5 /* SDTransparentPieProgressView.m in Sources */,
+				FEC880AF1B0DD38800C6F231 /* CacheTableViewCell.m in Sources */,
 				FECA80D61AF732BF00FF57AE /* UIScrollView+extension.m in Sources */,
 				FEC571EB1B032A1500D5D8E5 /* SDPieProgressView.m in Sources */,
 				FECA80D41AF732BF00FF57AE /* RefreshFooterView.m in Sources */,
@@ -1237,6 +1258,7 @@
 				FECA80A01AF732A800FF57AE /* SDImageCache.m in Sources */,
 				FE4020541B0494CD002125E6 /* TapImageView.m in Sources */,
 				FECA81171AF76EA400FF57AE /* NearViewController.m in Sources */,
+				FEC880AB1B0DD15900C6F231 /* cacheViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -24,7 +24,9 @@
 @end
 
 @implementation MyViewController
-
+-(void)viewWillAppear:(BOOL)animated{
+    [self loadInfo:2];
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     _applyTown = [[responseApplyTown alloc] init];
@@ -246,6 +248,11 @@
             _User.errcode = ad.errcode;
             [self.User.user.mytowns addObjectsFromArray:ad.user.mytowns];
             [self.myCollectionView footerEndRefreshing];
+        }
+        if (check ==2) {
+              self.User = [[ResponseUser alloc] initWithDictionary:data error:nil];
+            [self.myCollectionView reloadData];
+
         }
         log(@"User stat is %d,errcode is %@",_User.stat,_User.errcode);
         

@@ -18,8 +18,12 @@
         _stroyImage = [[UIImageView alloc] initWithFrame:CGRectMake(4, 5, self.frame.size.height, self.frame.size.height)];
         _stroyImage.clipsToBounds  = YES;
         _stroyImage.contentMode = UIViewContentModeCenter;
-        _storyLabel = [[UILabel alloc] initWithFrame:CGRectMake(_stroyImage.frame.origin.x+_stroyImage.frame.size.width+4, 4,_stroyImage.frame.size.width*3, self.frame.size.height/2-4)];
-        _dateLabel =[[UILabel alloc] initWithFrame:CGRectMake(_storyLabel.frame.origin.x, _storyLabel.frame.origin.y+_storyLabel.frame.size.height+4, _storyLabel.frame.size.width*3, self.frame.size.height/2-4)];
+        _storyLabel = [[UILabel alloc] initWithFrame:CGRectMake(_stroyImage.frame.origin.x+_stroyImage.frame.size.width+4, 12,self.frame.size.width-_stroyImage.frame.size.width-50, self.frame.size.height/2-4)];
+        _storyLabel.font =[UIFont systemFontOfSize:14];
+        _storyLabel.lineBreakMode = NSLineBreakByWordWrapping;
+        _storyLabel.numberOfLines =0;
+        _dateLabel =[[UILabel alloc] initWithFrame:CGRectMake(_storyLabel.frame.origin.x, _storyLabel.frame.origin.y+_storyLabel.frame.size.height, _storyLabel.frame.size.width*3, self.frame.size.height/2-4)];
+        _dateLabel.font =[UIFont systemFontOfSize:14];
         _goodLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.frame.size.width-40, 4, 20, self.frame.size.height/2-4)];
         _iconGoodImage = [[UIImageView alloc] initWithFrame:CGRectMake(_goodLabel.frame.origin.x+12, 12, 20, 20)];
         [self addSubview:_stroyImage];

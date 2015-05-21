@@ -365,6 +365,7 @@
 
 - (void)uploadFiles
 {
+     [self.navigationController setNavigationBarHidden:YES animated:NO];
     _progress.hidden = NO;
     [_progress removeFromSuperview];
     _progress= [SDDemoItemView demoItemViewWithClass:[SDBallProgressView class]];
@@ -392,7 +393,7 @@
         _progress.hidden =YES;
         //self.propressView.alpha = 0;
         if (completed) {
-            
+            [self.navigationController setNavigationBarHidden:NO animated:NO];
             //        alert = [[UIAlertView alloc]initWithTitle:@"" message:@"上传成功" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
             //                NSLog(@"%@",result);
             [self loadInfo:0];

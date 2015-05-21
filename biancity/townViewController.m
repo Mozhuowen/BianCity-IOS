@@ -62,7 +62,7 @@
         _iconAddImage.hidden = YES;
     }
      self.navigationItem.title = [NSString stringWithFormat:@"%@•边城",_applyTown.townname];
-    
+      _requestGood.targetid = _applyTown.townid;
       // __weak id weakSelf = self;
     [_placeholderImage sd_setImageWithURL:
      [NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@",getPictureUrl,_applyTown.cover,@"!small"]]
@@ -127,6 +127,7 @@
     _addrLabel.text = [NSString stringWithFormat:@"%@%@%@",_applyTown.geoinfo.province,_applyTown.geoinfo.city,_applyTown.geoinfo.freeaddr];
     _oldTownid = [_applyTown.townid integerValue];
     _storyTableView.scrollEnabled = NO;
+   // [self loadInfo:2];
 }
 -(void)loadMapImage:(UIImage*)image{
     [_addrMapImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@",getPictureUrl,_applyTown.geoinfo.screenpng,@"!large"]]  placeholderImage:image options:0] ;
@@ -179,11 +180,11 @@
     _placeholderImage = [[UIImageView alloc] init];
      _leftButton= [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemReply target:self action:@selector(selectLeftAction:)];
     _requestDelete =[[ModelDelete alloc] init];
-    _requestDelete.type = 0;
+    _requestDelete.type = [NSNumber numberWithInt:0];
     _requestDelete.id = _applyTown.townid;
      _rightButton= [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemTrash  target:self action:@selector(selectRightAction:)];
     _requestGood =[[ModelGood alloc] init];
-    _requestGood.targetid = _applyTown.townid;
+  
     _requestGood.type = 0;
     _requestStory = [[ModelStory alloc] init];
     _requestSubscriTown = [[ModelSubscriTown alloc] init];
@@ -198,7 +199,7 @@
     _origin = size;
     _bgScrollView.contentSize = size;
    _bgImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, _bgScrollView.frame.size.width, _bgScrollView.frame.size.width)];
-    
+    _bgImageView.image= [UIImage imageNamed:@"placeholder"];
     _townNameLabel =[[UILabel alloc ] initWithFrame:CGRectMake(4, _bgImageView.frame.origin.y+_bgImageView.frame.size.height+5, 150, 20)];
     _townNameLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:16];
     
@@ -252,6 +253,8 @@
     _leaveMsgLabel.layer.borderColor =[[UIColor grayColor] CGColor];
     _leaveMsgLabel.textAlignment =NSTextAlignmentCenter;
     _addrMapImage = [[UIImageView alloc ]initWithFrame:CGRectMake(self.view.frame.size.width*3/5-10,_summaryLabel.frame.origin.y+_summaryLabel.frame.size.height, self.view.frame.size.width*2/5, _leaveMsgLabel.frame.origin.y+_leaveMsgLabel.frame.size.height-(_summaryLabel.frame.origin.y+_summaryLabel.frame.size.height))];
+    _addrMapImage.image = [UIImage imageNamed:@"placeholder"];
+
     UITapGestureRecognizer* tapShowMap=[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showMap)];
     _addrMapImage.userInteractionEnabled =YES;
     [_addrMapImage addGestureRecognizer:tapShowMap];
@@ -354,7 +357,8 @@
     }
 }
 -(void)selectRightAction:(id)sender{
-    
+    _requestDelete.type = [NSNumber numberWithInt:0];
+    _requestDelete.id = _applyTown.townid;
     //[self.navigationController pushViewController:nil  animated:NO];
     [self showSheetSource:sender];
 }
@@ -440,13 +444,16 @@
             _responseStroys = [[ResponseStory alloc] initWithDictionary:data error:nil];
             [self.bgScrollView headerEndRefreshing];
             _requestStory.position =(int) [_responseStroys.putao count];
-        }else {
+        }else if(check ==1){
             ResponseStory *ad=[[ResponseStory alloc] initWithDictionary:data error:nil];
             [_responseStroys.putao addObjectsFromArray:ad.putao];
             _responseStroys.stat = ad.stat;
             _responseStroys.errcode = ad.errcode;
         _requestStory.position =(int) [_responseStroys.putao count];
             [self.bgScrollView footerEndRefreshing];
+        }else if(check ==2){
+            _responseStroys = [[ResponseStory alloc] initWithDictionary:data error:nil];
+            _requestStory.position =(int) [_responseStroys.putao count];
         }
         if(_requestStory.position>0){
              self.bgScrollView.contentSize= _origin;
@@ -524,6 +531,8 @@
         
         [cell.stroyImage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@",getPictureUrl,[[_responseStroys.putao objectAtIndex:indexPath.row]  cover],@"!small"]]  placeholderImage:[UIImage imageNamed:@"placeholder"] options:indexPath.row == 0 ? SDWebImageRefreshCached : 0];
         cell.storyLabel.text = [[_responseStroys.putao objectAtIndex:indexPath.row] title];
+            cell.storyLabel.lineBreakMode = NSLineBreakByWordWrapping;
+            cell.storyLabel.numberOfLines = 0;
         cell.dateLabel.text = [[_responseStroys.putao objectAtIndex:indexPath.row] createtime];
         cell.goodLabel.text =[NSString stringWithFormat:@"%@", [[_responseStroys.putao objectAtIndex:indexPath.row] goods]];
         cell.iconGoodImage.image = [UIImage imageNamed:@"ic_list_thumb"];
