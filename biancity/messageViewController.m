@@ -139,7 +139,7 @@
 -(void)localInfo{
     if ([CLLocationManager authorizationStatus]==kCLAuthorizationStatusNotDetermined){
         [_locationManager requestWhenInUseAuthorization];
-    }else if([CLLocationManager authorizationStatus]==kCLAuthorizationStatusAuthorizedWhenInUse){
+    }else if([CLLocationManager authorizationStatus]==kCLAuthorizationStatusAuthorizedWhenInUse||[CLLocationManager authorizationStatus]==kCLAuthorizationStatusAuthorizedAlways){
 //        //设置代理
 //        _locationManager.delegate=self;
 //        //设置定位精度

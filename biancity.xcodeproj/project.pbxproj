@@ -148,6 +148,7 @@
 		FECAE90E1B07763E00FE6FA7 /* UserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FECAE90C1B07763E00FE6FA7 /* UserViewController.m */; };
 		FECAE90F1B07763E00FE6FA7 /* UserViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FECAE90D1B07763E00FE6FA7 /* UserViewController.xib */; };
 		FECAE9121B07865100FE6FA7 /* UserCollectionReusableView.m in Sources */ = {isa = PBXBuildFile; fileRef = FECAE9111B07865100FE6FA7 /* UserCollectionReusableView.m */; };
+		FECBB80C1B0F03C600A59DEA /* PopView.m in Sources */ = {isa = PBXBuildFile; fileRef = FECBB80B1B0F03C600A59DEA /* PopView.m */; };
 		FECE80561B0CDFD600116714 /* townCache.m in Sources */ = {isa = PBXBuildFile; fileRef = FECE80551B0CDFD600116714 /* townCache.m */; };
 		FED0A5D41B08993800B452DB /* RTLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = FED0A5D31B08993800B452DB /* RTLabel.m */; };
 		FED0A5D81B08A0F700B452DB /* messageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FED0A5D61B08A0F700B452DB /* messageViewController.m */; };
@@ -442,6 +443,8 @@
 		FECAE90D1B07763E00FE6FA7 /* UserViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UserViewController.xib; sourceTree = "<group>"; };
 		FECAE9101B07865100FE6FA7 /* UserCollectionReusableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserCollectionReusableView.h; sourceTree = "<group>"; };
 		FECAE9111B07865100FE6FA7 /* UserCollectionReusableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserCollectionReusableView.m; sourceTree = "<group>"; };
+		FECBB80A1B0F03C600A59DEA /* PopView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PopView.h; sourceTree = "<group>"; };
+		FECBB80B1B0F03C600A59DEA /* PopView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PopView.m; sourceTree = "<group>"; };
 		FECE80541B0CDFD600116714 /* townCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = townCache.h; sourceTree = "<group>"; };
 		FECE80551B0CDFD600116714 /* townCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = townCache.m; sourceTree = "<group>"; };
 		FED0A5D21B08993800B452DB /* RTLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RTLabel.h; sourceTree = "<group>"; };
@@ -657,6 +660,7 @@
 		FECA80121AF71A3000FF57AE /* biancity */ = {
 			isa = PBXGroup;
 			children = (
+				FECBB8091B0F03A400A59DEA /* New Group */,
 				FED0A5D11B08993800B452DB /* webLabel */,
 				FEC62DEA1B06225A004510DC /* KeyboardObserver */,
 				FE40204E1B0494CD002125E6 /* scrollImage */,
@@ -986,6 +990,15 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
+		FECBB8091B0F03A400A59DEA /* New Group */ = {
+			isa = PBXGroup;
+			children = (
+				FECBB80A1B0F03C600A59DEA /* PopView.h */,
+				FECBB80B1B0F03C600A59DEA /* PopView.m */,
+			);
+			name = "New Group";
+			sourceTree = "<group>";
+		};
 		FED0A5D11B08993800B452DB /* webLabel */ = {
 			isa = PBXGroup;
 			children = (
@@ -1242,6 +1255,7 @@
 				FEC571EA1B032A1500D5D8E5 /* SDPieLoopProgressView.m in Sources */,
 				FED0A5DC1B08C24B00B452DB /* ModelMessBoard.m in Sources */,
 				FECA80191AF71A3000FF57AE /* AppDelegate.m in Sources */,
+				FECBB80C1B0F03C600A59DEA /* PopView.m in Sources */,
 				FECA80A61AF732A800FF57AE /* SDWebImagePrefetcher.m in Sources */,
 				FECA807A1AF7329800FF57AE /* JSONKeyMapper.m in Sources */,
 				FEC8D1F71AFF6121009E3AB0 /* ResponseSubscriTown.m in Sources */,
@@ -1388,7 +1402,7 @@
 					"$(PROJECT_DIR)/biancity/GaodeGeoInfo",
 				);
 				INFOPLIST_FILE = biancity/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1408,7 +1422,7 @@
 					"$(PROJECT_DIR)/biancity/GaodeGeoInfo",
 				);
 				INFOPLIST_FILE = biancity/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",

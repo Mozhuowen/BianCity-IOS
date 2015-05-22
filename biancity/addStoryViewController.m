@@ -18,6 +18,7 @@
 #import "ResponseStory.h"
 #import "SDProgressView.h"
 #import "SDDemoItemView.h"
+#import "PopView.h"
 @interface addStoryViewController ()
 {
     int count_images;
@@ -171,6 +172,7 @@
         _townstory.content = _descriTextView.text;
         _townstory.townid =_townid;
         _upLoadingfalg = YES;
+        [self saveUserDefaultsOwn];
         [self uploadFiles];
         
     }else{
@@ -443,10 +445,10 @@
                 [weakSelf uploadFiles];
             }
         }else {
-            [_progressAlert dismissWithClickedButtonIndex:0 animated:NO];
-            alert = [[UIAlertView alloc]initWithTitle:@"" message:@"上传失败" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
-            NSLog(@"%@",error);
-            [alert show];
+            [self.navigationController setNavigationBarHidden:NO animated:NO];
+            PopView *pop =[[PopView alloc] initWithFrame:CGRectMake(80, 80, 200, 320)];
+            [self.view addSubview:pop];
+            [pop setText:@"o(>﹏<)o 网络有点糟糕,以保存至草稿箱,请稍后再试"];
             _progress.hidden = YES;
         }
       
@@ -491,9 +493,15 @@
         log(@"creatStroy stat is %d,errcode is %d",_responseStory.stat,_responseStory.errcode);
         [self.navigationController popViewControllerAnimated:YES];
         [self deletecache];
+        [self.navigationController setNavigationBarHidden:NO animated:NO];
+        PopView *pop =[[PopView alloc] initWithFrame:CGRectMake(80, 80, 200, 320)];
+        [self.view addSubview:pop];
+        [pop setText:@"\(^o^)/~ 新建成功"];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error: %@", error);
-        [self showAlert:@"创建故事失败"];
+        PopView *pop =[[PopView alloc] initWithFrame:CGRectMake(80, 80, 200, 320)];
+        [self.view addSubview:pop];
+        [pop setText:@"o(>﹏<)o 网络糟糕，请稍后重试"];
     }];
 }
 #pragma   草稿箱
@@ -579,7 +587,11 @@
     for(int i=0;i<[_images count];i++){
         [self saveImage:[item1.imagesName objectAtIndex:i] image:[_images objectAtIndex:i]];
     }
-
+    if(!_upLoadingfalg){
+        PopView * pop = [[PopView alloc] initWithFrame:CGRectMake(80, self.view.frame.size.height-200, 240, 320)];
+        [self.view addSubview:pop];
+        [pop setText:@"成功保存\(^o^)/"];
+    }
 }
 -(void)setCacheBegin:(townCache*)cache key:(NSString*)keyid{
     _wallimagelabel = cache.coverName;

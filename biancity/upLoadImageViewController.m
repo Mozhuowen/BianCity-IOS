@@ -18,6 +18,7 @@
 #import "SDProgressView.h"
 #import "SDDemoItemView.h"
 #import "townCache.h"
+#import "PopView.h"
 @interface upLoadImageViewController ()
 {
     int count;
@@ -177,6 +178,11 @@
 
     
     [userDefaults synchronize];
+    if(!_uploadFlag){
+        PopView * pop = [[PopView alloc] initWithFrame:CGRectMake(80, self.view.frame.size.height-200, 240, 320)];
+        [self.view addSubview:pop];
+        [pop setText:@"成功保存\(^o^)/"];
+    }
 }
 - (void) readUserDeafultsOwn
 {
@@ -319,6 +325,7 @@
         _requestApplyTown.geoinfo = _geoinfo;
     if([self checkInfo]){
         _uploadFlag =YES;
+        [self saveUserDefaultsOwn];
         [self uploadFiles];
     }else{
         [self showAlert:@"信息不足，请补充完整"];
@@ -564,10 +571,11 @@
                 [weakSelf uploadFiles];
             }
         }else {
-            [_progressAlert dismissWithClickedButtonIndex:0 animated:NO];
-            alert = [[UIAlertView alloc]initWithTitle:@"" message:@"上传失败" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
-            NSLog(@"%@",error);
-            [alert show];
+            [self.navigationController setNavigationBarHidden:NO animated:NO];
+            _progressDome.hidden = YES;
+            PopView *pop =[[PopView alloc] initWithFrame:CGRectMake(80, 80, 200, 320)];
+            [self.view addSubview:pop];
+            [pop setText:@"o(>﹏<)o  网络糟糕，信息已保存至草稿箱，请重新上传"];
         }
         
         
@@ -615,15 +623,24 @@
                 town.applyTown = _responseApplyTown;
                 [self.navigationController pushViewController:town  animated:YES];
                 [self deletecache];
+                PopView *pop =[[PopView alloc] initWithFrame:CGRectMake(80, 80, 200, 320)];
+                [self.view addSubview:pop];
+                [pop setText:@"\(^o^)/~  创建成功"];
             }
             else{
-                [self showAlert:@"上传不成功"];
+                PopView *pop =[[PopView alloc] initWithFrame:CGRectMake(80, 80, 200, 320)];
+                [self.view addSubview:pop];
+                [pop setText:@"o(>﹏<)o  网络糟糕，请重新上传"];
+
             }
         log(@"APPLYTOWN stat is %d,errcode is %d",_responseApplyTown.stat,_responseApplyTown.errcode);
         log(@"%@",_responseApplyTown);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error: %@", error);
-        
+        PopView *pop =[[PopView alloc] initWithFrame:CGRectMake(80, 80, 200, 320)];
+        [self.view addSubview:pop];
+        [pop setText:@"o(>﹏<)o  网络糟糕，请重新上传"];
+
     }];
 }
 
