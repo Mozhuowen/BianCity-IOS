@@ -10,6 +10,9 @@
 
 #define log   NSLog
 
+extern NSString *const LOGIN_INFO ;
+extern NSString *const REGISTE_INFO ;
+
 extern NSString *const getHotTownUrl ;
 extern NSString *const getNearTownUrl ;
 extern NSString *const getUserInfoUrl ;
@@ -33,4 +36,10 @@ extern NSString *const getCwallUrl;
 extern NSString *const doGoodUrl;
 extern NSString *const deleteUrl;
 extern NSString *const cuserinfoUrl ;
+extern NSString *const loginUrl;
+extern NSString *const registeUrl ;
+extern NSString *const cnameUrl ;
+
+
+
 

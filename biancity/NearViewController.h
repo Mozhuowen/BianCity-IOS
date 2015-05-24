@@ -10,6 +10,6 @@
 #import "UIImageView+WebCache.h"
 #import "MAMaPKit/MAMapKit.h"
 #import "AMapSearchKit/AMapSearchAPI.h"
-@interface NearViewController : UIViewController<UICollectionViewDataSource,UICollectionViewDelegate,SDWebImageManagerDelegate,CLLocationManagerDelegate>
+@interface NearViewController : UIViewController<UICollectionViewDataSource,UICollectionViewDelegate,SDWebImageManagerDelegate,MAMapViewDelegate,CLLocationManagerDelegate>
 
 @end

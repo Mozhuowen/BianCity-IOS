@@ -16,6 +16,9 @@
 #import "UIView+KeyboardObserver.h"
 #import <CommonCrypto/CommonDigest.h>
 #import "ResponseSimple.h"
+#import "ResponseLogin.h"
+#import "ResponseRegiste.h"
+#import "PopView.h"
 @interface configureViewController (){
     NSInteger index_com;
 }
@@ -28,20 +31,51 @@
 @property (nonatomic,strong) UILabel * retrunLabel;
 @property (nonatomic,strong) UIView *bgTextView;
 @property (nonatomic,strong) ResponseSimple* response;
+
+@property (nonatomic,strong) ResponseRegiste* registe;
+@property (nonatomic,strong) ResponseLogin *login;
 @end
 
 @implementation configureViewController
 
 -(void)viewWillAppear:(BOOL)animated{
     [_bgTextView addKeyboardObserver];
+    [self readUserDeafultsOwn];
+    [self.configureTableView reloadData];
 }
 -(void)viewWillDisappear:(BOOL)animated{
     [_bgTextView removeKeyboardObserver];
 }
+- (void) readUserDeafultsOwn{
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    NSDictionary *cache;
+    cache = [userDefaults dictionaryForKey:LOGIN_INFO];
+    if([(NSNumber*)[cache objectForKey:@"needregiste"] boolValue]){
+        cache = [userDefaults dictionaryForKey:REGISTE_INFO];
+        _registe =[[ResponseRegiste alloc] initWithDictionary:cache error:nil];
+    
+        _user.cover = _registe.cover;
+        _user.name = _registe.name;
+        _user.sex = _registe.sex;
+        _user.location = _registe.location;
+            return;
+        
+    }
+    _login=[[ResponseLogin alloc] initWithDictionary:cache error:nil];
+    
+    _user.cover = _login.cover;
+    _user.name = _login.name;
+    _user.sex = _login.sex;
+    _user.location = _login.location;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.view.frame = [UIScreen mainScreen].bounds;
     SDWebImageManager *manager = [SDWebImageManager sharedManager];
     manager.delegate = self;
+    _user = [[ModelUser alloc] init];
+    _user.onlystatis = YES;
     self.navigationItem.title = @"设置";
     self.view.backgroundColor = [UIColor colorWithRed:0.9 green:0.9 blue:0.9 alpha:1.0];
     CGRect rc  = [UIScreen mainScreen].bounds;
@@ -85,6 +119,7 @@
     [self.view addSubview:_configureTableView];
        [self.view addSubview:_bgTextView];
     _bgTextView.hidden =YES;
+    [self readUserDeafultsOwn];
     // Do any additional setup after loading the view from its nib.
 }
 -(void)commitComment{
@@ -389,7 +424,6 @@
         
         weakSelf.progress.progressView.progress =percent;        NSLog(@"progress is %f", weakSelf.progress.progressView.progress);
     } completeBlock:^(NSError *error, NSDictionary *result, BOOL completed) {
-        UIAlertView * alert;
         _progress.hidden =YES;
         //self.propressView.alpha = 0;
         if (completed) {
@@ -399,9 +433,12 @@
             [self loadInfo:0];
             [_progress removeFromSuperview];
         }else {
-            alert = [[UIAlertView alloc]initWithTitle:@"" message:@"上传背景失败" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
-            NSLog(@"%@",error);
-            [alert show];
+            PopView *pop =[[PopView alloc] initWithFrame:CGRectMake([UIScreen mainScreen].bounds.size.width/2 -100, 80, 200, 320)];
+            [self.view addSubview:pop];
+            [pop setText:@"上传头像失败,请重试"];
+            [_progress removeFromSuperview];
+            [self.navigationController setNavigationBarHidden:NO animated:NO];
+
         }
         
         
@@ -418,6 +455,9 @@
 
 
 -(void)loadInfo:(int)check{
+    if(check ==0){
+        _user.cover = _imageName;
+    }
     NSDictionary *parameters;
     NSString *url ;
     url =[NSString stringWithString:cuserinfoUrl];
@@ -440,16 +480,38 @@
         if(check ==0){
           _response= [[ResponseSimple alloc] initWithDictionary:data error:nil];
             if(_response.stat == YES){
-                [self showAlert:@"头像修改成功"];
+                if(_login){
+                    _login.cover = _user.cover;
+                    [self saveUserDefaultsOwn:0 data:[_login toDictionary]];
+                }else if(_registe){
+                    _registe.cover = _user.cover;
+                    [self saveUserDefaultsOwn:1 data:[_registe toDictionary]];
+                }
+                PopView *pop =[[PopView alloc] initWithFrame:CGRectMake([UIScreen mainScreen].bounds.size.width/2 -100, 80, 200, 320)];
+                [self.view addSubview:pop];
+                [pop setText:@"头像修改成功"];
                 [self.configureTableView reloadData];
             }
             else{
-                [self showAlert:@"头像修改失败"];
-
+                PopView *pop =[[PopView alloc] initWithFrame:CGRectMake([UIScreen mainScreen].bounds.size.width/2 -100, 80, 200, 320)];
+                [self.view addSubview:pop];
+                [pop setText:@"头像修改失败"];
             }
         }else if(check==1){
              _response= [[ResponseSimple alloc] initWithDictionary:data error:nil];
             if(_response.stat){
+                if(_login){
+                    _login.name = _user.name;
+                    _login.location = _user.location;
+                    _login.sex = _user.sex;
+                    [self saveUserDefaultsOwn:0 data:[_login toDictionary]];
+                }else if(_registe){
+                    _registe.name = _user.name;
+                    _registe.location = _user.location;
+                    _registe.sex = _user.sex;
+                    [self saveUserDefaultsOwn:0 data:[_login toDictionary]];
+                
+                }
                 [self.configureTableView reloadData];
                 [self.navigationController popViewControllerAnimated:YES];
                 
@@ -458,13 +520,24 @@
             }
             
         }
+        [self readUserDeafultsOwn];
         log(@"responseMess stat is %d,errcode is %d",_response.stat,_response.errcode);
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error: %@", error);
 }];
 }
-
+- (void)saveUserDefaultsOwn:(NSInteger)check data:(NSDictionary*)data{
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    if(check==0){
+        NSDictionary *cache=data;
+        [userDefaults setObject:cache forKey:LOGIN_INFO];
+    }else if(check==1){
+        NSDictionary *cache=data;
+        [userDefaults setObject:cache forKey:REGISTE_INFO];
+    }
+    [userDefaults synchronize];
+}
 
 /*
 #pragma mark - Navigation

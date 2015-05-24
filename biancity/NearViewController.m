@@ -25,6 +25,7 @@
 @property (nonatomic,strong) responseApplyTown *applyTown;
 @property (nonatomic,strong)  showNavigationController *show;
 @property (nonatomic,strong) townViewController *town;
+@property (nonatomic,strong) MAMapView *mapView;
 @end
 
 @implementation NearViewController
@@ -147,15 +148,20 @@
             [vc.nearCollectionView headerEndRefreshing];
              //[vc.nearCollectionView headerBeginRefreshing];
         }else if([CLLocationManager authorizationStatus]==kCLAuthorizationStatusAuthorizedWhenInUse||[CLLocationManager authorizationStatus]==kCLAuthorizationStatusAuthorizedAlways){
-            //设置代理
-            _locationManager.delegate=vc;
-            //设置定位精度
-            _locationManager.desiredAccuracy=kCLLocationAccuracyBest;
-            //定位频率,每隔多少米定位一次
-            CLLocationDistance distance=1.0;//十米定位一次
-            _locationManager.distanceFilter=distance;
-            //启动跟踪定位
-            [_locationManager startUpdatingLocation];
+//            //设置代理
+//            _locationManager.delegate=vc;
+//            //设置定位精度
+//            _locationManager.desiredAccuracy=kCLLocationAccuracyBest;
+//            //定位频率,每隔多少米定位一次
+//            CLLocationDistance distance=1.0;//十米定位一次
+//            _locationManager.distanceFilter=distance;
+//            //启动跟踪定位
+//            [_locationManager startUpdatingLocation];
+            [MAMapServices sharedServices].apiKey =@"3b9e1284b49e66b32342d17309eb45eb";
+
+            _mapView = [[MAMapView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
+            _mapView.delegate = self;
+            _mapView.showsUserLocation = YES;
         }else if ([CLLocationManager authorizationStatus]==kCLAuthorizationStatusDenied||[CLLocationManager authorizationStatus]==kCLAuthorizationStatusRestricted){
             [vc.nearCollectionView headerEndRefreshing];
 
@@ -266,6 +272,38 @@
         }else{
          [_locationManager startUpdatingLocation];
         }
+}
+
+-(void)mapView:(MAMapView *)mapView didUpdateUserLocation:(MAUserLocation *)userLocation{
+    if(userLocation){
+        //        NSLog(@"%@",userLocation);
+          _nearTown.geo.latitude =[[NSNumber alloc]initWithDouble:userLocation.coordinate.latitude];
+          _nearTown.geo.longitude = [[NSNumber alloc] initWithDouble:userLocation.coordinate.longitude];
+        
+        if(_nearTown.geo.latitude!=nil){
+            _mapView.showsUserLocation = NO;
+            [_mapView removeFromSuperview];
+            [self loadInfo:0];
+        }else{
+            _mapView.showsUserLocation = YES;
+        }
+
+       
+//        _geoinfo.accuracy = [[NSNumber alloc] initWithDouble:userLocation.location.horizontalAccuracy] ;
+//        //
+//        _search = [[AMapSearchAPI alloc] initWithSearchKey:[MAMapServices sharedServices].apiKey  Delegate:self];
+//        _local=[[CLLocation alloc] initWithLatitude:userLocation.coordinate.latitude longitude:userLocation.coordinate.longitude];
+//        //
+//        //构造AMapReGeocodeSearchRequest对象，location为必选项，radius为可选项
+//        AMapReGeocodeSearchRequest *regeoRequest = [[AMapReGeocodeSearchRequest alloc] init];
+//        regeoRequest.searchType = AMapSearchType_ReGeocode;
+//        regeoRequest.location = [AMapGeoPoint locationWithLatitude:userLocation.coordinate.latitude longitude:userLocation.coordinate.longitude];
+//        regeoRequest.radius = 10000;
+//        regeoRequest.requireExtension = YES;
+//        
+//        //发起逆地理编码
+//        [_search AMapReGoecodeSearch: regeoRequest];
+    }
 }
 #pragma end location
 /*

@@ -10,13 +10,18 @@
 #import "MsgEncrypt.h"
 #import "basicRequest.h"
 #import "UIImageView+WebCache.h"
+
 @interface AppDelegate ()
 {
     CLLocationManager * localManager;
 }
+
 @end
 
 @implementation AppDelegate
+
+
+
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
@@ -35,7 +40,7 @@
     //[localManager requestAlwaysAuthorization];
     //[localManager requestWhenInUseAuthorization];
     localManager.delegate =self;
-
+   
     // Override point for customization after application launch.
     return YES;
 }
@@ -66,5 +71,15 @@
 {
     return UIInterfaceOrientationMaskPortrait;
 }
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation{
+    return [TencentOAuth HandleOpenURL:url];
+}
 
+- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url{
+   
+    if ([[url scheme] isEqualToString:@"awen"]) {
+        NSLog(@"外部调用成功");
+    }
+ return [TencentOAuth HandleOpenURL:url];
+}
 @end

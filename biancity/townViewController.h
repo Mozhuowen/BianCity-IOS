@@ -33,4 +33,5 @@
 @property (nonatomic,strong) UIBarButtonItem *rightButton;
 @property (nonatomic,strong) UIImageView *placeholderImage;
 @property (nonatomic) BOOL isComeFromSubscri;
+@property (nonatomic) BOOL isComefromUPload;
 @end

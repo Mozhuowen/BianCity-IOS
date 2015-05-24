@@ -10,5 +10,5 @@
 #import "ModelUser.h"
 #import "UIImageView+WebCache.h"
 @interface settingTableViewController : UITableViewController<SDWebImageManagerDelegate,UIActionSheetDelegate>
-@property (nonatomic,strong) ModelUser *user;
+//@property (nonatomic,strong) ModelUser *user;
 @end

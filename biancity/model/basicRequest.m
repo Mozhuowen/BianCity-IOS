@@ -7,31 +7,27 @@
 //
 
 #import "basicRequest.h"
-
+#import "ResponseLogin.h"
 @implementation basicRequest
 -(id)init{
     self=[super init];
-   // self.ptoken = @"jjU1uD4ESLf1fNyXqu6EuFTUrAlzArLF";
-    self.ptoken =@"QQ6I6lN8pc4l1NnxkCyFxrkOmzFqbKZO";
-    self.ptuserid = [[NSNumber alloc] initWithInt:15];
+    [self readUserDeafultsOwn:0];
+//    self.ptoken = @"jjU1uD4ESLf1fNyXqu6EuFTUrAlzArLF";
+//    self.ptoken =@"QQ6I6lN8pc4l1NnxkCyFxrkOmzFqbKZO";
+//    self.ptuserid = [[NSNumber alloc] initWithInt:15];
+//            NSDictionary *cache = [[NSUserDefaults standardUserDefaults] objectForKey:LOGIN_INFO];
+//        ResponseLogin *tmp = [[ResponseLogin alloc] initWithDictionary:cache error:nil];
+//        self.ptoken = tmp.ptoken;
+//        self.ptuserid = tmp.ptuserid;
+   
     return self;
 }
-//+ (id)sharedBaseic {
-//    static dispatch_once_t once;
-//    static id instance;
-//    dispatch_once(&once, ^{
-//        instance = [self new];
-//    });
-//    return instance;
-//}
-//
-//- (id)init {
-//    if ((self = [super init])) {
-//        self.ptoken = [NSString new];
-//        self.rejectid = [NSMutableArray new];
-//        self.ptuserid = [NSString new];
-//        self.gethoturl = [NSString new];
-//    }
-//    return self;
-//}
+- (void) readUserDeafultsOwn:(NSInteger)check{
+    if([[NSUserDefaults standardUserDefaults] dictionaryForKey:LOGIN_INFO]!=nil){
+    NSDictionary *cache = [[NSUserDefaults standardUserDefaults] dictionaryForKey:LOGIN_INFO];
+    ResponseLogin *tmp = [[ResponseLogin alloc] initWithDictionary:cache error:nil];
+    self.ptoken = tmp.ptoken;
+        self.ptuserid = tmp.ptuserid;
+    }
+}
 @end

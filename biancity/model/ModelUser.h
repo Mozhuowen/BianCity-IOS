@@ -8,12 +8,12 @@
 
 #import <Foundation/Foundation.h>
 #import "JSONModel.h"
-#import "ApplyTown.h"
+#import "ModelAppleTown.h"
 #import "basicRequest.h"
 @interface ModelUser : basicRequest
 @property (nonatomic,strong) NSString<Optional>* name;
 @property (nonatomic,strong)  NSString<Optional>* cover;
-@property (nonatomic,strong)  NSMutableArray<ApplyTown,Optional>* mytowns;
+@property (nonatomic,strong)  NSMutableArray<ModelAppleTown,Optional>* mytowns;
 @property (nonatomic,strong)  NSString<Optional>* sex;
 @property (nonatomic,strong)  NSString<Optional>* location;
 @property (nonatomic,strong)  NSNumber<Optional>* fans;			//粉丝数

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6751" systemVersion="14C2043" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="HZh-tJ-erl">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6751" systemVersion="14C2043" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="pLd-Yi-QWx">
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
     </dependencies>
     <scenes>
@@ -302,10 +303,160 @@
             </objects>
             <point key="canvasLocation" x="-3603" y="-648"/>
         </scene>
+        <!--Login View Controller-->
+        <scene sceneID="Lhd-DN-4U0">
+            <objects>
+                <viewController id="pLd-Yi-QWx" customClass="LoginViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="do3-g6-nYg"/>
+                        <viewControllerLayoutGuide type="bottom" id="RCL-5D-P8l"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="b96-nw-nwm">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="weibo_login" translatesAutoresizingMaskIntoConstraints="NO" id="Rb9-uh-Kfp">
+                                <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="150" id="CZq-Rk-l3w"/>
+                                    <constraint firstAttribute="height" constant="150" id="Fwg-Oq-qyN"/>
+                                    <constraint firstAttribute="width" constant="120" id="TXY-O5-xFj"/>
+                                    <constraint firstAttribute="height" constant="120" id="bTl-nK-0UT"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="CZq-Rk-l3w"/>
+                                        <exclude reference="Fwg-Oq-qyN"/>
+                                        <exclude reference="TXY-O5-xFj"/>
+                                        <exclude reference="bTl-nK-0UT"/>
+                                    </mask>
+                                </variation>
+                                <variation key="heightClass=regular-widthClass=compact">
+                                    <mask key="constraints">
+                                        <exclude reference="CZq-Rk-l3w"/>
+                                        <exclude reference="Fwg-Oq-qyN"/>
+                                        <exclude reference="TXY-O5-xFj"/>
+                                        <exclude reference="bTl-nK-0UT"/>
+                                    </mask>
+                                </variation>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="qq_login" translatesAutoresizingMaskIntoConstraints="NO" id="9hB-Mx-Acq">
+                                <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="90" id="3Rd-ry-fXI">
+                                        <variation key="heightClass=regular-widthClass=compact" constant="40"/>
+                                    </constraint>
+                                    <constraint firstAttribute="width" constant="120" id="6mH-zR-gui"/>
+                                    <constraint firstAttribute="height" constant="120" id="LMr-PI-dac"/>
+                                    <constraint firstAttribute="width" constant="150" id="OXL-t1-fG7"/>
+                                    <constraint firstAttribute="height" constant="150" id="a53-is-F3h"/>
+                                    <constraint firstAttribute="height" constant="90" id="o0x-3l-olt">
+                                        <variation key="heightClass=regular-widthClass=compact" constant="40"/>
+                                    </constraint>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="3Rd-ry-fXI"/>
+                                        <exclude reference="6mH-zR-gui"/>
+                                        <exclude reference="LMr-PI-dac"/>
+                                        <exclude reference="OXL-t1-fG7"/>
+                                        <exclude reference="a53-is-F3h"/>
+                                        <exclude reference="o0x-3l-olt"/>
+                                    </mask>
+                                </variation>
+                                <variation key="heightClass=regular-widthClass=compact">
+                                    <mask key="constraints">
+                                        <include reference="3Rd-ry-fXI"/>
+                                        <exclude reference="6mH-zR-gui"/>
+                                        <exclude reference="LMr-PI-dac"/>
+                                        <exclude reference="OXL-t1-fG7"/>
+                                        <exclude reference="a53-is-F3h"/>
+                                        <include reference="o0x-3l-olt"/>
+                                    </mask>
+                                </variation>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="luanch_login" translatesAutoresizingMaskIntoConstraints="NO" id="rjT-bN-k09">
+                                <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="120" id="EkC-a9-4jG"/>
+                                    <constraint firstAttribute="height" constant="120" id="UlF-sx-3aD"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="EkC-a9-4jG"/>
+                                        <exclude reference="UlF-sx-3aD"/>
+                                    </mask>
+                                </variation>
+                                <variation key="heightClass=regular-widthClass=compact">
+                                    <mask key="constraints">
+                                        <include reference="EkC-a9-4jG"/>
+                                        <include reference="UlF-sx-3aD"/>
+                                    </mask>
+                                </variation>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="9hB-Mx-Acq" secondAttribute="trailing" constant="80" id="5LQ-PP-u0A"/>
+                            <constraint firstItem="Rb9-uh-Kfp" firstAttribute="top" secondItem="9hB-Mx-Acq" secondAttribute="bottom" constant="-40" id="BLJ-3Z-Z5P"/>
+                            <constraint firstItem="Rb9-uh-Kfp" firstAttribute="leading" secondItem="b96-nw-nwm" secondAttribute="leading" constant="79" id="EsN-KY-nUb"/>
+                            <constraint firstItem="rjT-bN-k09" firstAttribute="top" secondItem="b96-nw-nwm" secondAttribute="top" constant="53" id="akB-Vf-0ri">
+                                <variation key="heightClass=regular-widthClass=compact" constant="59"/>
+                            </constraint>
+                            <constraint firstAttribute="centerX" secondItem="rjT-bN-k09" secondAttribute="centerX" id="e6H-cS-EZ4"/>
+                            <constraint firstItem="9hB-Mx-Acq" firstAttribute="width" secondItem="Rb9-uh-Kfp" secondAttribute="width" id="fue-cd-w3b"/>
+                            <constraint firstItem="9hB-Mx-Acq" firstAttribute="height" secondItem="Rb9-uh-Kfp" secondAttribute="height" id="kzI-ps-97y"/>
+                            <constraint firstAttribute="bottom" secondItem="Rb9-uh-Kfp" secondAttribute="bottom" constant="29" id="vxB-UE-qTk"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="subviews">
+                                <exclude reference="Rb9-uh-Kfp"/>
+                                <exclude reference="9hB-Mx-Acq"/>
+                                <exclude reference="rjT-bN-k09"/>
+                            </mask>
+                            <mask key="constraints">
+                                <exclude reference="akB-Vf-0ri"/>
+                                <exclude reference="e6H-cS-EZ4"/>
+                                <exclude reference="BLJ-3Z-Z5P"/>
+                                <exclude reference="EsN-KY-nUb"/>
+                                <exclude reference="vxB-UE-qTk"/>
+                                <exclude reference="5LQ-PP-u0A"/>
+                                <exclude reference="fue-cd-w3b"/>
+                                <exclude reference="kzI-ps-97y"/>
+                            </mask>
+                        </variation>
+                        <variation key="heightClass=regular-widthClass=compact">
+                            <mask key="subviews">
+                                <include reference="Rb9-uh-Kfp"/>
+                                <include reference="9hB-Mx-Acq"/>
+                                <include reference="rjT-bN-k09"/>
+                            </mask>
+                            <mask key="constraints">
+                                <include reference="akB-Vf-0ri"/>
+                                <include reference="e6H-cS-EZ4"/>
+                                <include reference="BLJ-3Z-Z5P"/>
+                                <include reference="EsN-KY-nUb"/>
+                                <include reference="vxB-UE-qTk"/>
+                                <include reference="5LQ-PP-u0A"/>
+                                <include reference="fue-cd-w3b"/>
+                                <include reference="kzI-ps-97y"/>
+                            </mask>
+                        </variation>
+                    </view>
+                    <connections>
+                        <outlet property="qqImageView" destination="9hB-Mx-Acq" id="wZS-cV-ifr"/>
+                        <outlet property="titleImageView" destination="rjT-bN-k09" id="tNQ-sb-h2F"/>
+                        <outlet property="weiboImageView" destination="Rb9-uh-Kfp" id="lzn-YB-Wdu"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="JXZ-po-SX2" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-5427" y="239.25"/>
+        </scene>
         <!--Home Tab Bar View Controller-->
         <scene sceneID="78j-mb-9Qh">
             <objects>
-                <tabBarController id="HZh-tJ-erl" customClass="HomeTabBarViewController" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="HomeTabBarViewController" id="HZh-tJ-erl" customClass="HomeTabBarViewController" sceneMemberID="viewController">
                     <nil key="simulatedBottomBarMetrics"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="CQL-gi-Cod">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
@@ -320,7 +471,12 @@
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="C42-x7-tVM" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-4737" y="239.25"/>
+            <point key="canvasLocation" x="-4758" y="239.25"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="luanch_login" width="90" height="90"/>
+        <image name="qq_login" width="75" height="75"/>
+        <image name="weibo_login" width="75" height="75"/>
+    </resources>
 </document>

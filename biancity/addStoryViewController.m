@@ -448,6 +448,7 @@
             [self.navigationController setNavigationBarHidden:NO animated:NO];
             PopView *pop =[[PopView alloc] initWithFrame:CGRectMake(80, 80, 200, 320)];
             [self.view addSubview:pop];
+               _upLoadingfalg = NO;
             [pop setText:@"o(>﹏<)o 网络有点糟糕,以保存至草稿箱,请稍后再试"];
             _progress.hidden = YES;
         }
@@ -496,10 +497,12 @@
         [self.navigationController setNavigationBarHidden:NO animated:NO];
         PopView *pop =[[PopView alloc] initWithFrame:CGRectMake(80, 80, 200, 320)];
         [self.view addSubview:pop];
+        _upLoadingfalg = NO;
         [pop setText:@"\(^o^)/~ 新建成功"];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error: %@", error);
         PopView *pop =[[PopView alloc] initWithFrame:CGRectMake(80, 80, 200, 320)];
+           _upLoadingfalg = NO;
         [self.view addSubview:pop];
         [pop setText:@"o(>﹏<)o 网络糟糕，请稍后重试"];
     }];

@@ -8,6 +8,9 @@
 
 #import "modelConsts.h"
 
+NSString *const LOGIN_INFO = @"logininfo";
+NSString *const REGISTE_INFO = @"registeinfo";
+
 NSString *const getHotTownUrl = @"http://123.57.132.31:8080/gethot";
 NSString *const getNearTownUrl = @"http://123.57.132.31:8080/getnear";
 NSString *const getUserInfoUrl = @"http://123.57.132.31:8080/getuserinfo";
@@ -32,7 +35,16 @@ NSString *const doGoodUrl = @"http://123.57.132.31:8080/dogood";
 NSString *const deleteUrl = @"http://123.57.132.31:8080/invisible";
 NSString *const cuserinfoUrl = @"http://123.57.132.31:8080/cuserinfo";
 
+NSString *const loginUrl = @"http://123.57.132.31:8080/login";
+NSString *const registeUrl = @"http://123.57.132.31:8080/registe";
+NSString *const cnameUrl = @"http://123.57.132.31:8080/cname";
 
+
+//
+//NSString *const doGoodUrl = @"http://192.168.199.200/dogood";
+//NSString *const loginUrl = @"http://192.168.199.200/login";
+//NSString *const registeUrl = @"http://192.168.199.200/registe";
+//NSString *const cnameUrl = @"http://192.168.199.200/cname";
 //NSString *const cuserinfoUrl = @"http://192.168.199.200/cuserinfo";
 //NSString *const deleteUrl = @"http://192.168.199.200/invisible";
 //NSString *const getCwallUrl = @"http://192.168.199.200/cwall";

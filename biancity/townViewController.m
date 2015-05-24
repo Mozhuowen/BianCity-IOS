@@ -25,6 +25,7 @@
 #import "mapViewController.h"
 #import "ModelDelete.h"
 #import "ResponseSimple.h"
+
 @interface townViewController ()
 @property (nonatomic,strong) ResponseStory *responseStroys;
 @property (nonatomic,strong) ModelStory *requestStory;
@@ -52,7 +53,7 @@
        _requestFans.userid = _applyTown.userid;
       _requestSubscriTown.townid = _applyTown.townid;
     _addrMapImage.image = [UIImage imageNamed:@"placeholder"];
-    if(_applyTown.userid == nil||[_applyTown.ptuserid isEqualToNumber:_applyTown.userid]){
+    if(_applyTown.userid == nil||[_requestStory.ptuserid isEqualToNumber:_applyTown.userid]){
         self.navigationItem.rightBarButtonItem = _rightButton;
         _iconAddImage.hidden = NO;
         
@@ -64,6 +65,9 @@
      self.navigationItem.title = [NSString stringWithFormat:@"%@•边城",_applyTown.townname];
       _requestGood.targetid = _applyTown.townid;
       // __weak id weakSelf = self;
+    if(_isComefromUPload){
+        [self loadBgimage:[UIImage imageNamed:@"placeholder"]];
+    }else{
     [_placeholderImage sd_setImageWithURL:
      [NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@",getPictureUrl,_applyTown.cover,@"!small"]]
                    placeholderImage:[UIImage imageNamed:@"placeholder"]
@@ -76,7 +80,7 @@
                               [self loadBgimage:image];
                           }];
 
-   
+    }
     NSString *myImgUrl = _applyTown.usercover;
     NSString *jap = @"http://";
     NSRange foundObj=[myImgUrl rangeOfString:jap options:NSCaseInsensitiveSearch];
@@ -177,7 +181,7 @@
     
     SDWebImageManager *manager = [SDWebImageManager sharedManager];
     manager.delegate = self;
-    _placeholderImage = [[UIImageView alloc] init];
+    _placeholderImage = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 100, 100)];
      _leftButton= [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemReply target:self action:@selector(selectLeftAction:)];
     _requestDelete =[[ModelDelete alloc] init];
     _requestDelete.type = [NSNumber numberWithInt:0];
@@ -295,7 +299,7 @@
     [_bgScrollView addSubview:_storyTableView];
     [self.view addSubview:_bgScrollView];
     [self addHeader];
-    [self addFooter];
+   // [self addFooter];
     // Do any additional setup after loading the view from its nib.
 }
 -(void)doGoodCommit{
@@ -659,7 +663,7 @@
         }else {
             _subscri.text =@"订阅";
         }
-_subscri.userInteractionEnabled =YES;
+   _subscri.userInteractionEnabled =YES;
         log(@"loadSubscriInfo stat is %d,errcode is %d",_responseSubscriTown.stat,_responseSubscriTown.errcode);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error: %@", error);
@@ -700,6 +704,10 @@ _subscri.userInteractionEnabled =YES;
         // [self.bgScrollView headerEndRefreshing];
     }];
 }
+
+
+
+
 /*
 #pragma mark - Navigation
 

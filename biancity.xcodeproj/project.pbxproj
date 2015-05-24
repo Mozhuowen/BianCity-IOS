@@ -22,6 +22,22 @@
 		FE4CC1171B0A2D5700B2615F /* ResponseFavorite.m in Sources */ = {isa = PBXBuildFile; fileRef = FE4CC1161B0A2D5700B2615F /* ResponseFavorite.m */; };
 		FE4CC11B1B0A2E3D00B2615F /* favoriteListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE4CC1191B0A2E3D00B2615F /* favoriteListViewController.m */; };
 		FE4CC11C1B0A2E3D00B2615F /* favoriteListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FE4CC11A1B0A2E3D00B2615F /* favoriteListViewController.xib */; };
+		FE54E3CC1B0F8F0E00582CC1 /* ModelRegisteQQ.m in Sources */ = {isa = PBXBuildFile; fileRef = FE54E3CB1B0F8F0E00582CC1 /* ModelRegisteQQ.m */; };
+		FE54E3CF1B0F8F8800582CC1 /* RequestLogin.m in Sources */ = {isa = PBXBuildFile; fileRef = FE54E3CE1B0F8F8800582CC1 /* RequestLogin.m */; };
+		FE54E3D21B0F8FFC00582CC1 /* ResponseLogin.m in Sources */ = {isa = PBXBuildFile; fileRef = FE54E3D11B0F8FFC00582CC1 /* ResponseLogin.m */; };
+		FE54E3D51B0F935A00582CC1 /* ResponseRegiste.m in Sources */ = {isa = PBXBuildFile; fileRef = FE54E3D41B0F935A00582CC1 /* ResponseRegiste.m */; };
+		FE6BDB661B118E65003C4811 /* RequestRegiste.m in Sources */ = {isa = PBXBuildFile; fileRef = FE6BDB651B118E65003C4811 /* RequestRegiste.m */; };
+		FE6BDB691B1192B7003C4811 /* ModelRegisteWb.m in Sources */ = {isa = PBXBuildFile; fileRef = FE6BDB681B1192B7003C4811 /* ModelRegisteWb.m */; };
+		FE6BDB6C1B11D947003C4811 /* ModelAppleTown.m in Sources */ = {isa = PBXBuildFile; fileRef = FE6BDB6B1B11D947003C4811 /* ModelAppleTown.m */; };
+		FE6BDB701B11EA4B003C4811 /* CnameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE6BDB6E1B11EA4B003C4811 /* CnameViewController.m */; };
+		FE6BDB711B11EA4B003C4811 /* CnameViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FE6BDB6F1B11EA4B003C4811 /* CnameViewController.xib */; };
+		FE8C7DBA1B1017A80069F626 /* ModelCName.m in Sources */ = {isa = PBXBuildFile; fileRef = FE8C7DB91B1017A80069F626 /* ModelCName.m */; };
+		FE8C7DC01B1018EC0069F626 /* TencentOpenApi_IOS_Bundle.bundle in Frameworks */ = {isa = PBXBuildFile; fileRef = FE8C7DBE1B1018EC0069F626 /* TencentOpenApi_IOS_Bundle.bundle */; };
+		FE8C7DC11B1018EC0069F626 /* TencentOpenAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE8C7DBF1B1018EC0069F626 /* TencentOpenAPI.framework */; };
+		FE8C7DC31B10195C0069F626 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = FE8C7DC21B10195C0069F626 /* libsqlite3.dylib */; };
+		FE8C7DC51B10196A0069F626 /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = FE8C7DC41B10196A0069F626 /* libiconv.dylib */; };
+		FE8C7DC71B1019760069F626 /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = FE8C7DC61B1019760069F626 /* libstdc++.dylib */; };
+		FE8C7DCA1B10231C0069F626 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE8C7DC91B10231C0069F626 /* LoginViewController.m */; };
 		FEC53D671AF8B27800FCF327 /* ModelUser.m in Sources */ = {isa = PBXBuildFile; fileRef = FEC53D661AF8B27800FCF327 /* ModelUser.m */; };
 		FEC53D6A1AF8B29500FCF327 /* ResponseUser.m in Sources */ = {isa = PBXBuildFile; fileRef = FEC53D691AF8B29500FCF327 /* ResponseUser.m */; };
 		FEC53D701AF8BF3600FCF327 /* HomeTabBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FEC53D6F1AF8BF3600FCF327 /* HomeTabBarViewController.m */; };
@@ -211,6 +227,32 @@
 		FE4CC1181B0A2E3D00B2615F /* favoriteListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = favoriteListViewController.h; sourceTree = "<group>"; };
 		FE4CC1191B0A2E3D00B2615F /* favoriteListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = favoriteListViewController.m; sourceTree = "<group>"; };
 		FE4CC11A1B0A2E3D00B2615F /* favoriteListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = favoriteListViewController.xib; sourceTree = "<group>"; };
+		FE54E3CA1B0F8F0E00582CC1 /* ModelRegisteQQ.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ModelRegisteQQ.h; sourceTree = "<group>"; };
+		FE54E3CB1B0F8F0E00582CC1 /* ModelRegisteQQ.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ModelRegisteQQ.m; sourceTree = "<group>"; };
+		FE54E3CD1B0F8F8800582CC1 /* RequestLogin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RequestLogin.h; sourceTree = "<group>"; };
+		FE54E3CE1B0F8F8800582CC1 /* RequestLogin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RequestLogin.m; sourceTree = "<group>"; };
+		FE54E3D01B0F8FFC00582CC1 /* ResponseLogin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResponseLogin.h; sourceTree = "<group>"; };
+		FE54E3D11B0F8FFC00582CC1 /* ResponseLogin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResponseLogin.m; sourceTree = "<group>"; };
+		FE54E3D31B0F935A00582CC1 /* ResponseRegiste.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResponseRegiste.h; sourceTree = "<group>"; };
+		FE54E3D41B0F935A00582CC1 /* ResponseRegiste.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResponseRegiste.m; sourceTree = "<group>"; };
+		FE6BDB641B118E65003C4811 /* RequestRegiste.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RequestRegiste.h; sourceTree = "<group>"; };
+		FE6BDB651B118E65003C4811 /* RequestRegiste.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RequestRegiste.m; sourceTree = "<group>"; };
+		FE6BDB671B1192B7003C4811 /* ModelRegisteWb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ModelRegisteWb.h; sourceTree = "<group>"; };
+		FE6BDB681B1192B7003C4811 /* ModelRegisteWb.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ModelRegisteWb.m; sourceTree = "<group>"; };
+		FE6BDB6A1B11D947003C4811 /* ModelAppleTown.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ModelAppleTown.h; sourceTree = "<group>"; };
+		FE6BDB6B1B11D947003C4811 /* ModelAppleTown.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ModelAppleTown.m; sourceTree = "<group>"; };
+		FE6BDB6D1B11EA4B003C4811 /* CnameViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CnameViewController.h; sourceTree = "<group>"; };
+		FE6BDB6E1B11EA4B003C4811 /* CnameViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CnameViewController.m; sourceTree = "<group>"; };
+		FE6BDB6F1B11EA4B003C4811 /* CnameViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CnameViewController.xib; sourceTree = "<group>"; };
+		FE8C7DB81B1017A80069F626 /* ModelCName.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ModelCName.h; sourceTree = "<group>"; };
+		FE8C7DB91B1017A80069F626 /* ModelCName.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ModelCName.m; sourceTree = "<group>"; };
+		FE8C7DBE1B1018EC0069F626 /* TencentOpenApi_IOS_Bundle.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = TencentOpenApi_IOS_Bundle.bundle; path = biancity/libTencent/TencentOpenApi_IOS_Bundle.bundle; sourceTree = "<group>"; };
+		FE8C7DBF1B1018EC0069F626 /* TencentOpenAPI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TencentOpenAPI.framework; path = biancity/libTencent/TencentOpenAPI.framework; sourceTree = "<group>"; };
+		FE8C7DC21B10195C0069F626 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
+		FE8C7DC41B10196A0069F626 /* libiconv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libiconv.dylib; path = usr/lib/libiconv.dylib; sourceTree = SDKROOT; };
+		FE8C7DC61B1019760069F626 /* libstdc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.dylib"; path = "usr/lib/libstdc++.dylib"; sourceTree = SDKROOT; };
+		FE8C7DC81B10231C0069F626 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
+		FE8C7DC91B10231C0069F626 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		FEC53D651AF8B27800FCF327 /* ModelUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ModelUser.h; sourceTree = "<group>"; };
 		FEC53D661AF8B27800FCF327 /* ModelUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ModelUser.m; sourceTree = "<group>"; };
 		FEC53D681AF8B29500FCF327 /* ResponseUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResponseUser.h; sourceTree = "<group>"; };
@@ -488,6 +530,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FE8C7DC71B1019760069F626 /* libstdc++.dylib in Frameworks */,
+				FE8C7DC51B10196A0069F626 /* libiconv.dylib in Frameworks */,
+				FE8C7DC31B10195C0069F626 /* libsqlite3.dylib in Frameworks */,
+				FE8C7DC01B1018EC0069F626 /* TencentOpenApi_IOS_Bundle.bundle in Frameworks */,
+				FE8C7DC11B1018EC0069F626 /* TencentOpenAPI.framework in Frameworks */,
 				FECA810F1AF759AB00FF57AE /* UIKit.framework in Frameworks */,
 				FECA810D1AF759A300FF57AE /* Foundation.framework in Frameworks */,
 				FECA810B1AF7598E00FF57AE /* QuartzCore.framework in Frameworks */,
@@ -628,6 +675,11 @@
 		FECA80071AF71A3000FF57AE = {
 			isa = PBXGroup;
 			children = (
+				FE8C7DC61B1019760069F626 /* libstdc++.dylib */,
+				FE8C7DC41B10196A0069F626 /* libiconv.dylib */,
+				FE8C7DC21B10195C0069F626 /* libsqlite3.dylib */,
+				FE8C7DBE1B1018EC0069F626 /* TencentOpenApi_IOS_Bundle.bundle */,
+				FE8C7DBF1B1018EC0069F626 /* TencentOpenAPI.framework */,
 				FED36DBD1AF9C02200251846 /* AMap.bundle */,
 				FECA810E1AF759AB00FF57AE /* UIKit.framework */,
 				FECA810C1AF759A300FF57AE /* Foundation.framework */,
@@ -677,6 +729,8 @@
 				FECA80391AF7326B00FF57AE /* AFNetworking */,
 				FECA80171AF71A3000FF57AE /* AppDelegate.h */,
 				FECA80181AF71A3000FF57AE /* AppDelegate.m */,
+				FE8C7DC81B10231C0069F626 /* LoginViewController.h */,
+				FE8C7DC91B10231C0069F626 /* LoginViewController.m */,
 				FEC53D6E1AF8BF3600FCF327 /* HomeTabBarViewController.h */,
 				FEC53D6F1AF8BF3600FCF327 /* HomeTabBarViewController.m */,
 				FECA801A1AF71A3000FF57AE /* HotTownViewController.h */,
@@ -699,6 +753,9 @@
 				FECA811E1AF7B43300FF57AE /* bj.jpg */,
 				FECA80141AF71A3000FF57AE /* Info.plist */,
 				FECA80151AF71A3000FF57AE /* main.m */,
+				FE6BDB6D1B11EA4B003C4811 /* CnameViewController.h */,
+				FE6BDB6E1B11EA4B003C4811 /* CnameViewController.m */,
+				FE6BDB6F1B11EA4B003C4811 /* CnameViewController.xib */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -959,6 +1016,22 @@
 				FEE5C87C1B0B845B00772651 /* ModelDelete.m */,
 				FECE80541B0CDFD600116714 /* townCache.h */,
 				FECE80551B0CDFD600116714 /* townCache.m */,
+				FE54E3CA1B0F8F0E00582CC1 /* ModelRegisteQQ.h */,
+				FE54E3CB1B0F8F0E00582CC1 /* ModelRegisteQQ.m */,
+				FE54E3CD1B0F8F8800582CC1 /* RequestLogin.h */,
+				FE54E3CE1B0F8F8800582CC1 /* RequestLogin.m */,
+				FE54E3D01B0F8FFC00582CC1 /* ResponseLogin.h */,
+				FE54E3D11B0F8FFC00582CC1 /* ResponseLogin.m */,
+				FE54E3D31B0F935A00582CC1 /* ResponseRegiste.h */,
+				FE54E3D41B0F935A00582CC1 /* ResponseRegiste.m */,
+				FE8C7DB81B1017A80069F626 /* ModelCName.h */,
+				FE8C7DB91B1017A80069F626 /* ModelCName.m */,
+				FE6BDB641B118E65003C4811 /* RequestRegiste.h */,
+				FE6BDB651B118E65003C4811 /* RequestRegiste.m */,
+				FE6BDB671B1192B7003C4811 /* ModelRegisteWb.h */,
+				FE6BDB681B1192B7003C4811 /* ModelRegisteWb.m */,
+				FE6BDB6A1B11D947003C4811 /* ModelAppleTown.h */,
+				FE6BDB6B1B11D947003C4811 /* ModelAppleTown.m */,
 			);
 			path = model;
 			sourceTree = "<group>";
@@ -1116,6 +1189,7 @@
 				FEC880AC1B0DD15900C6F231 /* cacheViewController.xib in Resources */,
 				FEC8D0551AFC87290083FA76 /* settingTableViewController.xib in Resources */,
 				FED86C681B00BC8900B2F96C /* sceenshot.png in Resources */,
+				FE6BDB711B11EA4B003C4811 /* CnameViewController.xib in Resources */,
 				FED0A5D91B08A0F700B452DB /* messageViewController.xib in Resources */,
 				FEC53D801AF923FF00FCF327 /* showNavigationController.xib in Resources */,
 				FE4CC10E1B0A0DC000B2615F /* subscriViewController.xib in Resources */,
@@ -1172,9 +1246,11 @@
 				FEE5C87D1B0B845B00772651 /* ModelDelete.m in Sources */,
 				FEC8D1EA1AFF5993009E3AB0 /* addStoryViewController.m in Sources */,
 				FEC7CD251AFDE05C007F798B /* ModelStory.m in Sources */,
+				FE6BDB701B11EA4B003C4811 /* CnameViewController.m in Sources */,
 				FED36DC71AFA49DA00251846 /* upLoadImageViewController.m in Sources */,
 				FECE80561B0CDFD600116714 /* townCache.m in Sources */,
 				FECA801C1AF71A3000FF57AE /* HotTownViewController.m in Sources */,
+				FE6BDB6C1B11D947003C4811 /* ModelAppleTown.m in Sources */,
 				FEC571EE1B032A1500D5D8E5 /* SDDemoItemView.m in Sources */,
 				FECA80A71AF732A800FF57AE /* UIButton+WebCache.m in Sources */,
 				FEC7CD281AFDE204007F798B /* ResponseStory.m in Sources */,
@@ -1202,6 +1278,8 @@
 				FECA80F41AF74CD300FF57AE /* HotTownCollectionViewCell.m in Sources */,
 				FECA80DE1AF733FE00FF57AE /* MsgEncrypt.m in Sources */,
 				FECA80791AF7329800FF57AE /* JSONModel+networking.m in Sources */,
+				FE8C7DBA1B1017A80069F626 /* ModelCName.m in Sources */,
+				FE8C7DCA1B10231C0069F626 /* LoginViewController.m in Sources */,
 				FE4CC11B1B0A2E3D00B2615F /* favoriteListViewController.m in Sources */,
 				FECA80AC1AF732A800FF57AE /* UIImageView+WebCache.m in Sources */,
 				FEC7CD2E1AFDE3CB007F798B /* TownStory.m in Sources */,
@@ -1219,6 +1297,7 @@
 				FECA80511AF7326B00FF57AE /* AFNetworkReachabilityManager.m in Sources */,
 				FECA80551AF7326B00FF57AE /* AFURLResponseSerialization.m in Sources */,
 				FEC53D7F1AF923FF00FCF327 /* showNavigationController.m in Sources */,
+				FE54E3D21B0F8FFC00582CC1 /* ResponseLogin.m in Sources */,
 				FECA809F1AF732A800FF57AE /* NSData+ImageContentType.m in Sources */,
 				FE4CC1041B09AC9700B2615F /* WGS84TOGCJ02.m in Sources */,
 				FECA80EB1AF7340900FF57AE /* ApplyTown.m in Sources */,
@@ -1226,6 +1305,7 @@
 				FECA80531AF7326B00FF57AE /* AFURLConnectionOperation.m in Sources */,
 				FEC53D671AF8B27800FCF327 /* ModelUser.m in Sources */,
 				FECA80521AF7326B00FF57AE /* AFSecurityPolicy.m in Sources */,
+				FE54E3D51B0F935A00582CC1 /* ResponseRegiste.m in Sources */,
 				FECA80AB1AF732A800FF57AE /* UIImageView+HighlightedWebCache.m in Sources */,
 				FECA80781AF7329800FF57AE /* JSONHTTPClient.m in Sources */,
 				FEC8D1F41AFF60F7009E3AB0 /* ModelSubscriTown.m in Sources */,
@@ -1245,6 +1325,7 @@
 				FECA80541AF7326B00FF57AE /* AFURLRequestSerialization.m in Sources */,
 				FEC8D0541AFC87290083FA76 /* settingTableViewController.m in Sources */,
 				FECA80721AF7329800FF57AE /* JSONModel.m in Sources */,
+				FE6BDB691B1192B7003C4811 /* ModelRegisteWb.m in Sources */,
 				FECA80AD1AF732A800FF57AE /* UIView+WebCacheOperation.m in Sources */,
 				FECA80A11AF732A800FF57AE /* SDWebImageCompat.m in Sources */,
 				FECA80561AF7326B00FF57AE /* AFURLSessionManager.m in Sources */,
@@ -1254,6 +1335,8 @@
 				FECA81131AF760BE00FF57AE /* MyCollectionReusableView.m in Sources */,
 				FEC571EA1B032A1500D5D8E5 /* SDPieLoopProgressView.m in Sources */,
 				FED0A5DC1B08C24B00B452DB /* ModelMessBoard.m in Sources */,
+				FE6BDB661B118E65003C4811 /* RequestRegiste.m in Sources */,
+				FE54E3CF1B0F8F8800582CC1 /* RequestLogin.m in Sources */,
 				FECA80191AF71A3000FF57AE /* AppDelegate.m in Sources */,
 				FECBB80C1B0F03C600A59DEA /* PopView.m in Sources */,
 				FECA80A61AF732A800FF57AE /* SDWebImagePrefetcher.m in Sources */,
@@ -1264,6 +1347,7 @@
 				FEE5C8731B0AE8BF00772651 /* configureViewController.m in Sources */,
 				FECA80D31AF732BF00FF57AE /* RefreshConsts.m in Sources */,
 				FECA80A41AF732A800FF57AE /* SDWebImageDownloaderOperation.m in Sources */,
+				FE54E3CC1B0F8F0E00582CC1 /* ModelRegisteQQ.m in Sources */,
 				FED0A5D41B08993800B452DB /* RTLabel.m in Sources */,
 				FECA80161AF71A3000FF57AE /* main.m in Sources */,
 				FECA80A51AF732A800FF57AE /* SDWebImageManager.m in Sources */,
@@ -1400,6 +1484,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/biancity/GaodeGeoInfo",
+					"$(PROJECT_DIR)/biancity/libTencent",
 				);
 				INFOPLIST_FILE = biancity/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
@@ -1420,6 +1505,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/biancity/GaodeGeoInfo",
+					"$(PROJECT_DIR)/biancity/libTencent",
 				);
 				INFOPLIST_FILE = biancity/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;

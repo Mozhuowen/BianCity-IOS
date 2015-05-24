@@ -575,6 +575,7 @@
             _progressDome.hidden = YES;
             PopView *pop =[[PopView alloc] initWithFrame:CGRectMake(80, 80, 200, 320)];
             [self.view addSubview:pop];
+              _uploadFlag = NO;
             [pop setText:@"o(>﹏<)o  网络糟糕，信息已保存至草稿箱，请重新上传"];
         }
         
@@ -620,16 +621,19 @@
             townViewController *town = [[townViewController alloc]initWithNibName:@"townViewController" bundle:nil];
                 self.applyTown_delegate = town;
                 [self transfromInfo];
+                town.isComefromUPload = YES;
                 town.applyTown = _responseApplyTown;
                 [self.navigationController pushViewController:town  animated:YES];
                 [self deletecache];
                 PopView *pop =[[PopView alloc] initWithFrame:CGRectMake(80, 80, 200, 320)];
                 [self.view addSubview:pop];
+                _uploadFlag = NO;
                 [pop setText:@"\(^o^)/~  创建成功"];
             }
             else{
                 PopView *pop =[[PopView alloc] initWithFrame:CGRectMake(80, 80, 200, 320)];
                 [self.view addSubview:pop];
+                  _uploadFlag = NO;
                 [pop setText:@"o(>﹏<)o  网络糟糕，请重新上传"];
 
             }
@@ -639,6 +643,7 @@
         NSLog(@"Error: %@", error);
         PopView *pop =[[PopView alloc] initWithFrame:CGRectMake(80, 80, 200, 320)];
         [self.view addSubview:pop];
+          _uploadFlag = NO;
         [pop setText:@"o(>﹏<)o  网络糟糕，请重新上传"];
 
     }];

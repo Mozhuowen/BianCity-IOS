@@ -11,16 +11,35 @@
 #import "configureViewController.h"
 #import "ResponseUser.h"
 #import "cacheViewController.h"
+#import "ResponseLogin.h"
+#import "ResponseRegiste.h"
 @interface settingTableViewController ()
 @property (nonatomic,strong) NSMutableArray *section1;
 @property (nonatomic,strong) NSMutableArray *section2;
-
+//@property (nonatomic,strong) ResponseUser * responseUser;
+@property (nonatomic,strong) ResponseRegiste* registe;
+@property (nonatomic,strong) ResponseLogin *login;
 @end
 
 @implementation settingTableViewController
 -(void)viewWillAppear:(BOOL)animated{
-    [self loadUserInfo];
+    [self readUserDeafultsOwn];
+    [self.tableView reloadData];
 }
+- (void) readUserDeafultsOwn{
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    NSDictionary *cache;
+    cache = [userDefaults dictionaryForKey:LOGIN_INFO];
+    if([(NSNumber*)[cache objectForKey:@"needregiste"] boolValue]){
+        cache = [userDefaults dictionaryForKey:REGISTE_INFO];
+       _registe =[[ResponseRegiste alloc] initWithDictionary:cache error:nil];
+        return;
+    }
+   _login=[[ResponseLogin alloc] initWithDictionary:cache error:nil];
+
+    
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     SDWebImageManager *manager = [SDWebImageManager sharedManager];
@@ -31,6 +50,7 @@
     self.navigationItem.leftBarButtonItem = leftButton;
     _section1 = [[NSMutableArray alloc] initWithObjects:@"wo", nil];
     _section2 = [[NSMutableArray alloc] initWithObjects:@"退出登录",@"草稿箱",@"检查更新",@"关于我们",@"常见意见", nil];
+    [self readUserDeafultsOwn];
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
@@ -91,30 +111,55 @@
     switch (indexPath.section) {
         
     case 0://对应各自的分区
-        
-        [[cell textLabel]  setText:_user.name];//给cell添加数据
+        if(_login){
+        [[cell textLabel]  setText:_login.name];//给cell添加数据
             cell.imageView.frame = CGRectMake(0, 0, 40, 40);
             cell.imageView.layer.masksToBounds = YES;
             [cell imageView].layer.cornerRadius = 20;
             NSLog(@"w %f,h %f",cell.imageView.frame.size.width,cell.imageView.frame.size.height);
-            if(_user){
-            NSString *myImgUrl = _user.cover;
+           
+            NSString *myImgUrl =_login.cover;
             NSString *jap = @"http://";
             NSRange foundObj=[myImgUrl rangeOfString:jap options:NSCaseInsensitiveSearch];
-            if(_user.cover){
+            if(_login.cover){
                 if(foundObj.length>0) {
                     [cell.imageView sd_setImageWithURL:[NSURL URLWithString:myImgUrl]  placeholderImage:[UIImage imageNamed:@"placeholder"] options:indexPath.row == 0 ? SDWebImageRefreshCached : 0] ;
                 }else {
                     NSMutableString * temp = [[NSMutableString alloc] initWithString:getPictureUrl];
-                    [temp appendString:_user.cover];
+                    [temp appendString:_login.cover];
                     [temp appendString:@"!small"];
                     [cell.imageView sd_setImageWithURL:[NSURL URLWithString:temp]  placeholderImage:[UIImage imageNamed:@"placeholder"] options:indexPath.row == 0 ? SDWebImageRefreshCached : 0] ;
                 }
             }else {
                 cell.imageView.image =[UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"bj" ofType:@"jpg"]];
+            
             }
+            
+        }else  if(_registe){
+            [[cell textLabel]  setText:_registe.name];//给cell添加数据
+            cell.imageView.frame = CGRectMake(0, 0, 40, 40);
+            cell.imageView.layer.masksToBounds = YES;
+            [cell imageView].layer.cornerRadius = 20;
+            NSLog(@"w %f,h %f",cell.imageView.frame.size.width,cell.imageView.frame.size.height);
+            
+            NSString *myImgUrl =_registe.cover;
+            NSString *jap = @"http://";
+            NSRange foundObj=[myImgUrl rangeOfString:jap options:NSCaseInsensitiveSearch];
+            if(_registe.cover){
+                if(foundObj.length>0) {
+                    [cell.imageView sd_setImageWithURL:[NSURL URLWithString:myImgUrl]  placeholderImage:[UIImage imageNamed:@"placeholder"] options:indexPath.row == 0 ? SDWebImageRefreshCached : 0] ;
+                }else {
+                    NSMutableString * temp = [[NSMutableString alloc] initWithString:getPictureUrl];
+                    [temp appendString:_registe.cover];
+                    [temp appendString:@"!small"];
+                    [cell.imageView sd_setImageWithURL:[NSURL URLWithString:temp]  placeholderImage:[UIImage imageNamed:@"placeholder"] options:indexPath.row == 0 ? SDWebImageRefreshCached : 0] ;
+                }
+            }else {
+                cell.imageView.image =[UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"bj" ofType:@"jpg"]];
+                
             }
-    
+            
+        }
         break;
         
     case 1:
@@ -169,7 +214,7 @@
 }
 -(void)configure{
     configureViewController *conf = [[configureViewController alloc] initWithNibName:@"configureViewController" bundle:nil];
-    conf.user = _user;
+//    conf.user = _responseUser.user;
     [self.navigationController pushViewController:conf animated:YES];
 
 }
@@ -219,42 +264,48 @@
 - (void)animationFinished:(NSString *)animationID finished:(NSNumber *)finished context:(void *)context {
     
     if ([animationID compare:@"exitApplication"] == 0) {
-        
+        [self saveUserDefaultsOwn];
         exit(0);
         
     }
     
 }
 
--(void)loadUserInfo{
-    NSDictionary *parameters=[_user toDictionary];
-    NSString *url =[NSString stringWithString:getUserInfoUrl];
-    NSDate *datenow = [NSDate date];//现在时间,你可以输出来看下是什么格式
-    NSString *strtime = [NSString stringWithFormat:@"%ld", (long)[datenow timeIntervalSince1970]];
-    MsgEncrypt *encrypt = [[MsgEncrypt alloc] init];
-    NSData *msgjson = [NSJSONSerialization dataWithJSONObject:parameters options:kNilOptions error:nil];
-    NSString* info = [[NSString alloc] initWithData:msgjson encoding:NSUTF8StringEncoding];
-    log(@"User Info is %@",info);
-    NSString *signature= [encrypt EncryptMsg:info timeStmap:strtime];
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    manager.requestSerializer=[AFJSONRequestSerializer serializer];
-    [manager.requestSerializer setValue:strtime forHTTPHeaderField:@"timestamp"];
-    [manager.requestSerializer setValue:[signature uppercaseString] forHTTPHeaderField:@"signature"];
-    [manager setSecurityPolicy:[AFSecurityPolicy policyWithPinningMode:AFSSLPinningModeNone] ];
-    manager.responseSerializer =[AFHTTPResponseSerializer serializer];
-    [manager POST:url parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        
-        NSDictionary * data =[NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
-        ResponseUser *response;
-            response = [[ResponseUser alloc] initWithDictionary:data error:nil];
-        _user = response.user;
-        [self.tableView reloadData];
-            // NSLog(@"USer is %@",_User);
-    log(@"User stat is %d,errcode is %@",response.stat,response.errcode);
-        
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"Error: %@", error);
- }];
+//-(void)loadUserInfo{
+//    NSDictionary *parameters=[_user toDictionary];
+//    NSString *url =[NSString stringWithString:getUserInfoUrl];
+//    NSDate *datenow = [NSDate date];//现在时间,你可以输出来看下是什么格式
+//    NSString *strtime = [NSString stringWithFormat:@"%ld", (long)[datenow timeIntervalSince1970]];
+//    MsgEncrypt *encrypt = [[MsgEncrypt alloc] init];
+//    NSData *msgjson = [NSJSONSerialization dataWithJSONObject:parameters options:kNilOptions error:nil];
+//    NSString* info = [[NSString alloc] initWithData:msgjson encoding:NSUTF8StringEncoding];
+//    log(@"User Info is %@",info);
+//    NSString *signature= [encrypt EncryptMsg:info timeStmap:strtime];
+//    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+//    manager.requestSerializer=[AFJSONRequestSerializer serializer];
+//    [manager.requestSerializer setValue:strtime forHTTPHeaderField:@"timestamp"];
+//    [manager.requestSerializer setValue:[signature uppercaseString] forHTTPHeaderField:@"signature"];
+//    [manager setSecurityPolicy:[AFSecurityPolicy policyWithPinningMode:AFSSLPinningModeNone] ];
+//    manager.responseSerializer =[AFHTTPResponseSerializer serializer];
+//    [manager POST:url parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+//        
+//        NSDictionary * data =[NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
+//       _responseUser = [[ResponseUser alloc] initWithDictionary:data error:nil];
+//        
+//        [self.tableView reloadData];
+//            // NSLog(@"USer is %@",_User);
+//    log(@"User stat is %d,errcode is %@",_responseUser.stat,_responseUser.errcode);
+//        
+//    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+//        NSLog(@"Error: %@", error);
+// }];
+//}
+- (void)saveUserDefaultsOwn{
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    NSDictionary *cache;
+    [userDefaults setObject:cache forKey:LOGIN_INFO];
+    [userDefaults setObject:cache forKey:REGISTE_INFO];
+    [userDefaults synchronize];
 }
 
 

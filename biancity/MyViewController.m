@@ -14,6 +14,9 @@
 #import "NLViewController.h"
 #import "ModelCWall.h"
 #import "ResponseSimple.h"
+#import "ApplyTown.h"
+#import "ResponseRegiste.h"
+#import "ResponseLogin.h"
 @interface MyViewController ()
 @property (weak, nonatomic) IBOutlet UICollectionView *myCollectionView;
 @property (nonatomic,strong) UIImage* wallImage;
@@ -21,11 +24,12 @@
 @property (nonatomic,strong) SDDemoItemView *progress;
 @property (nonatomic,strong) ModelCWall *requestCWall;
 @property (nonatomic,strong) ResponseSimple *responseWall;
+@property (nonatomic,strong) NSMutableArray * myTowns;
 @end
 
 @implementation MyViewController
 -(void)viewWillAppear:(BOOL)animated{
-    [self loadInfo:2];
+   // [self loadInfo:2];
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -44,13 +48,14 @@
     collectionViewLayout.headerReferenceSize = CGSizeMake(self.myCollectionView.frame.size.width, self.myCollectionView.frame.size.width*3/5+self.myCollectionView.frame.size.width/7);
     self.myCollectionView.collectionViewLayout = collectionViewLayout;
     _requestUser = [[ModelUser alloc] init];
-    _requestUser.onlystatis = NO;
+    _requestUser.onlystatis = YES;
     _requestUser.userid = _requestUser.ptuserid;
     SDWebImageManager *manager = [SDWebImageManager sharedManager];
     manager.delegate = self;
     [self addHeader];
    NSLog(@"width is %f,Height is %f",self.myCollectionView.frame.size.width,self.myCollectionView.frame.size.width);
     _myCollectionView.userInteractionEnabled = YES;
+    [self readUserDeafultsOwn];
     // Do any additional setup after loading the view.
 }
 
@@ -239,22 +244,17 @@
         NSDictionary * data =[NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
         if(check==0){
             self.User = [[ResponseUser alloc] initWithDictionary:data error:nil];
+            _User.user.mytowns = _myTowns;
             [self.myCollectionView headerEndRefreshing];
           [self.myCollectionView reloadData];
           // NSLog(@"USer is %@",_User);
-        }else {
-            ResponseUser *ad=[[ResponseUser alloc] initWithDictionary:data error:nil];
-            _User.stat = ad.stat;
-            _User.errcode = ad.errcode;
-            [self.User.user.mytowns addObjectsFromArray:ad.user.mytowns];
-            [self.myCollectionView footerEndRefreshing];
         }
         if (check ==2) {
               self.User = [[ResponseUser alloc] initWithDictionary:data error:nil];
             [self.myCollectionView reloadData];
 
         }
-        log(@"User stat is %d,errcode is %@",_User.stat,_User.errcode);
+        log(@"User stat is %d,errcode is %@,%@",_User.stat,_User.errcode,_User);
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error: %@", error);
@@ -283,7 +283,7 @@
     NSLog(@"sett");
     showNavigationController *show= [[showNavigationController alloc] initWithNibName:@"showNavigationController" bundle:nil];
     settingTableViewController *setting =[[settingTableViewController alloc] initWithNibName:@"settingTableViewController" bundle:nil];
-    setting.user = _User.user;
+   // setting.user = _requestUser;//_User.user;
     [show pushViewController:setting animated:YES ];
     [self presentViewController:show animated:YES completion:^{}];
 
@@ -492,6 +492,20 @@
     }];
 }
 
+- (void) readUserDeafultsOwn{
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    NSDictionary *cache;
+        cache = [userDefaults dictionaryForKey:LOGIN_INFO];
+    if([(NSNumber*)[cache objectForKey:@"needregiste"] boolValue]){
+     cache = [userDefaults dictionaryForKey:REGISTE_INFO];
+        ResponseRegiste *registe =[[ResponseRegiste alloc] initWithDictionary:cache error:nil];
+        _myTowns = registe.mytowns;
+        return;
+    }
+    ResponseLogin *login=[[ResponseLogin alloc] initWithDictionary:cache error:nil];
+    _myTowns = login.mytowns;
+    
+}
 /*
 #pragma mark - Navigation
 
