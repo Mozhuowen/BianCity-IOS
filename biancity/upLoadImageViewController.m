@@ -19,6 +19,8 @@
 #import "SDDemoItemView.h"
 #import "townCache.h"
 #import "PopView.h"
+#import "ResponseRegiste.h"
+#import "ResponseLogin.h"
 @interface upLoadImageViewController ()
 {
     int count;
@@ -623,8 +625,9 @@
                 [self transfromInfo];
                 town.isComefromUPload = YES;
                 town.applyTown = _responseApplyTown;
-                [self.navigationController pushViewController:town  animated:YES];
+                [self.navigationController pushViewController:town  animated:NO];
                 [self deletecache];
+                [self saveUserTown:data];
                 PopView *pop =[[PopView alloc] initWithFrame:CGRectMake(80, 80, 200, 320)];
                 [self.view addSubview:pop];
                 _uploadFlag = NO;
@@ -656,6 +659,31 @@
         [self.applyTown_delegate setApplyTownGeoInfo:_responseApplyTown];
     }
    
+}
+
+
+- (void)saveUserTown:(NSDictionary*)data{
+    NSMutableDictionary *tmpdata = [[NSMutableDictionary alloc] initWithDictionary:data];
+    [tmpdata removeObjectForKey:@"stat"];
+    [tmpdata removeObjectForKey:@"errcode"];
+    ModelAppleTown *town = [[ModelAppleTown alloc] initWithDictionary:tmpdata error:nil];
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    NSDictionary *cache;
+    if([(NSNumber*)[cache objectForKey:@"needregiste"] boolValue]){
+        cache = [userDefaults dictionaryForKey:REGISTE_INFO];
+        ResponseRegiste *registe =[[ResponseRegiste alloc] initWithDictionary:cache error:nil];
+        [registe.mytowns insertObject:town atIndex:0];
+        NSLog(@"registe is %@",registe);
+        [userDefaults setObject:[registe toDictionary] forKey:REGISTE_INFO];
+        [userDefaults synchronize];
+        return;
+    }
+     cache = [userDefaults dictionaryForKey:LOGIN_INFO];
+    ResponseLogin *login = [[ResponseLogin alloc] initWithDictionary:cache error:nil];
+    [login.mytowns insertObject:town atIndex:0];
+      NSLog(@"login is %@",login);
+    [userDefaults setObject:[login toDictionary] forKey:LOGIN_INFO];
+    [userDefaults synchronize];
 }
 #pragma end loading Infomation
 

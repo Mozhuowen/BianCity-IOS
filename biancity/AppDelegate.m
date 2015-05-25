@@ -9,8 +9,10 @@
 #import "AppDelegate.h"
 #import "MsgEncrypt.h"
 #import "basicRequest.h"
-#import "UIImageView+WebCache.h"
 
+#import "LoginViewController.h"
+#import "UIImageView+WebCache.h"
+#define kAppKey         @"2562644072"
 @interface AppDelegate ()
 {
     CLLocationManager * localManager;
@@ -19,7 +21,6 @@
 @end
 
 @implementation AppDelegate
-
 
 
 
@@ -41,6 +42,9 @@
     //[localManager requestWhenInUseAuthorization];
     localManager.delegate =self;
    
+    
+    [WeiboSDK enableDebugMode:YES];
+    [WeiboSDK registerApp:kAppKey];
     // Override point for customization after application launch.
     return YES;
 }
@@ -72,7 +76,15 @@
     return UIInterfaceOrientationMaskPortrait;
 }
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation{
-    return [TencentOAuth HandleOpenURL:url];
+    NSString *myImgUrl = [url absoluteString];
+    NSString *jap = @"wb";
+    NSRange foundObj=[myImgUrl rangeOfString:jap options:NSCaseInsensitiveSearch];
+    if(foundObj.length>0) {
+        return [WeiboSDK handleOpenURL:url delegate:self];
+    }else {
+        return [TencentOAuth HandleOpenURL:url];
+    }
+
 }
 
 - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url{
@@ -80,6 +92,82 @@
     if ([[url scheme] isEqualToString:@"awen"]) {
         NSLog(@"外部调用成功");
     }
- return [TencentOAuth HandleOpenURL:url];
+    NSString *myImgUrl = [url absoluteString];
+    NSString *jap = @"wb";
+    NSRange foundObj=[myImgUrl rangeOfString:jap options:NSCaseInsensitiveSearch];
+    if(foundObj.length>0) {
+        return [WeiboSDK handleOpenURL:url delegate:self];
+    }else {
+        return [TencentOAuth HandleOpenURL:url];
+    }
+
+}
+
+
+- (void)didReceiveWeiboRequest:(WBBaseRequest *)request
+{
+    
+}
+
+- (void)didReceiveWeiboResponse:(WBBaseResponse *)response
+{
+//    if ([response isKindOfClass:WBSendMessageToWeiboResponse.class])
+//    {
+//        NSString *title = NSLocalizedString(@"发送结果", nil);
+//        NSString *message = [NSString stringWithFormat:@"%@: %d\n%@: %@\n%@: %@", NSLocalizedString(@"响应状态", nil), (int)response.statusCode, NSLocalizedString(@"响应UserInfo数据", nil), response.userInfo, NSLocalizedString(@"原请求UserInfo数据", nil),response.requestUserInfo];
+//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title
+//                                                        message:message
+//                                                       delegate:nil
+//                                              cancelButtonTitle:NSLocalizedString(@"确定", nil)
+//                                              otherButtonTitles:nil];
+//        WBSendMessageToWeiboResponse* sendMessageToWeiboResponse = (WBSendMessageToWeiboResponse*)response;
+//        NSString* accessToken = [sendMessageToWeiboResponse.authResponse accessToken];
+//        if (accessToken)
+//        {
+//            self.wbtoken = accessToken;
+//        }
+//        NSString* userID = [sendMessageToWeiboResponse.authResponse userID];
+//        if (userID) {
+//            self.wbCurrentUserID = userID;
+//        }
+//        [alert show];
+//        
+//    }
+//    else
+    if ([response isKindOfClass:WBAuthorizeResponse.class])
+    {
+        self.wbtoken = [(WBAuthorizeResponse *)response accessToken];
+        self.wbCurrentUserID = [(WBAuthorizeResponse *)response userID];
+        _wbexpirationDate = [(WBAuthorizeResponse *)response expirationDate];
+        
+        if(_wbexpirationDate==nil || _wbCurrentUserID==nil||_wbtoken==nil)
+            return;
+        
+        LoginViewController* login = (LoginViewController*)[self appRootViewController];
+        [login wbdidother];
+        
+    }
+//    else if ([response isKindOfClass:WBPaymentResponse.class])
+//    {
+//        NSString *title = NSLocalizedString(@"支付结果", nil);
+//        NSString *message = [NSString stringWithFormat:@"%@: %d\nresponse.payStatusCode: %@\nresponse.payStatusMessage: %@\n%@: %@\n%@: %@", NSLocalizedString(@"响应状态", nil), (int)response.statusCode,[(WBPaymentResponse *)response payStatusCode], [(WBPaymentResponse *)response payStatusMessage], NSLocalizedString(@"响应UserInfo数据", nil),response.userInfo, NSLocalizedString(@"原请求UserInfo数据", nil), response.requestUserInfo];
+//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title
+//                                                        message:message
+//                                                       delegate:nil
+//                                              cancelButtonTitle:NSLocalizedString(@"确定", nil)
+//                                              otherButtonTitles:nil];
+//        [alert show];
+//        
+//    }
+}
+
+- (UIViewController *)appRootViewController
+{
+    UIViewController *appRootVC = [UIApplication sharedApplication].keyWindow.rootViewController;
+    UIViewController *topVC = appRootVC;
+    while (topVC.presentedViewController) {
+        topVC = topVC.presentedViewController;
+    }
+    return topVC;
 }
 @end

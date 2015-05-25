@@ -28,7 +28,7 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-  
+    self.view.frame = [UIScreen mainScreen].bounds;
     UIBarButtonItem *leftButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemReply target:self action:@selector(selectLeftAction:)];
     self.navigationItem.leftBarButtonItem = leftButton;
     
@@ -54,7 +54,8 @@
     self.myCollectionView.delegate = self;
     self.myCollectionView.allowsMultipleSelection = YES;//默认为NO,是否可以多选
     UICollectionViewFlowLayout *collectionViewLayout = (UICollectionViewFlowLayout *)self.myCollectionView.collectionViewLayout;
-    collectionViewLayout.headerReferenceSize = CGSizeMake(self.myCollectionView.frame.size.width, self.myCollectionView.frame.size.width*9/16+self.myCollectionView.frame.size.width/7);
+  
+    collectionViewLayout.headerReferenceSize = CGSizeMake(self.myCollectionView.frame.size.width, self.myCollectionView.frame.size.width*3/5+self.myCollectionView.frame.size.width/7);
     self.myCollectionView.collectionViewLayout = collectionViewLayout;
     _requestUser = [[ModelUser alloc] init];
     _requestUser.onlystatis = NO;

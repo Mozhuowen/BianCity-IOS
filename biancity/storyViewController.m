@@ -97,8 +97,9 @@
     if([_story.userid isEqualToNumber:_story.ptuserid]){
         UIBarButtonItem *rightButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemTrash  target:self action:@selector(selectRightAction:)];
         self.navigationItem.rightBarButtonItem = rightButton;
-    }else{
-        
+    }
+    if(_isComeFromFavorite){
+        self.navigationItem.rightBarButtonItem = nil;
     }
     self.navigationItem.title = [NSString stringWithFormat:@"%@•故事",_story.title];
      [_bgTextView addKeyboardObserver];
@@ -224,6 +225,7 @@
 -(CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 
 {
+    int height = [UIScreen mainScreen].bounds.size.width*3/5+140;
     NSString*str;
     UILabel *label;
     switch (indexPath.section) {
@@ -236,11 +238,11 @@
             [label sizeToFit];
             NSLog(@"image count is %lu",(unsigned long)[_story.imagenames count]);
             if([_story.imagenames count]==0){
-                return 310+label.frame.size.height;
+                return height+label.frame.size.height;
             }else if([_story.imagenames count]<=4&&[_story.imagenames count]>0){
-                return 330+self.view.frame.size.width/4+label.frame.size.height;
+                return height+self.view.frame.size.width/4+label.frame.size.height;
             }else if([_story.imagenames count]<=8&&[_story.imagenames count]>4){
-                 return 330+self.view.frame.size.width/2+label.frame.size.height;
+                 return height+self.view.frame.size.width/2+label.frame.size.height;
             }
             break;
         case 1://对应各自的分区

@@ -492,7 +492,7 @@
             self.responseStory = [[ResponseStory alloc] initWithDictionary:data error:nil];
         
         log(@"creatStroy stat is %d,errcode is %d",_responseStory.stat,_responseStory.errcode);
-        [self.navigationController popViewControllerAnimated:YES];
+        [self.navigationController popViewControllerAnimated:NO];
         [self deletecache];
         [self.navigationController setNavigationBarHidden:NO animated:NO];
         PopView *pop =[[PopView alloc] initWithFrame:CGRectMake(80, 80, 200, 320)];

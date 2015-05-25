@@ -7,8 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "ApplyTown.h"
-@interface responseApplyTown : ApplyTown
+#import "ModelAppleTown.h"
+@interface responseApplyTown : ModelAppleTown
 @property (nonatomic) BOOL stat;
 @property (nonatomic) int errcode;
 @end

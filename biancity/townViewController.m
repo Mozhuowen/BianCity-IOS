@@ -62,6 +62,10 @@
         self.navigationItem.rightBarButtonItem= nil;
         _iconAddImage.hidden = YES;
     }
+    if(_isComeFromSubscri){
+        self.navigationItem.rightBarButtonItem= nil;
+        _iconAddImage.hidden = YES;
+    }
      self.navigationItem.title = [NSString stringWithFormat:@"%@•边城",_applyTown.townname];
       _requestGood.targetid = _applyTown.townid;
       // __weak id weakSelf = self;
@@ -299,7 +303,7 @@
     [_bgScrollView addSubview:_storyTableView];
     [self.view addSubview:_bgScrollView];
     [self addHeader];
-   // [self addFooter];
+     [self addFooter];
     // Do any additional setup after loading the view from its nib.
 }
 -(void)doGoodCommit{
@@ -464,11 +468,16 @@
             self.storyTableView.hidden = NO;
             
         self.storyTableView.frame = CGRectMake(0,self.bgScrollView.contentSize.height-50,self.bgScrollView.frame.size.width, _requestStory.position*90);
-            self.bgScrollView.contentSize = CGSizeMake(self.bgScrollView.frame.size.width, self.bgScrollView.contentSize.height+_requestStory.position*90);
+           self.bgScrollView.contentSize = CGSizeMake(self.bgScrollView.frame.size.width, self.bgScrollView.contentSize.height+_requestStory.position*90);
             
                     [self.storyTableView reloadData];
+          
+          
             if(check ==1){
-                _bgScrollView.contentOffset = CGPointMake(0, self.bgScrollView.contentSize.height);
+                _bgScrollView.contentOffset = CGPointMake(0, self.bgScrollView.contentSize.height-20);
+                NSIndexPath *scrollIndexPath = [NSIndexPath indexPathForRow:_requestStory.position-1 inSection:0];
+                [_storyTableView scrollToRowAtIndexPath:scrollIndexPath atScrollPosition:UITableViewScrollPositionTop animated:NO];
+
             }
         }else {
             self.bgScrollView.contentSize= _origin;
@@ -523,7 +532,7 @@
     NSLog(@"did select");
     storyViewController *story = [[storyViewController alloc] initWithNibName:@"storyViewController" bundle:nil];
     story.story = [_responseStroys.putao objectAtIndex:indexPath.row];
- 
+   [tableView deselectRowAtIndexPath:indexPath animated:YES];
      [self.navigationController pushViewController:story  animated:YES];
 }
 

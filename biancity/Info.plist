@@ -40,6 +40,16 @@
 				<string>tencent1104330483</string>
 			</array>
 		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>1c99961fd050cf821c5a596cbdad8467</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>wb2562644072</string>
+			</array>
+		</dict>
 	</array>
 	<key>CFBundleVersion</key>
 	<string>1</string>

@@ -12,11 +12,15 @@
 #import "ResponseLogin.h"
 #import "HomeTabBarViewController.h"
 #import "sys/utsname.h"
+#import "ModelRegisteWb.h"
 #import "RequestRegiste.h"
 #import "ResponseRegiste.h"
 #import "ModelCName.h"
 #import "ResponseSimple.h"
 #import "CnameViewController.h"
+#import "AppDelegate.h"
+#define kRedirectURI    @"http://api.weibo.com/oauth2/default.html"
+
 @interface LoginViewController ()
 @property (weak, nonatomic) IBOutlet UIImageView *titleImageView;
 @property (weak, nonatomic) IBOutlet UIImageView *weiboImageView;
@@ -30,6 +34,7 @@
 @property (nonatomic,strong) ResponseRegiste *responseRegiste;
 @property (nonatomic,strong) ModelCName *requestCName;
 @property (nonatomic,strong) ResponseSimple *responseCname;
+@property (nonatomic,strong) ModelRegisteWb *modelWeb;
 @end
 
 @implementation LoginViewController
@@ -76,6 +81,8 @@
    }
 - (void)tencentDidLogin
 {
+    _qqImageView.hidden = YES;
+    _weiboImageView.hidden =YES;
     
     _requsetLogin.logintype = [NSNumber numberWithInt:1 ];
     _requsetLogin.token = [_tencentOAuth accessToken];
@@ -102,6 +109,50 @@
 {
     //    [[NSNotificationCenter defaultCenter] postNotificationName:kLoginFailed object:self];
 }
+
+- (void)ssoButtonPressed
+{
+    WBAuthorizeRequest *request = [WBAuthorizeRequest request];
+    request.redirectURI = kRedirectURI;
+    request.scope = @"all";
+    request.userInfo = @{@"SSO_From": @"LoginViewController",
+                         @"Other_Info_1": [NSNumber numberWithInt:123],
+                         @"Other_Info_2": @[@"obj1", @"obj2"],
+                         @"Other_Info_3": @{@"key1": @"obj1", @"key2": @"obj2"}};
+    [WeiboSDK sendRequest:request];
+}
+-(void)wbdidother{
+    NSLog(@"wb did");
+    _qqImageView.hidden = YES;
+    _weiboImageView.hidden =YES;
+    AppDelegate * appdelegate = (AppDelegate *)[[UIApplication sharedApplication]delegate];
+    
+    _requsetLogin.logintype = [NSNumber numberWithInt:0 ];
+    _requsetLogin.token = appdelegate.wbtoken;
+    _requsetLogin.uid = appdelegate.wbCurrentUserID;
+    NSTimeInterval timet = [appdelegate.wbexpirationDate timeIntervalSince1970];
+    long long int datet = (long long int)timet;
+    datet*=1000;
+    _requsetLogin.expire =[NSNumber numberWithLongLong:datet];
+    _requsetLogin.imei = [[[UIDevice currentDevice] identifierForVendor] UUIDString] ;
+    _requsetLogin.sv = [[UIDevice currentDevice] systemVersion];
+    _requsetLogin.phonemodel = [self deviceString];
+    _requsetLogin.brand = [[UIDevice currentDevice] model];
+    NSLog(@"%@",_requsetLogin);
+    [self loadInfo:0];
+
+}
+
+- (void)request:(WBHttpRequest *)request didFinishLoadingWithDataResult:(NSData *)data
+{
+    _modelWeb = [[ModelRegisteWb alloc] initWithData:data error:nil];
+    _requestRegiste.registInfo = _modelWeb;
+    _requestRegiste.logintype = 0;
+  NSLog(@"webinfo is %@",_requestRegiste);
+    [self loadInfo:1];
+}
+
+
 -(void)viewWillAppear:(BOOL)animated{
     if([[NSUserDefaults standardUserDefaults] dictionaryForKey:LOGIN_INFO]!=nil){
         _qqImageView.hidden=YES;
@@ -134,6 +185,9 @@
     _qqImageView.userInteractionEnabled = YES;
     [_qqImageView addGestureRecognizer:tapQQ];
     
+    UITapGestureRecognizer *tapWb = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(ssoButtonPressed)];
+    _weiboImageView.userInteractionEnabled = YES;
+    [_weiboImageView addGestureRecognizer:tapWb];
     // Do any additional setup after loading the view.
 }
 
@@ -189,7 +243,22 @@
 
           if([_responseLogin.needregiste boolValue]){
               _requestRegiste =[[RequestRegiste alloc] init];
-              [_tencentOAuth getUserInfo];
+              if([_requsetLogin.logintype integerValue]== 0){
+                  NSMutableDictionary * param = [[NSMutableDictionary alloc]initWithCapacity:2];
+                  [param setObject:_requsetLogin.token forKey:@"access_token"];
+                  [param setObject:_requsetLogin.uid forKey:@"uid"];
+                
+                  NSString * userInfoUrl = @"https://api.weibo.com/2/users/show.json";
+                  
+                  [WBHttpRequest requestWithAccessToken:_requsetLogin.token url:userInfoUrl httpMethod:@"GET" params:param delegate:self withTag:@"userInfo"];
+                  
+                  
+                  NSLog(@"param:%@",param);
+
+                  
+              }else if([_requsetLogin.logintype integerValue] == 1){
+                  [_tencentOAuth getUserInfo];
+              }
            }else{
                if([_responseLogin.needcname boolValue]){
                    [self changeName];

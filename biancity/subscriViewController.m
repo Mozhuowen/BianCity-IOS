@@ -25,7 +25,7 @@
 }
 -(void)viewWillAppear:(BOOL)animated{
     
-  [self loadSubscriInfo];
+  //[self loadSubscriInfo];
     
 }
 - (void)viewDidLoad {
@@ -43,7 +43,7 @@
     _subscriTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:_subscriTableView];
     _request =[[basicRequest alloc] init];
-  
+  [self loadSubscriInfo];
     // Do any additional setup after loading the view from its nib.
 }
 

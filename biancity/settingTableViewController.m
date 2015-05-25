@@ -305,6 +305,7 @@
     NSDictionary *cache;
     [userDefaults setObject:cache forKey:LOGIN_INFO];
     [userDefaults setObject:cache forKey:REGISTE_INFO];
+     [userDefaults setObject:cache forKey:@"cache"];
     [userDefaults synchronize];
 }
 

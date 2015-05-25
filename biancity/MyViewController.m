@@ -30,6 +30,9 @@
 @implementation MyViewController
 -(void)viewWillAppear:(BOOL)animated{
    // [self loadInfo:2];
+    [self readUserDeafultsOwn];
+    [self.myCollectionView reloadData];
+    NSLog(@"我的 appear");
 }
 - (void)viewDidLoad {
     [super viewDidLoad];

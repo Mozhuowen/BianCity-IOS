@@ -10,9 +10,12 @@
 #import "CoreLocation/CoreLocation.h"
 #import "CoreLocation/CLLocationManagerDelegate.h"
 #import "TencentOpenAPI/TencentOAuth.h"
-@interface AppDelegate : UIResponder <UIApplicationDelegate,CLLocationManagerDelegate>
+#import "WeiboSDK.h"
+@interface AppDelegate : UIResponder <UIApplicationDelegate,CLLocationManagerDelegate,WeiboSDKDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
-
+@property (strong, nonatomic) NSString *wbtoken;
+@property (strong, nonatomic) NSString *wbCurrentUserID;
+@property (nonatomic,strong) NSDate *wbexpirationDate;
 @end
 

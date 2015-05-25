@@ -187,6 +187,8 @@
 		FEE5C8771B0AFE4200772651 /* ModelCWall.m in Sources */ = {isa = PBXBuildFile; fileRef = FEE5C8761B0AFE4200772651 /* ModelCWall.m */; };
 		FEE5C87A1B0AFE7400772651 /* ResponseSimple.m in Sources */ = {isa = PBXBuildFile; fileRef = FEE5C8791B0AFE7400772651 /* ResponseSimple.m */; };
 		FEE5C87D1B0B845B00772651 /* ModelDelete.m in Sources */ = {isa = PBXBuildFile; fileRef = FEE5C87C1B0B845B00772651 /* ModelDelete.m */; };
+		FEF6995C1B130E9F00FE9D33 /* libWeiboSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FEF699511B130E9F00FE9D33 /* libWeiboSDK.a */; };
+		FEF6995D1B130E9F00FE9D33 /* WeiboSDK.bundle in Resources */ = {isa = PBXBuildFile; fileRef = FEF699591B130E9F00FE9D33 /* WeiboSDK.bundle */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -523,6 +525,17 @@
 		FEE5C8791B0AFE7400772651 /* ResponseSimple.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResponseSimple.m; sourceTree = "<group>"; };
 		FEE5C87B1B0B845B00772651 /* ModelDelete.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ModelDelete.h; sourceTree = "<group>"; };
 		FEE5C87C1B0B845B00772651 /* ModelDelete.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ModelDelete.m; sourceTree = "<group>"; };
+		FEF699511B130E9F00FE9D33 /* libWeiboSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libWeiboSDK.a; sourceTree = "<group>"; };
+		FEF699521B130E9F00FE9D33 /* WBHttpRequest+WeiboShare.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WBHttpRequest+WeiboShare.h"; sourceTree = "<group>"; };
+		FEF699531B130E9F00FE9D33 /* WBHttpRequest+WeiboToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WBHttpRequest+WeiboToken.h"; sourceTree = "<group>"; };
+		FEF699541B130E9F00FE9D33 /* WBHttpRequest+WeiboUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WBHttpRequest+WeiboUser.h"; sourceTree = "<group>"; };
+		FEF699551B130E9F00FE9D33 /* WBHttpRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WBHttpRequest.h; sourceTree = "<group>"; };
+		FEF699561B130E9F00FE9D33 /* WBSDKBasicButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WBSDKBasicButton.h; sourceTree = "<group>"; };
+		FEF699571B130E9F00FE9D33 /* WBSDKCommentButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WBSDKCommentButton.h; sourceTree = "<group>"; };
+		FEF699581B130E9F00FE9D33 /* WBSDKRelationshipButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WBSDKRelationshipButton.h; sourceTree = "<group>"; };
+		FEF699591B130E9F00FE9D33 /* WeiboSDK.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = WeiboSDK.bundle; sourceTree = "<group>"; };
+		FEF6995A1B130E9F00FE9D33 /* WeiboSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeiboSDK.h; sourceTree = "<group>"; };
+		FEF6995B1B130E9F00FE9D33 /* WeiboUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeiboUser.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -543,6 +556,7 @@
 				FECA81051AF7595B00FF57AE /* Security.framework in Frameworks */,
 				FECA81031AF7595000FF57AE /* libstdc++.6.0.9.dylib in Frameworks */,
 				FECA81011AF7594300FF57AE /* libz.dylib in Frameworks */,
+				FEF6995C1B130E9F00FE9D33 /* libWeiboSDK.a in Frameworks */,
 				FECA80FC1AF758D900FF57AE /* AMapSearchKit.framework in Frameworks */,
 				FECA80FD1AF758D900FF57AE /* MAMapKit.framework in Frameworks */,
 				FECA80F91AF758A600FF57AE /* CoreLocation.framework in Frameworks */,
@@ -712,6 +726,7 @@
 		FECA80121AF71A3000FF57AE /* biancity */ = {
 			isa = PBXGroup;
 			children = (
+				FEF699501B130E9F00FE9D33 /* libWeiboSDK */,
 				FECBB8091B0F03A400A59DEA /* New Group */,
 				FED0A5D11B08993800B452DB /* webLabel */,
 				FEC62DEA1B06225A004510DC /* KeyboardObserver */,
@@ -1097,6 +1112,24 @@
 			path = takePicture;
 			sourceTree = "<group>";
 		};
+		FEF699501B130E9F00FE9D33 /* libWeiboSDK */ = {
+			isa = PBXGroup;
+			children = (
+				FEF699511B130E9F00FE9D33 /* libWeiboSDK.a */,
+				FEF699521B130E9F00FE9D33 /* WBHttpRequest+WeiboShare.h */,
+				FEF699531B130E9F00FE9D33 /* WBHttpRequest+WeiboToken.h */,
+				FEF699541B130E9F00FE9D33 /* WBHttpRequest+WeiboUser.h */,
+				FEF699551B130E9F00FE9D33 /* WBHttpRequest.h */,
+				FEF699561B130E9F00FE9D33 /* WBSDKBasicButton.h */,
+				FEF699571B130E9F00FE9D33 /* WBSDKCommentButton.h */,
+				FEF699581B130E9F00FE9D33 /* WBSDKRelationshipButton.h */,
+				FEF699591B130E9F00FE9D33 /* WeiboSDK.bundle */,
+				FEF6995A1B130E9F00FE9D33 /* WeiboSDK.h */,
+				FEF6995B1B130E9F00FE9D33 /* WeiboUser.h */,
+			);
+			path = libWeiboSDK;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1182,6 +1215,7 @@
 				FED36DC31AF9C37100251846 /* saveAddrViewController.xib in Resources */,
 				FED36DBE1AF9C02200251846 /* AMap.bundle in Resources */,
 				FECA91C91AFB6BD800694847 /* townViewController.xib in Resources */,
+				FEF6995D1B130E9F00FE9D33 /* WeiboSDK.bundle in Resources */,
 				FEC571F61B03638900D5D8E5 /* storyViewController.xib in Resources */,
 				FED36DC81AFA49DA00251846 /* upLoadImageViewController.xib in Resources */,
 				FEC8D1EB1AFF5993009E3AB0 /* addStoryViewController.xib in Resources */,
@@ -1492,7 +1526,9 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SDKROOT)/usr/lib/system",
+					"$(PROJECT_DIR)/biancity/libWeiboSDK",
 				);
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -1513,7 +1549,9 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SDKROOT)/usr/lib/system",
+					"$(PROJECT_DIR)/biancity/libWeiboSDK",
 				);
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;

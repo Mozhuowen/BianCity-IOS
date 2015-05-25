@@ -23,7 +23,7 @@
     [self.navigationController dismissViewControllerAnimated:YES completion:^{}];
 }
 -(void)viewWillAppear:(BOOL)animated{
-   [self loadStorysInfo];
+   //[self loadStorysInfo];
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -39,7 +39,7 @@
     [self.view addSubview:_favTableView];
     _favTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     _requestStory = [[basicRequest alloc] init];
-    
+    [self loadStorysInfo];
     // Do any additional setup after loading the view from its nib.
 }
 
@@ -70,6 +70,7 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     storyViewController *story = [[storyViewController alloc] initWithNibName:@"storyViewController" bundle:nil];
     story.story = [_responseStroy.putao objectAtIndex:indexPath.row];
+    story.isComeFromFavorite = YES;
     [self.navigationController pushViewController:story  animated:YES];
 }
 -(void)loadStorysInfo{

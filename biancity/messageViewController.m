@@ -61,7 +61,7 @@
     _requestGood.targetid = 0;
     UIBarButtonItem *leftButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemReply target:self action:@selector(selectLeftAction:)];
     self.navigationItem.leftBarButtonItem = leftButton;
-   
+    self.view.frame = [UIScreen mainScreen].bounds;
     _requestMess = [[ModelMessBoard alloc] init];
     _requestMess.messposition = [[NSNumber alloc] initWithInt:0];
     _messageTableView = [[UITableView  alloc] initWithFrame:CGRectMake(0, 32, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height -32)];
@@ -105,6 +105,7 @@
     [self.view addSubview:_bgPlaceHolderLabel];
     _bgPlaceHolderLabel.hidden = YES;
      _bgTextView.alpha = 0;
+    _bgTextView.hidden =YES;
     [self addHeader];
     [self addFooter];
     [self localInfo];
@@ -152,6 +153,24 @@
         _mapView = [[MAMapView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
         _mapView.delegate = self;
         _mapView.showsUserLocation = YES;
+    }else if([CLLocationManager authorizationStatus]==kCLAuthorizationStatusDenied||[CLLocationManager authorizationStatus]==kCLAuthorizationStatusRestricted){
+        UILabel* lab = [[UILabel alloc] initWithFrame:_alertLabel.frame];
+        lab.lineBreakMode = NSLineBreakByWordWrapping;
+        lab.numberOfLines =0;
+        CGRect rect;
+        lab.text =[NSString stringWithFormat:@"更多精彩，请允许程序访问位置信息(^o^)"];
+        [lab sizeToFit];
+        NSLog(@"frame w %f,h %f",lab.frame.size.width,lab.frame.size.height);
+        rect = lab.frame;
+        rect.size.height +=15;
+        _alertLabel.frame = rect;
+        _alertLabel.text= [NSString stringWithFormat:@"更多精彩，请允许程序访问位置信息(^o^)"];
+        _alertLabel.textAlignment = NSTextAlignmentCenter;
+        rect = _messageTableView.frame;
+        rect.origin.y = _alertLabel.frame.size.height+_alertLabel.frame.origin.y;
+        rect.size.height = [UIScreen mainScreen].bounds.size.height-rect.origin.y;
+        _messageTableView.frame = rect;
+        _bgTextView.hidden =YES;
     }
     if (![CLLocationManager locationServicesEnabled]) {
         NSLog(@"定位服务当前可能尚未打开，请设置打开！");
@@ -238,7 +257,7 @@
                 rect.origin.y = _alertLabel.frame.size.height+_alertLabel.frame.origin.y;
                 rect.size.height = [UIScreen mainScreen].bounds.size.height-rect.origin.y;
                 _messageTableView.frame = rect;
-               
+                _bgTextView.hidden =YES;
                 [self.view setNeedsDisplay];
             }else{
                 lab.text = [NSString stringWithFormat:@"你在边城附近，可以留言"];
@@ -254,6 +273,7 @@
                 rect.size.height = rect.size.height -40;
                 _messageTableView.frame = rect;
                 _bgTextView.alpha = 1;
+                _bgTextView.hidden = NO;
                 [self.view setNeedsDisplay];
           }
         

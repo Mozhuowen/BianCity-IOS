@@ -13,7 +13,7 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
  
     if(self!=nil){
-        _bgImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.width*9/15)];
+        _bgImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.width*3/5)];
         _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, _bgImageView.frame.origin.y+_bgImageView.frame.size.height-25, _bgImageView.frame.size.width, 25)];
         _titleLabel.backgroundColor = [UIColor clearColor];
         _titleLabel.textColor = [UIColor whiteColor];
