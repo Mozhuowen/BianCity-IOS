@@ -15,7 +15,7 @@
     if (self) {
         self.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent: 0.75f];
         self.layer.cornerRadius = 5.0f;
-        _textLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, 10)];
+        _textLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.center.x-100, 0, 200, 10)];
         _textLabel.numberOfLines = 0;
         _textLabel.font = [UIFont systemFontOfSize:17];
         _textLabel.textColor = [UIColor whiteColor];
@@ -38,9 +38,9 @@
     self.alpha = 1.0f;
     _textLabel.text = text;
     [_textLabel sizeToFit];
-    CGRect frame = CGRectMake(5, 0, _textLabel.frame.size.width, _textLabel.frame.size.height);
+    CGRect frame = CGRectMake(5, 5, _textLabel.frame.size.width, _textLabel.frame.size.height);
     _textLabel.frame = frame;
-    frame =  CGRectMake(self.frame.origin.x, self.frame.origin.y, _textLabel.frame.size.width+10, _textLabel.frame.size.height+10);
+    frame =  CGRectMake(self.center.x-_textLabel.frame.size.width/2-5, self.frame.origin.y-5, _textLabel.frame.size.width+10, _textLabel.frame.size.height+10);
     self.frame = frame;
     [UIView animateWithDuration:2.0
                           delay:0.0

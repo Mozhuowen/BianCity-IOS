@@ -40,7 +40,7 @@ NSString *const registeUrl = @"http://123.57.132.31:8080/registe";
 NSString *const cnameUrl = @"http://123.57.132.31:8080/cname";
 
 
-//
+
 //NSString *const doGoodUrl = @"http://192.168.199.200/dogood";
 //NSString *const loginUrl = @"http://192.168.199.200/login";
 //NSString *const registeUrl = @"http://192.168.199.200/registe";
@@ -67,4 +67,4 @@ NSString *const cnameUrl = @"http://123.57.132.31:8080/cname";
 //NSString *const submitMesstUrl = @"http://192.168.199.200/submitmess";
 //NSString *const doSubscriUrl = @"http://192.168.199.200/dosubscri";
 //NSString *const getsubslistUrl = @"http://192.168.199.200/getsubslist";
-
+//

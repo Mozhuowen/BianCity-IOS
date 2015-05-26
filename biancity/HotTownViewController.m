@@ -22,7 +22,6 @@
 @property (nonatomic,strong)  ModelHotTown *basic;
 @property (nonatomic,strong) responseApplyTown *applyTown;
 @property (nonatomic,strong)  showNavigationController *show;
-@property (nonatomic,strong) townViewController *town;
 @end
 
 @implementation HotTownViewController
@@ -32,9 +31,7 @@
     
     _applyTown = [[responseApplyTown alloc] init];
     _show  = [[showNavigationController alloc] initWithNibName:@"showNavigationController" bundle:nil];
-    _town=[[townViewController alloc] initWithNibName:@"townViewController" bundle:nil];
-    
-    [_show pushViewController:_town animated:YES ];
+  
    _basic= [[ModelHotTown alloc] init];
 
     _basic.rejectid = [[NSMutableArray alloc]init];
@@ -96,6 +93,9 @@
 }
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
     
+  townViewController*  _town=[[townViewController alloc] initWithNibName:@"townViewController" bundle:nil];
+    
+    [_show pushViewController:_town animated:YES ];
     _applyTown = [_hotTown.towns objectAtIndex:indexPath.row];
     _town.applyTown = _applyTown;
     //[_show pushViewController:_town animated:YES ];
@@ -142,7 +142,7 @@
     MsgEncrypt *encrypt = [[MsgEncrypt alloc] init];
     NSData *msgjson = [NSJSONSerialization dataWithJSONObject:parameters options:kNilOptions error:nil];
     NSString* info = [[NSString alloc] initWithData:msgjson encoding:NSUTF8StringEncoding];
-     log(@"Near Info is %@,%ld",info,info.length);
+     log(@"Near Info is %@,%ld",info,(unsigned long)info.length);
     NSString *signature= [encrypt EncryptMsg:info timeStmap:strtime];
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.requestSerializer=[AFJSONRequestSerializer serializer];

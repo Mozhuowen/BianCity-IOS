@@ -171,6 +171,7 @@
 		FED0A5D91B08A0F700B452DB /* messageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FED0A5D71B08A0F700B452DB /* messageViewController.xib */; };
 		FED0A5DC1B08C24B00B452DB /* ModelMessBoard.m in Sources */ = {isa = PBXBuildFile; fileRef = FED0A5DB1B08C24B00B452DB /* ModelMessBoard.m */; };
 		FED0A5DF1B08C39F00B452DB /* ResponseMess.m in Sources */ = {isa = PBXBuildFile; fileRef = FED0A5DE1B08C39F00B452DB /* ResponseMess.m */; };
+		FED118C91B141BD500CBADE5 /* TownHeaderTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FED118C81B141BD500CBADE5 /* TownHeaderTableViewCell.m */; };
 		FED36DBE1AF9C02200251846 /* AMap.bundle in Resources */ = {isa = PBXBuildFile; fileRef = FED36DBD1AF9C02200251846 /* AMap.bundle */; };
 		FED36DC21AF9C37100251846 /* saveAddrViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FED36DC01AF9C37100251846 /* saveAddrViewController.m */; };
 		FED36DC31AF9C37100251846 /* saveAddrViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FED36DC11AF9C37100251846 /* saveAddrViewController.xib */; };
@@ -500,6 +501,8 @@
 		FED0A5DB1B08C24B00B452DB /* ModelMessBoard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ModelMessBoard.m; sourceTree = "<group>"; };
 		FED0A5DD1B08C39F00B452DB /* ResponseMess.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResponseMess.h; sourceTree = "<group>"; };
 		FED0A5DE1B08C39F00B452DB /* ResponseMess.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResponseMess.m; sourceTree = "<group>"; };
+		FED118C71B141BD500CBADE5 /* TownHeaderTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TownHeaderTableViewCell.h; sourceTree = "<group>"; };
+		FED118C81B141BD500CBADE5 /* TownHeaderTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TownHeaderTableViewCell.m; sourceTree = "<group>"; };
 		FED36DBD1AF9C02200251846 /* AMap.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = AMap.bundle; path = biancity/GaodeGeoInfo/MAMapKit.framework/Versions/2.4.2.19ad4bb/Resources/AMap.bundle; sourceTree = "<group>"; };
 		FED36DBF1AF9C37100251846 /* saveAddrViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = saveAddrViewController.h; sourceTree = "<group>"; };
 		FED36DC01AF9C37100251846 /* saveAddrViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = saveAddrViewController.m; sourceTree = "<group>"; };
@@ -1074,6 +1077,8 @@
 				FE4CC1101B0A100600B2615F /* subscriTableViewCell.m */,
 				FEC880AD1B0DD38800C6F231 /* CacheTableViewCell.h */,
 				FEC880AE1B0DD38800C6F231 /* CacheTableViewCell.m */,
+				FED118C71B141BD500CBADE5 /* TownHeaderTableViewCell.h */,
+				FED118C81B141BD500CBADE5 /* TownHeaderTableViewCell.m */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -1297,6 +1302,7 @@
 				FEC571E71B032A1500D5D8E5 /* SDBallProgressView.m in Sources */,
 				FED86C651B00BC8900B2F96C /* NLCropViewLayer.m in Sources */,
 				FEC571E91B032A1500D5D8E5 /* SDLoopProgressView.m in Sources */,
+				FED118C91B141BD500CBADE5 /* TownHeaderTableViewCell.m in Sources */,
 				FEC53D7A1AF9237000FCF327 /* locationViewController.m in Sources */,
 				FECA80D71AF732BF00FF57AE /* UIScrollView+Refresh.m in Sources */,
 				FECA804F1AF7326B00FF57AE /* AFHTTPRequestOperationManager.m in Sources */,

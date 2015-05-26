@@ -24,8 +24,8 @@
 @property (nonatomic,strong) ModelNearTown* nearTown;
 @property (nonatomic,strong) responseApplyTown *applyTown;
 @property (nonatomic,strong)  showNavigationController *show;
-@property (nonatomic,strong) townViewController *town;
 @property (nonatomic,strong) MAMapView *mapView;
+@property (nonatomic,strong) UILabel *placeBgLabel;
 @end
 
 @implementation NearViewController
@@ -41,6 +41,9 @@
         //[vc.nearCollectionView headerBeginRefreshing];
     }
         NSLog(@"appear");
+    if([_hotTown.towns count]<=5){
+        [self.nearCollectionView headerBeginRefreshing];
+    }
 
 }
 - (void)viewDidLoad {
@@ -48,11 +51,12 @@
     
     _applyTown = [[responseApplyTown alloc] init];
     _show  = [[showNavigationController alloc] initWithNibName:@"showNavigationController" bundle:nil];
-     _town=[[townViewController alloc] initWithNibName:@"townViewController" bundle:nil];
-  
-    [_show pushViewController:_town animated:YES ];
-
+    
    // UITabBarItem *item = [self.tabBarController.tabBar.items objectAtIndex:1];
+    _placeBgLabel = [[UILabel alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    _placeBgLabel.textAlignment = NSTextAlignmentCenter;
+    _placeBgLabel.text = @"附近还没有边城，赶快创建一个吧";
+    _placeBgLabel.hidden = YES;
     _nearTown = [[ModelNearTown alloc] init];
     _nearTown.geo = [[GeoInfo alloc] init];
     _nearTown.rejectid =[[NSMutableArray alloc] init];
@@ -122,7 +126,10 @@
     return cell;
 }
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
-  
+  townViewController*  _town=[[townViewController alloc] initWithNibName:@"townViewController" bundle:nil];
+    
+    [_show pushViewController:_town animated:YES ];
+
     _applyTown = [_hotTown.towns objectAtIndex:indexPath.row];
      _town.applyTown = _applyTown;
     [self presentViewController:_show animated:YES completion:^{}];
@@ -229,6 +236,9 @@
                 NSNumber* rjid= [[self.hotTown.towns objectAtIndex:i] townid];
                 [_nearTown.rejectid  addObject:rjid];
             }
+            if([_hotTown.towns count]==0){
+              _placeBgLabel.hidden = NO;
+            }
         }else {
             ResponseHotTown *ad=[[ResponseHotTown alloc] initWithDictionary:data error:nil];
             [self.hotTown.towns addObjectsFromArray:ad.towns];
@@ -289,20 +299,6 @@
         }
 
        
-//        _geoinfo.accuracy = [[NSNumber alloc] initWithDouble:userLocation.location.horizontalAccuracy] ;
-//        //
-//        _search = [[AMapSearchAPI alloc] initWithSearchKey:[MAMapServices sharedServices].apiKey  Delegate:self];
-//        _local=[[CLLocation alloc] initWithLatitude:userLocation.coordinate.latitude longitude:userLocation.coordinate.longitude];
-//        //
-//        //构造AMapReGeocodeSearchRequest对象，location为必选项，radius为可选项
-//        AMapReGeocodeSearchRequest *regeoRequest = [[AMapReGeocodeSearchRequest alloc] init];
-//        regeoRequest.searchType = AMapSearchType_ReGeocode;
-//        regeoRequest.location = [AMapGeoPoint locationWithLatitude:userLocation.coordinate.latitude longitude:userLocation.coordinate.longitude];
-//        regeoRequest.radius = 10000;
-//        regeoRequest.requireExtension = YES;
-//        
-//        //发起逆地理编码
-//        [_search AMapReGoecodeSearch: regeoRequest];
     }
 }
 #pragma end location

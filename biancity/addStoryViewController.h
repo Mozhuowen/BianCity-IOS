@@ -10,7 +10,7 @@
 #import "NLViewController.h"
 #import "TownStory.h"
 #import "townCache.h"
-@interface addStoryViewController : UIViewController<UITextFieldDelegate,UITextViewDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,NLImagepickerDelegate>
+@interface addStoryViewController : UIViewController<UITextFieldDelegate,UITextViewDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,NLImagepickerDelegate,UIAlertViewDelegate>
 @property (nonatomic,strong) TownStory* townstory;
 @property (nonatomic) NSNumber * townid;
 @property (nonatomic,strong) NSString * cacheid;

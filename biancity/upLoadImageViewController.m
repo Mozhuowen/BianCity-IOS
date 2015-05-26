@@ -181,7 +181,7 @@
     
     [userDefaults synchronize];
     if(!_uploadFlag){
-        PopView * pop = [[PopView alloc] initWithFrame:CGRectMake(80, self.view.frame.size.height-200, 240, 320)];
+        PopView * pop = [[PopView alloc] initWithFrame:CGRectMake(0, 400, [UIScreen mainScreen].bounds.size.width, 40)];
         [self.view addSubview:pop];
         [pop setText:@"成功保存\(^o^)/"];
     }
@@ -304,18 +304,65 @@
         self.placeholder.text = @"";
     }
 }
+-(void)changeAlert{
+    UIAlertView *alert = [[UIAlertView alloc]
+                          initWithTitle:@"是否保存到草稿箱？"
+                          message:nil
+                          delegate:self
+                          cancelButtonTitle:@"取消"
+                          otherButtonTitles:@"保存",@"不保存", nil];
+    alert.tag = 100;
+    [alert show];
+}
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    if(alertView.tag ==100){
+    switch (buttonIndex) {
+        case 0:
+            NSLog(@"0");
+            return;
+            break;
+            
+        case 1:
+            NSLog(@"1");
+            [self saveUserDefaultsOwn];
+            if(_isComeFromCache){
+            [self.navigationController popViewControllerAnimated:YES];
+                
+            }else{
+        [self.navigationController dismissViewControllerAnimated:YES completion:^{}];
+        }
+            return;
+            break;
+            
+        case 2:
+            NSLog(@"2");
+            if(_isComeFromCache){
+                [self.navigationController popViewControllerAnimated:YES];
+                
+            }else{
+                [self.navigationController dismissViewControllerAnimated:YES completion:^{}];
+            }
+
+            return;
+       break;
+            
+    }
+    
+    }
+}
 -(void)selectLeftAction:(id)sender{
     [_summaryTextView resignFirstResponder];
     [_townNameTextFiled resignFirstResponder];
-    if(!_uploadFlag){
-        if(_isComeFromCache){
-            [self.navigationController popViewControllerAnimated:YES];
-
-            }else{
-         [self.navigationController dismissViewControllerAnimated:YES completion:^{}];
-
-        }
-    }
+    [self changeAlert];
+//    if(!_uploadFlag){
+//        if(_isComeFromCache){
+//            [self.navigationController popViewControllerAnimated:YES];
+//
+//            }else{
+//         [self.navigationController dismissViewControllerAnimated:YES completion:^{}];
+//
+//        }
+//    }
 }
 -(void)selectRightAction:(id)sender{
     [_summaryTextView resignFirstResponder];
@@ -438,6 +485,7 @@
                           delegate:self
                           cancelButtonTitle:@"确定"
                           otherButtonTitles: nil];
+    alert.tag = 0;
     [alert show];
 }
 -(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
@@ -575,9 +623,10 @@
         }else {
             [self.navigationController setNavigationBarHidden:NO animated:NO];
             _progressDome.hidden = YES;
-            PopView *pop =[[PopView alloc] initWithFrame:CGRectMake(80, 80, 200, 320)];
+            PopView *pop =[[PopView alloc] initWithFrame:CGRectMake(0, 180, [UIScreen mainScreen].bounds.size.width, 40)];
             [self.view addSubview:pop];
               _uploadFlag = NO;
+              progressCount=0.0;
             [pop setText:@"o(>﹏<)o  网络糟糕，信息已保存至草稿箱，请重新上传"];
         }
         
@@ -628,13 +677,12 @@
                 [self.navigationController pushViewController:town  animated:NO];
                 [self deletecache];
                 [self saveUserTown:data];
-                PopView *pop =[[PopView alloc] initWithFrame:CGRectMake(80, 80, 200, 320)];
-                [self.view addSubview:pop];
+                PopView *pop =[[PopView alloc] initWithFrame:CGRectMake(0, 180, [UIScreen mainScreen].bounds.size.width, 40)];               [self.view addSubview:pop];
                 _uploadFlag = NO;
                 [pop setText:@"\(^o^)/~  创建成功"];
             }
             else{
-                PopView *pop =[[PopView alloc] initWithFrame:CGRectMake(80, 80, 200, 320)];
+                PopView *pop =[[PopView alloc] initWithFrame:CGRectMake(0, 180, [UIScreen mainScreen].bounds.size.width, 40)];
                 [self.view addSubview:pop];
                   _uploadFlag = NO;
                 [pop setText:@"o(>﹏<)o  网络糟糕，请重新上传"];
@@ -644,7 +692,7 @@
         log(@"%@",_responseApplyTown);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error: %@", error);
-        PopView *pop =[[PopView alloc] initWithFrame:CGRectMake(80, 80, 200, 320)];
+        PopView *pop =[[PopView alloc] initWithFrame:CGRectMake(0, 80, [UIScreen mainScreen].bounds.size.width, 40)];
         [self.view addSubview:pop];
           _uploadFlag = NO;
         [pop setText:@"o(>﹏<)o  网络糟糕，请重新上传"];

@@ -156,12 +156,39 @@
     // Dispose of any resources that can be recreated.
 }
 -(void)selectLeftAction:(id)sender{
-    if(_upLoadingfalg == NO){
-        [self.navigationController popViewControllerAnimated:YES];
-    }else {
-        [self showAlert:@"是否放弃"];
+    [self changeAlert];
+}
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    if(alertView.tag ==100){
+        switch (buttonIndex) {
+            case 0:
+                NSLog(@"0");
+                return;
+                break;
+                
+            case 1:
+                [self saveUserDefaultsOwn];
+                 [self.navigationController popViewControllerAnimated:YES];
+                return;
+                break;
+            case 2:
+                 [self.navigationController popViewControllerAnimated:YES];
+                return;
+                break;
+        }
     }
 }
+-(void)changeAlert{
+    UIAlertView *alert = [[UIAlertView alloc]
+                          initWithTitle:@"是否保存到草稿箱？"
+                          message:nil
+                          delegate:self
+                          cancelButtonTitle:@"取消"
+                          otherButtonTitles:@"保存",@"不保存", nil];
+    alert.tag = 100;
+    [alert show];
+}
+
 -(void)selectRightAction:(id)sender{
     if(_upLoadingfalg){
         [self showAlert:@"上传中，请稍等"];
@@ -430,8 +457,7 @@
         index_images ++;
             progressCount += self.progress.progressView.progress;
           if(idx ==[_images count]){
-                alert = [[UIAlertView alloc]initWithTitle:@"" message:@"上传成功" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
-                NSLog(@"%@",result);
+
                 [_progressAlert dismissWithClickedButtonIndex:0 animated:NO];
                 self.propressView.progress= 0;
                 progressCount=0.0;
@@ -446,9 +472,10 @@
             }
         }else {
             [self.navigationController setNavigationBarHidden:NO animated:NO];
-            PopView *pop =[[PopView alloc] initWithFrame:CGRectMake(80, 80, 200, 320)];
+            PopView *pop =[[PopView alloc] initWithFrame:CGRectMake(0, 180, [UIScreen mainScreen].bounds.size.width, 40)];
             [self.view addSubview:pop];
                _upLoadingfalg = NO;
+              progressCount=0.0;
             [pop setText:@"o(>﹏<)o 网络有点糟糕,以保存至草稿箱,请稍后再试"];
             _progress.hidden = YES;
         }
@@ -495,13 +522,13 @@
         [self.navigationController popViewControllerAnimated:NO];
         [self deletecache];
         [self.navigationController setNavigationBarHidden:NO animated:NO];
-        PopView *pop =[[PopView alloc] initWithFrame:CGRectMake(80, 80, 200, 320)];
+        PopView *pop =[[PopView alloc] initWithFrame:CGRectMake(0, 180, [UIScreen mainScreen].bounds.size.width, 40)];
         [self.view addSubview:pop];
         _upLoadingfalg = NO;
         [pop setText:@"\(^o^)/~ 新建成功"];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error: %@", error);
-        PopView *pop =[[PopView alloc] initWithFrame:CGRectMake(80, 80, 200, 320)];
+        PopView *pop =[[PopView alloc] initWithFrame:CGRectMake(0, 180, [UIScreen mainScreen].bounds.size.width, 40)];
            _upLoadingfalg = NO;
         [self.view addSubview:pop];
         [pop setText:@"o(>﹏<)o 网络糟糕，请稍后重试"];
@@ -591,7 +618,7 @@
         [self saveImage:[item1.imagesName objectAtIndex:i] image:[_images objectAtIndex:i]];
     }
     if(!_upLoadingfalg){
-        PopView * pop = [[PopView alloc] initWithFrame:CGRectMake(80, self.view.frame.size.height-200, 240, 320)];
+        PopView * pop = [[PopView alloc] initWithFrame:CGRectMake(0, 400, [UIScreen mainScreen].bounds.size.width, 40)];
         [self.view addSubview:pop];
         [pop setText:@"成功保存\(^o^)/"];
     }

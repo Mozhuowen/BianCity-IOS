@@ -56,7 +56,7 @@
 - (void)layoutSubviews
 {
     [super layoutSubviews];
-    self.progressView.frame = self.bounds;
+    self.progressView.frame = CGRectMake(self.center.x-50,self.center.y-50,100,100);
 }
 
 @end

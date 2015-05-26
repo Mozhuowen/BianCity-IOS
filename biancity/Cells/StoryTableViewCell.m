@@ -24,8 +24,10 @@
         _storyLabel.numberOfLines =0;
         _dateLabel =[[UILabel alloc] initWithFrame:CGRectMake(_storyLabel.frame.origin.x, _storyLabel.frame.origin.y+_storyLabel.frame.size.height, _storyLabel.frame.size.width*3, self.frame.size.height/2-4)];
         _dateLabel.font =[UIFont systemFontOfSize:14];
-        _goodLabel = [[UILabel alloc] initWithFrame:CGRectMake([UIScreen mainScreen].bounds.size.width-50, 4, 20, self.frame.size.height/2-4)];
-        _iconGoodImage = [[UIImageView alloc] initWithFrame:CGRectMake(_goodLabel.frame.origin.x+12, 12, 20, 20)];
+        _goodLabel = [[UILabel alloc] initWithFrame:CGRectMake([UIScreen mainScreen].bounds.size.width-50, 7, 23, self.frame.size.height/2-4)];
+        _goodLabel.textAlignment = NSTextAlignmentRight;
+        _goodLabel.font = [UIFont systemFontOfSize:14];
+        _iconGoodImage = [[UIImageView alloc] initWithFrame:CGRectMake(_goodLabel.frame.origin.x+_goodLabel.frame.size.width, 12, 25, 25)];
         [self addSubview:_stroyImage];
         [self.contentView addSubview:_storyLabel];
         [self.contentView addSubview:_dateLabel];

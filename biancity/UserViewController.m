@@ -20,11 +20,11 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 -(void)viewWillAppear:(BOOL)animated{
-    if([_requestUser.ptuserid isEqualToNumber:_userid]){
-        self.navigationItem.title = @"我的";
-    }else{
-        self.navigationItem.title =[NSString stringWithFormat:@"%@",_UserName];
-    }
+//    if([_requestUser.ptuserid isEqualToNumber:_userid]){
+//        self.navigationItem.title = @"我的";
+//    }else{
+    self.navigationItem.title =[NSString stringWithFormat:@"%@",_UserName];
+   
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -39,13 +39,11 @@
     _myCollectionView.delegate = self;
     _applyTown = [[responseApplyTown alloc] init];
     _show  = [[showNavigationController alloc] initWithNibName:@"showNavigationController" bundle:nil];
-    _town=[[townViewController alloc] initWithNibName:@"townViewController" bundle:nil];
-    
-    [_show pushViewController:_town animated:YES ];
+   
     self.myCollectionView.frame =[UIScreen mainScreen].bounds;
     
  
-    [self.myCollectionView registerClass:[MyCollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"MyCollectionReusableView"];
+//    [self.myCollectionView registerClass:[MyCollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"MyCollectionReusableView"];
     
       [self.myCollectionView registerClass:[UserCollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"UserCollectionReusableView"];
      
@@ -55,7 +53,7 @@
     self.myCollectionView.allowsMultipleSelection = YES;//默认为NO,是否可以多选
     UICollectionViewFlowLayout *collectionViewLayout = (UICollectionViewFlowLayout *)self.myCollectionView.collectionViewLayout;
   
-    collectionViewLayout.headerReferenceSize = CGSizeMake(self.myCollectionView.frame.size.width, self.myCollectionView.frame.size.width*3/5+self.myCollectionView.frame.size.width/7);
+    collectionViewLayout.headerReferenceSize = CGSizeMake(self.myCollectionView.frame.size.width, self.myCollectionView.frame.size.width*3/5+self.myCollectionView.frame.size.width/6);
     self.myCollectionView.collectionViewLayout = collectionViewLayout;
     _requestUser = [[ModelUser alloc] init];
     _requestUser.onlystatis = NO;
@@ -115,7 +113,9 @@
     return cell;
 }
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
-    
+     townViewController*   _town=[[townViewController alloc] initWithNibName:@"townViewController" bundle:nil];
+    _town.notEditFlag = YES;
+    [_show pushViewController:_town animated:YES ];
     _applyTown = [_User.user.mytowns objectAtIndex:indexPath.row];
     _town.applyTown = _applyTown;
     [self presentViewController:_show animated:YES completion:^{}];
@@ -124,81 +124,81 @@
 -(UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath{
     if (kind == UICollectionElementKindSectionHeader){
        
-        if(_requestUser.ptuserid == _requestUser.userid){
-             MyCollectionReusableView *header;
-            header =[collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:@"MyCollectionReusableView" forIndexPath:indexPath];
-            NSMutableString *pictureUrl = [[NSMutableString alloc] initWithString:getPictureUrl];
-            if(!_User.user.wallimage)
-                header.myCoverImage.image = [UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"bj" ofType:@"jpg"]];
-            else{
-                NSMutableString *bgImgUrl =[[NSMutableString alloc]initWithString: pictureUrl];
-                [bgImgUrl appendString:_User.user.wallimage];
-                [bgImgUrl appendString:@"!large"];
-                [header.myCoverImage sd_setImageWithURL:[NSURL URLWithString:bgImgUrl]  placeholderImage:[UIImage imageNamed:@"placeholder"] options:indexPath.row == 0 ? SDWebImageRefreshCached : 0] ;
-            }
-            NSString *myImgUrl = _User.user.cover;
-            NSString *jap = @"http://";
-            NSRange foundObj=[myImgUrl rangeOfString:jap options:NSCaseInsensitiveSearch];
-            if(_User.user.cover){
-                if(foundObj.length>0) {
-                    [header.iconMyImage sd_setImageWithURL:[NSURL URLWithString:myImgUrl]  placeholderImage:[UIImage imageNamed:@"placeholder"] options:indexPath.row == 0 ? SDWebImageRefreshCached : 0] ;
-                }else {
-                    NSMutableString * temp = [[NSMutableString alloc] initWithString:pictureUrl];
-                    [temp appendString:_User.user.cover];
-                    [temp appendString:@"!small"];
-                    [header.iconMyImage sd_setImageWithURL:[NSURL URLWithString:temp]  placeholderImage:[UIImage imageNamed:@"placeholder"] options:indexPath.row == 0 ? SDWebImageRefreshCached : 0] ;
-                }
-            }else {
-                header.iconMyImage.image =[UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"bj" ofType:@"jpg"]];
-            }
-            header.iconAddImage.image = [UIImage imageNamed:@"ic_plus"];
-            //[header.iconAddImage setTag:333];
-            
-            
-            
-            header.iconAddrImage.image = [UIImage imageNamed:@"ic_location_small"] ;
-            
-            header.iconSettingImage.image = [UIImage imageNamed:@"ic_account_setting"];
-            
-            // header.userInteractionEnabled = YES;
-            header.iconMyImage.layer.masksToBounds=YES;
-            header.iconMyImage.layer.cornerRadius=25.0;
-            header.iconMyImage.layer.borderWidth=2.0;
-            header.iconMyImage.layer.borderColor =[[UIColor whiteColor] CGColor];
-            header.iconMyImage.backgroundColor = [UIColor whiteColor];
-            header.iconLineImage.backgroundColor = [UIColor whiteColor];
-            // NSString * str =nil;
-            header.myNameLabel.text = _User.user.name;
-            // NSLog(@"%@",_User.user.sex);
-            if(_User.user.sex && [_User.user.sex isEqualToString:@"m"]){
-                header.maleLabel.text =@"男";
-                header.iconMaleImage.image = [UIImage imageNamed:@"ic_sex_boy"];
-            }else {
-                header.maleLabel.text =@"女";
-                header.iconMaleImage.image = [UIImage imageNamed:@"ic_sex_girl"];
-            }
-            //str =[NSString stringWithString:_User.user.location];
-            header.addrLabel.text = _User.user.location;
-            header.myTownsLabel.text = [NSString stringWithFormat:@"%@",_User.user.towncount];
-            header.myTownLabel.text = @"边城";
-            
-            header.myStorysLabel.text = [NSString stringWithFormat:@"%@",_User.user.putaocount];
-            header.myStoryLabel.text = @"故事";
-            
-            header.fansLabel.text = [NSString stringWithFormat:@"%@",_User.user.fans];
-            header.fanLabel.text = @"粉丝";
-            
-            header.checksLabel.text = [NSString stringWithFormat:@"%@",_User.user.subscricount];
-            header.checkLabel.text = @"订阅";
-            
-            header.storesLabel.text = [NSString stringWithFormat:@"%@",_User.user.favoritecount];
-            header.storeLabel.text = @"收藏";
-            
-            header.goodsLabel.text =[NSString stringWithFormat:@"%@",_User.user.begoodcount];
-            header.goodLabel.text = @"被赞";
-            header.t_delegate = self;
-            return header;
-        }else{
+//        if(_requestUser.ptuserid == _requestUser.userid){
+//             MyCollectionReusableView *header;
+//            header =[collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:@"MyCollectionReusableView" forIndexPath:indexPath];
+//            NSMutableString *pictureUrl = [[NSMutableString alloc] initWithString:getPictureUrl];
+//            if(!_User.user.wallimage)
+//                header.myCoverImage.image = [UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"bj" ofType:@"jpg"]];
+//            else{
+//                NSMutableString *bgImgUrl =[[NSMutableString alloc]initWithString: pictureUrl];
+//                [bgImgUrl appendString:_User.user.wallimage];
+//                [bgImgUrl appendString:@"!large"];
+//                [header.myCoverImage sd_setImageWithURL:[NSURL URLWithString:bgImgUrl]  placeholderImage:[UIImage imageNamed:@"placeholder"] options:indexPath.row == 0 ? SDWebImageRefreshCached : 0] ;
+//            }
+//            NSString *myImgUrl = _User.user.cover;
+//            NSString *jap = @"http://";
+//            NSRange foundObj=[myImgUrl rangeOfString:jap options:NSCaseInsensitiveSearch];
+//            if(_User.user.cover){
+//                if(foundObj.length>0) {
+//                    [header.iconMyImage sd_setImageWithURL:[NSURL URLWithString:myImgUrl]  placeholderImage:[UIImage imageNamed:@"placeholder"] options:indexPath.row == 0 ? SDWebImageRefreshCached : 0] ;
+//                }else {
+//                    NSMutableString * temp = [[NSMutableString alloc] initWithString:pictureUrl];
+//                    [temp appendString:_User.user.cover];
+//                    [temp appendString:@"!small"];
+//                    [header.iconMyImage sd_setImageWithURL:[NSURL URLWithString:temp]  placeholderImage:[UIImage imageNamed:@"placeholder"] options:indexPath.row == 0 ? SDWebImageRefreshCached : 0] ;
+//                }
+//            }else {
+//                header.iconMyImage.image =[UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"bj" ofType:@"jpg"]];
+//            }
+//            header.iconAddImage.image = [UIImage imageNamed:@"ic_plus"];
+//            //[header.iconAddImage setTag:333];
+//            
+//            
+//            
+//            header.iconAddrImage.image = [UIImage imageNamed:@"ic_location_small"] ;
+//            
+//            header.iconSettingImage.image = [UIImage imageNamed:@"ic_account_setting"];
+//            
+//            // header.userInteractionEnabled = YES;
+//            header.iconMyImage.layer.masksToBounds=YES;
+//            header.iconMyImage.layer.cornerRadius=25.0;
+//            header.iconMyImage.layer.borderWidth=2.0;
+//            header.iconMyImage.layer.borderColor =[[UIColor whiteColor] CGColor];
+//            header.iconMyImage.backgroundColor = [UIColor whiteColor];
+//            header.iconLineImage.backgroundColor = [UIColor whiteColor];
+//            // NSString * str =nil;
+//            header.myNameLabel.text = _User.user.name;
+//            // NSLog(@"%@",_User.user.sex);
+//            if(_User.user.sex && [_User.user.sex isEqualToString:@"m"]){
+//                header.maleLabel.text =@"男";
+//                header.iconMaleImage.image = [UIImage imageNamed:@"ic_sex_boy"];
+//            }else {
+//                header.maleLabel.text =@"女";
+//                header.iconMaleImage.image = [UIImage imageNamed:@"ic_sex_girl"];
+//            }
+//            //str =[NSString stringWithString:_User.user.location];
+//            header.addrLabel.text = _User.user.location;
+//            header.myTownsLabel.text = [NSString stringWithFormat:@"%@",_User.user.towncount];
+//            header.myTownLabel.text = @"边城";
+//            
+//            header.myStorysLabel.text = [NSString stringWithFormat:@"%@",_User.user.putaocount];
+//            header.myStoryLabel.text = @"故事";
+//            
+//            header.fansLabel.text = [NSString stringWithFormat:@"%@",_User.user.fans];
+//            header.fanLabel.text = @"粉丝";
+//            
+//            header.checksLabel.text = [NSString stringWithFormat:@"%@",_User.user.subscricount];
+//            header.checkLabel.text = @"订阅";
+//            
+//            header.storesLabel.text = [NSString stringWithFormat:@"%@",_User.user.favoritecount];
+//            header.storeLabel.text = @"收藏";
+//            
+//            header.goodsLabel.text =[NSString stringWithFormat:@"%@",_User.user.begoodcount];
+//            header.goodLabel.text = @"被赞";
+//            header.t_delegate = self;
+//            return header;
+//        }else{
             UserCollectionReusableView *header;
              header =[collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:@"UserCollectionReusableView" forIndexPath:indexPath];
             NSMutableString *pictureUrl = [[NSMutableString alloc] initWithString:getPictureUrl];
@@ -272,7 +272,6 @@
             header.goodLabel.text = @"被赞";
             header.t_delegate = self;
             return header;
-        }
       
     }
     return nil;

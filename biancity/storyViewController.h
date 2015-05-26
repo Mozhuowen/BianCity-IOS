@@ -14,4 +14,5 @@
 @interface storyViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,SDWebImageManagerDelegate,TapImageViewDelegate,ImgScrollViewDelegate,UITextFieldDelegate,UIWebViewDelegate,UIActionSheetDelegate>
 @property (nonatomic,strong) TownStory * story;
 @property (nonatomic) BOOL isComeFromFavorite;
+@property (nonatomic) BOOL notEditFlag;
 @end

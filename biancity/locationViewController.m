@@ -37,8 +37,8 @@
     _mapView.delegate = self;
     _mapView.showsUserLocation = YES;
     
-    _mapView.userTrackingMode = MAUserTrackingModeFollowWithHeading;
-    //[_mapView setZoomLevel:16.1 animated:YES];
+    _mapView.userTrackingMode = MAUserTrackingModeFollow;
+    [_mapView setZoomLevel:16.1 animated:YES];
      [self.view addSubview:_mapView];
     // Do any additional setup after loading the view from its nib.
 }

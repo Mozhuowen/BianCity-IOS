@@ -19,9 +19,10 @@
         _userNameLabel.font = [UIFont systemFontOfSize:10];
         _dateLabel = [[UILabel alloc] initWithFrame:CGRectMake(_userNameLabel.frame.origin.x, _userNameLabel.frame.origin.y+_userNameLabel.frame.size.height, 160, 15)];
         _dateLabel.font = [UIFont systemFontOfSize:10];
-        _goodLabel = [[UILabel alloc] initWithFrame:CGRectMake([UIScreen mainScreen].bounds.size.width-70, _userNameLabel.frame.origin.y, 30, 30)];
+        _goodLabel = [[UILabel alloc] initWithFrame:CGRectMake([UIScreen mainScreen].bounds.size.width-60, _userNameLabel.frame.origin.y, 36, 30)];
         _goodLabel.textAlignment = NSTextAlignmentRight;
-        _iconGoodImage = [[UIImageView alloc] initWithFrame:CGRectMake(_goodLabel.frame.origin.x+_goodLabel.frame.size.width, _goodLabel.frame.origin.y, 30, 30)];
+        _goodLabel.font = [UIFont systemFontOfSize:14];
+        _iconGoodImage = [[UIImageView alloc] initWithFrame:CGRectMake(_goodLabel.frame.origin.x+_goodLabel.frame.size.width, _goodLabel.frame.origin.y, 25, 25)];
           _commentRTlabel = [[RTLabel alloc] initWithFrame:CGRectMake(_iconUserImage.frame.origin.x+40, _iconUserImage.frame.origin.y+_iconUserImage.frame.size.height, [UIScreen mainScreen].bounds.size.width-45, 10)];
         	[_commentRTlabel setBackgroundColor:[UIColor clearColor]];
          [_commentRTlabel setParagraphReplacement:@""];

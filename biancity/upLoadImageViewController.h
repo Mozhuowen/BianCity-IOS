@@ -13,7 +13,7 @@
 @protocol ApplyTownGeoInfodegelate <NSObject>
 - (void) setApplyTownGeoInfo:(responseApplyTown*) sender;
 @end
-@interface upLoadImageViewController : UIViewController<UITextFieldDelegate,UITextViewDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,upLoadGeoInfodegelate>
+@interface upLoadImageViewController : UIViewController<UITextFieldDelegate,UITextViewDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,upLoadGeoInfodegelate,UIAlertViewDelegate>
 @property (weak) id<ApplyTownGeoInfodegelate> applyTown_delegate;
 -(void)setCacheBegin:(townCache*)cache key:(NSString*)keyid;
 @property (nonatomic,strong) NSString* cacheid;

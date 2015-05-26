@@ -35,6 +35,6 @@
 @property (nonatomic,strong) UIScrollView *bgScrollView;
 @property (nonatomic,strong) responseApplyTown *applyTown;
 @property (nonatomic,strong)  showNavigationController *show;
-@property (nonatomic,strong) townViewController *town;
+
 
 @end

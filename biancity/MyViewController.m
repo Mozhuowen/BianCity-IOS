@@ -31,6 +31,7 @@
 -(void)viewWillAppear:(BOOL)animated{
    // [self loadInfo:2];
     [self readUserDeafultsOwn];
+    _User.user.mytowns = _myTowns;
     [self.myCollectionView reloadData];
     NSLog(@"我的 appear");
 }
@@ -38,9 +39,9 @@
     [super viewDidLoad];
     _applyTown = [[responseApplyTown alloc] init];
     _show  = [[showNavigationController alloc] initWithNibName:@"showNavigationController" bundle:nil];
-    _town=[[townViewController alloc] initWithNibName:@"townViewController" bundle:nil];
     _requestCWall =[[ModelCWall alloc] init];
-     [_show pushViewController:_town animated:YES ];
+
+    
     self.myCollectionView.frame = self.view.frame;//[UIScreen mainScreen].bounds;
     [self.myCollectionView registerClass:[MyCollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"MyCollectionReusableView"];
        [self.myCollectionView registerClass:[HotTownCollectionViewCell class] forCellWithReuseIdentifier:@"HotTownCollectionViewCell"];
@@ -51,7 +52,6 @@
     collectionViewLayout.headerReferenceSize = CGSizeMake(self.myCollectionView.frame.size.width, self.myCollectionView.frame.size.width*3/5+self.myCollectionView.frame.size.width/7);
     self.myCollectionView.collectionViewLayout = collectionViewLayout;
     _requestUser = [[ModelUser alloc] init];
-    _requestUser.onlystatis = YES;
     _requestUser.userid = _requestUser.ptuserid;
     SDWebImageManager *manager = [SDWebImageManager sharedManager];
     manager.delegate = self;
@@ -59,6 +59,7 @@
    NSLog(@"width is %f,Height is %f",self.myCollectionView.frame.size.width,self.myCollectionView.frame.size.width);
     _myCollectionView.userInteractionEnabled = YES;
     [self readUserDeafultsOwn];
+    [self loadInfo:0];
     // Do any additional setup after loading the view.
 }
 
@@ -108,7 +109,8 @@
         return cell;
 }
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
- 
+  townViewController*  _town=[[townViewController alloc] initWithNibName:@"townViewController" bundle:nil];
+    [_show pushViewController:_town animated:YES ];
     _applyTown = [_User.user.mytowns objectAtIndex:indexPath.row];
     _town.applyTown = _applyTown;
     [self presentViewController:_show animated:YES completion:^{}];
@@ -171,26 +173,26 @@
         }
         //str =[NSString stringWithString:_User.user.location];
             header.addrLabel.text = _User.user.location;
-        header.myTownsLabel.text = [NSString stringWithFormat:@"%@",_User.user.towncount];
+        header.myTownsLabel.text = [NSString stringWithFormat:@"%@",(_User.user.towncount==nil)?@"0":_User.user.towncount];
         header.myTownLabel.text = @"边城";
         
-        header.myStorysLabel.text = [NSString stringWithFormat:@"%@",_User.user.putaocount];
+        header.myStorysLabel.text = [NSString stringWithFormat:@"%@",(_User.user.putaocount==nil)?@"0":_User.user.putaocount];
         header.myStoryLabel.text = @"故事";
         
-        header.fansLabel.text = [NSString stringWithFormat:@"%@",_User.user.fans];
+        header.fansLabel.text = [NSString stringWithFormat:@"%@",(_User.user.fans==nil)?@"0":_User.user.fans];
         header.fanLabel.text = @"粉丝";
         
-        header.checksLabel.text = [NSString stringWithFormat:@"%@",_User.user.subscricount];
+        header.checksLabel.text = [NSString stringWithFormat:@"%@",(_User.user.subscricount==nil)?@"0":_User.user.subscricount];
         header.checkLabel.text = @"订阅";
         UITapGestureRecognizer *subi = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(subList)];
         [header.checkView addGestureRecognizer:subi];
         header.checkView.userInteractionEnabled = YES;
-        header.storesLabel.text = [NSString stringWithFormat:@"%@",_User.user.favoritecount];
+        header.storesLabel.text = [NSString stringWithFormat:@"%@",(_User.user.favoritecount==nil)?@"0":_User.user.favoritecount];
         header.storeLabel.text = @"收藏";
         UITapGestureRecognizer *tapfav = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(storyList)];
         header.storeView.userInteractionEnabled =YES;
         [header.storeView addGestureRecognizer:tapfav];
-        header.goodsLabel.text =[NSString stringWithFormat:@"%@",_User.user.begoodcount];
+        header.goodsLabel.text =[NSString stringWithFormat:@"%@",(_User.user.begoodcount==nil)?@"0":_User.user.begoodcount];
         header.goodLabel.text = @"被赞";
         header.t_delegate = self;
         return header;
@@ -221,12 +223,17 @@
     // 添加下拉刷新头部控件
     [self.myCollectionView addHeaderWithCallback:^{
         // 进入刷新状态就会回调这个Block
-       [vc loadInfo:0];
+       [vc loadInfo:1];
     }];
-    [self.myCollectionView headerBeginRefreshing];
+    //[self.myCollectionView headerBeginRefreshing];
 }
 #pragma loading Infomation
 -(void)loadInfo:(int)check{
+    if(check==0){
+          _requestUser.onlystatis = YES;
+    }else{
+      _requestUser.onlystatis = NO;
+    }
     NSDictionary *parameters=[_requestUser toDictionary];
     NSString *url =[NSString stringWithString:getUserInfoUrl];
     NSDate *datenow = [NSDate date];//现在时间,你可以输出来看下是什么格式
@@ -248,12 +255,14 @@
         if(check==0){
             self.User = [[ResponseUser alloc] initWithDictionary:data error:nil];
             _User.user.mytowns = _myTowns;
-            [self.myCollectionView headerEndRefreshing];
+           // [self.myCollectionView headerEndRefreshing];
           [self.myCollectionView reloadData];
           // NSLog(@"USer is %@",_User);
         }
-        if (check ==2) {
+        if (check ==1) {
               self.User = [[ResponseUser alloc] initWithDictionary:data error:nil];
+            [self refreshUserDeafultsOwn ];
+            [self.myCollectionView headerEndRefreshing];
             [self.myCollectionView reloadData];
 
         }
@@ -262,9 +271,11 @@
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error: %@", error);
         if(check ==0){
-            [self.myCollectionView headerEndRefreshing];
+            //[self.myCollectionView headerEndRefreshing];
         }else {
-            [self.myCollectionView footerEndRefreshing];
+            [self.myCollectionView headerEndRefreshing];
+
+            //[self.myCollectionView footerEndRefreshing];
         }
         
     }];
@@ -470,7 +481,7 @@
     MsgEncrypt *encrypt = [[MsgEncrypt alloc] init];
     NSData *msgjson = [NSJSONSerialization dataWithJSONObject:parameters options:kNilOptions error:nil];
     NSString* info = [[NSString alloc] initWithData:msgjson encoding:NSUTF8StringEncoding];
-    log(@"create story Info is %@,%ld",info,info.length);
+    log(@"create story Info is %@,%ld",info,(unsigned long)info.length);
     NSString *signature= [encrypt EncryptMsg:info timeStmap:strtime];
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.requestSerializer=[AFJSONRequestSerializer serializer];
@@ -507,7 +518,23 @@
     }
     ResponseLogin *login=[[ResponseLogin alloc] initWithDictionary:cache error:nil];
     _myTowns = login.mytowns;
-    
+}
+- (void) refreshUserDeafultsOwn{
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    NSDictionary *cache;
+    if([(NSNumber*)[cache objectForKey:@"needregiste"] boolValue]){
+        cache = [userDefaults dictionaryForKey:REGISTE_INFO];
+        ResponseRegiste *registe =[[ResponseRegiste alloc] initWithDictionary:cache error:nil];
+      registe.mytowns = _User.user.mytowns;
+        [userDefaults setObject:[registe toDictionary] forKey:REGISTE_INFO];
+        [userDefaults synchronize];
+        return;
+    }
+    cache = [userDefaults dictionaryForKey:LOGIN_INFO];
+    ResponseLogin *login=[[ResponseLogin alloc] initWithDictionary:cache error:nil];
+    login.mytowns = _User.user.mytowns;
+    [userDefaults setObject:[login toDictionary] forKey:LOGIN_INFO];
+    [userDefaults synchronize];
 }
 /*
 #pragma mark - Navigation

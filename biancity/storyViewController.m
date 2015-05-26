@@ -64,7 +64,7 @@
         [vc loadfavoriteInfo:0 view:nil];
         [vc loadGoodInfo:0 tag:-1];
     }];
-    [self.tableView headerBeginRefreshing];
+   // [self.tableView headerBeginRefreshing];
 }
 
 - (void)addFooter
@@ -94,12 +94,16 @@
     [self loadCommentInfo:2];
 }
 -(void)viewWillAppear:(BOOL)animated{
+    
     if([_story.userid isEqualToNumber:_story.ptuserid]){
         UIBarButtonItem *rightButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemTrash  target:self action:@selector(selectRightAction:)];
         self.navigationItem.rightBarButtonItem = rightButton;
     }
     if(_isComeFromFavorite){
         self.navigationItem.rightBarButtonItem = nil;
+    }
+    if(_notEditFlag){
+    self.navigationItem.rightBarButtonItem = nil;
     }
     self.navigationItem.title = [NSString stringWithFormat:@"%@•故事",_story.title];
      [_bgTextView addKeyboardObserver];
@@ -182,7 +186,9 @@
     myScrollView.contentSize = contentSize;
     [self addHeader];
     [self addFooter];
-  
+    [self loadCommentInfo:3];
+    [self loadfavoriteInfo:0 view:nil];
+    [self loadGoodInfo:0 tag:-1];
     isloading =NO;
     [self.view addSubview:_bgTextView];
     _bgTextView.alpha = 0;
@@ -234,6 +240,7 @@
             label = [[UILabel alloc] initWithFrame:CGRectMake(40, 0, [UIScreen mainScreen].bounds.size.width-45, 10)];
             label.lineBreakMode = NSLineBreakByWordWrapping;
             label.numberOfLines = 0;
+            label.font =[UIFont systemFontOfSize:14];
             label.text =_story.content;
             [label sizeToFit];
             NSLog(@"image count is %lu",(unsigned long)[_story.imagenames count]);
@@ -356,6 +363,7 @@
             label.lineBreakMode = NSLineBreakByWordWrapping;
             label.numberOfLines = 0;
             label.text = _story.content;
+            label.font =[UIFont systemFontOfSize:14];
             [label sizeToFit];
             headerCell.descrilabel.frame = label.frame;
             headerCell.descrilabel.text = _story.content;
@@ -368,7 +376,7 @@
             NSLog(@"headerCell.descrilabel width %f,headerCell.descrilabel height %f",headerCell.descrilabel.frame.size.width,headerCell.descrilabel.frame.size.height);
             headerCell.userNameLabel.text = _story.username;
             headerCell.dateLabel.text = _story.createtime;
-            headerCell.goodLabel.text = [NSString stringWithFormat:@"%@",_responseGood.good.goods];
+            headerCell.goodLabel.text = [NSString stringWithFormat:@"%@",(_responseGood.good.goods==nil)?@"0":_responseGood.good.goods];
         headerCell.titleLabel.text = _story.title;
             if(_responseFavorite.favori.dofavori){
                 CGRect re=headerCell.subscrilabel.frame;
@@ -440,7 +448,7 @@
            // [commentCell.commentlabel setNeedsDisplay];
             commentCell.userNameLabel.text = tmp.username;
             commentCell.dateLabel.text =tmp.time;
-            commentCell.goodLabel.text = [NSString stringWithFormat:@"%@",tmp.goods];
+            commentCell.goodLabel.text = [NSString stringWithFormat:@"%@",(tmp.goods==nil)?@"0":tmp.goods];
             cell = commentCell;
             break;
     }
@@ -697,7 +705,7 @@
      log(@"loadSubscriInfo stat is %d,errcode is %d,%@",_responseComment.stat,_responseComment.errcode,_responseComment);
         [_tableView reloadData];
         if(check ==2){
-        NSIndexPath *scrollIndexPath = [NSIndexPath indexPathForRow:0 inSection:1];
+           NSIndexPath *scrollIndexPath = [NSIndexPath indexPathForRow:0 inSection:1];
             [_tableView scrollToRowAtIndexPath:scrollIndexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
