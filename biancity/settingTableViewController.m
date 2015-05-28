@@ -13,6 +13,9 @@
 #import "cacheViewController.h"
 #import "ResponseLogin.h"
 #import "ResponseRegiste.h"
+#import "AboutUsViewController.h"
+#import "issueViewController.h"
+
 @interface settingTableViewController ()
 @property (nonatomic,strong) NSMutableArray *section1;
 @property (nonatomic,strong) NSMutableArray *section2;
@@ -51,11 +54,6 @@
     _section1 = [[NSMutableArray alloc] initWithObjects:@"wo", nil];
     _section2 = [[NSMutableArray alloc] initWithObjects:@"退出登录",@"草稿箱",@"检查更新",@"关于我们",@"常见意见", nil];
     [self readUserDeafultsOwn];
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 -(void)selectLeftAction:(id)sender{
     [self.navigationController dismissViewControllerAnimated:YES completion:^{}];
@@ -107,16 +105,16 @@
     return 50;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"settingTableViewCell" forIndexPath:indexPath];
+    settingTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"settingTableViewCell" forIndexPath:indexPath];
     switch (indexPath.section) {
         
     case 0://对应各自的分区
         if(_login){
         [[cell textLabel]  setText:_login.name];//给cell添加数据
-            cell.imageView.frame = CGRectMake(0, 0, 40, 40);
-            cell.imageView.layer.masksToBounds = YES;
-            [cell imageView].layer.cornerRadius = 20;
-            NSLog(@"w %f,h %f",cell.imageView.frame.size.width,cell.imageView.frame.size.height);
+          // cell.imageView.frame = CGRectMake(0, 0, 40, 40);
+//            cell.imageView.layer.masksToBounds = YES;
+//            [cell imageView].layer.cornerRadius = 20;
+//            NSLog(@"w %f,h %f",cell.imageView.frame.size.width,cell.imageView.frame.size.height);
            
             NSString *myImgUrl =_login.cover;
             NSString *jap = @"http://";
@@ -137,9 +135,9 @@
             
         }else  if(_registe){
             [[cell textLabel]  setText:_registe.name];//给cell添加数据
-            cell.imageView.frame = CGRectMake(0, 0, 40, 40);
-            cell.imageView.layer.masksToBounds = YES;
-            [cell imageView].layer.cornerRadius = 20;
+//            cell.imageView.frame = CGRectMake(0, 0, 40, 40);
+//            cell.imageView.layer.masksToBounds = YES;
+//            [cell imageView].layer.cornerRadius = 20;
             NSLog(@"w %f,h %f",cell.imageView.frame.size.width,cell.imageView.frame.size.height);
             
             NSString *myImgUrl =_registe.cover;
@@ -160,6 +158,8 @@
             }
             
         }
+          cell.imageView.layer.masksToBounds = YES;
+          [cell imageView].layer.cornerRadius = 30;
         break;
         
     case 1:
@@ -196,9 +196,12 @@
                     return;
                     break;
                 case 3:
+                    [self showAbout];
                     return;
                     break;
-                default:
+                case 4:
+                    [self showIssue];
+                    return;
                     break;
             }
             return;
@@ -206,6 +209,14 @@
         default:
             break;
     }
+}
+-(void)showIssue{
+    issueViewController *issue =[[issueViewController alloc] initWithNibName:@"issueViewController" bundle:nil];
+     [self.navigationController pushViewController:issue animated:YES];
+}
+-(void)showAbout{
+    AboutUsViewController *about = [[AboutUsViewController alloc] initWithNibName:@"AboutUsViewController" bundle:nil];
+     [self.navigationController pushViewController:about animated:YES];
 }
 -(void)showCache{
     cacheViewController* cache =[[cacheViewController alloc] initWithNibName:@"cacheViewController" bundle:nil];

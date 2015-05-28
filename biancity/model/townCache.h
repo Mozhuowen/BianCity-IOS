@@ -19,6 +19,5 @@
 @property (nonatomic,strong)  NSNumber<Optional>* townid;
 @property (nonatomic,strong) GeoInfo<Optional>* geoinfo;
 @property (nonatomic,strong) NSString<Optional>* mapIamgeName;
-- (NSDictionary *) encodedItem;
-- (townCache*)decodeItem:(NSDictionary*)source;
+
 @end

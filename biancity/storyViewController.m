@@ -237,7 +237,7 @@
     switch (indexPath.section) {
             
         case 0://对应各自的分区
-            label = [[UILabel alloc] initWithFrame:CGRectMake(40, 0, [UIScreen mainScreen].bounds.size.width-45, 10)];
+            label = [[UILabel alloc] initWithFrame:CGRectMake(4, 0, [UIScreen mainScreen].bounds.size.width-8, 10)];
             label.lineBreakMode = NSLineBreakByWordWrapping;
             label.numberOfLines = 0;
             label.font =[UIFont systemFontOfSize:14];

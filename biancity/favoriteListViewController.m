@@ -71,6 +71,7 @@
     storyViewController *story = [[storyViewController alloc] initWithNibName:@"storyViewController" bundle:nil];
     story.story = [_responseStroy.putao objectAtIndex:indexPath.row];
     story.isComeFromFavorite = YES;
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
     [self.navigationController pushViewController:story  animated:YES];
 }
 -(void)loadStorysInfo{

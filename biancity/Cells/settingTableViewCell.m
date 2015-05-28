@@ -9,7 +9,15 @@
 #import "settingTableViewCell.h"
 
 @implementation settingTableViewCell
-
+-(instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
+    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
+    self.imageView.frame =CGRectMake(0, 0, 40, 40);//
+    _iconImage= [[UIImageView alloc] initWithFrame:CGRectMake(10, 0, 40, 40)];
+   self.imageView.layer.masksToBounds = YES;
+  self.imageView.layer.cornerRadius = 20;
+    [self.contentView addSubview:_iconImage];
+    return  self;
+}
 - (void)awakeFromNib {
     // Initialization code
 }

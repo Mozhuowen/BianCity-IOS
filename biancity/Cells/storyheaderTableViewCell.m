@@ -48,6 +48,7 @@
         _comment.textAlignment = NSTextAlignmentCenter;
         _comment.font = [UIFont systemFontOfSize:16];
         _comment.textColor = [UIColor whiteColor];
+        _comment.layer.cornerRadius =4.0;
           _comment.backgroundColor = [UIColor blueColor];
         [self.contentView addSubview:_bgImageView];
            [self.contentView addSubview:bg];

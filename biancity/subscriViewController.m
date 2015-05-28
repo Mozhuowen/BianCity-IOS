@@ -74,6 +74,7 @@
     townViewController *town = [[townViewController alloc] initWithNibName:@"townViewController" bundle:nil];
     town.applyTown = [_response.towns objectAtIndex:indexPath.row];
     town.isComeFromSubscri = YES;
+       [tableView deselectRowAtIndexPath:indexPath animated:YES];
     [self.navigationController pushViewController:town animated:YES];
 }
 -(void)loadSubscriInfo{

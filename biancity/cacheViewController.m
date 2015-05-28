@@ -88,7 +88,7 @@
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     CacheTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"CacheTableViewCell" forIndexPath:indexPath];
     townCache* tmp = [_cacheCount objectAtIndex:indexPath.row];
-    cell.image.image = [self readeIamge:tmp.coverName];
+    cell.image.image = [self imageWithImage:[self readeIamge:tmp.coverName] scaledToSize:cell.image.frame.size];
     if(tmp.type ==0){
         cell.typeLabel.text=@"边城";
     }else{
@@ -96,7 +96,7 @@
     }
     cell.NameLabel.text = tmp.title;
     cell.deleteImage.tag = indexPath.row;
-    cell.deleteImage.image = [UIImage imageNamed:@"ic_note_complete_normal"];
+    cell.deleteImage.image = [UIImage imageNamed:@"delete"];
     UITapGestureRecognizer * tapdele = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showSheetSource:)];
     cell.deleteImage.userInteractionEnabled = YES;
     [cell.deleteImage addGestureRecognizer:tapdele];
@@ -185,6 +185,27 @@
     [userDefaults setObject:cache forKey:@"cache"];
     
     [userDefaults synchronize];
+}
+
+-(UIImage*)imageWithImage:(UIImage*)image scaledToSize:(CGSize)newSize
+{
+    NSData *imageData = UIImageJPEGRepresentation(image,0.3);
+    image = [UIImage imageWithData:imageData];
+    // Create a graphics image context
+    UIGraphicsBeginImageContext(newSize);
+    
+    // Tell the old image to draw in this new context, with the desired
+    // new size
+    [image drawInRect:CGRectMake(0,0,newSize.width,newSize.height)];
+    
+    // Get the new image from the context
+    UIImage* newImage = UIGraphicsGetImageFromCurrentImageContext();
+    
+    // End the context
+    UIGraphicsEndImageContext();
+    
+    // Return the new image.
+    return newImage;
 }
 /*
 #pragma mark - Navigation

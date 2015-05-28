@@ -253,22 +253,22 @@
             }
             //str =[NSString stringWithString:_User.user.location];
             header.addrLabel.text = _User.user.location;
-            header.myTownsLabel.text = [NSString stringWithFormat:@"%@",_User.user.towncount];
+            header.myTownsLabel.text = [NSString stringWithFormat:@"%@",(_User.user.towncount==nil)?@"0":_User.user.towncount];
             header.myTownLabel.text = @"边城";
             
-            header.myStorysLabel.text = [NSString stringWithFormat:@"%@",_User.user.putaocount];
+            header.myStorysLabel.text = [NSString stringWithFormat:@"%@",(_User.user.putaocount==nil)?@"0":_User.user.putaocount];
             header.myStoryLabel.text = @"故事";
             
-            header.fansLabel.text = [NSString stringWithFormat:@"%@",_User.user.fans];
+            header.fansLabel.text = [NSString stringWithFormat:@"%@",(_User.user.fans==nil)?@"0":_User.user.fans];
             header.fanLabel.text = @"粉丝";
             
-            header.checksLabel.text = [NSString stringWithFormat:@"%@",_User.user.subscricount];
+            header.checksLabel.text = [NSString stringWithFormat:@"%@",(_User.user.subscricount==nil)?@"0":_User.user.subscricount];
             header.checkLabel.text = @"订阅";
             
-            header.storesLabel.text = [NSString stringWithFormat:@"%@",_User.user.favoritecount];
+            header.storesLabel.text = [NSString stringWithFormat:@"%@",(_User.user.favoritecount==nil)?@"0":_User.user.favoritecount];
             header.storeLabel.text = @"收藏";
             
-            header.goodsLabel.text =[NSString stringWithFormat:@"%@",_User.user.begoodcount];
+            header.goodsLabel.text =[NSString stringWithFormat:@"%@",(_User.user.begoodcount==nil)?@"0":_User.user.begoodcount];
             header.goodLabel.text = @"被赞";
             header.t_delegate = self;
             return header;

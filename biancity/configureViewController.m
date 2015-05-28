@@ -174,9 +174,7 @@
         case 0://对应各自的分区
             
             [[cell textLabel]  setText:[_section objectAtIndex:indexPath.row]];//给cell添加数据
-            cell.imageView.frame = CGRectMake(0, 0, 40, 40);
-            cell.imageView.layer.masksToBounds = YES;
-            [cell imageView].layer.cornerRadius = 20;
+           
             //NSLog(@"w %f,h %f",cell.imageView.frame.size.width,cell.imageView.frame.size.height);
             if(_user){
                 NSString *myImgUrl = _user.cover;
@@ -195,6 +193,8 @@
                     cell.imageView.image =[UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"bj" ofType:@"jpg"]];
                 }
             }
+            cell.imageView.layer.masksToBounds = YES;
+            cell.imageView.layer.cornerRadius = 40;
             break;
         case 1:
                 [[cell textLabel]  setText:[NSString stringWithFormat:@"%@:%@",[_section objectAtIndex:indexPath.row],_user.name]];
@@ -359,7 +359,7 @@
     //    {
     //        imageData = UIImageJPEGRepresentation(image, 1.0);
     //    }
-    _image = image;
+    _image = [self imageWithImage:image scaledToSize:CGSizeMake(80, 80)];
     NSMutableString *fileName = [[NSMutableString alloc] init];
     for(int i=0;i<8;i++){
         [fileName appendFormat:@"%c",(65+arc4random_uniform(26))];
@@ -370,6 +370,7 @@
     _user.cover = fileName;
     _imageName = fileName;
     [self uploadFiles];
+    image =nil;
 }
 
 - (NSDictionary *)constructingSignatureAndPolicyWithFileInfo:(NSDictionary *)fileInfo
@@ -407,7 +408,7 @@
     _progress.frame = [UIScreen mainScreen].bounds;//CGRectMake(self.view.frame.size.width/2-100, self.view.frame.size.height/2-100, 200, 200);
     [self.view addSubview:_progress];
     NSData * fileData;
-    fileData=UIImagePNGRepresentation(_image);
+    fileData=UIImageJPEGRepresentation(_image,1.0);
     
     NSDictionary * fileInfo = [UMUUploaderManager fetchFileInfoDictionaryWith:fileData];//获取文件信息
     
@@ -443,6 +444,7 @@
         
         
     }];
+    fileData =nil;
 }
 
 - (NSString *)dictionaryToJSONStringBase64Encoding:(NSDictionary *)dic
@@ -539,6 +541,26 @@
     [userDefaults synchronize];
 }
 
+-(UIImage*)imageWithImage:(UIImage*)image scaledToSize:(CGSize)newSize
+{
+    NSData *imageData = UIImageJPEGRepresentation(image,0.8);
+    image = [UIImage imageWithData:imageData];
+    // Create a graphics image context
+    UIGraphicsBeginImageContext(newSize);
+    
+    // Tell the old image to draw in this new context, with the desired
+    // new size
+    [image drawInRect:CGRectMake(0,0,newSize.width,newSize.height)];
+    
+    // Get the new image from the context
+    UIImage* newImage = UIGraphicsGetImageFromCurrentImageContext();
+    
+    // End the context
+    UIGraphicsEndImageContext();
+    
+    // Return the new image.
+    return newImage;
+}
 /*
 #pragma mark - Navigation
 

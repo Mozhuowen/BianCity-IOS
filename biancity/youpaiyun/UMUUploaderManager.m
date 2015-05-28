@@ -29,7 +29,7 @@ static NSInteger SingleBlockSize = 1024*100;
 /**
  *  同一个bucket 上传文件时最大并发请求数
  */
-static NSInteger MaxConcurrentOperationCount = 1;
+static NSInteger MaxConcurrentOperationCount = 3;
 
 /**
  *   默认授权时间长度（秒)
@@ -483,6 +483,7 @@ static NSMutableDictionary * managerRepository;
         [blocks addObject:subData];
         l = l+subData.length;
     }
+    fileData =nil;
     return blocks;
 }
 

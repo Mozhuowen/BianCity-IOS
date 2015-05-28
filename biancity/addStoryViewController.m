@@ -19,6 +19,8 @@
 #import "SDProgressView.h"
 #import "SDDemoItemView.h"
 #import "PopView.h"
+#import "NSData+MD5Digest.h"
+
 @interface addStoryViewController ()
 {
     int count_images;
@@ -118,14 +120,6 @@
     _save.userInteractionEnabled = YES;
     [_save addGestureRecognizer:tapCache];
     _placeholder.enabled = NO;
-    
-    _progressAlert = [[UIAlertView alloc]initWithTitle:@"" message:@"上传图片中，请稍等" delegate:nil cancelButtonTitle:nil otherButtonTitles: nil];
-    self.propressView.frame = CGRectMake(8,5, self.view.frame.size.width*4/5-4, 5);
-    self.propressView.backgroundColor= [UIColor grayColor];
-    
-    UIView * myview = [[UIView alloc] initWithFrame:CGRectMake(0,0, self.view.frame.size.width, 30)];
-    [myview addSubview:self.propressView];
-    [_progressAlert setValue:myview forKey:@"accessoryView"];
     index_images = 0;
     progressCount=0.0;
     if(_cacheid == nil){
@@ -199,7 +193,9 @@
         _townstory.content = _descriTextView.text;
         _townstory.townid =_townid;
         _upLoadingfalg = YES;
+         [self.navigationController setNavigationBarHidden:YES animated:NO];
         [self saveUserDefaultsOwn];
+        progressCount=0.0;
         [self uploadFiles];
         
     }else{
@@ -320,6 +316,21 @@
     //    }
   
     NSString *fileName =[self createFileName];
+    if((_wallImage.image.size.width*_wallImage.image.size.height/1000000.00)>2){
+       image = [self imageWithImageToScreen:image];
+    }
+    StoryImage *img = [[StoryImage alloc] init];
+    img.imagename = fileName;
+    NSData *tp =UIImageJPEGRepresentation(image, 1.0);
+    img.md5 = [tp MD5HexDigest];//=[[NSString alloc] initWithData:[tp md]  encoding:NSUnicodeStringEncoding];//[self image_md5:tp];
+    NSLog(@"Image MD5 %@",img.md5);
+    img.list_index =[[NSNumber alloc] initWithLongLong:([_images count])];
+    img.size = [[NSNumber alloc] initWithDouble:image.size.width*image.size.height];
+    [_townstory.images addObject:img];
+    
+    tp = nil;
+    [self saveImage:fileName image:image];
+    image = [self imageWithImage:image scaledToSize:_imagesLabel.frame.size];
     [_images addObject:image];
     [_imageNames addObject:fileName];
     UIImageView *temp=[[UIImageView alloc] initWithFrame:_imagesLabel.frame];
@@ -345,25 +356,22 @@
     }else{
         _imagesLabel.frame =  CGRectMake(_imagesLabel.frame.origin.x+_imagesLabel.frame.size.width, _imagesLabel.frame.origin.y, _imagesLabel.frame.size.width, _imagesLabel.frame.size.height);
     }
-    StoryImage *img = [[StoryImage alloc] init];
-    img.imagename = fileName;
-    NSData *tp =UIImageJPEGRepresentation(image, 1.0);
-    img.md5 =[self image_md5:[[NSString alloc] initWithData:tp encoding:NSUTF8StringEncoding]];
-    img.list_index =[[NSNumber alloc] initWithLongLong:([_images count]-1)];
-    img.size = [[NSNumber alloc] initWithDouble:image.size.width*image.size.height];
-    [_townstory.images addObject:img];
+    
     [_bgImages setNeedsDisplay];
+    tp = nil;
+    image = nil;
 }
--(NSString *)image_md5:(NSString * )name{
- const char *str = [name UTF8String];
+-(NSString *)image_md5:(NSData * )name{
+ const char *str = [name bytes];
     if (str == NULL) {
         str = "";
     }
+    NSLog(@"md5%s",str);
     unsigned char r[CC_MD5_DIGEST_LENGTH];
     CC_MD5(str, (CC_LONG)strlen(str), r);
     NSString *result = [NSString stringWithFormat:@"%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x",
                                              r[0], r[1], r[2], r[3], r[4], r[5], r[6], r[7], r[8], r[9], r[10], r[11], r[12], r[13], r[14], r[15]];
-    
+    NSLog(@"Image Md5 is %@",result);
     return result;
 }
 -(NSString*)createFileName{
@@ -420,21 +428,29 @@
     _progress.hidden = NO;
     if(index_images==0){
         
-        [self.navigationController setNavigationBarHidden:YES animated:NO];
-        //[_progressAlert show];
+       
         _progress= [SDDemoItemView demoItemViewWithClass:[SDBallProgressView class]];
-        _progress.frame = [UIScreen mainScreen].bounds;//CGRectMake(self.view.frame.size.width/2-100, self.view.frame.size.height/2-100, 200, 200);
+        _progress.frame = [UIScreen mainScreen].bounds;//
         [self.view addSubview:_progress];
     }
     int idx = index_images;
     NSData * fileData;
     if(idx==0)
     {
-        fileData=UIImagePNGRepresentation(_wallImage.image);
+      
+        fileData=UIImageJPEGRepresentation(_wallImage.image,1.0);
+        //UIImagePNGRepresentation(_wallImage.image);
+         NSLog(@"image size is %fM,file length is %fM",_wallImage.image.size.width*_wallImage.image.size.height/1000000.00,fileData.length/1000000.00);
     }//[NSData
     else{
-        fileData=UIImagePNGRepresentation([_images objectAtIndex:(idx-1)]);
+        UIImage *im =  [self readeIamge:[_imageNames objectAtIndex:idx-1]];
+        fileData=[self readeIamgeData:[_imageNames objectAtIndex:idx-1]];
+        //UIImageJPEGRepresentation(im,1.0);//UIImagePNGRepresentation([self readeIamge:[_imageNames objectAtIndex:idx-1]]);
+         NSLog(@"image size is %fM,file length is %fM",im.size.width*im.size.height/1000000.00,fileData.length/1000000.00);
+        im = nil;
     }
+   
+
     NSDictionary * fileInfo = [UMUUploaderManager fetchFileInfoDictionaryWith:fileData];//获取文件信息
     
     NSDictionary * signaturePolicyDic =[self constructingSignatureAndPolicyWithFileInfo:fileInfo];
@@ -445,19 +461,16 @@
     
     __weak typeof(self)weakSelf = self;
     UMUUploaderManager * manager = [UMUUploaderManager managerWithBucket:bucket];
-    [manager uploadWithFile:fileData policy:policy signature:signature progressBlock:^(CGFloat percent, long long requestDidSendBytes) {
+[manager uploadWithFile:fileData policy:policy signature:signature progressBlock:^(CGFloat percent, long long requestDidSendBytes) {
         NSLog(@"%f",percent);
-        weakSelf.propressView.progress = percent/([_images count]+1)+progressCount;
         weakSelf.progress.progressView.progress =percent/([_images count]+1)+progressCount;
         NSLog(@"progress is %f", weakSelf.progress.progressView.progress);
     } completeBlock:^(NSError *error, NSDictionary *result, BOOL completed) {
-        UIAlertView * alert;
         //self.propressView.alpha = 0;
         if (completed) {
         index_images ++;
-            progressCount += self.progress.progressView.progress;
+            progressCount += 1.0/([_images count]+1);
           if(idx ==[_images count]){
-
                 [_progressAlert dismissWithClickedButtonIndex:0 animated:NO];
                 self.propressView.progress= 0;
                 progressCount=0.0;
@@ -468,6 +481,7 @@
                 [self loadInfo:0];
                 _progress.hidden = YES;
             }else {
+               
                 [weakSelf uploadFiles];
             }
         }else {
@@ -482,7 +496,13 @@
       
         
     }];
-    
+    fileData =nil;
+    fileInfo = nil;
+    signaturePolicyDic = nil;
+    signature = nil;
+    policy = nil;
+    bucket = nil;
+    manager = nil;
 }
 
 - (NSString *)dictionaryToJSONStringBase64Encoding:(NSDictionary *)dic
@@ -521,6 +541,7 @@
         log(@"creatStroy stat is %d,errcode is %d",_responseStory.stat,_responseStory.errcode);
         [self.navigationController popViewControllerAnimated:NO];
         [self deletecache];
+        _wallImage =nil;
         [self.navigationController setNavigationBarHidden:NO animated:NO];
         PopView *pop =[[PopView alloc] initWithFrame:CGRectMake(0, 180, [UIScreen mainScreen].bounds.size.width, 40)];
         [self.view addSubview:pop];
@@ -535,6 +556,19 @@
     }];
 }
 #pragma   草稿箱
+
+
+-(NSData*)readeIamgeData:(NSString*)imageName{
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
+    
+    NSData * result;
+    NSString *uniquePath=[[paths objectAtIndex:0] stringByAppendingPathComponent:imageName];
+    BOOL blHave=[[NSFileManager defaultManager] fileExistsAtPath:uniquePath];
+    if(blHave){
+        result = [NSData dataWithContentsOfFile:uniquePath];
+    }
+    return  result;
+}
 -(UIImage*)readeIamge:(NSString*)imageName{
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES);
     
@@ -558,7 +592,7 @@
         NSLog(@"already have");
         return ;
     }
-    NSData * imagedata = UIImagePNGRepresentation(image);
+    NSData * imagedata = UIImageJPEGRepresentation(image,1.0);
     BOOL result = [imagedata writeToFile:uniquePath atomically:YES];
     if (result) {
         NSLog(@"save %@ image success",imagename);
@@ -614,9 +648,9 @@
     [userDefaults synchronize];
     
     [self saveImage: item1.coverName image:_wallImage.image];
-    for(int i=0;i<[_images count];i++){
-        [self saveImage:[item1.imagesName objectAtIndex:i] image:[_images objectAtIndex:i]];
-    }
+//    for(int i=0;i<[_images count];i++){
+//        [self saveImage:[item1.imagesName objectAtIndex:i] image:[_images objectAtIndex:i]];
+//    }
     if(!_upLoadingfalg){
         PopView * pop = [[PopView alloc] initWithFrame:CGRectMake(0, 400, [UIScreen mainScreen].bounds.size.width, 40)];
         [self.view addSubview:pop];
@@ -661,6 +695,8 @@
     //    }
     
     NSString *fileName =imageName;
+    [self saveImage:imageName image:image];
+   image = [self imageWithImage:image scaledToSize:_imagesLabel.frame.size];
     [_images addObject:image];
     [_imageNames addObject:fileName];
     UIImageView *temp=[[UIImageView alloc] initWithFrame:_imagesLabel.frame];
@@ -706,6 +742,63 @@
     [userDefaults setObject:cache forKey:@"cache"];
     [userDefaults synchronize];
     
+}
+
+-(UIImage*)imageWithImage:(UIImage*)image scaledToSize:(CGSize)newSize
+{
+    NSData *imageData = UIImageJPEGRepresentation(image,0.3);
+    image = [UIImage imageWithData:imageData];
+    
+    float scaleX = image.size.width/newSize.width;
+    float scaleY = image.size.height/newSize.height;
+    if(scaleX>scaleY){
+        newSize.height *= scaleY/scaleX;
+    }else{
+        newSize.width *= scaleX/scaleY;
+    }
+    // Create a graphics image context
+    UIGraphicsBeginImageContext(newSize);
+    
+    // Tell the old image to draw in this new context, with the desired
+    // new size
+    [image drawInRect:CGRectMake(0,0,newSize.width,newSize.height)];
+    
+    // Get the new image from the context
+    UIImage* newImage = UIGraphicsGetImageFromCurrentImageContext();
+    
+    // End the context
+    UIGraphicsEndImageContext();
+    
+    // Return the new image.
+    return newImage;
+}
+
+-(UIImage*)imageWithImageToScreen:(UIImage*)image
+{
+    CGSize newSize = CGSizeMake(1450, 1450);
+    
+    float scaleX = image.size.width/newSize.width;
+    float scaleY = image.size.height/newSize.height;
+    if(scaleX>scaleY){
+        newSize.height *= scaleY/scaleX;
+    }else{
+        newSize.width *= scaleX/scaleY;
+    }
+    // Create a graphics image context
+    UIGraphicsBeginImageContext(newSize);
+    
+    // Tell the old image to draw in this new context, with the desired
+    // new size
+    [image drawInRect:CGRectMake(0,0,newSize.width,newSize.height)];
+    
+    // Get the new image from the context
+    UIImage* newImage = UIGraphicsGetImageFromCurrentImageContext();
+    
+    // End the context
+    UIGraphicsEndImageContext();
+    
+    // Return the new image.
+    return newImage;
 }
 
 /*

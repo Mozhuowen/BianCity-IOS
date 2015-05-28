@@ -165,6 +165,10 @@
 		FECAE90F1B07763E00FE6FA7 /* UserViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FECAE90D1B07763E00FE6FA7 /* UserViewController.xib */; };
 		FECAE9121B07865100FE6FA7 /* UserCollectionReusableView.m in Sources */ = {isa = PBXBuildFile; fileRef = FECAE9111B07865100FE6FA7 /* UserCollectionReusableView.m */; };
 		FECBB80C1B0F03C600A59DEA /* PopView.m in Sources */ = {isa = PBXBuildFile; fileRef = FECBB80B1B0F03C600A59DEA /* PopView.m */; };
+		FECE58F21B170835000457E9 /* AboutUsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FECE58F01B170835000457E9 /* AboutUsViewController.m */; };
+		FECE58F31B170835000457E9 /* AboutUsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FECE58F11B170835000457E9 /* AboutUsViewController.xib */; };
+		FECE58F71B170893000457E9 /* issueViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FECE58F51B170893000457E9 /* issueViewController.m */; };
+		FECE58F81B170893000457E9 /* issueViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FECE58F61B170893000457E9 /* issueViewController.xib */; };
 		FECE80561B0CDFD600116714 /* townCache.m in Sources */ = {isa = PBXBuildFile; fileRef = FECE80551B0CDFD600116714 /* townCache.m */; };
 		FED0A5D41B08993800B452DB /* RTLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = FED0A5D31B08993800B452DB /* RTLabel.m */; };
 		FED0A5D81B08A0F700B452DB /* messageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FED0A5D61B08A0F700B452DB /* messageViewController.m */; };
@@ -490,6 +494,12 @@
 		FECAE9111B07865100FE6FA7 /* UserCollectionReusableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserCollectionReusableView.m; sourceTree = "<group>"; };
 		FECBB80A1B0F03C600A59DEA /* PopView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PopView.h; sourceTree = "<group>"; };
 		FECBB80B1B0F03C600A59DEA /* PopView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PopView.m; sourceTree = "<group>"; };
+		FECE58EF1B170835000457E9 /* AboutUsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutUsViewController.h; sourceTree = "<group>"; };
+		FECE58F01B170835000457E9 /* AboutUsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutUsViewController.m; sourceTree = "<group>"; };
+		FECE58F11B170835000457E9 /* AboutUsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AboutUsViewController.xib; sourceTree = "<group>"; };
+		FECE58F41B170893000457E9 /* issueViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = issueViewController.h; sourceTree = "<group>"; };
+		FECE58F51B170893000457E9 /* issueViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = issueViewController.m; sourceTree = "<group>"; };
+		FECE58F61B170893000457E9 /* issueViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = issueViewController.xib; sourceTree = "<group>"; };
 		FECE80541B0CDFD600116714 /* townCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = townCache.h; sourceTree = "<group>"; };
 		FECE80551B0CDFD600116714 /* townCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = townCache.m; sourceTree = "<group>"; };
 		FED0A5D21B08993800B452DB /* RTLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RTLabel.h; sourceTree = "<group>"; };
@@ -636,6 +646,12 @@
 				FEC880A81B0DD15900C6F231 /* cacheViewController.h */,
 				FEC880A91B0DD15900C6F231 /* cacheViewController.m */,
 				FEC880AA1B0DD15900C6F231 /* cacheViewController.xib */,
+				FECE58EF1B170835000457E9 /* AboutUsViewController.h */,
+				FECE58F01B170835000457E9 /* AboutUsViewController.m */,
+				FECE58F11B170835000457E9 /* AboutUsViewController.xib */,
+				FECE58F41B170893000457E9 /* issueViewController.h */,
+				FECE58F51B170893000457E9 /* issueViewController.m */,
+				FECE58F61B170893000457E9 /* issueViewController.xib */,
 			);
 			name = show;
 			sourceTree = "<group>";
@@ -1216,6 +1232,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FECE58F31B170835000457E9 /* AboutUsViewController.xib in Resources */,
 				FED86C6A1B00BCCC00B2F96C /* NLViewController.xib in Resources */,
 				FED36DC31AF9C37100251846 /* saveAddrViewController.xib in Resources */,
 				FED36DBE1AF9C02200251846 /* AMap.bundle in Resources */,
@@ -1241,6 +1258,7 @@
 				FECA80241AF71A3000FF57AE /* LaunchScreen.xib in Resources */,
 				FECA80D01AF732BF00FF57AE /* placeholder@2x.png in Resources */,
 				FED86C641B00BC8900B2F96C /* corner.png in Resources */,
+				FECE58F81B170893000457E9 /* issueViewController.xib in Resources */,
 				FECA80D11AF732BF00FF57AE /* Refresh.bundle in Resources */,
 				FECA80F51AF74CD300FF57AE /* HotTownCollectionViewCell.xib in Resources */,
 				FECA80211AF71A3000FF57AE /* Images.xcassets in Resources */,
@@ -1266,6 +1284,7 @@
 				FE40205D1B050477002125E6 /* CommentTableViewCell.m in Sources */,
 				FECA80ED1AF7340900FF57AE /* GeoInfo.m in Sources */,
 				FEC571F11B0359B800D5D8E5 /* storyheaderTableViewCell.m in Sources */,
+				FECE58F21B170835000457E9 /* AboutUsViewController.m in Sources */,
 				FEC8D1E51AFF0077009E3AB0 /* StoryTableViewCell.m in Sources */,
 				FEC8D1EE1AFF608E009E3AB0 /* ModelGood.m in Sources */,
 				FEC7CD311AFE4142007F798B /* settingTableViewCell.m in Sources */,
@@ -1337,6 +1356,7 @@
 				FECA80511AF7326B00FF57AE /* AFNetworkReachabilityManager.m in Sources */,
 				FECA80551AF7326B00FF57AE /* AFURLResponseSerialization.m in Sources */,
 				FEC53D7F1AF923FF00FCF327 /* showNavigationController.m in Sources */,
+				FECE58F71B170893000457E9 /* issueViewController.m in Sources */,
 				FE54E3D21B0F8FFC00582CC1 /* ResponseLogin.m in Sources */,
 				FECA809F1AF732A800FF57AE /* NSData+ImageContentType.m in Sources */,
 				FE4CC1041B09AC9700B2615F /* WGS84TOGCJ02.m in Sources */,

@@ -46,7 +46,7 @@
 @property (nonatomic,strong) UILabel *msgSaveButtonLabel;
 @property (nonatomic,strong) SDDemoItemView *progressDome;
 @property (nonatomic) BOOL uploadFlag;
-
+@property (nonatomic) BOOL isChange;
 @end
 
 @implementation upLoadImageViewController
@@ -193,17 +193,6 @@
     cache = [userDefaults objectForKey:@"cache"];
     townCache *item1  = [[townCache alloc] initWithDictionary:[cache objectForKey:_cacheid] error:nil];;
     [self setCacheBegin:item1 key:_cacheid];
-//   townCache *item1 = [[townCache alloc] init];
-//    for(id key in cache){
-//        item1 = [[townCache alloc]initWithDictionary:[cache objectForKey:key] error:nil];
-//        UIImageView * bg = [[UIImageView alloc] initWithFrame:_msgIamgeButtonLabel.frame];
-//        bg.image = [self readeIamge:item1.coverName];
-//        [_msgIamgeButtonLabel addSubview:bg];
-//        _summaryTextView.text = item1.descri;
-//        _townNameTextFiled.text = item1.title;
-//        NSLog(@"cache is %@",item1);
-//
-//    }
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -290,6 +279,7 @@
     [_bgScrollView setScrollEnabled:YES];
     [_bgScrollView setShowsVerticalScrollIndicator:YES];
     [self.view addSubview:_bgScrollView];
+    _isChange = NO;
     if(_isComeFromCache){
         [self readUserDeafultsOwn];
     }
@@ -353,16 +343,19 @@
 -(void)selectLeftAction:(id)sender{
     [_summaryTextView resignFirstResponder];
     [_townNameTextFiled resignFirstResponder];
-    [self changeAlert];
-//    if(!_uploadFlag){
-//        if(_isComeFromCache){
-//            [self.navigationController popViewControllerAnimated:YES];
-//
-//            }else{
-//         [self.navigationController dismissViewControllerAnimated:YES completion:^{}];
-//
-//        }
-//    }
+    if(_isChange){
+        [self changeAlert];
+    }else{
+    if(!_uploadFlag){
+        if(_isComeFromCache){
+            [self.navigationController popViewControllerAnimated:YES];
+
+            }else{
+         [self.navigationController dismissViewControllerAnimated:YES completion:^{}];
+
+        }
+    }
+    }
 }
 -(void)selectRightAction:(id)sender{
     [_summaryTextView resignFirstResponder];
@@ -374,7 +367,9 @@
         _requestApplyTown.geoinfo = _geoinfo;
     if([self checkInfo]){
         _uploadFlag =YES;
+          [self.navigationController setNavigationBarHidden:YES animated:NO];
         [self saveUserDefaultsOwn];
+        progressCount=0.0;
         [self uploadFiles];
     }else{
         [self showAlert:@"信息不足，请补充完整"];
@@ -534,6 +529,7 @@
 - (void) setUploadImage:(UIImage*) sender{
     _GeoImage = sender;
 };
+
 #pragma upLoadimage
 - (NSDictionary *)constructingSignatureAndPolicyWithFileInfo:(NSDictionary *)fileInfo
 {
@@ -570,7 +566,7 @@
 {
     if(index==0){
         _progressDome.hidden = NO;
-        [self.navigationController setNavigationBarHidden:YES animated:NO];
+      
         //[_progressAlert show];
         _progressDome= [SDDemoItemView demoItemViewWithClass:[SDBallProgressView class]];
         _progressDome.frame = [UIScreen mainScreen].bounds;
@@ -580,10 +576,10 @@
     NSData * fileData;
     if(idx==0)
     {
-        fileData=UIImagePNGRepresentation(_GeoImage);
+        fileData=UIImageJPEGRepresentation(_GeoImage,1.0);
     }//[NSData
     else{
-        fileData=UIImagePNGRepresentation(_coverimage);
+        fileData=UIImageJPEGRepresentation(_coverimage,1.0);
     }
     NSDictionary * fileInfo = [UMUUploaderManager fetchFileInfoDictionaryWith:fileData];//获取文件信息
     
@@ -604,7 +600,7 @@
         //self.propressView.alpha = 0;
         if (completed) {
              index ++;
-            progressCount +=self.propressView.progress;
+            progressCount +=0.500000;
             if(idx ==1){
                 alert = [[UIAlertView alloc]initWithTitle:@"" message:@"上传成功" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
                 NSLog(@"%@",result);
@@ -632,7 +628,7 @@
         
         
     }];
-   
+    fileData = nil;
 }
 
 - (NSString *)dictionaryToJSONStringBase64Encoding:(NSDictionary *)dic
@@ -677,6 +673,7 @@
                 [self.navigationController pushViewController:town  animated:NO];
                 [self deletecache];
                 [self saveUserTown:data];
+                _bgScrollView = nil;
                 PopView *pop =[[PopView alloc] initWithFrame:CGRectMake(0, 180, [UIScreen mainScreen].bounds.size.width, 40)];               [self.view addSubview:pop];
                 _uploadFlag = NO;
                 [pop setText:@"\(^o^)/~  创建成功"];
