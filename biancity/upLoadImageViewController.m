@@ -86,7 +86,7 @@
     _addrLabel.text= addr;
 
     [self.view setNeedsDisplay];
-    NSLog(@"cache %@",cache);
+    log(@"cache %@",cache);
 }
 
 -(UIImage*)readeIamge:(NSString*)imageName{
@@ -109,15 +109,15 @@
     NSString *uniquePath=[[paths objectAtIndex:0] stringByAppendingPathComponent:imagename];
     BOOL blHave=[[NSFileManager defaultManager] fileExistsAtPath:uniquePath];
     if (blHave) {
-        NSLog(@"already have");
+        log(@"already have");
         return ;
     }
     NSData * imagedata = UIImagePNGRepresentation(image);
     BOOL result = [imagedata writeToFile:uniquePath atomically:YES];
     if (result) {
-        NSLog(@"success");
+        log(@"success");
     }else {
-        NSLog(@"no success");
+        log(@"no success");
     }
 }
 -(void)removeImageFile:(NSString*)imageName{
@@ -128,15 +128,15 @@
     NSString *uniquePath=[[paths objectAtIndex:0] stringByAppendingPathComponent:imageName];
     BOOL blHave=[[NSFileManager defaultManager] fileExistsAtPath:uniquePath];
     if (!blHave) {
-        NSLog(@"no  have");
+        log(@"no  have");
         return ;
     }else {
-        NSLog(@" have");
+        log(@" have");
         BOOL blDele= [fileManager removeItemAtPath:uniquePath error:nil];
         if (blDele) {
-            NSLog(@"dele success");
+            log(@"dele success");
         }else {
-            NSLog(@"dele fail");
+            log(@"dele fail");
         }
         
     }
@@ -152,7 +152,7 @@
     return fileName;
 }
 - (void)saveUserDefaultsOwn{
-  
+   _isChange =NO;
     townCache *item1 = [[townCache alloc] init];
     item1.coverName = _requestApplyTown.cover;
     item1.title = _townNameTextFiled.text;
@@ -165,7 +165,7 @@
     cache = [userDefaults objectForKey:@"cache"];
     [self saveImage: item1.coverName image:_coverimage];
     [self saveImage:item1.mapIamgeName image:_GeoImage];
-    NSLog(@"save button,cache %@",cache);
+    log(@"save button,cache %@",cache);
     NSDictionary * para = [item1 toDictionary];
     NSMutableDictionary *ad;
     if(cache !=nil){
@@ -175,7 +175,7 @@
         ad= [[NSMutableDictionary alloc] init];
     }
     [ad setObject:para forKey:_cacheid];
-    NSLog(@"item1 %@",ad);
+    log(@"item1 %@",ad);
     [userDefaults setObject:ad forKey:@"cache"];
 
     
@@ -198,13 +198,33 @@
     [super viewDidLoad];
     _requestApplyTown = [[ApplyTown alloc] init];
         self.navigationItem.title = @"创建边城";
-    UIBarButtonItem *leftButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemReply target:self action:@selector(selectLeftAction:)];
-    self.navigationItem.leftBarButtonItem = leftButton;
+//    UIBarButtonItem *leftButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemReply target:self action:@selector(selectLeftAction:)];
+//    
+//    
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    [button setBackgroundImage:[UIImage imageNamed:@"ic_navigation_back_normal"]
+                      forState:UIControlStateNormal];
+    [button addTarget:self action:@selector(selectLeftAction:)
+     forControlEvents:UIControlEventTouchUpInside];
+    button.frame = CGRectMake(0, 0, 30, 30);
+    UIBarButtonItem *menuButton = [[UIBarButtonItem alloc] initWithCustomView:button];
+    self.navigationItem.leftBarButtonItem = menuButton;
+    UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [rightButton setBackgroundImage:[UIImage imageNamed:@"ic_note_complete_normal"]
+                           forState:UIControlStateNormal];
+    [rightButton addTarget:self action:@selector(selectRightAction:)
+          forControlEvents:UIControlEventTouchUpInside];
+    rightButton.frame = CGRectMake(0, 0, 30, 30);
+    UIBarButtonItem *rightmenuButton = [[UIBarButtonItem alloc] initWithCustomView:rightButton];
+    self.navigationItem.rightBarButtonItem =rightmenuButton;
+   // self.navigationItem.leftBarButtonItem = leftButton;
     if(_cacheid==nil){
         _cacheid = [self createName];
     }
-    UIBarButtonItem *rightButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave  target:self action:@selector(selectRightAction:)];
-    self.navigationItem.rightBarButtonItem = rightButton;
+//    UIBarButtonItem *rightButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave  target:self action:@selector(selectRightAction:)];
+//    self.navigationItem.rightBarButtonItem = rightButton;
+
+    
     self.view.frame =[UIScreen mainScreen].bounds;
     _bgScrollView = [[UIScrollView alloc] initWithFrame:[UIScreen mainScreen].bounds];
     _bgScrollView.contentSize = CGSizeMake([UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height+200);
@@ -212,8 +232,8 @@
     _msgIamgeButtonLabel.textAlignment = NSTextAlignmentCenter;
     _msgIamgeButtonLabel.text =@"点击选择封面照片";
     _msgIamgeButtonLabel.tag = 111;
-    [_msgIamgeButtonLabel.layer setBorderWidth:1.0];
-    [_msgIamgeButtonLabel.layer setBorderColor:[[UIColor grayColor] CGColor]];
+    [_msgIamgeButtonLabel.layer setBorderWidth:0.5];
+    [_msgIamgeButtonLabel.layer setBorderColor:[[UIColor colorWithRed:(10*16+8)/255.0 green:(10*16+11)/255.0 blue:(10*16+13)/255.0 alpha:1.0] CGColor]];
     UITapGestureRecognizer * tapIamge = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showSheetSource:)];
     _msgIamgeButtonLabel.userInteractionEnabled = YES;
     [_msgIamgeButtonLabel addGestureRecognizer:tapIamge];
@@ -233,10 +253,11 @@
     _townNameTextFiled.delegate =self;
     _townNameTextFiled.returnKeyType =UIReturnKeyDone;
     _townNameTextFiled.borderStyle = UITextBorderStyleRoundedRect;
+    _townNameTextFiled.layer.borderColor =[[UIColor colorWithRed:(10*16+8)/255.0 green:(10*16+11)/255.0 blue:(10*16+13)/255.0 alpha:1.0] CGColor];
     _summaryTextView = [[UITextView alloc] initWithFrame:CGRectMake(4, _townNameTextFiled.frame.origin.y+40, self.view.frame.size.width-8, 80)];
     _summaryTextView.font = [UIFont systemFontOfSize:14];
-    _summaryTextView.layer.borderWidth = 1.0;
-    _summaryTextView.layer.borderColor =[[UIColor grayColor] CGColor];
+    _summaryTextView.layer.borderWidth = 0.5;
+    _summaryTextView.layer.borderColor =[[UIColor colorWithRed:(10*16+8)/255.0 green:(10*16+11)/255.0 blue:(10*16+13)/255.0 alpha:1.0] CGColor];
     _summaryTextView.returnKeyType =UIReturnKeyDone;
     _summaryTextView.delegate = self;
     _summaryTextView.layer.cornerRadius = 5.0;
@@ -250,13 +271,14 @@
     _msgSaveButtonLabel.textAlignment =NSTextAlignmentCenter;
     _msgSaveButtonLabel.textColor = [UIColor whiteColor];
     _msgSaveButtonLabel.text = @"保存到草稿箱";
-    _msgSaveButtonLabel.layer.borderColor =[[UIColor blueColor] CGColor];
+    _msgSaveButtonLabel.layer.borderColor =[[UIColor colorWithRed:(4*16+7)/255.0 green:11*16/255.0 blue:(15*16+9)/255.0 alpha:1] CGColor];
     _msgSaveButtonLabel.layer.borderWidth = 1.0;
     _msgSaveButtonLabel.layer.cornerRadius = 4.0;
+    _msgSaveButtonLabel.layer.masksToBounds = YES;
     UITapGestureRecognizer *tapSave = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(saveUserDefaultsOwn)];
     _msgSaveButtonLabel.userInteractionEnabled =YES;
     [_msgSaveButtonLabel addGestureRecognizer:tapSave];
-    _msgSaveButtonLabel.backgroundColor = [UIColor blueColor];
+    _msgSaveButtonLabel.backgroundColor = [UIColor colorWithRed:(4*16+7)/255.0 green:11*16/255.0 blue:(15*16+9)/255.0 alpha:1];
     [_bgScrollView addSubview:_msgIamgeButtonLabel];
      _propressView = [[UIProgressView alloc]initWithProgressViewStyle:UIProgressViewStyleBar];
 
@@ -308,12 +330,12 @@
     if(alertView.tag ==100){
     switch (buttonIndex) {
         case 0:
-            NSLog(@"0");
+            log(@"0");
             return;
             break;
             
         case 1:
-            NSLog(@"1");
+            log(@"1");
             [self saveUserDefaultsOwn];
             if(_isComeFromCache){
             [self.navigationController popViewControllerAnimated:YES];
@@ -325,7 +347,7 @@
             break;
             
         case 2:
-            NSLog(@"2");
+            log(@"2");
             if(_isComeFromCache){
                 [self.navigationController popViewControllerAnimated:YES];
                 
@@ -391,6 +413,8 @@
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
+    if(textField.text.length != 0)
+    _isChange =YES;
     [textField resignFirstResponder];    //主要是[receiver resignFirstResponder]在哪调用就能把receiver对应的键盘往下收
     return YES;
 }
@@ -421,6 +445,8 @@
     
     if ([text isEqualToString:@"\n"]) {
         
+        if(text.length != 0)
+            _isChange =YES;
         [textView resignFirstResponder];
         
         return NO;
@@ -433,7 +459,7 @@
 
 
 - (void)showSheetSource:(id)sender {
-    // NSLog(@"showSheet");
+    // log(@"showSheet");
     UIActionSheet *actionSheet = [[UIActionSheet alloc]
                                   initWithTitle:@"请选择照片来源"
                                   delegate:self
@@ -520,6 +546,7 @@
         [fileName appendFormat:@"%c",(97+arc4random_uniform(26))];
     }
     _requestApplyTown.cover = fileName;
+      _isChange =YES;
     
 }
 - (void) setUploadGeoInfo:(GeoInfo*) sender{
@@ -592,7 +619,7 @@
     __weak typeof(self)weakSelf = self;
     UMUUploaderManager * manager = [UMUUploaderManager managerWithBucket:bucket];
     [manager uploadWithFile:fileData policy:policy signature:signature progressBlock:^(CGFloat percent, long long requestDidSendBytes) {
-        NSLog(@"%f",percent);
+        log(@"%f",percent);
         weakSelf.propressView.progress = percent/2+progressCount;
         weakSelf.progressDome.progressView.progress =percent/2+progressCount;
     } completeBlock:^(NSError *error, NSDictionary *result, BOOL completed) {
@@ -603,7 +630,7 @@
             progressCount +=0.500000;
             if(idx ==1){
                 alert = [[UIAlertView alloc]initWithTitle:@"" message:@"上传成功" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
-                NSLog(@"%@",result);
+                log(@"%@",result);
                 [_progressAlert dismissWithClickedButtonIndex:0 animated:NO];
                 self.propressView.progress= 0;
                 progressCount=0.0;
@@ -647,7 +674,7 @@
     MsgEncrypt *encrypt = [[MsgEncrypt alloc] init];
     NSData *msgjson = [NSJSONSerialization dataWithJSONObject:parameters options:kNilOptions error:nil];
     NSString* info = [[NSString alloc] initWithData:msgjson encoding:NSUTF8StringEncoding];
-    //NSLog(@"%lu",(unsigned long)info.length);
+    //log(@"%lu",(unsigned long)info.length);
     log(@"ApplyTown Info is %@,length is %lu",info,(unsigned long)info.length);
     NSString *signature= [encrypt EncryptMsg:info timeStmap:strtime];
     log(@"%@,time si %@",signature,strtime);
@@ -663,7 +690,7 @@
        
             _responseApplyTown = [[responseApplyTown alloc] initWithDictionary:data error:nil];
             //[self.bgScrollView headerEndRefreshing];
-            // NSLog(@"USer is %@",_User);
+            // log(@"USer is %@",_User);
             if(_responseApplyTown.stat){
             townViewController *town = [[townViewController alloc]initWithNibName:@"townViewController" bundle:nil];
                 self.applyTown_delegate = town;
@@ -679,16 +706,18 @@
                 [pop setText:@"\(^o^)/~  创建成功"];
             }
             else{
+
                 PopView *pop =[[PopView alloc] initWithFrame:CGRectMake(0, 180, [UIScreen mainScreen].bounds.size.width, 40)];
                 [self.view addSubview:pop];
                   _uploadFlag = NO;
-                [pop setText:@"o(>﹏<)o  网络糟糕，请重新上传"];
+                int idx =  [(NSNumber*)[data objectForKey:@"errcode"] intValue];
+                [pop setText:[NSString stringWithFormat:@"o(>﹏<)o %@",[ErrCode errcode:idx]]];
 
             }
         log(@"APPLYTOWN stat is %d,errcode is %d",_responseApplyTown.stat,_responseApplyTown.errcode);
         log(@"%@",_responseApplyTown);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"Error: %@", error);
+        log(@"Error: %@", error);
         PopView *pop =[[PopView alloc] initWithFrame:CGRectMake(0, 80, [UIScreen mainScreen].bounds.size.width, 40)];
         [self.view addSubview:pop];
           _uploadFlag = NO;
@@ -708,6 +737,7 @@
 
 
 - (void)saveUserTown:(NSDictionary*)data{
+     _isChange =NO;
     NSMutableDictionary *tmpdata = [[NSMutableDictionary alloc] initWithDictionary:data];
     [tmpdata removeObjectForKey:@"stat"];
     [tmpdata removeObjectForKey:@"errcode"];
@@ -718,7 +748,7 @@
         cache = [userDefaults dictionaryForKey:REGISTE_INFO];
         ResponseRegiste *registe =[[ResponseRegiste alloc] initWithDictionary:cache error:nil];
         [registe.mytowns insertObject:town atIndex:0];
-        NSLog(@"registe is %@",registe);
+        log(@"registe is %@",registe);
         [userDefaults setObject:[registe toDictionary] forKey:REGISTE_INFO];
         [userDefaults synchronize];
         return;
@@ -726,7 +756,7 @@
      cache = [userDefaults dictionaryForKey:LOGIN_INFO];
     ResponseLogin *login = [[ResponseLogin alloc] initWithDictionary:cache error:nil];
     [login.mytowns insertObject:town atIndex:0];
-      NSLog(@"login is %@",login);
+      log(@"login is %@",login);
     [userDefaults setObject:[login toDictionary] forKey:LOGIN_INFO];
     [userDefaults synchronize];
 }

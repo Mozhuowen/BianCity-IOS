@@ -51,7 +51,8 @@
 -(void)viewWillAppear:(BOOL)animated{
 
        if(_applyTown.userid == nil||[_requestStory.ptuserid isEqualToNumber:_applyTown.userid]){
-        self.navigationItem.rightBarButtonItem = _rightButton;
+           self.navigationItem.rightBarButtonItem = _rightButton;
+             [self loadInfo:2];
        }else {
        
         self.navigationItem.rightBarButtonItem= nil;
@@ -60,6 +61,8 @@
     if(_notEditFlag){
     self.navigationItem.rightBarButtonItem= nil;
     }
+    
+   
 }
 
 -(void)tapUser{
@@ -78,7 +81,17 @@
     manager.delegate = self;
     self.navigationItem.title = [NSString stringWithFormat:@"%@•边城",_applyTown.townname];
     _placeholderImage = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 40, 40)];
-     _leftButton= [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemReply target:self action:@selector(selectLeftAction:)];
+//     _leftButton= [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemReply target:self action:@selector(selectLeftAction:)];
+    
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    [button setBackgroundImage:[UIImage imageNamed:@"ic_navigation_back_normal"]
+                      forState:UIControlStateNormal];
+    [button addTarget:self action:@selector(selectLeftAction:)
+     forControlEvents:UIControlEventTouchUpInside];
+    button.frame = CGRectMake(0, 0, 30, 30);
+    UIBarButtonItem *menuButton = [[UIBarButtonItem alloc] initWithCustomView:button];
+    _leftButton = menuButton;
+    
     _requestDelete =[[ModelDelete alloc] init];
 
      _rightButton= [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemTrash  target:self action:@selector(selectRightAction:)];
@@ -181,7 +194,7 @@
     [self showSheetSource:sender];
 }
 - (void)showSheetSource:(id)sender {
-    // NSLog(@"showSheet");
+    // log(@"showSheet");
     UIActionSheet *actionSheet = [[UIActionSheet alloc]
                                   initWithTitle:@"确认删除"
                                   delegate:self
@@ -237,7 +250,7 @@
         _requestStory.position =0;
     }
     NSDictionary *parameters = [_requestStory toDictionary];
-    //NSLog(@"%@",parameters);
+    //log(@"%@",parameters);
     NSString *url =[NSString stringWithString:getStoryUrl];
     NSDate *datenow = [NSDate date];//现在时间,你可以输出来看下是什么格式
     NSString *strtime = [NSString stringWithFormat:@"%ld", (long)[datenow timeIntervalSince1970]];
@@ -256,6 +269,11 @@
         NSDictionary * data =[NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
         if(check==0){
             _responseStroys = [[ResponseStory alloc] initWithDictionary:data error:nil];
+            if(!_responseStroys.stat){
+                PopView *pop =[[PopView alloc] initWithFrame:CGRectMake(0, 250, [UIScreen mainScreen].bounds.size.width, 40)];               [self.view addSubview:pop];
+                int idx =  [(NSNumber*)[data objectForKey:@"errcode"] intValue];
+                [pop setText:[ErrCode errcode:idx]];
+            }
             [self.storyTableView headerEndRefreshing];
             _requestStory.position =(int) [_responseStroys.putao count];
         }else if(check ==1){
@@ -263,10 +281,20 @@
             [_responseStroys.putao addObjectsFromArray:ad.putao];
             _responseStroys.stat = ad.stat;
             _responseStroys.errcode = ad.errcode;
+            if(!_responseStroys.stat){
+                PopView *pop =[[PopView alloc] initWithFrame:CGRectMake(0, 250, [UIScreen mainScreen].bounds.size.width, 40)];               [self.view addSubview:pop];
+                int idx =  [(NSNumber*)[data objectForKey:@"errcode"] intValue];
+                [pop setText:[ErrCode errcode:idx]];
+            }
         _requestStory.position =(int) [_responseStroys.putao count];
             [self.storyTableView footerEndRefreshing];
         }else if(check ==2){
             _responseStroys = [[ResponseStory alloc] initWithDictionary:data error:nil];
+            if(!_responseStroys.stat){
+                PopView *pop =[[PopView alloc] initWithFrame:CGRectMake(0, 250, [UIScreen mainScreen].bounds.size.width, 40)];               [self.view addSubview:pop];
+                int idx =  [(NSNumber*)[data objectForKey:@"errcode"] intValue];
+                [pop setText:[ErrCode errcode:idx]];
+            }
             _requestStory.position =(int) [_responseStroys.putao count];
         }
 
@@ -279,7 +307,7 @@
         }
         log(@"story stat is %d,errcode is %d",_responseStroys.stat,_responseStroys.errcode);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"Error: %@", error);
+        log(@"Error: %@", error);
         if(check ==0){
             [self.storyTableView headerEndRefreshing];
         }else if(check ==1) {
@@ -300,7 +328,7 @@
             return 1;
             break;
         case 1:
-        NSLog(@"count is %lu",(unsigned long)[_responseStroys.putao count]);
+        log(@"count is %lu",(unsigned long)[_responseStroys.putao count]);
         return  [_responseStroys.putao count];//每个分区通常对应不同的数组，返回其元素个数来确定分区的行数
         break;
     }
@@ -333,7 +361,7 @@
             break;
             
         case 1:
-            NSLog(@"did select");
+            log(@"did select");
             storyViewController *story = [[storyViewController alloc] initWithNibName:@"storyViewController" bundle:nil];
             story.story = [_responseStroys.putao objectAtIndex:indexPath.row];
             story.notEditFlag =_notEditFlag;
@@ -374,7 +402,7 @@
                                              //add some ting
                                          }
                                         completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
-                                            NSLog(@"loadbgImage complete");
+                                            log(@"loadbgImage complete");
                                             
                                             [bgimage sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@%@",getPictureUrl,_applyTown.cover,@"!large"]]  placeholderImage:image options:0] ;
                                         }];
@@ -471,7 +499,8 @@
             cell = storyCell;
         break;
     }
-
+//    cell.selectedBackgroundView = [[UIView alloc] initWithFrame:cell.frame];
+//    cell.selectedBackgroundView.backgroundColor = [UIColor colorWithRed:(5*16+11)/255.0 green:(5*16+1)/255.0 blue:(4*16+8)/255.0 alpha:1.0];
   //  cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
 }
@@ -480,7 +509,7 @@
     _requestGood.targetid = _applyTown.townid;
     _requestGood.type = 0;
     NSDictionary *parameters = [_requestGood toDictionary];
-    //NSLog(@"%@",parameters);
+    //log(@"%@",parameters);
     NSString *url;
     if(check ==0){
         url=[NSString stringWithString:getGoodsUrl];
@@ -505,12 +534,17 @@
         
         NSDictionary * data =[NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
             _responseGood = [[ResponseGood alloc] initWithDictionary:data error:nil];
+        if(!_responseGood.stat){
+            PopView *pop =[[PopView alloc] initWithFrame:CGRectMake(0, 250, [UIScreen mainScreen].bounds.size.width, 40)];               [self.view addSubview:pop];
+            int idx =  [(NSNumber*)[data objectForKey:@"errcode"] intValue];
+            [pop setText:[ErrCode errcode:idx]];
+        }
           [_storyTableView reloadData];
         _isDoGooding =NO;
        
         log(@"loadGoodInfo stat is %d,errcode is %d",_responseGood.stat,_responseGood.errcode);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"Error: %@", error);
+        log(@"Error: %@", error);
         //[self.bgScrollView headerEndRefreshing];
     }];
 }
@@ -518,7 +552,7 @@
 -(void)loadFansInfo{
     _requestFans.userid = _applyTown.userid;
     NSDictionary *parameters = [_requestFans toDictionary];
-    //NSLog(@"%@",parameters);
+    //log(@"%@",parameters);
     NSString *url =[NSString stringWithString:getFansUrl];
     NSDate *datenow = [NSDate date];//现在时间,你可以输出来看下是什么格式
     NSString *strtime = [NSString stringWithFormat:@"%ld", (long)[datenow timeIntervalSince1970]];
@@ -540,7 +574,7 @@
           [_storyTableView reloadData];
         log(@"loadFansInfo stat is %d,errcode is %@",_responseFans.stat,_responseFans.errcode);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"Error: %@", error);
+        log(@"Error: %@", error);
        // [self.bgScrollView headerEndRefreshing];
     }];
 }
@@ -548,7 +582,7 @@
 -(void)loadSubscriInfo:(NSInteger)check{
     _requestSubscriTown.townid = _applyTown.townid;
     NSDictionary *parameters = [_requestSubscriTown toDictionary];
-    //NSLog(@"%@",parameters);
+    //log(@"%@",parameters);
     NSString *url;
     if(check ==0){
         url=[NSString stringWithString:getSubscriUrl];
@@ -577,7 +611,7 @@
         [_storyTableView reloadData];
         log(@"loadSubscriInfo stat is %d,errcode is %d",_responseSubscriTown.stat,_responseSubscriTown.errcode);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"Error: %@", error);
+        log(@"Error: %@", error);
        // [self.bgScrollView headerEndRefreshing];
     }];
 }
@@ -587,7 +621,7 @@
     _requestDelete.type = [NSNumber numberWithInt:0];
     _requestDelete.id = _applyTown.townid;
     NSDictionary *parameters = [_requestDelete toDictionary];
-    //NSLog(@"%@",parameters);
+    //log(@"%@",parameters);
     NSString *url =[NSString stringWithString:deleteUrl];
     NSDate *datenow = [NSDate date];//现在时间,你可以输出来看下是什么格式
     NSString *strtime = [NSString stringWithFormat:@"%ld", (long)[datenow timeIntervalSince1970]];
@@ -612,7 +646,7 @@
             [self.navigationController dismissViewControllerAnimated:YES completion:^{}];
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"Error: %@", error);
+        log(@"Error: %@", error);
         // [self.bgScrollView headerEndRefreshing];
     }];
 }
@@ -629,7 +663,7 @@
                 [registe.mytowns removeObjectAtIndex:i];
         }
         
-        NSLog(@"registe is %@",registe);
+        log(@"registe is %@",registe);
         [userDefaults setObject:[registe toDictionary] forKey:REGISTE_INFO];
         [userDefaults synchronize];
         return;
@@ -640,7 +674,7 @@
         if([((ModelAppleTown*)[login.mytowns objectAtIndex:i]).townid isEqual:_requestDelete.id])
             [login.mytowns removeObjectAtIndex:i];
     }
-    NSLog(@"login is %@",login);
+    log(@"login is %@",login);
     [userDefaults setObject:[login toDictionary] forKey:LOGIN_INFO];
     [userDefaults synchronize];
 }

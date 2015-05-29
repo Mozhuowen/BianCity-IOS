@@ -25,11 +25,27 @@
     [super viewDidLoad];
     
     self.navigationItem.title = @"使用自定义地址";
-    UIBarButtonItem *leftButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemReply target:self action:@selector(selectLeftAction:)];
-    self.navigationItem.leftBarButtonItem = leftButton;
-    
-    UIBarButtonItem *rightButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave  target:self action:@selector(selectRightAction:)];
-    self.navigationItem.rightBarButtonItem = rightButton;
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    [button setBackgroundImage:[UIImage imageNamed:@"ic_navigation_back_normal"]
+                      forState:UIControlStateNormal];
+    [button addTarget:self action:@selector(selectLeftAction:)
+     forControlEvents:UIControlEventTouchUpInside];
+    button.frame = CGRectMake(0, 0, 30, 30);
+    UIBarButtonItem *menuButton = [[UIBarButtonItem alloc] initWithCustomView:button];
+    self.navigationItem.leftBarButtonItem = menuButton;
+    UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [rightButton setBackgroundImage:[UIImage imageNamed:@"ic_note_complete_normal"]
+                           forState:UIControlStateNormal];
+    [rightButton addTarget:self action:@selector(selectRightAction:)
+          forControlEvents:UIControlEventTouchUpInside];
+    rightButton.frame = CGRectMake(0, 0, 30, 30);
+    UIBarButtonItem *rightmenuButton = [[UIBarButtonItem alloc] initWithCustomView:rightButton];
+    self.navigationItem.rightBarButtonItem =rightmenuButton;
+//    UIBarButtonItem *leftButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemReply target:self action:@selector(selectLeftAction:)];
+//    self.navigationItem.leftBarButtonItem = leftButton;
+//    
+//    UIBarButtonItem *rightButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave  target:self action:@selector(selectRightAction:)];
+//    self.navigationItem.rightBarButtonItem = rightButton;
     _msglabel.font = [UIFont fontWithName:@"Helvetica" size:12];
     _msglabel.text = @"你可以长按并拖动地图中的图标到准确位置";
     _msglabel.lineBreakMode = NSLineBreakByWordWrapping;
@@ -134,7 +150,7 @@
     [alert show];
 }
 - (void)transfromInfo{
-    // NSLog(@"tapped");
+    // log(@"tapped");
     if ([self.t_delegate respondsToSelector:@selector(setUploadGeoInfo:)])
     {
         [self.t_delegate setUploadGeoInfo:_geoInfo];
@@ -152,7 +168,7 @@
 - (void) setGeoInfo:(GeoInfo*) sender{
     _geoInfo = sender;
     [self reloadInputViews];
-   // NSLog(@"save   ");
+   // log(@"save   ");
 }
 /*
 #pragma mark - Navigation

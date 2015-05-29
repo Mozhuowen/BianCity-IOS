@@ -11,6 +11,8 @@
 #import "JSONModel.h"
 #import "MsgEncrypt.h"
 #import "AFHTTPRequestOperationManager.h"
+#import "ErrCode.h"
+#import "PopView.h"
 @interface basicRequest : JSONModel
 @property (nonatomic,strong) NSString<Optional>* ptoken;	//用户token
 @property (nonatomic,strong) NSNumber<Optional>*  ptuserid;	//用户id

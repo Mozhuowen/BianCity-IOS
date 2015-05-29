@@ -49,11 +49,20 @@
     manager.delegate = self;
     self.navigationItem.title = @"设置";
     [self.tableView registerClass:[settingTableViewCell class] forCellReuseIdentifier:@"settingTableViewCell"];
-    UIBarButtonItem *leftButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemReply target:self action:@selector(selectLeftAction:)];
-    self.navigationItem.leftBarButtonItem = leftButton;
+//    UIBarButtonItem *leftButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemReply target:self action:@selector(selectLeftAction:)];
+//    self.navigationItem.leftBarButtonItem = leftButton;
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    [button setBackgroundImage:[UIImage imageNamed:@"ic_navigation_back_normal"]
+                      forState:UIControlStateNormal];
+    [button addTarget:self action:@selector(selectLeftAction:)
+     forControlEvents:UIControlEventTouchUpInside];
+    button.frame = CGRectMake(0, 0, 30, 30);
+    UIBarButtonItem *menuButton = [[UIBarButtonItem alloc] initWithCustomView:button];
+    self.navigationItem.leftBarButtonItem = menuButton;
     _section1 = [[NSMutableArray alloc] initWithObjects:@"wo", nil];
-    _section2 = [[NSMutableArray alloc] initWithObjects:@"退出登录",@"草稿箱",@"检查更新",@"关于我们",@"常见意见", nil];
+    _section2 = [[NSMutableArray alloc] initWithObjects:@"退出登录",@"草稿箱",@"关于我们",@"常见意见", nil];
     [self readUserDeafultsOwn];
+    self.tableView.sectionFooterHeight = 0;
 }
 -(void)selectLeftAction:(id)sender{
     [self.navigationController dismissViewControllerAnimated:YES completion:^{}];
@@ -91,6 +100,10 @@
     
 
 }
+-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    return 20;
+}
+
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     switch (indexPath.section) {
         case 0:
@@ -114,7 +127,7 @@
           // cell.imageView.frame = CGRectMake(0, 0, 40, 40);
 //            cell.imageView.layer.masksToBounds = YES;
 //            [cell imageView].layer.cornerRadius = 20;
-//            NSLog(@"w %f,h %f",cell.imageView.frame.size.width,cell.imageView.frame.size.height);
+//            log(@"w %f,h %f",cell.imageView.frame.size.width,cell.imageView.frame.size.height);
            
             NSString *myImgUrl =_login.cover;
             NSString *jap = @"http://";
@@ -138,7 +151,7 @@
 //            cell.imageView.frame = CGRectMake(0, 0, 40, 40);
 //            cell.imageView.layer.masksToBounds = YES;
 //            [cell imageView].layer.cornerRadius = 20;
-            NSLog(@"w %f,h %f",cell.imageView.frame.size.width,cell.imageView.frame.size.height);
+            log(@"w %f,h %f",cell.imageView.frame.size.width,cell.imageView.frame.size.height);
             
             NSString *myImgUrl =_registe.cover;
             NSString *jap = @"http://";
@@ -193,13 +206,10 @@
                     return;
                     break;
                 case 2:
-                    return;
-                    break;
-                case 3:
                     [self showAbout];
                     return;
                     break;
-                case 4:
+                case 3:
                     [self showIssue];
                     return;
                     break;
@@ -304,11 +314,11 @@
 //       _responseUser = [[ResponseUser alloc] initWithDictionary:data error:nil];
 //        
 //        [self.tableView reloadData];
-//            // NSLog(@"USer is %@",_User);
+//            // log(@"USer is %@",_User);
 //    log(@"User stat is %d,errcode is %@",_responseUser.stat,_responseUser.errcode);
 //        
 //    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-//        NSLog(@"Error: %@", error);
+//        log(@"Error: %@", error);
 // }];
 //}
 - (void)saveUserDefaultsOwn{

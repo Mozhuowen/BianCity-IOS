@@ -19,8 +19,18 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationItem.title = @"常见问题";
-    UIBarButtonItem *leftButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemReply target:self action:@selector(selectLeftAction:)];
-    self.navigationItem.leftBarButtonItem = leftButton;
+//    UIBarButtonItem *leftButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemReply target:self action:@selector(selectLeftAction:)];
+//    self.navigationItem.leftBarButtonItem = leftButton;
+    
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    [button setBackgroundImage:[UIImage imageNamed:@"ic_navigation_back_normal"]
+                      forState:UIControlStateNormal];
+    [button addTarget:self action:@selector(selectLeftAction:)
+     forControlEvents:UIControlEventTouchUpInside];
+    button.frame = CGRectMake(0, 0, 30, 30);
+    UIBarButtonItem *menuButton = [[UIBarButtonItem alloc] initWithCustomView:button];
+    self.navigationItem.leftBarButtonItem = menuButton;
+
     self.view.frame = [UIScreen mainScreen].bounds;
     _bgTableView = [[UITableView alloc] initWithFrame:self.view.frame];
     

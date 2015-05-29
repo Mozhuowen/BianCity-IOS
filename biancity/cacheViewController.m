@@ -39,8 +39,17 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
        self.navigationItem.title = @"草稿箱";
-    UIBarButtonItem *leftButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemReply target:self action:@selector(selectLeftAction:)];
-    self.navigationItem.leftBarButtonItem = leftButton;
+//    UIBarButtonItem *leftButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemReply target:self action:@selector(selectLeftAction:)];
+//    self.navigationItem.leftBarButtonItem = leftButton;
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    [button setBackgroundImage:[UIImage imageNamed:@"ic_navigation_back_normal"]
+                      forState:UIControlStateNormal];
+    [button addTarget:self action:@selector(selectLeftAction:)
+     forControlEvents:UIControlEventTouchUpInside];
+    button.frame = CGRectMake(0, 0, 30, 30);
+    UIBarButtonItem *menuButton = [[UIBarButtonItem alloc] initWithCustomView:button];
+    self.navigationItem.leftBarButtonItem = menuButton;
+
     self.view.frame = [UIScreen mainScreen].bounds;
     self.cacheCount = [[NSMutableArray alloc] init];
     self.keys = [[NSMutableArray alloc] init];
@@ -78,11 +87,14 @@
         [self.navigationController pushViewController:story animated:YES];
     }
 }
+-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    return 20;
+}
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     return 90;
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    NSLog(@"cachecount is %lu",(unsigned long)[_cacheCount count]);
+    log(@"cachecount is %lu",(unsigned long)[_cacheCount count]);
     return [_cacheCount count];
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -117,7 +129,7 @@
 -(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     NSInteger   tag = actionSheet.tag;
-    NSLog(@"tag is %ld",(long)tag);
+    log(@"tag is %ld",(long)tag);
     if (buttonIndex == 0) {
 
         NSMutableDictionary * ca = [[NSMutableDictionary alloc] init];
@@ -135,7 +147,7 @@
             }else{
                 [ca setObject:[[_cacheCount objectAtIndex:i
                                ] toDictionary] forKey:[_keys objectAtIndex:i]];
-                NSLog(@" ca is %@",ca);
+                log(@" ca is %@",ca);
             }
            }
         [self saveUserDefaults:ca];
@@ -164,15 +176,15 @@
     NSString *uniquePath=[[paths objectAtIndex:0] stringByAppendingPathComponent:imageName];
     BOOL blHave=[[NSFileManager defaultManager] fileExistsAtPath:uniquePath];
     if (!blHave) {
-        NSLog(@"no  have");
+        log(@"no  have");
         return ;
     }else {
-        NSLog(@" have");
+        log(@" have");
         BOOL blDele= [fileManager removeItemAtPath:uniquePath error:nil];
         if (blDele) {
-            NSLog(@"dele success");
+            log(@"dele success");
         }else {
-            NSLog(@"dele fail");
+            log(@"dele fail");
         }
         
     }
@@ -181,7 +193,7 @@
 - (void)saveUserDefaults:(NSDictionary*)cache{
     
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    NSLog(@"after delecache %@",cache);
+    log(@"after delecache %@",cache);
     [userDefaults setObject:cache forKey:@"cache"];
     
     [userDefaults synchronize];

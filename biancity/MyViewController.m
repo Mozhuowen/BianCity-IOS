@@ -25,6 +25,7 @@
 @property (nonatomic,strong) ModelCWall *requestCWall;
 @property (nonatomic,strong) ResponseSimple *responseWall;
 @property (nonatomic,strong) NSMutableArray * myTowns;
+@property (nonatomic,strong) UILabel *msgPlaceholdLabel;
 @end
 
 @implementation MyViewController
@@ -33,7 +34,13 @@
     [self readUserDeafultsOwn];
     _User.user.mytowns = _myTowns;
     [self.myCollectionView reloadData];
-    NSLog(@"我的 appear");
+    if([_User.user.mytowns count]==0){
+          _msgPlaceholdLabel.hidden = NO;
+    }
+    if([_User.user.mytowns count]<3){
+        [self loadInfo:0];
+    }
+    log(@"我的 appear");
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -56,10 +63,16 @@
     SDWebImageManager *manager = [SDWebImageManager sharedManager];
     manager.delegate = self;
     [self addHeader];
-   NSLog(@"width is %f,Height is %f",self.myCollectionView.frame.size.width,self.myCollectionView.frame.size.width);
+   log(@"width is %f,Height is %f",self.myCollectionView.frame.size.width,self.myCollectionView.frame.size.width);
     _myCollectionView.userInteractionEnabled = YES;
     [self readUserDeafultsOwn];
     [self loadInfo:0];
+     CGRect rect = CGRectMake(0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height- [UIScreen mainScreen].bounds.size.width);
+    _msgPlaceholdLabel =[[UILabel alloc] initWithFrame:rect];
+    _msgPlaceholdLabel.textAlignment = NSTextAlignmentCenter;
+    _msgPlaceholdLabel.text = @"还没有边城，赶快创建吧";
+    [self.view addSubview:_msgPlaceholdLabel];
+    _msgPlaceholdLabel.hidden = YES;
     // Do any additional setup after loading the view.
 }
 
@@ -163,7 +176,7 @@
         header.iconLineImage.backgroundColor = [UIColor whiteColor];
        // NSString * str =nil;
         header.myNameLabel.text = _User.user.name;
-       // NSLog(@"%@",_User.user.sex);
+       // log(@"%@",_User.user.sex);
         if(_User.user.sex && [_User.user.sex isEqualToString:@"m"]){
             header.maleLabel.text =@"男";
             header.iconMaleImage.image = [UIImage imageNamed:@"ic_sex_boy"];
@@ -254,13 +267,27 @@
         NSDictionary * data =[NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
         if(check==0){
             self.User = [[ResponseUser alloc] initWithDictionary:data error:nil];
+            if(!_User.stat){
+                PopView *pop =[[PopView alloc] initWithFrame:CGRectMake(0, 250, [UIScreen mainScreen].bounds.size.width, 40)];               [self.view addSubview:pop];
+                int idx =  [(NSNumber*)[data objectForKey:@"errcode"] intValue];
+                [pop setText:[ErrCode errcode:idx]];
+             
+            }
+
             _User.user.mytowns = _myTowns;
            // [self.myCollectionView headerEndRefreshing];
           [self.myCollectionView reloadData];
-          // NSLog(@"USer is %@",_User);
+          // log(@"USer is %@",_User);
         }
         if (check ==1) {
               self.User = [[ResponseUser alloc] initWithDictionary:data error:nil];
+            if(!_User.stat){
+                PopView *pop =[[PopView alloc] initWithFrame:CGRectMake(0, 250, [UIScreen mainScreen].bounds.size.width, 40)];               [self.view addSubview:pop];
+                int idx =  [(NSNumber*)[data objectForKey:@"errcode"] intValue];
+                [pop setText:[ErrCode errcode:idx]];
+                
+            }
+
             [self refreshUserDeafultsOwn ];
             [self.myCollectionView headerEndRefreshing];
             [self.myCollectionView reloadData];
@@ -269,10 +296,10 @@
         log(@"User stat is %d,errcode is %@,%@",_User.stat,_User.errcode,_User);
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"Error: %@", error);
+        log(@"Error: %@", error);
         if(check ==0){
             //[self.myCollectionView headerEndRefreshing];
-        }else {
+        }else{
             [self.myCollectionView headerEndRefreshing];
 
             //[self.myCollectionView footerEndRefreshing];
@@ -284,7 +311,7 @@
 #pragma end loading Infomation
 #pragma functions
 -(void)addTown{
-   // NSLog(@"add");
+   // log(@"add");
     showNavigationController *show= [[showNavigationController alloc] initWithNibName:@"showNavigationController" bundle:nil];
     locationViewController *location =[[locationViewController alloc] initWithNibName:@"locationViewController" bundle:nil];
        [show pushViewController:location animated:YES ];
@@ -294,7 +321,7 @@
  [self addTown];
 }
 -(void)setting:(id)sender{
-    NSLog(@"sett");
+    log(@"sett");
     showNavigationController *show= [[showNavigationController alloc] initWithNibName:@"showNavigationController" bundle:nil];
     settingTableViewController *setting =[[settingTableViewController alloc] initWithNibName:@"settingTableViewController" bundle:nil];
    // setting.user = _requestUser;//_User.user;
@@ -304,7 +331,7 @@
 }
 
 - (void)showSheetSource:(UITapGestureRecognizer* )sender {
-    // NSLog(@"showSheet");
+    // log(@"showSheet");
     UIActionSheet *actionSheet = [[UIActionSheet alloc]
                                   initWithTitle:@"请选择照片来源"
                                   delegate:self
@@ -440,21 +467,21 @@
     __weak typeof(self)weakSelf = self;
     UMUUploaderManager * manager = [UMUUploaderManager managerWithBucket:bucket];
     [manager uploadWithFile:fileData policy:policy signature:signature progressBlock:^(CGFloat percent, long long requestDidSendBytes) {
-        NSLog(@"%f",percent);
+        log(@"%f",percent);
         
-        weakSelf.progress.progressView.progress =percent;        NSLog(@"progress is %f", weakSelf.progress.progressView.progress);
+        weakSelf.progress.progressView.progress =percent;        log(@"progress is %f", weakSelf.progress.progressView.progress);
     } completeBlock:^(NSError *error, NSDictionary *result, BOOL completed) {
         UIAlertView * alert;
         //self.propressView.alpha = 0;
         if (completed) {
            
 //        alert = [[UIAlertView alloc]initWithTitle:@"" message:@"上传成功" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
-//                NSLog(@"%@",result);
+//                log(@"%@",result);
         [self loadWallInfo];
             [_progress removeFromSuperview];
         }else {
             alert = [[UIAlertView alloc]initWithTitle:@"" message:@"上传背景失败" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
-            NSLog(@"%@",error);
+            log(@"%@",error);
             [alert show];
         }
         
@@ -474,7 +501,7 @@
 #pragma loading Infomation
 -(void)loadWallInfo{
     NSDictionary *parameters = [_requestCWall toDictionary];
-    //NSLog(@"%@",parameters);
+    //log(@"%@",parameters);
     NSString *url =[NSString stringWithString:getCwallUrl];
     NSDate *datenow = [NSDate date];//现在时间,你可以输出来看下是什么格式
     NSString *strtime = [NSString stringWithFormat:@"%ld", (long)[datenow timeIntervalSince1970]];
@@ -498,10 +525,17 @@
         log(@"creatStroy stat is %d,errcode is %d",_responseWall.stat,_responseWall.errcode);
         if(_responseWall.stat ==1){
             [self loadInfo:0];
+        }else{
+            
+                PopView *pop =[[PopView alloc] initWithFrame:CGRectMake(0, 250, [UIScreen mainScreen].bounds.size.width, 40)];               [self.view addSubview:pop];
+                int idx =  [(NSNumber*)[data objectForKey:@"errcode"] intValue];
+                [pop setText:[ErrCode errcode:idx]];
+                
+
         }
         [self.navigationController popViewControllerAnimated:YES];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"Error: %@", error);
+        log(@"Error: %@", error);
         [self showAlert:@"更换背景失败"];
     }];
 }

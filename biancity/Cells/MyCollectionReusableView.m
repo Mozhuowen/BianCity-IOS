@@ -7,7 +7,7 @@
 //
 
 #import "MyCollectionReusableView.h"
-
+#import "basicRequest.h"
 @implementation MyCollectionReusableView
 -(id)initWithFrame:(CGRect)frame{
 //    CGSize origin = CGSizeMake(frame.size.width, frame.size.width*9/16+frame.size.width/7) ;
@@ -139,14 +139,14 @@
 }
 - (void) Tapped:(UIGestureRecognizer *) gesture
 {
-    // NSLog(@"tapped");
+    // log(@"tapped");
     if ([self.t_delegate respondsToSelector:@selector(tappedWithObject:)])
     {
         [self.t_delegate tappedWithObject:self.iconAddImage];
     }
 }
 -(void)TappedSetting:(UIGestureRecognizer *) gesture{
-    NSLog(@"tappedSetting");
+    log(@"tappedSetting");
     if ([self.t_delegate respondsToSelector:@selector(setting:)])
     {
         [self.t_delegate setting:_iconSettingImage];

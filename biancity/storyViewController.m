@@ -130,8 +130,16 @@
     manager.delegate = self;
     _placeholderImage = [[UIImageView alloc] init];
    
-    UIBarButtonItem *leftButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemReply target:self action:@selector(selectLeftAction:)];
-    self.navigationItem.leftBarButtonItem = leftButton;
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    [button setBackgroundImage:[UIImage imageNamed:@"ic_navigation_back_normal"]
+                      forState:UIControlStateNormal];
+    [button addTarget:self action:@selector(selectLeftAction:)
+     forControlEvents:UIControlEventTouchUpInside];
+    button.frame = CGRectMake(0, 0, 30, 30);
+    UIBarButtonItem *menuButton = [[UIBarButtonItem alloc] initWithCustomView:button];
+    self.navigationItem.leftBarButtonItem = menuButton;
+//    UIBarButtonItem *leftButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemReply target:self action:@selector(selectLeftAction:)];
+//    self.navigationItem.leftBarButtonItem = leftButton;
     
     self.view.frame = [UIScreen mainScreen].bounds;
     _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height)];
@@ -243,7 +251,7 @@
             label.font =[UIFont systemFontOfSize:14];
             label.text =_story.content;
             [label sizeToFit];
-            NSLog(@"image count is %lu",(unsigned long)[_story.imagenames count]);
+            log(@"image count is %lu",(unsigned long)[_story.imagenames count]);
             if([_story.imagenames count]==0){
                 return height+label.frame.size.height;
             }else if([_story.imagenames count]<=4&&[_story.imagenames count]>0){
@@ -299,7 +307,7 @@
     }
     [_bgTextView setNeedsDisplay];
    
-    NSLog(@"textTap");
+    log(@"textTap");
 }
 -(void)textAppear:(NSInteger)index{
     index_comment = index;
@@ -312,7 +320,7 @@
     }
      [_responseText becomeFirstResponder];
     [_bgTextView setNeedsDisplay];
-    NSLog(@"textTap");
+    log(@"textTap");
 }
 
 -(void)tapfavorite:(UITapGestureRecognizer*)sender{
@@ -343,7 +351,7 @@
                                          //add some ting
                                      }
                                     completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
-                                        NSLog(@"loadbgImage complete");
+                                        log(@"loadbgImage complete");
                                         [self loadBgimage:headerCell.bgImageView image:image];
                                     }];
              }
@@ -373,7 +381,7 @@
             rect = headerCell.comment.frame;
             rect.origin.y = headerCell.imagesView.frame.origin.y + headerCell.imagesView.frame.size.height ;
              headerCell.comment.frame =rect;
-            NSLog(@"headerCell.descrilabel width %f,headerCell.descrilabel height %f",headerCell.descrilabel.frame.size.width,headerCell.descrilabel.frame.size.height);
+            log(@"headerCell.descrilabel width %f,headerCell.descrilabel height %f",headerCell.descrilabel.frame.size.width,headerCell.descrilabel.frame.size.height);
             headerCell.userNameLabel.text = _story.username;
             headerCell.dateLabel.text = _story.createtime;
             headerCell.goodLabel.text = [NSString stringWithFormat:@"%@",(_responseGood.good.goods==nil)?@"0":_responseGood.good.goods];
@@ -416,7 +424,7 @@
             commentCell.iconGoodImage.userInteractionEnabled = YES;
             [ commentCell.iconGoodImage addGestureRecognizer:tapGood];
 
-        NSLog(@"index.row is %ld",(long)indexPath.row);
+        log(@"index.row is %ld",(long)indexPath.row);
             tmp =[_responseComment.comments objectAtIndex:indexPath.row];
              [self setUserImage:tmp.cover imageView:commentCell.iconUserImage row:indexPath.row];
            NSString*str= [tmp.content stringByReplacingOccurrencesOfString:@"<font color='#1E90FF'>" withString:@""];
@@ -543,7 +551,7 @@
 -(void)tapUser:(UITapGestureRecognizer*)sender{
     UIImageView *vi =( UIImageView *) [sender view];
     NSInteger idx_user = vi.tag;
-    NSLog(@"tag %ld",(long)idx_user);
+    log(@"tag %ld",(long)idx_user);
     UserViewController * user = [[UserViewController alloc] initWithNibName:@"UserViewController" bundle:nil];
     if(idx_user<0){
         user.userid = _story.userid;
@@ -620,7 +628,7 @@
     [self addSubImgView];
     
     ImgScrollView *tmpImgScrollView = [[ImgScrollView alloc] initWithFrame:(CGRect){contentOffset,myScrollView.bounds.size}];
-    //   NSLog(@"size si %f",myScrollView.bounds.size.width);
+    //   log(@"size si %f",myScrollView.bounds.size.width);
     [tmpImgScrollView setContentWithFrame:convertRect];
     [tmpImgScrollView setImage:tmpView.image];
     
@@ -647,7 +655,7 @@
         _requestComment.commentposition = 0;
     }
     NSDictionary *parameters = [_requestComment toDictionary];
-    //NSLog(@"%@",parameters);
+    //log(@"%@",parameters);
     NSString *url;
     if(check==2){
        url=[NSString stringWithString:submitCommentUrl];
@@ -672,6 +680,11 @@
         NSDictionary * data =[NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
         if(check == 0){
         _responseComment = [[ResponseComment alloc] initWithDictionary:data error:nil];
+            if(!_responseComment.stat){
+                PopView *pop =[[PopView alloc] initWithFrame:CGRectMake(0, 250, [UIScreen mainScreen].bounds.size.width, 40)];               [self.view addSubview:pop];
+                int idx =  [(NSNumber*)[data objectForKey:@"errcode"] intValue];
+                [pop setText:[ErrCode errcode:idx]];
+            }
             [_tableView headerEndRefreshing];
             if([_responseComment.comments count]<10){
                 _tableView.footerHidden =YES;
@@ -680,7 +693,11 @@
             }
         }else if(check ==1){
             ResponseComment *ad = [[ResponseComment alloc] initWithDictionary:data error:nil];
-        
+            if(!_responseComment.stat){
+                PopView *pop =[[PopView alloc] initWithFrame:CGRectMake(0, 250, [UIScreen mainScreen].bounds.size.width, 40)];               [self.view addSubview:pop];
+                int idx =  [(NSNumber*)[data objectForKey:@"errcode"] intValue];
+                [pop setText:[ErrCode errcode:idx]];
+            }
              [_tableView footerEndRefreshing];
             if([ad.comments count]>0){
             [_responseComment.comments addObjectsFromArray:ad.comments];
@@ -709,7 +726,7 @@
             [_tableView scrollToRowAtIndexPath:scrollIndexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"Error: %@", error);
+        log(@"Error: %@", error);
         if(check==0)
         [_tableView headerEndRefreshing];
         else if(check ==1)
@@ -720,7 +737,7 @@
 -(void)loadfavoriteInfo:(NSInteger)check view:(UILabel*)label{
     
     NSDictionary *parameters = [_requestFavorite toDictionary];
-    //NSLog(@"%@",parameters);
+    //log(@"%@",parameters);
     NSString *url;
     if(check == 0){
         url=[NSString stringWithString:getfavoriteUrl];
@@ -744,6 +761,11 @@
         
         NSDictionary * data =[NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
         _responseFavorite = [[ResponseFavorite alloc] initWithDictionary:data error:nil];
+        if(!_responseFavorite.stat){
+            PopView *pop =[[PopView alloc] initWithFrame:CGRectMake(0, 250, [UIScreen mainScreen].bounds.size.width, 40)];               [self.view addSubview:pop];
+            int idx =  [(NSNumber*)[data objectForKey:@"errcode"] intValue];
+            [pop setText:[ErrCode errcode:idx]];
+        }
         // [self.bgScrollView headerEndRefreshing];
         log(@"loadfavoriteInfo stat is %d,errcode is %d",_responseFavorite.stat,_responseFavorite.errcode);
         if(check==1){
@@ -764,7 +786,7 @@
         [_tableView reloadData];
         label.userInteractionEnabled = YES;
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"Error: %@", error);
+        log(@"Error: %@", error);
         // [self.bgScrollView headerEndRefreshing];
     }];
 }
@@ -772,7 +794,7 @@
 -(void)loadGoodInfo:(NSInteger)check tag:(NSInteger)tag{
     
     NSDictionary *parameters = [_requestGood toDictionary];
-    //NSLog(@"%@",parameters);
+    //log(@"%@",parameters);
     NSString *url;
     if(check ==0){
         url=[NSString stringWithString:getGoodsUrl];
@@ -809,12 +831,12 @@
         isloading =NO;
         log(@"loadGoodInfo stat is %d,errcode is %d",_responseGood.stat,_responseGood.errcode);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"Error: %@", error);
+        log(@"Error: %@", error);
         //[self.bgScrollView headerEndRefreshing];
     }];
 }
 - (void)showSheetSource:(id)sender {
-    // NSLog(@"showSheet");
+    // log(@"showSheet");
     UIActionSheet *actionSheet = [[UIActionSheet alloc]
                                   initWithTitle:@"确认删除"
                                   delegate:self
@@ -838,7 +860,7 @@
 -(void)deleteInfo{
     
     NSDictionary *parameters = [_requestDelete toDictionary];
-    //NSLog(@"%@",parameters);
+    //log(@"%@",parameters);
     NSString *url =[NSString stringWithString:deleteUrl];
     NSDate *datenow = [NSDate date];//现在时间,你可以输出来看下是什么格式
     NSString *strtime = [NSString stringWithFormat:@"%ld", (long)[datenow timeIntervalSince1970]];
@@ -863,7 +885,7 @@
             [self.navigationController popViewControllerAnimated:YES];
              }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"Error: %@", error);
+        log(@"Error: %@", error);
         // [self.bgScrollView headerEndRefreshing];
     }];
 }

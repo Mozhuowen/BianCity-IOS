@@ -40,7 +40,7 @@
         [self showAlert:@"请到后台设置APP可访问地理信息"];
         //[vc.nearCollectionView headerBeginRefreshing];
     }
-        NSLog(@"appear");
+        log(@"appear");
     if([_hotTown.towns count]<=5){
         [self.nearCollectionView headerBeginRefreshing];
     }
@@ -113,7 +113,7 @@
     NSMutableString *pictureUrl = [[NSMutableString alloc] initWithString:getPictureUrl];
     [pictureUrl appendString:imageUrl];
     [pictureUrl appendString:@"!small"];
-    // NSLog(@"imageUrl = %@",pictureUrl);
+    // log(@"imageUrl = %@",pictureUrl);
     [cell.HotTownCoverImage sd_setImageWithURL:[NSURL URLWithString:pictureUrl]  placeholderImage:[UIImage imageNamed:@"placeholder"] options:indexPath.row == 0 ? SDWebImageRefreshCached : 0] ;
     
     [cell.hotTownNameLabel setText:[[self.hotTown.towns objectAtIndex:indexPath.row] townname]];
@@ -140,7 +140,7 @@
     if(status==kCLAuthorizationStatusAuthorizedWhenInUse){
         [self.nearCollectionView headerBeginRefreshing];
     }
-    NSLog(@"didChangeAuthorizationStatus");
+    log(@"didChangeAuthorizationStatus");
 }
 #pragma header and footer
 - (void)addHeader
@@ -211,7 +211,7 @@
     }
     _nearTown.rejectid =_nearTown.rejectid  ;
     NSDictionary *parameters = [_nearTown toDictionary];//[[basicRequest sharedBaseic] paraters];
-  //  NSLog(@"%@",parameters);
+  //  log(@"%@",parameters);
     NSString *url =[NSString stringWithString:getNearTownUrl];
     NSDate *datenow = [NSDate date];//现在时间,你可以输出来看下是什么格式
     NSString *strtime = [NSString stringWithFormat:@"%ld", (long)[datenow timeIntervalSince1970]];
@@ -231,6 +231,13 @@
         NSDictionary * data =[NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
         if(check==0){
             self.hotTown = [[ResponseHotTown alloc] initWithDictionary:data error:nil];
+            if(!_hotTown.stat){
+                PopView *pop =[[PopView alloc] initWithFrame:CGRectMake(0, 250, [UIScreen mainScreen].bounds.size.width, 40)];               [self.view addSubview:pop];
+                int idx =  [(NSNumber*)[data objectForKey:@"errcode"] intValue];
+                [pop setText:[ErrCode errcode:idx]];
+                
+            }
+
             [self.nearCollectionView headerEndRefreshing];
             for(int i=0;i<[self.hotTown.towns count];i++){
                 NSNumber* rjid= [[self.hotTown.towns objectAtIndex:i] townid];
@@ -244,6 +251,13 @@
             [self.hotTown.towns addObjectsFromArray:ad.towns];
             _hotTown.stat = ad.stat;
             _hotTown.errcode = ad.errcode;
+            if(!_hotTown.stat){
+                PopView *pop =[[PopView alloc] initWithFrame:CGRectMake(0, 250, [UIScreen mainScreen].bounds.size.width, 40)];               [self.view addSubview:pop];
+                int idx =  [(NSNumber*)[data objectForKey:@"errcode"] intValue];
+                [pop setText:[ErrCode errcode:idx]];
+               
+            }
+
             for(int i=0;i<[ad.towns count];i++){
                 NSNumber* rjid= [[ad.towns objectAtIndex:i] townid];
                 [_nearTown.rejectid addObject:rjid];
@@ -253,7 +267,7 @@
         [self.nearCollectionView reloadData];
         log(@"near stat is %d,errcode is %d",self.hotTown.stat,self.hotTown.errcode);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"Error: %@", error);
+        log(@"Error: %@", error);
         if(check ==0){
             [self.nearCollectionView headerEndRefreshing];
         }else {
@@ -272,7 +286,7 @@
 -(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations{
     CLLocation *location=[locations firstObject];//取出第一个位置
     CLLocationCoordinate2D coordinate=location.coordinate;//位置坐标
-   // NSLog(@"经度：%f,纬度：%f,海拔：%f,航向：%f,行走速度：%f",coordinate.longitude,coordinate.latitude,location.altitude,location.course,location.speed);
+   // log(@"经度：%f,纬度：%f,海拔：%f,航向：%f,行走速度：%f",coordinate.longitude,coordinate.latitude,location.altitude,location.course,location.speed);
     //如果不需要实时定位，使用完即使关闭定位服务
     _nearTown.geo.latitude = [[NSNumber alloc] initWithDouble:coordinate.latitude];
     _nearTown.geo.longitude = [[NSNumber alloc] initWithDouble:coordinate.longitude];
@@ -286,7 +300,7 @@
 
 -(void)mapView:(MAMapView *)mapView didUpdateUserLocation:(MAUserLocation *)userLocation{
     if(userLocation){
-        //        NSLog(@"%@",userLocation);
+        //        log(@"%@",userLocation);
           _nearTown.geo.latitude =[[NSNumber alloc]initWithDouble:userLocation.coordinate.latitude];
           _nearTown.geo.longitude = [[NSNumber alloc] initWithDouble:userLocation.coordinate.longitude];
         

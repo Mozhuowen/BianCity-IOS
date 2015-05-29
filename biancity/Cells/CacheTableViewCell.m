@@ -18,7 +18,7 @@
         _NameLabel = [[UILabel alloc] initWithFrame:CGRectMake(_image.frame.origin.x+_image.frame.size.width+4, 4,_image.frame.size.width*3, self.frame.size.height/2-4)];
        
         _typeLabel = [[UILabel alloc] initWithFrame:CGRectMake(_NameLabel.frame.origin.x,self.frame.size.height/2+ 4,_image.frame.size.width*3, self.frame.size.height/2-4)];
-        _deleteImage =[[UIImageView alloc] initWithFrame:CGRectMake(self.frame.size.width-50, 10, 50, 50)];
+        _deleteImage =[[UIImageView alloc] initWithFrame:CGRectMake([UIScreen mainScreen].bounds.size.width-50, 10, 50, 50)];
         [self.contentView addSubview:_image];
         [self.contentView addSubview:_NameLabel];
         [self.contentView addSubview:_typeLabel];

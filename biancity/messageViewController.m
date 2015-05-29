@@ -59,8 +59,18 @@
     _requestGood = [[ModelGood alloc] init];
     _requestGood.type = [NSNumber numberWithInt:3];
     _requestGood.targetid = 0;
-    UIBarButtonItem *leftButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemReply target:self action:@selector(selectLeftAction:)];
-    self.navigationItem.leftBarButtonItem = leftButton;
+//    UIBarButtonItem *leftButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemReply target:self action:@selector(selectLeftAction:)];
+//    self.navigationItem.leftBarButtonItem = leftButton;
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    [button setBackgroundImage:[UIImage imageNamed:@"ic_navigation_back_normal"]
+                      forState:UIControlStateNormal];
+    [button addTarget:self action:@selector(selectLeftAction:)
+     forControlEvents:UIControlEventTouchUpInside];
+    button.frame = CGRectMake(0, 0, 30, 30);
+    UIBarButtonItem *menuButton = [[UIBarButtonItem alloc] initWithCustomView:button];
+    self.navigationItem.leftBarButtonItem = menuButton;
+    
+    
     self.view.frame = [UIScreen mainScreen].bounds;
     _requestMess = [[ModelMessBoard alloc] init];
     _requestMess.messposition = [[NSNumber alloc] initWithInt:0];
@@ -135,7 +145,7 @@
     if(status==kCLAuthorizationStatusAuthorizedWhenInUse){
        [self localInfo];
     }
-    NSLog(@"didChangeAuthorizationStatus");
+    log(@"didChangeAuthorizationStatus");
 }
 -(void)localInfo{
     if ([CLLocationManager authorizationStatus]==kCLAuthorizationStatusNotDetermined){
@@ -160,7 +170,7 @@
         CGRect rect;
         lab.text =[NSString stringWithFormat:@"更多精彩，请允许程序访问位置信息(^o^)"];
         [lab sizeToFit];
-        NSLog(@"frame w %f,h %f",lab.frame.size.width,lab.frame.size.height);
+        log(@"frame w %f,h %f",lab.frame.size.width,lab.frame.size.height);
         rect = lab.frame;
         rect.size.height +=15;
         _alertLabel.frame = rect;
@@ -173,7 +183,7 @@
         _bgTextView.hidden =YES;
     }
     if (![CLLocationManager locationServicesEnabled]) {
-        NSLog(@"定位服务当前可能尚未打开，请设置打开！");
+        log(@"定位服务当前可能尚未打开，请设置打开！");
         return;
     }
 
@@ -193,7 +203,7 @@
 
 -(void)mapView:(MAMapView *)mapView didUpdateUserLocation:(MAUserLocation *)userLocation{
     if(userLocation){
-        //        NSLog(@"%@",userLocation);
+        //        log(@"%@",userLocation);
         _geoinfo.latitude =[[NSNumber alloc]initWithDouble:userLocation.coordinate.latitude];
         _geoinfo.longitude = [[NSNumber alloc] initWithDouble:userLocation.coordinate.longitude];
         _geoinfo.accuracy = [[NSNumber alloc] initWithDouble:userLocation.location.horizontalAccuracy] ;
@@ -216,7 +226,7 @@
 //实现逆地理编码的回调函数
 - (void)onReGeocodeSearchDone:(AMapReGeocodeSearchRequest *)request response:(AMapReGeocodeSearchResponse *)response
 {
-     NSLog(@"AMapReGeocodeSearchResponse localtion");
+     log(@"AMapReGeocodeSearchResponse localtion");
     if(response.regeocode != nil)
     {
         _geoinfo.province = response.regeocode.addressComponent.province;
@@ -242,12 +252,12 @@
         if(_geoinfo.province.length>0){
             CLLocationDistance meters=[_local distanceFromLocation:_townLocal];
                        CGRect rect;
-            NSLog(@"meters %f",meters);
+            log(@"meters %f",meters);
             _mapView.showsUserLocation = NO;
             if(meters>500){
                 lab.text =[NSString stringWithFormat:@"请开启手机定位功能，需要距离边城附近500才能留言哦，你距离边城还有%f米,在努力靠近一点吧",meters];
                 [lab sizeToFit];
-                NSLog(@"frame w %f,h %f",lab.frame.size.width,lab.frame.size.height);
+                log(@"frame w %f,h %f",lab.frame.size.width,lab.frame.size.height);
                 rect = lab.frame;
                 rect.size.height +=15;
                 _alertLabel.frame = rect;
@@ -296,7 +306,7 @@
     return 1;
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    NSLog(@"mess count %ld",[_responseMess.mess count]);
+    log(@"mess count %ld",[_responseMess.mess count]);
     return [_responseMess.mess count];
 }
 
@@ -339,7 +349,7 @@
     commentCell.iconGoodImage.userInteractionEnabled =YES;
     [commentCell.iconGoodImage addGestureRecognizer:tapGood];
     //commentCell.iconGoodImage.image = [UIImage imageNamed:@"ic_list_thumb"];
-    NSLog(@"index.row is %ld",(long)indexPath.row);
+    log(@"index.row is %ld",(long)indexPath.row);
     tmp =[_responseMess.mess objectAtIndex:indexPath.row];
     [self setUserImage:tmp.cover imageView:commentCell.iconUserImage row:indexPath.row];
     NSString*str= [tmp.content stringByReplacingOccurrencesOfString:@"<font color='#1E90FF'>" withString:@""];
@@ -418,7 +428,7 @@
 -(void)tapUser:(UITapGestureRecognizer*)sender{
     UIImageView *vi =( UIImageView *) [sender view];
     NSInteger idx_user = vi.tag;
-    NSLog(@"tag %ld",(long)idx_user);
+    log(@"tag %ld",(long)idx_user);
     UserViewController * user = [[UserViewController alloc] initWithNibName:@"UserViewController" bundle:nil];
 
         user.userid = [[_responseMess.mess objectAtIndex:idx_user] userid];
@@ -484,13 +494,28 @@
         NSDictionary * data =[NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
         if(check ==0){
             self.responseMess = [[ResponseMess alloc] initWithDictionary:data error:nil];
+            if(!_responseMess.stat){
+                PopView *pop =[[PopView alloc] initWithFrame:CGRectMake(0, 250, [UIScreen mainScreen].bounds.size.width, 40)];               [self.view addSubview:pop];
+                int idx =  [(NSNumber*)[data objectForKey:@"errcode"] intValue];
+                [pop setText:[ErrCode errcode:idx]];
+            }
             [_messageTableView headerEndRefreshing ];
         }else if(check==1){
             ResponseMess *ad = [[ResponseMess alloc] initWithDictionary:data error:nil];
+            if(!_responseMess.stat){
+                PopView *pop =[[PopView alloc] initWithFrame:CGRectMake(0, 250, [UIScreen mainScreen].bounds.size.width, 40)];               [self.view addSubview:pop];
+                int idx =  [(NSNumber*)[data objectForKey:@"errcode"] intValue];
+                [pop setText:[ErrCode errcode:idx]];
+            }
             [_responseMess.mess addObjectsFromArray:ad.mess];
             [_messageTableView footerEndRefreshing];
         }else{
               self.responseMess = [[ResponseMess alloc] initWithDictionary:data error:nil];
+            if(!_responseMess.stat){
+                PopView *pop =[[PopView alloc] initWithFrame:CGRectMake(0, 250, [UIScreen mainScreen].bounds.size.width, 40)];               [self.view addSubview:pop];
+                int idx =  [(NSNumber*)[data objectForKey:@"errcode"] intValue];
+                [pop setText:[ErrCode errcode:idx]];
+            }
         }
         _requestMess.messposition =[NSNumber numberWithInteger:[_responseMess.mess count]];
         log(@"responseMess stat is %d,errcode is %d",_responseMess.stat,_responseMess.errcode);
@@ -516,7 +541,7 @@
         
 
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"Error: %@", error);
+        log(@"Error: %@", error);
         if(check==0){
              [_messageTableView headerEndRefreshing ];
         }else{
@@ -529,7 +554,7 @@
 -(void)loadGoodInfo:(NSInteger)check tag:(NSInteger)tag{
     
     NSDictionary *parameters = [_requestGood toDictionary];
-    //NSLog(@"%@",parameters);
+    //log(@"%@",parameters);
     NSString *url;
     if(check ==0){
         url=[NSString stringWithString:getGoodsUrl];
@@ -563,7 +588,7 @@
         isloading =NO;
         log(@"loadGoodInfo stat is %d,errcode is %d",ad.stat,ad.errcode);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"Error: %@", error);
+        log(@"Error: %@", error);
         //[self.bgScrollView headerEndRefreshing];
     }];
 }

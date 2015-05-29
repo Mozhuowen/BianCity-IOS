@@ -57,6 +57,7 @@
 		FEC571F51B03638900D5D8E5 /* storyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FEC571F31B03638900D5D8E5 /* storyViewController.m */; };
 		FEC571F61B03638900D5D8E5 /* storyViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FEC571F41B03638900D5D8E5 /* storyViewController.xib */; };
 		FEC62DED1B06225A004510DC /* UIView+KeyboardObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = FEC62DEC1B06225A004510DC /* UIView+KeyboardObserver.m */; };
+		FEC681EC1B18589B008FE061 /* ErrCode.m in Sources */ = {isa = PBXBuildFile; fileRef = FEC681EB1B18589B008FE061 /* ErrCode.m */; };
 		FEC7CD251AFDE05C007F798B /* ModelStory.m in Sources */ = {isa = PBXBuildFile; fileRef = FEC7CD241AFDE05C007F798B /* ModelStory.m */; };
 		FEC7CD281AFDE204007F798B /* ResponseStory.m in Sources */ = {isa = PBXBuildFile; fileRef = FEC7CD271AFDE204007F798B /* ResponseStory.m */; };
 		FEC7CD2B1AFDE294007F798B /* StoryImage.m in Sources */ = {isa = PBXBuildFile; fileRef = FEC7CD2A1AFDE294007F798B /* StoryImage.m */; };
@@ -296,6 +297,8 @@
 		FEC571F41B03638900D5D8E5 /* storyViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = storyViewController.xib; sourceTree = "<group>"; };
 		FEC62DEB1B06225A004510DC /* UIView+KeyboardObserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+KeyboardObserver.h"; sourceTree = "<group>"; };
 		FEC62DEC1B06225A004510DC /* UIView+KeyboardObserver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+KeyboardObserver.m"; sourceTree = "<group>"; };
+		FEC681EA1B18589B008FE061 /* ErrCode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ErrCode.h; sourceTree = "<group>"; };
+		FEC681EB1B18589B008FE061 /* ErrCode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ErrCode.m; sourceTree = "<group>"; };
 		FEC7CD231AFDE05C007F798B /* ModelStory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ModelStory.h; sourceTree = "<group>"; };
 		FEC7CD241AFDE05C007F798B /* ModelStory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ModelStory.m; sourceTree = "<group>"; };
 		FEC7CD261AFDE204007F798B /* ResponseStory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResponseStory.h; sourceTree = "<group>"; };
@@ -1066,6 +1069,8 @@
 				FE6BDB681B1192B7003C4811 /* ModelRegisteWb.m */,
 				FE6BDB6A1B11D947003C4811 /* ModelAppleTown.h */,
 				FE6BDB6B1B11D947003C4811 /* ModelAppleTown.m */,
+				FEC681EA1B18589B008FE061 /* ErrCode.h */,
+				FEC681EB1B18589B008FE061 /* ErrCode.m */,
 			);
 			path = model;
 			sourceTree = "<group>";
@@ -1328,6 +1333,7 @@
 				FED36DC21AF9C37100251846 /* saveAddrViewController.m in Sources */,
 				FECA80BC1AF732B300FF57AE /* UMUUploaderManager.m in Sources */,
 				FECAE90E1B07763E00FE6FA7 /* UserViewController.m in Sources */,
+				FEC681EC1B18589B008FE061 /* ErrCode.m in Sources */,
 				FECA80A21AF732A800FF57AE /* SDWebImageDecoder.m in Sources */,
 				FECA80BB1AF732B300FF57AE /* NSString+NSHash.m in Sources */,
 				FE4CC1111B0A100600B2615F /* subscriTableViewCell.m in Sources */,

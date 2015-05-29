@@ -28,9 +28,18 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationItem.title =@"收藏列表";
-    UIBarButtonItem *leftButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemReply target:self action:@selector(selectLeftAction:)];
-    self.navigationItem.leftBarButtonItem = leftButton;
+//    UIBarButtonItem *leftButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemReply target:self action:@selector(selectLeftAction:)];
+//    self.navigationItem.leftBarButtonItem = leftButton;
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    [button setBackgroundImage:[UIImage imageNamed:@"ic_navigation_back_normal"]
+                      forState:UIControlStateNormal];
+    [button addTarget:self action:@selector(selectLeftAction:)
+     forControlEvents:UIControlEventTouchUpInside];
+    button.frame = CGRectMake(0, 0, 30, 30);
+    UIBarButtonItem *menuButton = [[UIBarButtonItem alloc] initWithCustomView:button];
+    self.navigationItem.leftBarButtonItem = menuButton;
 
+    
     self.view.frame = [UIScreen mainScreen].bounds;
     _favTableView = [[UITableView alloc] initWithFrame:self.view.frame];
     _favTableView.delegate = self;
@@ -77,7 +86,7 @@
 -(void)loadStorysInfo{
     
     NSDictionary *parameters = [_requestStory toDictionary];
-    //NSLog(@"%@",parameters);
+    //log(@"%@",parameters);
     NSString *url;
     url=[NSString stringWithString:getfavolistUrl];
     NSDate *datenow = [NSDate date];//现在时间,你可以输出来看下是什么格式
@@ -97,11 +106,16 @@
         
         NSDictionary * data =[NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
         _responseStroy = [[ResponseStory alloc] initWithDictionary:data error:nil];
+        if(!_responseStroy.stat){
+            PopView *pop =[[PopView alloc] initWithFrame:CGRectMake(0, 250, [UIScreen mainScreen].bounds.size.width, 40)];               [self.view addSubview:pop];
+            int idx =  [(NSNumber*)[data objectForKey:@"errcode"] intValue];
+            [pop setText:[ErrCode errcode:idx]];
+        }
         // [self.bgScrollView headerEndRefreshing];
         log(@"loadSubscriListInfo stat is %d,errcode is %d",_responseStroy.stat,_responseStroy.errcode);
         [_favTableView reloadData];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"Error: %@", error);
+        log(@"Error: %@", error);
         // [self.bgScrollView headerEndRefreshing];
     }];
 }

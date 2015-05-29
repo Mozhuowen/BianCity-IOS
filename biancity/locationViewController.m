@@ -21,11 +21,27 @@
     [super viewDidLoad];
     _geoinfo = [[GeoInfo alloc] init];
     self.navigationItem.title = @"创建边城";
-    UIBarButtonItem *leftButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemReply target:self action:@selector(selectLeftAction:)];
-    self.navigationItem.leftBarButtonItem = leftButton;
-    
-    UIBarButtonItem *rightButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave  target:self action:@selector(selectRightAction:)];
-    self.navigationItem.rightBarButtonItem = rightButton;
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    [button setBackgroundImage:[UIImage imageNamed:@"ic_navigation_back_normal"]
+                      forState:UIControlStateNormal];
+    [button addTarget:self action:@selector(selectLeftAction:)
+     forControlEvents:UIControlEventTouchUpInside];
+    button.frame = CGRectMake(0, 0, 30, 30);
+    UIBarButtonItem *menuButton = [[UIBarButtonItem alloc] initWithCustomView:button];
+    self.navigationItem.leftBarButtonItem = menuButton;
+    UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [rightButton setBackgroundImage:[UIImage imageNamed:@"ic_note_complete_normal"]
+                           forState:UIControlStateNormal];
+    [rightButton addTarget:self action:@selector(selectRightAction:)
+          forControlEvents:UIControlEventTouchUpInside];
+    rightButton.frame = CGRectMake(0, 0, 30, 30);
+    UIBarButtonItem *rightmenuButton = [[UIBarButtonItem alloc] initWithCustomView:rightButton];
+    self.navigationItem.rightBarButtonItem =rightmenuButton;
+//    UIBarButtonItem *leftButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemReply target:self action:@selector(selectLeftAction:)];
+//    self.navigationItem.leftBarButtonItem = leftButton;
+//    
+//    UIBarButtonItem *rightButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave  target:self action:@selector(selectRightAction:)];
+//    self.navigationItem.rightBarButtonItem = rightButton;
     _msgLabel.font = [UIFont fontWithName:@"Helvetica" size:12];
     _msgLabel.text = @"你将在以下地点附近建立边城，请开启手机定位功能并等待定位到当前位置";
     _msgLabel.lineBreakMode = NSLineBreakByWordWrapping;
@@ -77,7 +93,7 @@
 //定位
 -(void)mapView:(MAMapView *)mapView didUpdateUserLocation:(MAUserLocation *)userLocation{
     if(userLocation){
-//        NSLog(@"%@",userLocation);
+//        log(@"%@",userLocation);
         _geoinfo.latitude =[[NSNumber alloc]initWithDouble:userLocation.coordinate.latitude];
         _geoinfo.longitude = [[NSNumber alloc] initWithDouble:userLocation.coordinate.longitude];
       _geoinfo.accuracy = [[NSNumber alloc] initWithDouble:userLocation.location.horizontalAccuracy] ;
@@ -117,15 +133,15 @@
          [addr appendString:_geoinfo.street];
           [addr appendString:_geoinfo.road];
         _geoinfo.address = addr;
-      //  NSLog(@"%@",_geoinfo);
+      //  log(@"%@",_geoinfo);
 //        //通过AMapReGeocodeSearchResponse对象处理搜索结果
 //        NSString *result = [NSString stringWithFormat:@"ReGeocode: %@", response.regeocode];
-//        NSLog(@"ReGeo: %@", result);
+//        log(@"ReGeo: %@", result);
     }
 }
 
 - (void)transfromInfo{
-    // NSLog(@"tapped");
+    // log(@"tapped");
     if ([self.t_delegate respondsToSelector:@selector(setGeoInfo:)])
     {
         [self.t_delegate setGeoInfo:_geoinfo];

@@ -32,9 +32,10 @@
         _subscrilabel = [[UILabel alloc] initWithFrame:CGRectMake([UIScreen mainScreen].bounds.size.width-130, _userNameLabel.frame.origin.y, 60, 25)];
         _subscrilabel.font = [UIFont systemFontOfSize:16];
         _subscrilabel.textAlignment = NSTextAlignmentCenter;
-        _subscrilabel.layer.borderWidth = 1.0;
+        _subscrilabel.layer.borderWidth = 0.5;
         _subscrilabel.layer.cornerRadius = 3.0;
-        _subscrilabel.layer.borderColor = [[UIColor grayColor] CGColor];
+        _subscrilabel.layer.borderColor = [[UIColor colorWithRed:(10*16+8)/255.0 green:(10*16+11)/255.0 blue:(10*16+13)/255.0 alpha:1.0] CGColor];
+        _subscrilabel.textColor = [UIColor colorWithRed:(10*16+8)/255.0 green:(10*16+11)/255.0 blue:(10*16+13)/255.0 alpha:1.0];
         _goodLabel = [[UILabel alloc] initWithFrame:CGRectMake(_subscrilabel.frame.origin.x+70, _subscrilabel.frame.origin.y, 36, 25)];
         _goodLabel.textAlignment = NSTextAlignmentRight;
         _goodLabel.font = [UIFont systemFontOfSize:14];
@@ -49,7 +50,8 @@
         _comment.font = [UIFont systemFontOfSize:16];
         _comment.textColor = [UIColor whiteColor];
         _comment.layer.cornerRadius =4.0;
-          _comment.backgroundColor = [UIColor blueColor];
+        _comment.layer.masksToBounds = YES;
+          _comment.backgroundColor = [UIColor colorWithRed:(4*16+7)/255.0 green:11*16/255.0 blue:(15*16+9)/255.0 alpha:1];
         [self.contentView addSubview:_bgImageView];
            [self.contentView addSubview:bg];
         [self.contentView addSubview:_titleLabel];

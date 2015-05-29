@@ -15,4 +15,5 @@
 @property (nonatomic) NSNumber * townid;
 @property (nonatomic,strong) NSString * cacheid;
 @property (nonatomic) BOOL isComeFormCache;
+
 @end

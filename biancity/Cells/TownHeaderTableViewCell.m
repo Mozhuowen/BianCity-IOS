@@ -50,22 +50,24 @@
     _addrLabel.lineBreakMode = NSLineBreakByWordWrapping;
     _addrLabel.numberOfLines = 0;
     _subscri = [[UILabel alloc ] initWithFrame:CGRectMake(5, _iconAddrimage.frame.origin.y+50, 80, 40)];
-    _subscri.layer.borderWidth = 1.0;
+    _subscri.textColor = [UIColor colorWithRed:(4*16+7)/255.0 green:11*16/255.0 blue:(15*16+9)/255.0 alpha:1];
+    _subscri.layer.borderWidth = 0.5;
     _subscri.layer.cornerRadius = 3.0;
     _subscri.textAlignment =NSTextAlignmentCenter;
-    _subscri.layer.borderColor =[[UIColor grayColor] CGColor];
+    _subscri.layer.borderColor =[[UIColor colorWithRed:(10*16+8)/255.0 green:(10*16+11)/255.0 blue:(10*16+13)/255.0 alpha:1.0] CGColor];
   
     _leaveMsgLabel = [[UILabel alloc] initWithFrame:CGRectMake(_subscri.frame.origin.x+90, _subscri.frame.origin.y, 80, 40)];
-    _leaveMsgLabel.layer.borderWidth = 1.0;
+    _leaveMsgLabel.textColor = [UIColor colorWithRed:(4*16+7)/255.0 green:11*16/255.0 blue:(15*16+9)/255.0 alpha:1];
+    _leaveMsgLabel.layer.borderWidth = 0.5;
     _leaveMsgLabel.layer.cornerRadius = 3.0;
-    _leaveMsgLabel.layer.borderColor =[[UIColor grayColor] CGColor];
+    _leaveMsgLabel.layer.borderColor =[[UIColor colorWithRed:(10*16+8)/255.0 green:(10*16+11)/255.0 blue:(10*16+13)/255.0 alpha:1.0] CGColor];
     _leaveMsgLabel.textAlignment =NSTextAlignmentCenter;
     
     _addrMapImage = [[UIImageView alloc ]initWithFrame:CGRectMake([UIScreen mainScreen].bounds.size.width*3/5-5,_summaryLabel.frame.origin.y+_summaryLabel.frame.size.height, [UIScreen mainScreen].bounds.size.width*2/5, _leaveMsgLabel.frame.origin.y+_leaveMsgLabel.frame.size.height-(_summaryLabel.frame.origin.y+_summaryLabel.frame.size.height))];
     
     _storyLabel = [[UILabel alloc] initWithFrame:CGRectMake(4,_leaveMsgLabel.frame.origin.y+80, 80, 35)];
     _storyLabel.textAlignment =NSTextAlignmentCenter;
-    _storyLabel.backgroundColor = [UIColor blueColor];
+    _storyLabel.backgroundColor = [UIColor colorWithRed:(4*16+7)/255.0 green:11*16/255.0 blue:(15*16+9)/255.0 alpha:1];
     _storyLabel.textColor = [UIColor whiteColor];
     _iconAddImage = [[UIImageView alloc] initWithFrame:CGRectMake([UIScreen mainScreen].bounds.size.width -50, _storyLabel.frame.origin.y-5, 40, 40)];
     [self.contentView addSubview:_bgImageView];

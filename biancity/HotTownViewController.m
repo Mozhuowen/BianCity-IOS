@@ -25,7 +25,11 @@
 @end
 
 @implementation HotTownViewController
-
+-(void)viewWillAppear:(BOOL)animated{
+    if([_hotTown.towns count]==0){
+        [self.HotTownCollectionView headerBeginRefreshing];
+    }
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -135,7 +139,7 @@
         [_basic.rejectid removeAllObjects];
     }
     NSDictionary *parameters = [_basic toDictionary];
-    //NSLog(@"%@",parameters);
+    //log(@"%@",parameters);
     NSString *url =[NSString stringWithString:getHotTownUrl];
     NSDate *datenow = [NSDate date];//现在时间,你可以输出来看下是什么格式
     NSString *strtime = [NSString stringWithFormat:@"%ld", (long)[datenow timeIntervalSince1970]];
@@ -155,6 +159,12 @@
         NSDictionary * data =[NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
         if(check==0){
             self.hotTown = [[ResponseHotTown alloc] initWithDictionary:data error:nil];
+            if(!_hotTown.stat){
+                PopView *pop =[[PopView alloc] initWithFrame:CGRectMake(0, 250, [UIScreen mainScreen].bounds.size.width, 40)];               [self.view addSubview:pop];
+                int idx =  [(NSNumber*)[data objectForKey:@"errcode"] intValue];
+                [pop setText:[ErrCode errcode:idx]];
+            
+            }
             [self.HotTownCollectionView headerEndRefreshing];
             for(int i=0;i<[self.hotTown.towns count];i++){
                 NSNumber* rjid= [[self.hotTown.towns objectAtIndex:i] townid];
@@ -165,6 +175,13 @@
             [self.hotTown.towns addObjectsFromArray:ad.towns];
             _hotTown.stat = ad.stat;
             _hotTown.errcode = ad.errcode;
+            if(!_hotTown.stat){
+                PopView *pop =[[PopView alloc] initWithFrame:CGRectMake(0, 250, [UIScreen mainScreen].bounds.size.width, 40)];               [self.view addSubview:pop];
+                int idx =  [(NSNumber*)[data objectForKey:@"errcode"] intValue];
+                [pop setText:[ErrCode errcode:idx]];
+             
+            }
+
             for(int i=0;i<[ad.towns count];i++){
                 NSNumber* rjid= [[ad.towns objectAtIndex:i] townid];
                 [_basic.rejectid addObject:rjid];
@@ -174,7 +191,7 @@
         [self.HotTownCollectionView reloadData];
         log(@"HotTown stat is %d,errcode is %d",_hotTown.stat,_hotTown.errcode);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"Error: %@", error);
+        log(@"Error: %@", error);
         if(check ==0){
             [self.HotTownCollectionView headerEndRefreshing];
         }else {

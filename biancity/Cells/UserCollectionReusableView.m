@@ -7,7 +7,7 @@
 //
 
 #import "UserCollectionReusableView.h"
-
+#import "basicRequest.h"
 @implementation UserCollectionReusableView
 -(id)initWithFrame:(CGRect)frame{
     //    CGSize origin = CGSizeMake(frame.size.width, frame.size.width*9/16+frame.size.width/7) ;
@@ -15,7 +15,7 @@
     self=[super initWithFrame:frame];
     if(self){
         [self setBackgroundColor:[UIColor whiteColor]];
-        self.myCoverImage = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.width*9/16)];
+        self.myCoverImage = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.width*3/5)];
         [self addSubview:self.myCoverImage];
 //        
 //        UITapGestureRecognizer *set = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(TappedSetting:)];
@@ -51,7 +51,7 @@
         [self.myCoverImage addSubview:self.addrLabel];
 #pragma end coverImage
         float wt = self.frame.size.width/6;
-        float ht = wt/2;
+        float ht = wt/2+4;
         int fontSize = 14;
         self.myTownView = [[UIView alloc] initWithFrame:CGRectMake(0, self.myCoverImage.frame.size.height, wt, ht)];
         [self addSubview:self.myTownView];
@@ -136,14 +136,14 @@
 }
 - (void) Tapped:(UIGestureRecognizer *) gesture
 {
-    // NSLog(@"tapped");
+    // log(@"tapped");
     if ([self.t_delegate respondsToSelector:@selector(tappedWithObject:)])
     {
         [self.t_delegate tappedWithObject:self.iconAddImage];
     }
 }
 -(void)TappedSetting:(UIGestureRecognizer *) gesture{
-    NSLog(@"tappedSetting");
+    log(@"tappedSetting");
     if ([self.t_delegate respondsToSelector:@selector(setting:)])
     {
         [self.t_delegate setting:_iconSettingImage];

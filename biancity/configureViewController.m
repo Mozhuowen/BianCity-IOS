@@ -21,6 +21,7 @@
 #import "PopView.h"
 @interface configureViewController (){
     NSInteger index_com;
+    BOOL isChange;
 }
 @property (nonatomic,strong) UITableView* configureTableView;
 @property (nonatomic,strong) NSMutableArray *section;
@@ -85,11 +86,31 @@
     _configureTableView.delegate =self;
     _configureTableView.dataSource =self;
   [self.configureTableView registerClass:[settingTableViewCell class] forCellReuseIdentifier:@"settingTableViewCell"];
-    UIBarButtonItem *leftButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemReply target:self action:@selector(selectLeftAction:)];
-    self.navigationItem.leftBarButtonItem = leftButton;
+//    UIBarButtonItem *leftButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemReply target:self action:@selector(selectLeftAction:)];
+//    self.navigationItem.leftBarButtonItem = leftButton;
+//    
+//    UIBarButtonItem *rightButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave  target:self action:@selector(selectRightAction:)];
+//    self.navigationItem.rightBarButtonItem = rightButton;
     
-    UIBarButtonItem *rightButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave  target:self action:@selector(selectRightAction:)];
-    self.navigationItem.rightBarButtonItem = rightButton;
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    [button setBackgroundImage:[UIImage imageNamed:@"ic_navigation_back_normal"]
+                      forState:UIControlStateNormal];
+    [button addTarget:self action:@selector(selectLeftAction:)
+     forControlEvents:UIControlEventTouchUpInside];
+    button.frame = CGRectMake(0, 0, 30, 30);
+    UIBarButtonItem *menuButton = [[UIBarButtonItem alloc] initWithCustomView:button];
+    self.navigationItem.leftBarButtonItem = menuButton;
+    UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [rightButton setBackgroundImage:[UIImage imageNamed:@"ic_note_complete_normal"]
+                           forState:UIControlStateNormal];
+    [rightButton addTarget:self action:@selector(selectRightAction:)
+          forControlEvents:UIControlEventTouchUpInside];
+    rightButton.frame = CGRectMake(0, 0, 30, 30);
+    UIBarButtonItem *rightmenuButton = [[UIBarButtonItem alloc] initWithCustomView:rightButton];
+    self.navigationItem.rightBarButtonItem =rightmenuButton;
+    
+    
+    
  _section = [[NSMutableArray alloc] initWithObjects:@"点击修改头像",@"昵称",@"性别",@"所在地", nil];
     _bgTextView = [[UIView alloc] initWithFrame:CGRectMake(0, [UIScreen mainScreen].bounds.size.height-40, [UIScreen mainScreen].bounds.size.width, 40)];
     _bgTextView.backgroundColor = [UIColor colorWithRed:0.9 green:0.9 blue:0.9 alpha:1.0];
@@ -112,7 +133,7 @@
     _retrunLabel.userInteractionEnabled = YES;
     [_retrunLabel addGestureRecognizer:commitComments];
     
-    
+    isChange = NO;
     [_bgTextView addSubview:_responseText];
     [_bgTextView addSubview:_retrunLabel];
     
@@ -125,6 +146,9 @@
 -(void)commitComment{
     
      [_responseText resignFirstResponder];
+     if(_responseText.text.length!=0)
+         isChange =YES;
+    
     if(index_com ==1){
         _user.name = _responseText.text;
     }else if(index_com ==3){
@@ -134,12 +158,15 @@
     [self.configureTableView reloadData];
 }
 -(void)selectLeftAction:(id)sender{
-    
-    [self showSheetSource:-1];
+    if(isChange){
+        [self showSheetSource:-1];
+    }else{
+          [self.navigationController popViewControllerAnimated:YES];
+    }
 }
 -(void)selectRightAction:(id)sender{
     [self loadInfo:1];
-
+    isChange = NO;
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -160,6 +187,9 @@
     
     
 }
+-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    return 3;
+}
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     if(indexPath.row ==0){
      return 80;
@@ -175,7 +205,7 @@
             
             [[cell textLabel]  setText:[_section objectAtIndex:indexPath.row]];//给cell添加数据
            
-            //NSLog(@"w %f,h %f",cell.imageView.frame.size.width,cell.imageView.frame.size.height);
+            //log(@"w %f,h %f",cell.imageView.frame.size.width,cell.imageView.frame.size.height);
             if(_user){
                 NSString *myImgUrl = _user.cover;
                 NSString *jap = @"http://";
@@ -242,7 +272,7 @@
 
 
 - (void)showSheetSource:(NSInteger)tag{
-    // NSLog(@"showSheet");
+    // log(@"showSheet");
      [_responseText resignFirstResponder];
     UIActionSheet *actionSheet ;
     if(tag<0){
@@ -314,8 +344,12 @@
     }else{
         
         if (buttonIndex == 0) {
+            if(![_user.sex isEqualToString:@"m"])
+                isChange = YES;
             _user.sex =@"m";
         }else if (buttonIndex == 1) {
+            if(![_user.sex isEqualToString:@"f"])
+                isChange = YES;
           _user.sex =@"f";
         }else if(buttonIndex == 2) {
         
@@ -421,16 +455,16 @@
     __weak typeof(self)weakSelf = self;
     UMUUploaderManager * manager = [UMUUploaderManager managerWithBucket:bucket];
     [manager uploadWithFile:fileData policy:policy signature:signature progressBlock:^(CGFloat percent, long long requestDidSendBytes) {
-        NSLog(@"%f",percent);
+        log(@"%f",percent);
         
-        weakSelf.progress.progressView.progress =percent;        NSLog(@"progress is %f", weakSelf.progress.progressView.progress);
+        weakSelf.progress.progressView.progress =percent;        log(@"progress is %f", weakSelf.progress.progressView.progress);
     } completeBlock:^(NSError *error, NSDictionary *result, BOOL completed) {
         _progress.hidden =YES;
         //self.propressView.alpha = 0;
         if (completed) {
             [self.navigationController setNavigationBarHidden:NO animated:NO];
             //        alert = [[UIAlertView alloc]initWithTitle:@"" message:@"上传成功" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
-            //                NSLog(@"%@",result);
+            //                log(@"%@",result);
             [self loadInfo:0];
             [_progress removeFromSuperview];
         }else {
@@ -497,7 +531,8 @@
             else{
                 PopView *pop =[[PopView alloc] initWithFrame:CGRectMake([UIScreen mainScreen].bounds.size.width/2 -100, 80, 200, 320)];
                 [self.view addSubview:pop];
-                [pop setText:@"头像修改失败"];
+                int idx =  [(NSNumber*)[data objectForKey:@"errcode"] intValue];
+                [pop setText:[NSString stringWithFormat:@"%@  头像修改失败",[ErrCode errcode:idx]]];
             }
         }else if(check==1){
              _response= [[ResponseSimple alloc] initWithDictionary:data error:nil];
@@ -526,7 +561,7 @@
         log(@"responseMess stat is %d,errcode is %d",_response.stat,_response.errcode);
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"Error: %@", error);
+        log(@"Error: %@", error);
 }];
 }
 - (void)saveUserDefaultsOwn:(NSInteger)check data:(NSDictionary*)data{

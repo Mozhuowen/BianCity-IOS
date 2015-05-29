@@ -19,6 +19,7 @@
 #import "ResponseSimple.h"
 #import "CnameViewController.h"
 #import "AppDelegate.h"
+#import "PopView.h"
 #define kRedirectURI    @"http://api.weibo.com/oauth2/default.html"
 
 @interface LoginViewController ()
@@ -67,7 +68,7 @@
     if ([deviceString isEqualToString:@"iPad2,3"])      return @"iPad 2 (CDMA)";
     if ([deviceString isEqualToString:@"i386"])         return @"Simulator";
     if ([deviceString isEqualToString:@"x86_64"])       return @"Simulator";
-    NSLog(@"NOTE: Unknown device type: %@", deviceString);
+    log(@"NOTE: Unknown device type: %@", deviceString);
     return deviceString;
 }
 -(void)getUserInfoResponse:(APIResponse *)response{
@@ -76,7 +77,7 @@
     _registeQQ.openid = [_tencentOAuth openId];
     _requestRegiste.registqqInfo = _registeQQ;
     _requestRegiste.logintype = 1;
-    NSLog(@"qqinfo is %@",_registeQQ);
+    log(@"qqinfo is %@",_registeQQ);
     [self loadInfo:1];
    }
 - (void)tencentDidLogin
@@ -95,7 +96,7 @@
     _requsetLogin.sv = [[UIDevice currentDevice] systemVersion];
     _requsetLogin.phonemodel = [self deviceString];
     _requsetLogin.brand = [[UIDevice currentDevice] model];
-    NSLog(@"%@",_requsetLogin);
+    log(@"%@",_requsetLogin);
         [self loadInfo:0];
     
   
@@ -122,7 +123,7 @@
     [WeiboSDK sendRequest:request];
 }
 -(void)wbdidother{
-    NSLog(@"wb did");
+    log(@"wb did");
     _qqImageView.hidden = YES;
     _weiboImageView.hidden =YES;
     AppDelegate * appdelegate = (AppDelegate *)[[UIApplication sharedApplication]delegate];
@@ -138,7 +139,7 @@
     _requsetLogin.sv = [[UIDevice currentDevice] systemVersion];
     _requsetLogin.phonemodel = [self deviceString];
     _requsetLogin.brand = [[UIDevice currentDevice] model];
-    NSLog(@"%@",_requsetLogin);
+    log(@"%@",_requsetLogin);
     [self loadInfo:0];
 
 }
@@ -148,7 +149,7 @@
     _modelWeb = [[ModelRegisteWb alloc] initWithData:data error:nil];
     _requestRegiste.registInfo = _modelWeb;
     _requestRegiste.logintype = 0;
-  NSLog(@"webinfo is %@",_requestRegiste);
+  log(@"webinfo is %@",_requestRegiste);
     [self loadInfo:1];
 }
 
@@ -229,17 +230,22 @@
     [manager POST:url parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         
         NSDictionary * data =[NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
-       // NSLog(@"data %@",data);
+       // log(@"data %@",data);
       if(check ==0){
            //
-           // NSLog(@"_responseLogin is %@",_responseLogin);
+           // log(@"_responseLogin is %@",_responseLogin);
             if((NSNumber*)[data objectForKey:@"stat"]){
                 [self saveUserDefaultsOwn:0 data:data];
             }else{
-                NSLog(@"服务器返回错误");
+                log(@"服务器返回错误");
+                PopView *pop =[[PopView alloc] initWithFrame:CGRectMake(0, 250, [UIScreen mainScreen].bounds.size.width, 40)];               [self.view addSubview:pop];
+               int idx =  [(NSNumber*)[data objectForKey:@"stat"] intValue];
+                [pop setText:[ErrCode errcode:idx]];
+                
             }
           _responseLogin = [[ResponseLogin alloc] initWithDictionary:data error:nil];
-           NSLog(@"_responseLogin is %@",_responseLogin);
+          
+           log(@"_responseLogin is %@",_responseLogin);
 
           if([_responseLogin.needregiste boolValue]){
               _requestRegiste =[[RequestRegiste alloc] init];
@@ -253,7 +259,7 @@
                   [WBHttpRequest requestWithAccessToken:_requsetLogin.token url:userInfoUrl httpMethod:@"GET" params:param delegate:self withTag:@"userInfo"];
                   
                   
-                  NSLog(@"param:%@",param);
+                  log(@"param:%@",param);
 
                   
               }else if([_requsetLogin.logintype integerValue] == 1){
@@ -269,11 +275,18 @@
             
           }
             log(@"_responseLogin stat is %@,errcode is %@",_responseLogin.stat,_responseLogin.errcode);
+          
         }else if(check ==1){
             if((NSNumber*)[data objectForKey:@"stat"]){
                 [self saveUserDefaultsOwn:1 data:data];
             }
             _responseRegiste = [[ResponseRegiste alloc] initWithDictionary:data error:nil];
+            if(!_responseRegiste.stat){
+                PopView *pop =[[PopView alloc] initWithFrame:CGRectMake(0, 250, [UIScreen mainScreen].bounds.size.width, 40)];               [self.view addSubview:pop];
+                int idx =  [(NSNumber*)[data objectForKey:@"errcode"] intValue];
+                [pop setText:[ErrCode errcode:idx]];
+              
+            }
          if(_responseRegiste.needchangename){
              [self changeName]; // _requestCName = [[ModelCName alloc] init] ;
             }else{
@@ -282,17 +295,23 @@
             log(@"_responseRegiste stat is %d,errcode is %d",_responseRegiste.stat,_responseRegiste.errcode);
         }else if(check ==2){
             _responseCname = [[ResponseSimple alloc] initWithDictionary:data error:nil];
+            if(!_responseCname.stat){
+                PopView *pop =[[PopView alloc] initWithFrame:CGRectMake(0, 250, [UIScreen mainScreen].bounds.size.width, 40)];               [self.view addSubview:pop];
+                int idx =  [(NSNumber*)[data objectForKey:@"errcode"] intValue];
+                [pop setText:[ErrCode errcode:idx]];
+            
+            }
             log(@"_responseCname stat is %d,errcode is %d",_responseCname.stat,_responseCname.errcode);
             if(_responseCname.stat){
                 [self welcome];
             }
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"Error: %@", error);
+        log(@"Error: %@", error);
     }];
 }
 -(void)welcome{
-    NSLog(@"Welcome");
+    log(@"Welcome");
     UIStoryboard * story = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     HomeTabBarViewController *home = [story instantiateViewControllerWithIdentifier:@"HomeTabBarViewController"];
     [self presentViewController:home animated:NO completion:^{} ];

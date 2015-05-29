@@ -26,6 +26,7 @@
     int count_images;
     int index_images;
     float progressCount;
+    BOOL isChange;
 }
 @property (nonatomic) BOOL upLoadingfalg;
 @property (nonatomic,strong) UIScrollView *bgScrollView;
@@ -38,7 +39,7 @@
 @property (nonatomic,strong) NSMutableArray* addingImages;
 @property (nonatomic,strong) UIView *bgImages;
 @property (nonatomic,strong) UIView *save;
-@property (nonatomic,strong) UILabel *imagesLabel;
+@property (nonatomic,strong) UIImageView *imagesLabel;
 @property (nonatomic,strong) NSMutableArray *images;
 @property (nonatomic,strong) NSMutableArray *imageNames;
 @property (nonatomic) NSInteger  switchPickerFlag;
@@ -59,10 +60,27 @@
     [super viewDidLoad];
     _townstory = [[TownStory alloc] init];
     _townstory.images = [[NSMutableArray alloc] init];
-    self.navigationItem.leftBarButtonItem =
-    [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemReply target:self action:@selector(selectLeftAction:)];
-    UIBarButtonItem *rightButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave  target:self action:@selector(selectRightAction:)];
-    self.navigationItem.rightBarButtonItem = rightButton;
+//    self.navigationItem.leftBarButtonItem =
+//    [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemReply target:self action:@selector(selectLeftAction:)];
+//    UIBarButtonItem *rightButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave  target:self action:@selector(selectRightAction:)];
+//    self.navigationItem.rightBarButtonItem = rightButton;
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    [button setBackgroundImage:[UIImage imageNamed:@"ic_navigation_back_normal"]
+                      forState:UIControlStateNormal];
+    [button addTarget:self action:@selector(selectLeftAction:)
+     forControlEvents:UIControlEventTouchUpInside];
+    button.frame = CGRectMake(0, 0, 30, 30);
+    UIBarButtonItem *menuButton = [[UIBarButtonItem alloc] initWithCustomView:button];
+    self.navigationItem.leftBarButtonItem = menuButton;
+    UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [rightButton setBackgroundImage:[UIImage imageNamed:@"ic_note_complete_normal"]
+                           forState:UIControlStateNormal];
+    [rightButton addTarget:self action:@selector(selectRightAction:)
+          forControlEvents:UIControlEventTouchUpInside];
+    rightButton.frame = CGRectMake(0, 0, 30, 30);
+    UIBarButtonItem *rightmenuButton = [[UIBarButtonItem alloc] initWithCustomView:rightButton];
+    self.navigationItem.rightBarButtonItem =rightmenuButton;
+    
     self.view.frame =[UIScreen mainScreen].bounds;
     _imageNames= [[NSMutableArray alloc] init];
     _images = [[NSMutableArray alloc] init];
@@ -78,8 +96,8 @@
     _bgsesciLabel = [[UILabel alloc] initWithFrame:_wallImage.frame];
     _bgsesciLabel.textAlignment = NSTextAlignmentCenter;
     _bgsesciLabel.text = @"点击选择封面照片";
-    _wallImage.layer.borderWidth =1.0;
-    _wallImage.layer.borderColor = [[UIColor grayColor] CGColor];
+    _wallImage.layer.borderWidth =0.5;
+    _wallImage.layer.borderColor = [[UIColor colorWithRed:(10*16+8)/255.0 green:(10*16+11)/255.0 blue:(10*16+13)/255.0 alpha:1.0] CGColor];
     _bgImages.backgroundColor = [UIColor whiteColor];
     _titleTextField = [[UITextField alloc] initWithFrame:CGRectMake(0, _wallImage.frame.size.height+4, _wallImage.frame.size.width, 30)];
     _titleTextField.placeholder =@"标题";
@@ -90,28 +108,24 @@
     _descriTextView.returnKeyType =UIReturnKeyDone;
     _descriTextView.delegate = self;
     _descriTextView.font = [UIFont systemFontOfSize:16];
-    _descriTextView.layer.borderWidth =1.0;
-    _descriTextView.layer.borderColor = [[UIColor grayColor] CGColor];
+    _descriTextView.layer.borderWidth =0.5;
+    _descriTextView.layer.borderColor = [[UIColor colorWithRed:(10*16+8)/255.0 green:(10*16+11)/255.0 blue:(10*16+13)/255.0 alpha:1.0] CGColor];
     _placeholder =[[UILabel alloc] initWithFrame:CGRectMake(_descriTextView.frame.origin.x+2, _descriTextView.frame.origin.y+10, 120, 12) ];
     _placeholder.text =@"说点什么吧";
     _placeholder.backgroundColor = [UIColor clearColor];
     _bgImages =[[UIView alloc] initWithFrame:CGRectMake(0,_descriTextView.frame.size.height+_descriTextView.frame.origin.y+20, _bgScrollView.frame.size.width, [UIScreen mainScreen].bounds.size.width/4)];
 //    _bgImages.layer.borderWidth =1.0;
     UITapGestureRecognizer *tapImages = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showSheetSource:)];
-    _imagesLabel =[[UILabel alloc] initWithFrame:CGRectMake(1, 1,[UIScreen mainScreen].bounds.size.width/4-2, _bgImages.frame.size.height-2)];
-    _imagesLabel.textAlignment = NSTextAlignmentCenter;
-    NSString *str =@"+\n添加照片";
-    _imagesLabel.text = str;
-    _imagesLabel.layer.borderWidth =1.0;
-    _imagesLabel.lineBreakMode = NSLineBreakByWordWrapping;
-    _imagesLabel.numberOfLines= 0;
-    _imagesLabel.layer.borderColor = [[UIColor grayColor] CGColor];
+    _imagesLabel =[[UIImageView alloc] initWithFrame:CGRectMake(1, 1,[UIScreen mainScreen].bounds.size.width/4-2, _bgImages.frame.size.height-2)];
+    _imagesLabel.image = [UIImage imageNamed:@"ic_add_photo"];
     _imagesLabel.userInteractionEnabled =YES;
     [_imagesLabel addGestureRecognizer:tapImages];
     //[_bgImages.layer setBorderColor:[[UIColor colorWithPatternImage:[UIImage imageNamed:@"DotedImage.png"]] CGColor]];
     //_bgImages.backgroundColor = [UIColor grayColor];
     _save =[[UIView alloc] initWithFrame:CGRectMake(5, _bgImages.frame.origin.y+_bgImages.frame.size.height+20, _bgScrollView.frame.size.width-10, 40)];
-    _save.backgroundColor = [UIColor blueColor];
+    _save.backgroundColor = [UIColor colorWithRed:(4*16+7)/255.0 green:11*16/255.0 blue:(15*16+9)/255.0 alpha:1];
+    _save.layer.masksToBounds =YES;
+    _save.layer.cornerRadius =4.0;
     UILabel *pSave = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, _save.frame.size.width, _save.frame.size.height)];
     pSave.textAlignment = NSTextAlignmentCenter;
     pSave.textColor = [UIColor whiteColor];
@@ -135,7 +149,7 @@
     [_bgImages addSubview:_imagesLabel];
     [_bgScrollView addSubview:_save];
     [_save addSubview:pSave];
-    
+    isChange = NO;
     [self.view addSubview:_bgScrollView];
     
     if(_isComeFormCache){
@@ -150,13 +164,18 @@
     // Dispose of any resources that can be recreated.
 }
 -(void)selectLeftAction:(id)sender{
-    [self changeAlert];
+    if(isChange){
+        [self changeAlert];
+    }else {
+        [self.navigationController popViewControllerAnimated:YES];
+
+    }
 }
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
     if(alertView.tag ==100){
         switch (buttonIndex) {
             case 0:
-                NSLog(@"0");
+                log(@"0");
                 return;
                 break;
                 
@@ -215,6 +234,8 @@
 }
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
+     if(textField.text.length!=0)
+         isChange =YES;
     [textField resignFirstResponder];    //主要是[receiver resignFirstResponder]在哪调用就能把receiver对应的键盘往下收
     return YES;
 }
@@ -222,7 +243,8 @@
 {
     
     if ([text isEqualToString:@"\n"]) {
-        
+        if(text.length != 0)
+              isChange =YES;
         [textView resignFirstResponder];
         
         return NO;
@@ -233,7 +255,7 @@
     
 }
 - (void)showSheetSource:(UITapGestureRecognizer* )sender {
-    // NSLog(@"showSheet");
+    // log(@"showSheet");
     UIView *vi = [sender view];
     _switchPickerFlag = vi.tag;
     UIActionSheet *actionSheet = [[UIActionSheet alloc]
@@ -290,6 +312,7 @@
     UIImage *image = [info objectForKey:UIImagePickerControllerEditedImage];
     if (image == nil)
         image = [info objectForKey:UIImagePickerControllerOriginalImage];
+      isChange =YES;
     if(100==_switchPickerFlag){
     NLViewController *pic = [[NLViewController alloc] initWithNibName:@"NLViewController" bundle:nil];
     pic.bgImage = image;
@@ -323,7 +346,7 @@
     img.imagename = fileName;
     NSData *tp =UIImageJPEGRepresentation(image, 1.0);
     img.md5 = [tp MD5HexDigest];//=[[NSString alloc] initWithData:[tp md]  encoding:NSUnicodeStringEncoding];//[self image_md5:tp];
-    NSLog(@"Image MD5 %@",img.md5);
+    log(@"Image MD5 %@",img.md5);
     img.list_index =[[NSNumber alloc] initWithLongLong:([_images count])];
     img.size = [[NSNumber alloc] initWithDouble:image.size.width*image.size.height];
     [_townstory.images addObject:img];
@@ -366,12 +389,12 @@
     if (str == NULL) {
         str = "";
     }
-    NSLog(@"md5%s",str);
+    log(@"md5%s",str);
     unsigned char r[CC_MD5_DIGEST_LENGTH];
     CC_MD5(str, (CC_LONG)strlen(str), r);
     NSString *result = [NSString stringWithFormat:@"%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x",
                                              r[0], r[1], r[2], r[3], r[4], r[5], r[6], r[7], r[8], r[9], r[10], r[11], r[12], r[13], r[14], r[15]];
-    NSLog(@"Image Md5 is %@",result);
+    log(@"Image Md5 is %@",result);
     return result;
 }
 -(NSString*)createFileName{
@@ -389,7 +412,7 @@
     _wallimagelabel = [self createFileName];
     _bgsesciLabel.hidden= YES;
     _townstory.cover = _wallimagelabel;
-    NSLog(@"changeIamge");
+    log(@"changeIamge");
 };
 
 - (NSDictionary *)constructingSignatureAndPolicyWithFileInfo:(NSDictionary *)fileInfo
@@ -440,13 +463,13 @@
       
         fileData=UIImageJPEGRepresentation(_wallImage.image,1.0);
         //UIImagePNGRepresentation(_wallImage.image);
-         NSLog(@"image size is %fM,file length is %fM",_wallImage.image.size.width*_wallImage.image.size.height/1000000.00,fileData.length/1000000.00);
+         log(@"image size is %fM,file length is %fM",_wallImage.image.size.width*_wallImage.image.size.height/1000000.00,fileData.length/1000000.00);
     }//[NSData
     else{
         UIImage *im =  [self readeIamge:[_imageNames objectAtIndex:idx-1]];
         fileData=[self readeIamgeData:[_imageNames objectAtIndex:idx-1]];
         //UIImageJPEGRepresentation(im,1.0);//UIImagePNGRepresentation([self readeIamge:[_imageNames objectAtIndex:idx-1]]);
-         NSLog(@"image size is %fM,file length is %fM",im.size.width*im.size.height/1000000.00,fileData.length/1000000.00);
+         log(@"image size is %fM,file length is %fM",im.size.width*im.size.height/1000000.00,fileData.length/1000000.00);
         im = nil;
     }
    
@@ -462,9 +485,9 @@
     __weak typeof(self)weakSelf = self;
     UMUUploaderManager * manager = [UMUUploaderManager managerWithBucket:bucket];
 [manager uploadWithFile:fileData policy:policy signature:signature progressBlock:^(CGFloat percent, long long requestDidSendBytes) {
-        NSLog(@"%f",percent);
+        log(@"%f",percent);
         weakSelf.progress.progressView.progress =percent/([_images count]+1)+progressCount;
-        NSLog(@"progress is %f", weakSelf.progress.progressView.progress);
+        log(@"progress is %f", weakSelf.progress.progressView.progress);
     } completeBlock:^(NSError *error, NSDictionary *result, BOOL completed) {
         //self.propressView.alpha = 0;
         if (completed) {
@@ -517,7 +540,7 @@
 #pragma loading Infomation
 -(void)loadInfo:(int)check{
     NSDictionary *parameters = [_townstory toDictionary];
-    //NSLog(@"%@",parameters);
+    //log(@"%@",parameters);
     NSString *url =[NSString stringWithString:getCreatePutao];
     NSDate *datenow = [NSDate date];//现在时间,你可以输出来看下是什么格式
     NSString *strtime = [NSString stringWithFormat:@"%ld", (long)[datenow timeIntervalSince1970]];
@@ -537,18 +560,26 @@
         NSDictionary * data =[NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
      
             self.responseStory = [[ResponseStory alloc] initWithDictionary:data error:nil];
-        
         log(@"creatStroy stat is %d,errcode is %d",_responseStory.stat,_responseStory.errcode);
+        _upLoadingfalg = NO;
+        [self.navigationController setNavigationBarHidden:NO animated:NO];
+
+        if(_responseStory.stat){
         [self.navigationController popViewControllerAnimated:NO];
         [self deletecache];
         _wallImage =nil;
-        [self.navigationController setNavigationBarHidden:NO animated:NO];
         PopView *pop =[[PopView alloc] initWithFrame:CGRectMake(0, 180, [UIScreen mainScreen].bounds.size.width, 40)];
         [self.view addSubview:pop];
-        _upLoadingfalg = NO;
-        [pop setText:@"\(^o^)/~ 新建成功"];
+            [pop setText:@"\(^o^)/~ 新建成功"];
+        }else {
+            
+            PopView *pop =[[PopView alloc] initWithFrame:CGRectMake(0, 180, [UIScreen mainScreen].bounds.size.width, 40)];
+            [self.view addSubview:pop];
+            int idx =  [(NSNumber*)[data objectForKey:@"errcode"] intValue];
+            [pop setText:[NSString stringWithFormat:@"o(>﹏<)o %@",[ErrCode errcode:idx]]];
+        }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"Error: %@", error);
+        log(@"Error: %@", error);
         PopView *pop =[[PopView alloc] initWithFrame:CGRectMake(0, 180, [UIScreen mainScreen].bounds.size.width, 40)];
            _upLoadingfalg = NO;
         [self.view addSubview:pop];
@@ -589,15 +620,15 @@
     NSString *uniquePath=[[paths objectAtIndex:0] stringByAppendingPathComponent:imagename];
     BOOL blHave=[[NSFileManager defaultManager] fileExistsAtPath:uniquePath];
     if (blHave) {
-        NSLog(@"already have");
+        log(@"already have");
         return ;
     }
     NSData * imagedata = UIImageJPEGRepresentation(image,1.0);
     BOOL result = [imagedata writeToFile:uniquePath atomically:YES];
     if (result) {
-        NSLog(@"save %@ image success",imagename);
+        log(@"save %@ image success",imagename);
     }else {
-        NSLog(@"no success");
+        log(@"no success");
     }
 }
 -(void)removeImageFile:(NSString*)imageName{
@@ -608,21 +639,21 @@
     NSString *uniquePath=[[paths objectAtIndex:0] stringByAppendingPathComponent:imageName];
     BOOL blHave=[[NSFileManager defaultManager] fileExistsAtPath:uniquePath];
     if (!blHave) {
-        NSLog(@"no  have");
+        log(@"no  have");
         return ;
     }else {
-        NSLog(@" have");
+        log(@" have");
         BOOL blDele= [fileManager removeItemAtPath:uniquePath error:nil];
         if (blDele) {
-            NSLog(@"dele success");
+            log(@"dele success");
         }else {
-            NSLog(@"dele fail");
+            log(@"dele fail");
         }
         
     }
 }
 - (void)saveUserDefaultsOwn{
-    
+      isChange =NO;
     townCache *item1 = [[townCache alloc] init];
     item1.title = _titleTextField.text;
     item1.descri = _descriTextView.text;
@@ -633,7 +664,7 @@
     NSDictionary *cache;
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     cache = [userDefaults objectForKey:@"cache"];
-       NSLog(@"save button,cache %@",cache);
+       log(@"save button,cache %@",cache);
     NSDictionary * para = [item1 toDictionary];
     NSMutableDictionary *ad;
     if(cache !=nil){
@@ -643,7 +674,7 @@
         ad= [[NSMutableDictionary alloc] init];
     }
     [ad setObject:para forKey:_cacheid];
-    NSLog(@"item1 %@",ad);
+    log(@"item1 %@",ad);
     [userDefaults setObject:ad forKey:@"cache"];
     [userDefaults synchronize];
     
@@ -673,7 +704,7 @@
     }
     
     [self.view setNeedsDisplay];
-    NSLog(@"staory cache %@",cache);
+    log(@"staory cache %@",cache);
 }
 - (void) readUserDeafultsOwn
 {
