@@ -20,4 +20,6 @@
 @property  (nonatomic,strong) NSString<Optional>* sv;		//系统版本
 @property  (nonatomic,strong) NSString<Optional>* phonemodel;	//手机型号
 @property  (nonatomic,strong) NSString<Optional>* brand;	//手机品牌
+@property  (nonatomic,strong) NSString<Optional>* username;	//边城帐号
+@property  (nonatomic,strong) NSString<Optional>* password;	//边城帐号密码
 @end

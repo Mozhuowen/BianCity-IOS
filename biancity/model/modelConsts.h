@@ -8,7 +8,7 @@
 #import <UIKit/UIKit.h>
 #import <Foundation/Foundation.h>
 
-#define log   
+#define log   NSLog
 
 extern NSString *const LOGIN_INFO ;
 extern NSString *const REGISTE_INFO ;

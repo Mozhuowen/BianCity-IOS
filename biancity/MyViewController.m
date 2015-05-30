@@ -71,6 +71,7 @@
     _msgPlaceholdLabel =[[UILabel alloc] initWithFrame:rect];
     _msgPlaceholdLabel.textAlignment = NSTextAlignmentCenter;
     _msgPlaceholdLabel.text = @"还没有边城，赶快创建吧";
+    _msgPlaceholdLabel.textColor = [UIColor colorWithRed:(10*16+8)/255.0 green:(10*16+11)/255.0 blue:(10*16+13)/255.0 alpha:1.0];
     [self.view addSubview:_msgPlaceholdLabel];
     _msgPlaceholdLabel.hidden = YES;
     // Do any additional setup after loading the view.

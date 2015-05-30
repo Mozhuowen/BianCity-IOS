@@ -16,7 +16,7 @@
 - (void) setUploadGeoInfo:(GeoInfo*) sender;
 - (void) setUploadImage:(UIImage*) sender;
 @end
-@interface saveAddrViewController : UIViewController<MAMapViewDelegate,AMapSearchDelegate,UITextFieldDelegate,saveGeoInfodegelate>
+@interface saveAddrViewController : UIViewController<MAMapViewDelegate,AMapSearchDelegate,UITextFieldDelegate,saveGeoInfodegelate,MAAnnotation>
 - (void) setGeoInfo:(GeoInfo*) sender;
 @property (weak) id<upLoadGeoInfodegelate> t_delegate;
 @end

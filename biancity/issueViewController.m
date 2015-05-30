@@ -49,13 +49,13 @@
     [_question addObject:@"3、创建边城或者故事时上传图片失败？\n"];
     [_Answer addObject:@"检查一下你的网络哦，或者先保存到草稿箱，等到网络比较好的时候再上传就可以啦。\n\n\n\n"];
     
-    [_question addObject:@"2. 我用得很不爽怎么办？\n"];
+    [_question addObject:@"4. 我用得很不爽怎么办？\n"];
     [_Answer addObject:@"私密马赛~~~大鞠躬 如果有什么建议和问题记得骚扰我们，我们会下一版本中不断改进的，亲请耐心等待。\n\n\n\n"];
     
-    [_question addObject:@"3. 怎么骚扰你们？\n"];
+    [_question addObject:@"5. 怎么骚扰你们？\n"];
     [_Answer addObject:@"mozhuowen@gmail.com\n\n\n\n"];
     
-    [_question addObject:@"4. 看完这一页我准备把你们的APP给卸了。\n"];
+    [_question addObject:@"6. 看完这一页我准备把你们的APP给卸了。\n"];
     [_Answer addObject:@"や!め!て! (ㄒoㄒ)// 泪奔中 边城APP不会后台运行不会弹通知骚扰不会收集隐私，你这样对一个乳齿善良的APP真的好么？ \n\n\n\n"];
     // Do any additional setup after loading the view from its nib.
 }

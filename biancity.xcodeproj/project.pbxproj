@@ -38,6 +38,10 @@
 		FE8C7DC51B10196A0069F626 /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = FE8C7DC41B10196A0069F626 /* libiconv.dylib */; };
 		FE8C7DC71B1019760069F626 /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = FE8C7DC61B1019760069F626 /* libstdc++.dylib */; };
 		FE8C7DCA1B10231C0069F626 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE8C7DC91B10231C0069F626 /* LoginViewController.m */; };
+		FE9B79811B19DFF5008BA999 /* myloginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE9B797F1B19DFF5008BA999 /* myloginViewController.m */; };
+		FE9B79821B19DFF5008BA999 /* myloginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FE9B79801B19DFF5008BA999 /* myloginViewController.xib */; };
+		FE9B79861B19E09F008BA999 /* registerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FE9B79841B19E09F008BA999 /* registerViewController.m */; };
+		FE9B79871B19E09F008BA999 /* registerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FE9B79851B19E09F008BA999 /* registerViewController.xib */; };
 		FEC53D671AF8B27800FCF327 /* ModelUser.m in Sources */ = {isa = PBXBuildFile; fileRef = FEC53D661AF8B27800FCF327 /* ModelUser.m */; };
 		FEC53D6A1AF8B29500FCF327 /* ResponseUser.m in Sources */ = {isa = PBXBuildFile; fileRef = FEC53D691AF8B29500FCF327 /* ResponseUser.m */; };
 		FEC53D701AF8BF3600FCF327 /* HomeTabBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FEC53D6F1AF8BF3600FCF327 /* HomeTabBarViewController.m */; };
@@ -261,6 +265,12 @@
 		FE8C7DC61B1019760069F626 /* libstdc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.dylib"; path = "usr/lib/libstdc++.dylib"; sourceTree = SDKROOT; };
 		FE8C7DC81B10231C0069F626 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		FE8C7DC91B10231C0069F626 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
+		FE9B797E1B19DFF5008BA999 /* myloginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = myloginViewController.h; sourceTree = "<group>"; };
+		FE9B797F1B19DFF5008BA999 /* myloginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = myloginViewController.m; sourceTree = "<group>"; };
+		FE9B79801B19DFF5008BA999 /* myloginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = myloginViewController.xib; sourceTree = "<group>"; };
+		FE9B79831B19E09F008BA999 /* registerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = registerViewController.h; sourceTree = "<group>"; };
+		FE9B79841B19E09F008BA999 /* registerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = registerViewController.m; sourceTree = "<group>"; };
+		FE9B79851B19E09F008BA999 /* registerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = registerViewController.xib; sourceTree = "<group>"; };
 		FEC53D651AF8B27800FCF327 /* ModelUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ModelUser.h; sourceTree = "<group>"; };
 		FEC53D661AF8B27800FCF327 /* ModelUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ModelUser.m; sourceTree = "<group>"; };
 		FEC53D681AF8B29500FCF327 /* ResponseUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResponseUser.h; sourceTree = "<group>"; };
@@ -793,6 +803,12 @@
 				FE6BDB6D1B11EA4B003C4811 /* CnameViewController.h */,
 				FE6BDB6E1B11EA4B003C4811 /* CnameViewController.m */,
 				FE6BDB6F1B11EA4B003C4811 /* CnameViewController.xib */,
+				FE9B797E1B19DFF5008BA999 /* myloginViewController.h */,
+				FE9B797F1B19DFF5008BA999 /* myloginViewController.m */,
+				FE9B79801B19DFF5008BA999 /* myloginViewController.xib */,
+				FE9B79831B19E09F008BA999 /* registerViewController.h */,
+				FE9B79841B19E09F008BA999 /* registerViewController.m */,
+				FE9B79851B19E09F008BA999 /* registerViewController.xib */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -1245,6 +1261,7 @@
 				FEF6995D1B130E9F00FE9D33 /* WeiboSDK.bundle in Resources */,
 				FEC571F61B03638900D5D8E5 /* storyViewController.xib in Resources */,
 				FED36DC81AFA49DA00251846 /* upLoadImageViewController.xib in Resources */,
+				FE9B79821B19DFF5008BA999 /* myloginViewController.xib in Resources */,
 				FEC8D1EB1AFF5993009E3AB0 /* addStoryViewController.xib in Resources */,
 				FECAE90F1B07763E00FE6FA7 /* UserViewController.xib in Resources */,
 				FEC880AC1B0DD15900C6F231 /* cacheViewController.xib in Resources */,
@@ -1261,6 +1278,7 @@
 				FECA811F1AF7B43300FF57AE /* bj.jpg in Resources */,
 				FECA801F1AF71A3000FF57AE /* Main.storyboard in Resources */,
 				FECA80241AF71A3000FF57AE /* LaunchScreen.xib in Resources */,
+				FE9B79871B19E09F008BA999 /* registerViewController.xib in Resources */,
 				FECA80D01AF732BF00FF57AE /* placeholder@2x.png in Resources */,
 				FED86C641B00BC8900B2F96C /* corner.png in Resources */,
 				FECE58F81B170893000457E9 /* issueViewController.xib in Resources */,
@@ -1368,6 +1386,7 @@
 				FE4CC1041B09AC9700B2615F /* WGS84TOGCJ02.m in Sources */,
 				FECA80EB1AF7340900FF57AE /* ApplyTown.m in Sources */,
 				FECA80A31AF732A800FF57AE /* SDWebImageDownloader.m in Sources */,
+				FE9B79861B19E09F008BA999 /* registerViewController.m in Sources */,
 				FECA80531AF7326B00FF57AE /* AFURLConnectionOperation.m in Sources */,
 				FEC53D671AF8B27800FCF327 /* ModelUser.m in Sources */,
 				FECA80521AF7326B00FF57AE /* AFSecurityPolicy.m in Sources */,
@@ -1416,6 +1435,7 @@
 				FE54E3CC1B0F8F0E00582CC1 /* ModelRegisteQQ.m in Sources */,
 				FED0A5D41B08993800B452DB /* RTLabel.m in Sources */,
 				FECA80161AF71A3000FF57AE /* main.m in Sources */,
+				FE9B79811B19DFF5008BA999 /* myloginViewController.m in Sources */,
 				FECA80A51AF732A800FF57AE /* SDWebImageManager.m in Sources */,
 				FECA80AA1AF732A800FF57AE /* UIImage+WebP.m in Sources */,
 				FECA80731AF7329800FF57AE /* JSONModelArray.m in Sources */,
@@ -1562,6 +1582,8 @@
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "93fb9d41-4195-488e-ba20-ba74cff1ab9c";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -1569,7 +1591,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Yun Zhu (RP3BZ382VQ)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/biancity/GaodeGeoInfo",
@@ -1585,6 +1607,8 @@
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "93fb9d41-4195-488e-ba20-ba74cff1ab9c";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

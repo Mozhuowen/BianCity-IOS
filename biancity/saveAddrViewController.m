@@ -17,6 +17,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *msglabel;
 @property (strong,nonatomic) GeoInfo *geoInfo;
 @property (strong,nonatomic) UIImage *screenImage;
+@property (nonatomic,strong) CLLocation* originLocal;
 @end
 
 @implementation saveAddrViewController
@@ -64,7 +65,6 @@
     _mapView = [[MAMapView alloc] initWithFrame:CGRectMake(0, 140, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds)-120.0)];
     _mapView.delegate = self;
     //_mapView.showsUserLocation = YES;
-    
    // _mapView.userTrackingMode = MAUserTrackingModeFollowWithHeading;
     //[_mapView setZoomLevel:16.1 animated:YES];
     _mapView.centerCoordinate =CLLocationCoordinate2DMake([_geoInfo.latitude doubleValue],[_geoInfo.longitude doubleValue]);
@@ -78,6 +78,7 @@
     
     MAPointAnnotation *pointAnnotation = [[MAPointAnnotation alloc] init];
     pointAnnotation.coordinate = CLLocationCoordinate2DMake([_geoInfo.latitude doubleValue], [_geoInfo.longitude doubleValue]);
+    _originLocal = [[CLLocation alloc] initWithLatitude:pointAnnotation.coordinate.latitude longitude:pointAnnotation.coordinate.longitude];
     pointAnnotation.title = @"边城位置";
     
     [_mapView setZoomLevel:16.1 animated:YES];
@@ -86,6 +87,25 @@
     [addr appendString:(_geoInfo.province!=nil?_geoInfo.province:@"")];
     [addr appendString:(_geoInfo.city!=nil?_geoInfo.city:@"")];
     _addrLabel.text = addr;
+
+}
+-(void)mapView:(MAMapView *)mapView annotationView:(MAAnnotationView *)view didChangeDragState:(MAAnnotationViewDragState)newState fromOldState:(MAAnnotationViewDragState)oldState{
+    CLLocation *local=[[CLLocation alloc] initWithLatitude:view.annotation.coordinate.latitude longitude:view.annotation.coordinate.longitude];
+    CLLocationDistance meters=[local distanceFromLocation:_originLocal];
+    
+    log(@"移动前的经纬度：%f,%f,移动后的经纬度:%f,%f,移动距离:%f",[_geoInfo.latitude doubleValue],[_geoInfo.latitude doubleValue],local.coordinate.latitude,local.coordinate.longitude,meters);
+    
+    if(meters >300){
+        PopView *pop =[[PopView alloc] initWithFrame:CGRectMake(0, 250, [UIScreen mainScreen].bounds.size.width, 40)];
+        [self.view addSubview:pop];
+        [pop setText:[NSString stringWithFormat:@"移动距离%f,大于300米，请重试",meters]];
+    view.annotation.coordinate = CLLocationCoordinate2DMake([_geoInfo.latitude doubleValue], [_geoInfo.longitude doubleValue]);
+        
+    }else{
+        _geoInfo.latitude =[[NSNumber alloc]initWithDouble:local.coordinate.latitude];
+        _geoInfo.longitude = [[NSNumber alloc] initWithDouble:local.coordinate.longitude];
+    }
+    
 
 }
 #pragma mark mapView Delegate 地图 添加标注时 回调

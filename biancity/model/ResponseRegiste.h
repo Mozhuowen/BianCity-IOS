@@ -19,4 +19,6 @@
 @property  (nonatomic,strong) NSMutableArray<ModelAppleTown,Optional>* mytowns;
 @property  (nonatomic,strong) NSString<Optional>* sex;
 @property  (nonatomic,strong) NSString<Optional>* location;
+@property  (nonatomic,strong) NSNumber<Optional>* ptuserid;	//注册边城帐号时需要用到这两个
+@property  (nonatomic,strong) NSString<Optional>* ptoken;	//注册边城帐号时需要用到这两个
 @end

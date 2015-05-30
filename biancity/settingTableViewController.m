@@ -60,7 +60,7 @@
     UIBarButtonItem *menuButton = [[UIBarButtonItem alloc] initWithCustomView:button];
     self.navigationItem.leftBarButtonItem = menuButton;
     _section1 = [[NSMutableArray alloc] initWithObjects:@"wo", nil];
-    _section2 = [[NSMutableArray alloc] initWithObjects:@"退出登录",@"草稿箱",@"关于我们",@"常见意见", nil];
+    _section2 = [[NSMutableArray alloc] initWithObjects:@"退出登录",@"草稿箱",@"关于我们",@"常见问题", nil];
     [self readUserDeafultsOwn];
     self.tableView.sectionFooterHeight = 0;
 }

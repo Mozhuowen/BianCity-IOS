@@ -20,12 +20,15 @@
 #import "CnameViewController.h"
 #import "AppDelegate.h"
 #import "PopView.h"
+#import "showNavigationController.h"
+#import "myloginViewController.h"
 #define kRedirectURI    @"http://api.weibo.com/oauth2/default.html"
 
 @interface LoginViewController ()
 @property (weak, nonatomic) IBOutlet UIImageView *titleImageView;
 @property (weak, nonatomic) IBOutlet UIImageView *weiboImageView;
 @property (weak, nonatomic) IBOutlet UIImageView *qqImageView;
+@property (weak, nonatomic) IBOutlet UIButton *loginButton;
 @property (nonatomic,strong) NSArray *permissions;
 @property (nonatomic,strong) TencentOAuth* tencentOAuth;
 @property (nonatomic,strong) ModelRegisteQQ *registeQQ;
@@ -80,6 +83,12 @@
     log(@"qqinfo is %@",_registeQQ);
     [self loadInfo:1];
    }
+- (IBAction)UserLogin:(id)sender {
+    showNavigationController *show =[[showNavigationController alloc] initWithNibName:@"showNavigationController" bundle:nil];
+    myloginViewController * mylogin = [[myloginViewController alloc] initWithNibName:@"myloginViewController" bundle:nil];
+    [show pushViewController:mylogin animated:YES];
+    [self presentViewController:show animated:YES completion:^{}];
+}
 - (void)tencentDidLogin
 {
     _qqImageView.hidden = YES;
@@ -158,6 +167,7 @@
     if([[NSUserDefaults standardUserDefaults] dictionaryForKey:LOGIN_INFO]!=nil){
         _qqImageView.hidden=YES;
         _weiboImageView.hidden= YES;
+        _loginButton.hidden =YES;
         [UIView animateWithDuration:2.0
                               delay:0.0
                             options:UIViewAnimationOptionCurveEaseIn
@@ -172,7 +182,7 @@
     }else {
         _qqImageView.hidden=NO;
         _weiboImageView.hidden= NO;
-
+       _loginButton.hidden =NO;
     }
 }
 - (void)viewDidLoad {
@@ -189,6 +199,11 @@
     UITapGestureRecognizer *tapWb = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(ssoButtonPressed)];
     _weiboImageView.userInteractionEnabled = YES;
     [_weiboImageView addGestureRecognizer:tapWb];
+    _loginButton.layer.borderColor = [[UIColor colorWithRed:(10*16+8)/255.0 green:(10*16+11)/255.0 blue:(10*16+13)/255.0 alpha:1.0] CGColor];
+    _loginButton.layer.borderWidth = 0.5;
+    _loginButton.layer.masksToBounds = YES;
+    _loginButton.layer.cornerRadius = 20.0;
+    _loginButton.tintColor = [UIColor colorWithRed:(10*16+8)/255.0 green:(10*16+11)/255.0 blue:(10*16+13)/255.0 alpha:1.0];
     // Do any additional setup after loading the view.
 }
 
@@ -197,7 +212,13 @@
     // Dispose of any resources that can be recreated.
 }
 - (void)qqregiste{
+    if([QQApiInterface isQQInstalled])
      [_tencentOAuth authorize:_permissions inSafari:NO];
+    else {
+        PopView *pop =[[PopView alloc] initWithFrame:CGRectMake(0, 250, [UIScreen mainScreen].bounds.size.width, 40)];               [self.view addSubview:pop];
+        [pop setText:@"未安装QQ,请换一种登录方式"];
+
+    }
 }
 
 #pragma loading Infomation

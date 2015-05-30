@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "TencentOpenAPI/TencentOAuth.h"
+#import "TencentOpenAPI/QQApiInterface.h"
 #import "WeiboSDK.h"
 @interface LoginViewController : UIViewController<TencentSessionDelegate,WBHttpRequestDelegate>
 -(void)wbdidother;

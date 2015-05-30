@@ -14,4 +14,10 @@
 @property (nonatomic) int logintype;
 @property (nonatomic,strong) ModelRegisteWb<Optional>* registInfo;
 @property (nonatomic,strong)  ModelRegisteQQ<Optional>* registqqInfo;
+@property  (nonatomic,strong) NSString<Optional>* username;		//用户名
+@property  (nonatomic,strong) NSString<Optional>*  password;		//密码
+@property  (nonatomic,strong) NSString<Optional>* imei;	//手机唯一imei号
+@property  (nonatomic,strong) NSString<Optional>*  sv;		//系统版本
+@property  (nonatomic,strong) NSString<Optional>* phonemodel;	//手机型号
+@property  (nonatomic,strong) NSString<Optional>* brand;	//手机品牌
 @end

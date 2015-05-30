@@ -246,7 +246,7 @@
 #pragma loading Infomation
 -(void)loadInfo:(int)check{
      _requestStory.townid = [_applyTown.townid intValue];
-    if(check==0){
+    if(check==0||check==2){
         _requestStory.position =0;
     }
     NSDictionary *parameters = [_requestStory toDictionary];
@@ -257,7 +257,7 @@
     MsgEncrypt *encrypt = [[MsgEncrypt alloc] init];
     NSData *msgjson = [NSJSONSerialization dataWithJSONObject:parameters options:kNilOptions error:nil];
     NSString* info = [[NSString alloc] initWithData:msgjson encoding:NSUTF8StringEncoding];
-    log(@"Near Info is %@,%ld",info,(unsigned long)info.length);
+    log(@"town shory Info is %@,%ld",info,(unsigned long)info.length);
     NSString *signature= [encrypt EncryptMsg:info timeStmap:strtime];
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.requestSerializer=[AFJSONRequestSerializer serializer];
@@ -655,6 +655,7 @@
     
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     NSDictionary *cache;
+     cache = [userDefaults dictionaryForKey:LOGIN_INFO];
     if([(NSNumber*)[cache objectForKey:@"needregiste"] boolValue]){
         cache = [userDefaults dictionaryForKey:REGISTE_INFO];
         ResponseRegiste *registe =[[ResponseRegiste alloc] initWithDictionary:cache error:nil];
