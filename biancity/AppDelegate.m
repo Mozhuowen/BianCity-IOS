@@ -26,7 +26,12 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    
+//    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+//   
+//    UIStoryboard * main = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+//    self.window.rootViewController = [main instantiateViewControllerWithIdentifier:@"LoginViewController"];
+//    
+//     [self.window makeKeyAndVisible];
     [SDWebImageManager sharedManager].imageDownloader.username = @"httpwatch";
     [SDWebImageManager sharedManager].imageDownloader.password = @"httpwatch01";
     [SDWebImageManager.sharedManager.imageDownloader setValue:@"SDWebImage Demo" forHTTPHeaderField:@"AppName"];

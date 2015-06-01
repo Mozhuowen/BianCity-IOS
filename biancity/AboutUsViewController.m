@@ -56,7 +56,7 @@
    [str appendString: @"如果你正在创业，不要忘了在你们最初奋斗的那个出租房创建一个边城。\n\n"];
   [str appendString: @"翠翠的边城里写满了美好、感动和遗憾，你的呢？\n"];
     _msgLabel.text = str;
-    _AppIcon.image = [UIImage imageNamed:@"appIcon"];
+    _AppIcon.image = [UIImage imageNamed:@"luanch_login"];
     NSDictionary* infoDict =[[NSBundle mainBundle] infoDictionary];
     NSString* versionNum =[infoDict objectForKey:@"CFBundleShortVersionString"];
     _appVersion.text =[NSString stringWithFormat:@"版本:%@",versionNum];

@@ -93,7 +93,7 @@
 {
     _qqImageView.hidden = YES;
     _weiboImageView.hidden =YES;
-    
+       _loginButton.hidden = YES;
     _requsetLogin.logintype = [NSNumber numberWithInt:1 ];
     _requsetLogin.token = [_tencentOAuth accessToken];
     _requsetLogin.uid = [_tencentOAuth openId];
@@ -135,6 +135,7 @@
     log(@"wb did");
     _qqImageView.hidden = YES;
     _weiboImageView.hidden =YES;
+    _loginButton.hidden = YES;
     AppDelegate * appdelegate = (AppDelegate *)[[UIApplication sharedApplication]delegate];
     
     _requsetLogin.logintype = [NSNumber numberWithInt:0 ];

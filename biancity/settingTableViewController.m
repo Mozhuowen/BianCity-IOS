@@ -171,6 +171,7 @@
             }
             
         }
+            cell.imageView.bounds = CGRectMake(0, 0, 60, 60);
           cell.imageView.layer.masksToBounds = YES;
           [cell imageView].layer.cornerRadius = 30;
         break;

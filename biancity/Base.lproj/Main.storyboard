@@ -306,7 +306,7 @@
         <!--Login View Controller-->
         <scene sceneID="Lhd-DN-4U0">
             <objects>
-                <viewController id="pLd-Yi-QWx" customClass="LoginViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="LoginViewController" id="pLd-Yi-QWx" customClass="LoginViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="do3-g6-nYg"/>
                         <viewControllerLayoutGuide type="bottom" id="RCL-5D-P8l"/>
@@ -363,9 +363,6 @@
                                     <constraint firstAttribute="height" constant="28" id="AZK-S0-LlM">
                                         <variation key="heightClass=regular-widthClass=compact" constant="40"/>
                                     </constraint>
-                                    <constraint firstAttribute="width" constant="246" id="qz7-Su-GVG">
-                                        <variation key="heightClass=regular-widthClass=compact" constant="244"/>
-                                    </constraint>
                                 </constraints>
                                 <state key="normal" title="登录/注册">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -373,13 +370,11 @@
                                 <variation key="default">
                                     <mask key="constraints">
                                         <exclude reference="AZK-S0-LlM"/>
-                                        <exclude reference="qz7-Su-GVG"/>
                                     </mask>
                                 </variation>
                                 <variation key="heightClass=regular-widthClass=compact">
                                     <mask key="constraints">
                                         <include reference="AZK-S0-LlM"/>
-                                        <include reference="qz7-Su-GVG"/>
                                     </mask>
                                 </variation>
                                 <connections>
@@ -423,17 +418,17 @@
                                 <exclude reference="GAK-0s-JZt"/>
                             </mask>
                             <mask key="constraints">
-                                <exclude reference="akB-Vf-0ri"/>
-                                <exclude reference="e6H-cS-EZ4"/>
-                                <exclude reference="TdF-Wg-v4o"/>
-                                <exclude reference="5XE-lj-U1b"/>
-                                <exclude reference="PVc-t4-0KK"/>
-                                <exclude reference="ZKr-HL-8Mp"/>
-                                <exclude reference="yvq-y5-V1i"/>
                                 <exclude reference="5Ys-0W-93d"/>
                                 <exclude reference="CSO-tG-tiD"/>
                                 <exclude reference="KVa-Zx-QGW"/>
                                 <exclude reference="aSM-4O-DPf"/>
+                                <exclude reference="5XE-lj-U1b"/>
+                                <exclude reference="PVc-t4-0KK"/>
+                                <exclude reference="ZKr-HL-8Mp"/>
+                                <exclude reference="yvq-y5-V1i"/>
+                                <exclude reference="TdF-Wg-v4o"/>
+                                <exclude reference="akB-Vf-0ri"/>
+                                <exclude reference="e6H-cS-EZ4"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=compact">
@@ -444,17 +439,17 @@
                                 <include reference="GAK-0s-JZt"/>
                             </mask>
                             <mask key="constraints">
-                                <include reference="akB-Vf-0ri"/>
-                                <include reference="e6H-cS-EZ4"/>
-                                <include reference="TdF-Wg-v4o"/>
-                                <include reference="5XE-lj-U1b"/>
-                                <include reference="PVc-t4-0KK"/>
-                                <include reference="ZKr-HL-8Mp"/>
-                                <include reference="yvq-y5-V1i"/>
                                 <include reference="5Ys-0W-93d"/>
                                 <include reference="CSO-tG-tiD"/>
                                 <include reference="KVa-Zx-QGW"/>
                                 <include reference="aSM-4O-DPf"/>
+                                <include reference="5XE-lj-U1b"/>
+                                <include reference="PVc-t4-0KK"/>
+                                <include reference="ZKr-HL-8Mp"/>
+                                <include reference="yvq-y5-V1i"/>
+                                <include reference="TdF-Wg-v4o"/>
+                                <include reference="akB-Vf-0ri"/>
+                                <include reference="e6H-cS-EZ4"/>
                             </mask>
                         </variation>
                     </view>

@@ -19,6 +19,7 @@
 #import "ResponseLogin.h"
 #import "ResponseRegiste.h"
 #import "PopView.h"
+
 @interface configureViewController (){
     NSInteger index_com;
     BOOL isChange;
@@ -210,19 +211,44 @@
                 NSString *myImgUrl = _user.cover;
                 NSString *jap = @"http://";
                 NSRange foundObj=[myImgUrl rangeOfString:jap options:NSCaseInsensitiveSearch];
+             
                 if(_user.cover){
+                    __weak UIImageView *weakImage = cell.imageView;
                     if(foundObj.length>0) {
-                        [cell.imageView sd_setImageWithURL:[NSURL URLWithString:myImgUrl]  placeholderImage:[UIImage imageNamed:@"placeholder"] options:indexPath.row == 0 ? SDWebImageRefreshCached : 0] ;
+//                        [cell.imageView sd_setImageWithURL:[NSURL URLWithString:myImgUrl]  placeholderImage:[UIImage imageNamed:@"placeholder"] options:indexPath.row == 0 ? SDWebImageRefreshCached : 0] ;
+                        
+                        [cell.imageView sd_setImageWithURL:[NSURL URLWithString:myImgUrl]
+                                             placeholderImage:[UIImage imageNamed:@"placeholder"]
+                                                      options:SDWebImageProgressiveDownload
+                                                     progress:^(NSInteger receivedSize, NSInteger expectedSize) {
+                                                         //add some ting
+                                                     }
+                                                    completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+                                                        log(@"loadbgImage complete");
+                                                        [weakImage setNeedsDisplay];
+                                                    }];
                     }else {
                         NSMutableString * temp = [[NSMutableString alloc] initWithString:getPictureUrl];
                         [temp appendString:_user.cover];
                         [temp appendString:@"!small"];
-                        [cell.imageView sd_setImageWithURL:[NSURL URLWithString:temp]  placeholderImage:[UIImage imageNamed:@"placeholder"] options:indexPath.row == 0 ? SDWebImageRefreshCached : 0] ;
+//                        [cell.imageView sd_setImageWithURL:[NSURL URLWithString:temp]  placeholderImage:[UIImage imageNamed:@"placeholder"] options:indexPath.row == 0 ? SDWebImageRefreshCached : 0] ;
+                        [cell.imageView sd_setImageWithURL:[NSURL URLWithString:temp]
+                                          placeholderImage:[UIImage imageNamed:@"placeholder"]
+                                                   options:SDWebImageProgressiveDownload
+                                                  progress:^(NSInteger receivedSize, NSInteger expectedSize) {
+                                                      //add some ting
+                                                  }
+                                                 completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+                                                     log(@"loadbgImage complete");
+                                                     [weakImage setNeedsDisplay];
+                                                 }];
                     }
                 }else {
                     cell.imageView.image =[UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"bj" ofType:@"jpg"]];
                 }
             }
+        
+                cell.imageView.bounds = CGRectMake(0,0, 80, 80);
             cell.imageView.layer.masksToBounds = YES;
             cell.imageView.layer.cornerRadius = 40;
             break;
@@ -466,6 +492,7 @@
             //        alert = [[UIAlertView alloc]initWithTitle:@"" message:@"上传成功" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
             //                log(@"%@",result);
             [self loadInfo:0];
+            [self.configureTableView reloadData];
             [_progress removeFromSuperview];
         }else {
             PopView *pop =[[PopView alloc] initWithFrame:CGRectMake([UIScreen mainScreen].bounds.size.width/2 -100, 80, 200, 320)];

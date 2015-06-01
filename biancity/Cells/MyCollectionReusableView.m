@@ -45,7 +45,7 @@
         
         self.iconAddrImage = [[UIImageView alloc] initWithFrame:CGRectMake(self.myCoverImage.frame.size.width/2+8, 120, 16, 16)];
         [self.myCoverImage addSubview:self.iconAddrImage];
-        self.addrLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.myCoverImage.frame.size.width/2+25, 126, 150, 8)];
+        self.addrLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.myCoverImage.frame.size.width/2+25, 120, 150, 17)];
          self.addrLabel.textColor = [UIColor whiteColor];
              self.addrLabel.font = [UIFont systemFontOfSize:12];
         [self.myCoverImage addSubview:self.addrLabel];
